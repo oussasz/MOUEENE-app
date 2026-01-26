@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Provider Dashboard - Manage your services on Moueene"
+    />
+    <title>Provider Dashboard - Moueene</title>
+    <link rel="icon" type="image/png" href="../logo.png" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <nav class="navbar">
+          <a href="../index.html" class="logo">
+            <img src="../logo.png" alt="Moueene Logo" />
+          </a>
+          <ul class="nav-menu">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="providers.html">Providers</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+          <div class="nav-buttons">
+            <a href="#" class="btn btn-outline"><i class="fas fa-bell"></i></a>
+            <a href="provider-dashboard.html" class="btn btn-primary"
+              >Dashboard</a
+            >
+          </div>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard-section" style="padding-top: 100px">
+      <div class="container">
+        <div class="dashboard-grid">
+          <!-- Sidebar -->
+          <div class="dashboard-sidebar">
+            <div class="dashboard-user">
+              <img
+                src="../assets/images/providers/provider1.jpg"
+                alt="Provider Avatar"
+              />
+              <h4 id="provider-name">Provider Name</h4>
+              <span>Service Provider</span>
+            </div>
+            <nav class="dashboard-nav">
+              <a href="#" class="active"
+                ><i class="fas fa-tachometer-alt"></i> Dashboard</a
+              >
+              <a href="#"><i class="fas fa-briefcase"></i> My Services</a>
+              <a href="#"><i class="fas fa-calendar-alt"></i> Bookings</a>
+              <a href="#"><i class="fas fa-envelope"></i> Messages</a>
+              <a href="#"><i class="fas fa-star"></i> Reviews</a>
+              <a href="#"><i class="fas fa-chart-line"></i> Analytics</a>
+              <a href="#"><i class="fas fa-credit-card"></i> Earnings</a>
+              <a href="#"><i class="fas fa-cog"></i> Settings</a>
+              <a href="login.html"
+                ><i class="fas fa-sign-out-alt"></i> Logout</a
+              >
+            </nav>
+          </div>
+
+          <!-- Main Content -->
+          <div class="dashboard-content">
+            <div class="dashboard-header">
+              <div>
+                <h2 id="welcome-message">Welcome back!</h2>
+                <p style="color: var(--text-light); margin: 0">
+                  Here's your business overview.
+                </p>
+              </div>
+              <a href="provider-profile.html" class="btn btn-primary"
+                >View Public Profile</a
+              >
+            </div>
+
+            <!-- Stats -->
+            <div class="dashboard-stats">
+              <div class="dashboard-stat-card">
+                <i class="fas fa-calendar-check"></i>
+                <h3 id="stat-total-bookings">0</h3>
+                <p>Total Bookings</p>
+              </div>
+              <div class="dashboard-stat-card">
+                <i class="fas fa-hourglass-half"></i>
+                <h3 id="stat-pending-bookings">0</h3>
+                <p>Pending</p>
+              </div>
+              <div class="dashboard-stat-card">
+                <i class="fas fa-check-circle"></i>
+                <h3 id="stat-completed-bookings">0</h3>
+                <p>Completed</p>
+              </div>
+              <div class="dashboard-stat-card">
+                <i class="fas fa-star"></i>
+                <h3 id="stat-rating">0.0</h3>
+                <p>Average Rating</p>
+              </div>
+            </div>
+
+            <!-- Recent Bookings -->
+            <div style="margin-bottom: 30px">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: 20px;
+                "
+              >
+                <h3 style="margin: 0">Recent Bookings</h3>
+                <a href="#" class="btn btn-outline btn-sm">View All</a>
+              </div>
+              <div
+                id="bookings-list"
+                style="
+                  background: var(--bg-light);
+                  border-radius: var(--radius-md);
+                  overflow: hidden;
+                "
+              >
+                <!-- Bookings will be loaded here by JavaScript -->
+                <div
+                  style="
+                    padding: 40px;
+                    text-align: center;
+                    color: var(--text-light);
+                  "
+                >
+                  <i class="fas fa-spinner fa-spin" style="font-size: 2rem"></i>
+                  <p>Loading bookings...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div>
+              <h3 style="margin-bottom: 20px">Quick Actions</h3>
+              <div class="grid grid-3" style="gap: 20px">
+                <div class="card" style="padding: 20px; text-align: center">
+                  <i
+                    class="fas fa-plus-circle"
+                    style="
+                      font-size: 2rem;
+                      color: var(--primary-color);
+                      margin-bottom: 10px;
+                    "
+                  ></i>
+                  <h4>Add New Service</h4>
+                  <p style="color: var(--text-light); font-size: 0.9rem">
+                    Expand your offerings
+                  </p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    style="margin-top: 10px"
+                  >
+                    Add Service
+                  </button>
+                </div>
+                <div class="card" style="padding: 20px; text-align: center">
+                  <i
+                    class="fas fa-calendar"
+                    style="
+                      font-size: 2rem;
+                      color: var(--primary-color);
+                      margin-bottom: 10px;
+                    "
+                  ></i>
+                  <h4>Manage Schedule</h4>
+                  <p style="color: var(--text-light); font-size: 0.9rem">
+                    Update availability
+                  </p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    style="margin-top: 10px"
+                  >
+                    Set Schedule
+                  </button>
+                </div>
+                <div class="card" style="padding: 20px; text-align: center">
+                  <i
+                    class="fas fa-user-edit"
+                    style="
+                      font-size: 2rem;
+                      color: var(--primary-color);
+                      margin-bottom: 10px;
+                    "
+                  ></i>
+                  <h4>Edit Profile</h4>
+                  <p style="color: var(--text-light); font-size: 0.9rem">
+                    Update your information
+                  </p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    style="margin-top: 10px"
+                    onclick="window.location.href = '/pages/profile-edit.html'"
+                  >
+                    Edit Profile
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-bottom" style="border-top: none">
+          <p>&copy; 2026 Moueene. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script>
+      // Require authentication and provider access
+      if (!Auth.requireAuth()) {
+        window.location.href = "/pages/login.html?type=provider";
+      }
+      if (!Auth.requireUserType("provider")) {
+        window.location.href = "/pages/dashboard.html";
+      }
+
+      // Load provider dashboard data
+      async function loadProviderDashboard() {
+        try {
+          const user = await Auth.getCurrentUser();
+
+          if (user) {
+            // Update profile display
+            document.getElementById("provider-name").textContent =
+              user.business_name || `${user.first_name} ${user.last_name}`;
+            document.getElementById("welcome-message").textContent =
+              `Welcome back, ${user.first_name}!`;
+
+            if (user.profile_picture) {
+              document.querySelector(".dashboard-user img").src =
+                user.profile_picture;
+            }
+
+            // Update stats
+            document.getElementById("stat-total-bookings").textContent =
+              user.total_bookings || 0;
+            document.getElementById("stat-completed-bookings").textContent =
+              user.completed_bookings || 0;
+            document.getElementById("stat-rating").textContent = parseFloat(
+              user.average_rating || 0,
+            ).toFixed(1);
+
+            // Load bookings
+            await loadBookings();
+          }
+        } catch (error) {
+          console.error("Error loading dashboard:", error);
+        }
+      }
+
+      // Load provider bookings
+      async function loadBookings() {
+        try {
+          const token = Auth.getToken();
+          const response = await fetch("/backend/api/providers/bookings", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          const result = await response.json();
+
+          if (result.success && result.data) {
+            const bookings = result.data;
+            const pending = bookings.filter(
+              (b) => b.booking_status === "pending",
+            ).length;
+            document.getElementById("stat-pending-bookings").textContent =
+              pending;
+
+            // Render bookings list
+            const bookingsList = document.getElementById("bookings-list");
+            if (bookings.length > 0) {
+              bookingsList.innerHTML = bookings
+                .slice(0, 5)
+                .map(
+                  (booking) => `
+                <div style="display: flex; align-items: center; gap: 20px; padding: 20px; background: var(--bg-white); border-bottom: 1px solid var(--border-color);">
+                  <div style="flex: 1;">
+                    <h4 style="margin: 0 0 5px 0;">${booking.service_name}</h4>
+                    <p style="margin: 0; color: var(--text-light); font-size: 0.9rem;">
+                      Customer: ${booking.customer_first_name} ${booking.customer_last_name}
+                    </p>
+                    <p style="margin: 5px 0 0 0; color: var(--text-light); font-size: 0.85rem;">
+                      <i class="far fa-calendar"></i> ${new Date(booking.booking_date).toLocaleDateString()} at ${booking.booking_time}
+                    </p>
+                  </div>
+                  <div>
+                    <span class="badge badge-${getStatusClass(booking.booking_status)}">
+                      ${booking.booking_status.charAt(0).toUpperCase() + booking.booking_status.slice(1)}
+                    </span>
+                  </div>
+                  <div>
+                    <span style="font-size: 1.2rem; font-weight: 600; color: var(--primary-color);">
+                      $${booking.total_price}
+                    </span>
+                  </div>
+                </div>
+              `,
+                )
+                .join("");
+            } else {
+              bookingsList.innerHTML =
+                '<div style="padding: 40px; text-align: center; color: var(--text-light);">No bookings yet</div>';
+            }
+          }
+        } catch (error) {
+          console.error("Error loading bookings:", error);
+          document.getElementById("bookings-list").innerHTML =
+            '<div style="padding: 40px; text-align: center; color: var(--text-light);">Failed to load bookings</div>';
+        }
+      }
+
+      function getStatusClass(status) {
+        const classes = {
+          pending: "warning",
+          confirmed: "success",
+          completed: "info",
+          cancelled: "danger",
+        };
+        return classes[status] || "secondary";
+      }
+
+      // Logout handler
+      document
+        .querySelector('a[href="login.html"]')
+        .addEventListener("click", (e) => {
+          e.preventDefault();
+          Auth.logout();
+        });
+
+      // Initialize dashboard
+      document.addEventListener("DOMContentLoaded", loadProviderDashboard);
+    </script>
+  </body>
+</html>

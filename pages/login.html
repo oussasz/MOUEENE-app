@@ -98,6 +98,7 @@
                     id="email"
                     name="email"
                     required
+                    autocomplete="email"
                     placeholder="Enter your email"
                   />
                 </div>
@@ -108,6 +109,7 @@
                     id="password"
                     name="password"
                     required
+                    autocomplete="current-password"
                     placeholder="Enter your password"
                   />
                 </div>
@@ -190,5 +192,138 @@
     </footer>
 
     <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script>
+      // Redirect if already logged in
+      if (Auth.isAuthenticated()) {
+        Auth.redirectToDashboard();
+      }
+
+      // Handle login form submission
+      const loginForm = document.querySelector("form[data-validate]");
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Get form data
+        const formData = new FormData(loginForm);
+        const email = formData.get("email");
+        const password = formData.get("password");
+        const rememberMe = formData.get("remember") === "on";
+
+        // Validate email
+        if (!email || !email.includes("@")) {
+          await Auth.showModal({
+            type: "warning",
+            title: "Invalid email",
+            message: "Please enter a valid email address.",
+          });
+          return;
+        }
+
+        // Validate password
+        if (!password) {
+          await Auth.showModal({
+            type: "warning",
+            title: "Missing password",
+            message: "Please enter your password.",
+          });
+          return;
+        }
+
+        // Check URL for user type parameter, default to 'user'
+        const urlParams = new URLSearchParams(window.location.search);
+        const userType = urlParams.get("type") || "user";
+
+        // Prepare login data
+        const credentials = {
+          email: email,
+          password: password,
+          user_type: userType,
+          remember_me: rememberMe,
+        };
+
+        // Show loading state
+        const submitButton = loginForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.innerHTML =
+          '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+
+        // Call login API
+        const result = await Auth.login(credentials);
+
+        if (result.success) {
+          // Show success message
+          await Auth.showModal({
+            type: "success",
+            title: "Welcome back",
+            message: result.message || "Login successful!",
+          });
+          // Redirect to dashboard
+          Auth.redirectToDashboard();
+        } else {
+          // Show error message
+          await Auth.showModal({
+            type: "error",
+            title: "Login failed",
+            message:
+              result.message || "Login failed. Please check your credentials.",
+          });
+          // Reset button
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+        }
+      });
+
+      // Add user type selector in UI
+      const authForm = document.querySelector(".auth-form");
+      const userTypeSelector = document.createElement("div");
+      userTypeSelector.style.marginBottom = "20px";
+      userTypeSelector.innerHTML = `
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+          <label class="user-type-btn" style="flex: 1; padding: 10px; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.3s;">
+            <input type="radio" name="login_type" value="user" checked style="display: none;" />
+            <i class="fas fa-user" style="margin-right: 5px;"></i>
+            Customer
+          </label>
+          <label class="user-type-btn" style="flex: 1; padding: 10px; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.3s;">
+            <input type="radio" name="login_type" value="provider" style="display: none;" />
+            <i class="fas fa-user-tie" style="margin-right: 5px;"></i>
+            Provider
+          </label>
+        </div>
+      `;
+      authForm.insertBefore(userTypeSelector, loginForm);
+
+      // Handle user type selection
+      document.querySelectorAll(".user-type-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          document.querySelectorAll(".user-type-btn").forEach((b) => {
+            b.style.borderColor = "var(--border-color)";
+            b.style.background = "transparent";
+          });
+          this.style.borderColor = "var(--primary-color)";
+          this.style.background = "rgba(0, 201, 167, 0.1)";
+
+          // Update URL parameter
+          const selectedType = this.querySelector("input").value;
+          const url = new URL(window.location);
+          url.searchParams.set("type", selectedType);
+          window.history.replaceState({}, "", url);
+        });
+      });
+
+      // Initialize selected type from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialType = urlParams.get("type") || "user";
+      const initialBtn = document.querySelector(
+        `input[value="${initialType}"]`,
+      )?.parentElement;
+      if (initialBtn) {
+        initialBtn.click();
+      } else {
+        document.querySelector(".user-type-btn").click();
+      }
+    </script>
   </body>
 </html>

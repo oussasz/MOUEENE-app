@@ -1,0 +1,1273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Provider Dashboard - Manage your services and bookings on Moueene"
+    />
+    <title>Provider Dashboard - Moueene</title>
+    <link rel="icon" type="image/png" href="../logo.png" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Dashboard Header */
+      .dashboard-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-bottom: 1px solid #e5e7eb;
+        z-index: 100;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+
+      .dashboard-header .container {
+        max-width: 100%;
+        padding: 0 30px;
+      }
+
+      .dashboard-navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 70px;
+        gap: 30px;
+      }
+
+      .dashboard-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: var(--text-dark);
+      }
+
+      .dashboard-logo img {
+        height: 38px;
+        width: auto;
+      }
+
+      .dashboard-search {
+        flex: 1;
+        max-width: 500px;
+        position: relative;
+      }
+
+      .dashboard-search input {
+        width: 100%;
+        padding: 10px 20px 10px 45px;
+        border: 1px solid #e5e7eb;
+        border-radius: 25px;
+        background: #f9fafb;
+        outline: none;
+        transition: all 0.3s;
+        font-size: 0.95rem;
+      }
+
+      .dashboard-search input:focus {
+        background: white;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 201, 167, 0.1);
+      }
+
+      .dashboard-search i {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        font-size: 0.9rem;
+      }
+
+      .dashboard-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .dashboard-icon-btn {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: #f9fafb;
+        border: none;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: #6b7280;
+      }
+
+      .dashboard-icon-btn:hover {
+        background: #f3f4f6;
+        color: var(--primary-color);
+      }
+
+      .dashboard-icon-btn .badge-dot {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 8px;
+        height: 8px;
+        background: #ef4444;
+        border-radius: 50%;
+        border: 2px solid white;
+      }
+
+      .user-menu {
+        position: relative;
+      }
+
+      .user-menu-trigger {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 12px 6px 6px;
+        border-radius: 25px;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .user-menu-trigger:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+      }
+
+      .user-menu-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .user-menu-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .user-menu-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        line-height: 1.2;
+      }
+
+      .user-menu-role {
+        font-size: 0.75rem;
+        color: #6b7280;
+      }
+
+      .user-menu-chevron {
+        color: #9ca3af;
+        font-size: 0.75rem;
+      }
+
+      .user-dropdown {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        min-width: 220px;
+        padding: 8px 0;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s;
+        z-index: 1000;
+      }
+
+      .user-menu.active .user-dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .user-dropdown-header {
+        padding: 12px 16px;
+        border-bottom: 1px solid #f3f4f6;
+        margin-bottom: 8px;
+      }
+
+      .user-dropdown-name {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--text-dark);
+        margin-bottom: 2px;
+      }
+
+      .user-dropdown-email {
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+
+      .user-dropdown a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 16px;
+        color: #4b5563;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+
+      .user-dropdown a:hover {
+        background: #f9fafb;
+        color: var(--primary-color);
+      }
+
+      .user-dropdown a i {
+        width: 18px;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+
+      .user-dropdown-divider {
+        height: 1px;
+        background: #f3f4f6;
+        margin: 8px 0;
+      }
+
+      .user-dropdown a.logout {
+        color: #ef4444;
+      }
+
+      .user-dropdown a.logout:hover {
+        background: #fef2f2;
+      }
+
+      @media (max-width: 768px) {
+        .dashboard-search {
+          display: none;
+        }
+
+        .user-menu-info {
+          display: none;
+        }
+
+        .dashboard-header .container {
+          padding: 0 20px;
+        }
+      }
+
+      .provider-dashboard {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        padding-top: 80px;
+      }
+
+      .dashboard-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 30px 20px;
+      }
+
+      .dashboard-layout {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 30px;
+      }
+
+      /* Sidebar */
+      .provider-sidebar {
+        background: white;
+        border-radius: 20px;
+        padding: 0;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        height: fit-content;
+        position: sticky;
+        top: 100px;
+      }
+
+      .provider-profile-card {
+        padding: 30px 20px;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .provider-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto 15px;
+        border: 4px solid var(--primary-color);
+        object-fit: cover;
+        box-shadow: 0 5px 20px rgba(0, 201, 167, 0.2);
+      }
+
+      .provider-profile-card h3 {
+        margin: 0 0 5px;
+        font-size: 1.2rem;
+        color: var(--text-dark);
+      }
+
+      .provider-profile-card .badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-top: 8px;
+      }
+
+      .badge-verified {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: white;
+      }
+
+      .badge-pending {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+      }
+
+      .sidebar-nav {
+        padding: 15px 0;
+      }
+
+      .sidebar-nav a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 25px;
+        color: var(--text-light);
+        transition: all 0.3s ease;
+        font-weight: 500;
+        border-left: 3px solid transparent;
+      }
+
+      .sidebar-nav a:hover,
+      .sidebar-nav a.active {
+        background: rgba(0, 201, 167, 0.08);
+        color: var(--primary-color);
+        border-left-color: var(--primary-color);
+      }
+
+      .sidebar-nav a i {
+        width: 20px;
+        text-align: center;
+      }
+
+      /* Main Content */
+      .provider-main {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      .dashboard-welcome {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--primary-dark)
+        );
+        color: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 201, 167, 0.25);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .dashboard-welcome::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.15),
+          transparent
+        );
+        border-radius: 50%;
+      }
+
+      .dashboard-welcome h1 {
+        margin: 0 0 10px;
+        font-size: 2rem;
+        color: white;
+      }
+
+      .dashboard-welcome p {
+        margin: 0;
+        opacity: 0.95;
+        font-size: 1.05rem;
+      }
+
+      /* Stats Grid */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+      }
+
+      .stat-card {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stat-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--primary-dark)
+        );
+      }
+
+      .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+      }
+
+      .stat-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+
+      .stat-card-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-size: 1.4rem;
+      }
+
+      .stat-card-icon.primary {
+        background: rgba(0, 201, 167, 0.12);
+        color: var(--primary-color);
+      }
+
+      .stat-card-icon.warning {
+        background: rgba(245, 158, 11, 0.12);
+        color: #f59e0b;
+      }
+
+      .stat-card-icon.success {
+        background: rgba(34, 197, 94, 0.12);
+        color: #22c55e;
+      }
+
+      .stat-card-icon.info {
+        background: rgba(59, 130, 246, 0.12);
+        color: #3b82f6;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin: 0;
+      }
+
+      .stat-label {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin: 5px 0 0;
+      }
+
+      .stat-change {
+        font-size: 0.8rem;
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .stat-change.positive {
+        color: #22c55e;
+      }
+
+      .stat-change.negative {
+        color: #ef4444;
+      }
+
+      /* Content Cards */
+      .content-card {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      }
+
+      .content-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .content-card-header h3 {
+        margin: 0;
+        font-size: 1.3rem;
+        color: var(--text-dark);
+      }
+
+      .booking-item {
+        display: grid;
+        grid-template-columns: auto 1fr auto auto;
+        gap: 20px;
+        align-items: center;
+        padding: 18px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+      }
+
+      .booking-item:hover {
+        background: var(--bg-light);
+        border-color: var(--border-color);
+      }
+
+      .booking-item + .booking-item {
+        margin-top: 12px;
+      }
+
+      .booking-avatar {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--border-color);
+      }
+
+      .booking-info h4 {
+        margin: 0 0 5px;
+        font-size: 1.05rem;
+        color: var(--text-dark);
+      }
+
+      .booking-info p {
+        margin: 0;
+        font-size: 0.88rem;
+        color: var(--text-light);
+      }
+
+      .booking-date {
+        text-align: right;
+      }
+
+      .booking-date .date {
+        font-weight: 600;
+        color: var(--primary-color);
+        font-size: 0.95rem;
+      }
+
+      .booking-date .time {
+        color: var(--text-light);
+        font-size: 0.85rem;
+        margin-top: 3px;
+      }
+
+      .booking-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .btn-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--border-color);
+        background: white;
+        color: var(--text-light);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-icon:hover {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-light);
+      }
+
+      .empty-state i {
+        font-size: 4rem;
+        opacity: 0.3;
+        margin-bottom: 20px;
+      }
+
+      .quick-actions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .action-card {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 2px solid transparent;
+      }
+
+      .action-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        border-color: var(--primary-color);
+      }
+
+      .action-card i {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+      }
+
+      .action-card h4 {
+        margin: 0 0 8px;
+        font-size: 1.1rem;
+      }
+
+      .action-card p {
+        color: var(--text-light);
+        font-size: 0.88rem;
+        margin: 0;
+      }
+
+      @media (max-width: 1024px) {
+        .dashboard-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .provider-sidebar {
+          position: static;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .booking-item {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .booking-actions {
+          justify-content: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+      <div class="container">
+        <nav class="dashboard-navbar">
+          <a href="provider-dashboard.html" class="dashboard-logo">
+            <img src="../logo.png" alt="Moueene Logo" />
+          </a>
+
+          <div class="dashboard-search">
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              placeholder="Search services, bookings, customers..."
+            />
+          </div>
+
+          <div class="dashboard-actions">
+            <button
+              class="dashboard-icon-btn"
+              id="notifications-btn"
+              title="Notifications"
+            >
+              <i class="fas fa-bell"></i>
+              <span class="badge-dot"></span>
+            </button>
+
+            <button class="dashboard-icon-btn" title="Messages">
+              <i class="fas fa-envelope"></i>
+            </button>
+
+            <div class="user-menu" id="user-menu">
+              <div class="user-menu-trigger">
+                <img
+                  src="https://ui-avatars.com/api/?name=Provider&background=00c9a7&color=fff&size=36"
+                  alt="User"
+                  class="user-menu-avatar"
+                  id="header-avatar"
+                />
+                <div class="user-menu-info">
+                  <div class="user-menu-name" id="header-user-name">
+                    Loading...
+                  </div>
+                  <div class="user-menu-role">Service Provider</div>
+                </div>
+                <i class="fas fa-chevron-down user-menu-chevron"></i>
+              </div>
+
+              <div class="user-dropdown">
+                <div class="user-dropdown-header">
+                  <div class="user-dropdown-name" id="dropdown-user-name">
+                    Loading...
+                  </div>
+                  <div class="user-dropdown-email" id="dropdown-user-email">
+                    email@example.com
+                  </div>
+                </div>
+                <a href="provider-profile.html">
+                  <i class="fas fa-user"></i>
+                  <span>My Profile</span>
+                </a>
+                <a href="provider-settings.html">
+                  <i class="fas fa-cog"></i>
+                  <span>Settings</span>
+                </a>
+                <a href="provider-earnings.html">
+                  <i class="fas fa-wallet"></i>
+                  <span>Earnings</span>
+                </a>
+                <div class="user-dropdown-divider"></div>
+                <a href="#" class="logout" id="header-logout-btn">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Logout</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Provider Dashboard -->
+    <div class="provider-dashboard">
+      <div class="dashboard-container">
+        <div class="dashboard-layout">
+          <!-- Sidebar -->
+          <aside class="provider-sidebar">
+            <div class="provider-profile-card">
+              <img
+                id="provider-avatar"
+                src="https://ui-avatars.com/api/?name=Provider&background=00c9a7&color=fff&size=100"
+                alt="Provider Avatar"
+                class="provider-avatar"
+              />
+              <h3 id="provider-name">Loading...</h3>
+              <p
+                style="
+                  color: var(--text-light);
+                  font-size: 0.85rem;
+                  margin: 5px 0;
+                "
+              >
+                Service Provider
+              </p>
+              <span class="badge badge-pending" id="verification-badge">
+                <i class="fas fa-clock"></i> Pending Verification
+              </span>
+            </div>
+
+            <nav class="sidebar-nav">
+              <a href="provider-dashboard.html" class="active">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+              </a>
+              <a href="provider-services.html">
+                <i class="fas fa-briefcase"></i>
+                <span>My Services</span>
+              </a>
+              <a href="provider-bookings.html">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Bookings</span>
+              </a>
+              <a href="provider-messages.html">
+                <i class="fas fa-envelope"></i>
+                <span>Messages</span>
+              </a>
+              <a href="provider-reviews.html">
+                <i class="fas fa-star"></i>
+                <span>Reviews</span>
+              </a>
+              <a href="provider-earnings.html">
+                <i class="fas fa-wallet"></i>
+                <span>Earnings</span>
+              </a>
+              <a href="provider-settings.html">
+                <i class="fas fa-user-edit"></i>
+                <span>Settings</span>
+              </a>
+              <a href="#" id="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+              </a>
+            </nav>
+          </aside>
+
+          <!-- Main Content -->
+          <main class="provider-main">
+            <!-- Welcome Banner -->
+            <div class="dashboard-welcome">
+              <h1 id="welcome-title">Welcome back!</h1>
+              <p id="welcome-subtitle">
+                Here's your business performance overview
+              </p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-card-header">
+                  <div class="stat-card-icon primary">
+                    <i class="fas fa-calendar-check"></i>
+                  </div>
+                </div>
+                <h2 class="stat-value" id="stat-total-bookings">0</h2>
+                <p class="stat-label">Total Bookings</p>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-card-header">
+                  <div class="stat-card-icon warning">
+                    <i class="fas fa-hourglass-half"></i>
+                  </div>
+                </div>
+                <h2 class="stat-value" id="stat-pending-bookings">0</h2>
+                <p class="stat-label">Pending Requests</p>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-card-header">
+                  <div class="stat-card-icon success">
+                    <i class="fas fa-check-circle"></i>
+                  </div>
+                </div>
+                <h2 class="stat-value" id="stat-completed-bookings">0</h2>
+                <p class="stat-label">Completed Jobs</p>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-card-header">
+                  <div class="stat-card-icon info">
+                    <i class="fas fa-star"></i>
+                  </div>
+                </div>
+                <h2 class="stat-value" id="stat-rating">0.0</h2>
+                <p class="stat-label">Average Rating</p>
+                <div
+                  class="stat-change positive"
+                  id="stat-reviews"
+                  style="display: none"
+                >
+                  <span><span id="stat-total-reviews">0</span> reviews</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Bookings -->
+            <div class="content-card">
+              <div class="content-card-header">
+                <h3>
+                  <i
+                    class="fas fa-calendar-alt"
+                    style="color: var(--primary-color); margin-right: 10px"
+                  ></i
+                  >Recent Bookings
+                </h3>
+                <a href="provider-bookings.html" class="btn btn-outline btn-sm"
+                  >View All</a
+                >
+              </div>
+              <div id="bookings-list">
+                <div class="empty-state">
+                  <i class="fas fa-spinner fa-spin"></i>
+                  <p>Loading bookings...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="content-card">
+              <div class="content-card-header">
+                <h3>
+                  <i
+                    class="fas fa-bolt"
+                    style="color: var(--primary-color); margin-right: 10px"
+                  ></i
+                  >Quick Actions
+                </h3>
+              </div>
+              <div class="quick-actions-grid">
+                <div
+                  class="action-card"
+                  onclick="window.location.href = 'provider-services.html'"
+                >
+                  <i class="fas fa-plus-circle"></i>
+                  <h4>Add Service</h4>
+                  <p>Create a new service offering</p>
+                </div>
+                <div
+                  class="action-card"
+                  onclick="window.location.href = 'provider-bookings.html'"
+                >
+                  <i class="fas fa-calendar"></i>
+                  <h4>Manage Schedule</h4>
+                  <p>Update your availability</p>
+                </div>
+                <div
+                  class="action-card"
+                  onclick="window.location.href = 'provider-settings.html'"
+                >
+                  <i class="fas fa-user-edit"></i>
+                  <h4>Edit Profile</h4>
+                  <p>Update your information</p>
+                </div>
+                <div
+                  class="action-card"
+                  onclick="window.location.href = 'provider-profile.html'"
+                >
+                  <i class="fas fa-eye"></i>
+                  <h4>View Profile</h4>
+                  <p>See your public page</p>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="background: white; margin-top: 0">
+      <div class="container">
+        <div class="footer-bottom" style="border-top: none; padding: 25px 0">
+          <p>&copy; 2026 Moueene. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script>
+      // Require authentication and provider access
+      if (!Auth.requireAuth()) {
+        window.location.href = "/pages/login.html?type=provider";
+      }
+      if (!Auth.requireUserType("provider")) {
+        window.location.href = "/pages/dashboard.html";
+      }
+
+      // Provider Dashboard Controller
+      const ProviderDashboard = {
+        async init() {
+          await this.loadProviderProfile();
+          await this.loadStatistics();
+          await this.loadRecentBookings();
+          this.setupEventListeners();
+        },
+
+        async loadProviderProfile() {
+          try {
+            const user = await Auth.getCurrentUser();
+
+            if (user) {
+              // Update profile display
+              const providerName =
+                user.business_name || `${user.first_name} ${user.last_name}`;
+              const fullName = `${user.first_name} ${user.last_name}`;
+
+              document.getElementById("provider-name").textContent =
+                providerName;
+              document.getElementById("welcome-title").textContent =
+                `Welcome back, ${user.first_name}!`;
+
+              // Update header user menu
+              document.getElementById("header-user-name").textContent =
+                user.first_name;
+              document.getElementById("dropdown-user-name").textContent =
+                fullName;
+              document.getElementById("dropdown-user-email").textContent =
+                user.email;
+
+              // Update avatar
+              if (user.profile_picture) {
+                document.getElementById("provider-avatar").src =
+                  user.profile_picture;
+                document.getElementById("header-avatar").src =
+                  user.profile_picture;
+              }
+
+              // Update verification badge
+              const badge = document.getElementById("verification-badge");
+              if (user.verification_status === "verified") {
+                badge.className = "badge badge-verified";
+                badge.innerHTML =
+                  '<i class="fas fa-check-circle"></i> Verified Provider';
+              } else if (user.verification_status === "rejected") {
+                badge.className = "badge badge-error";
+                badge.innerHTML =
+                  '<i class="fas fa-times-circle"></i> Verification Rejected';
+                badge.style.background =
+                  "linear-gradient(135deg, #ef4444, #dc2626)";
+              }
+
+              // Update stats
+              document.getElementById("stat-total-bookings").textContent =
+                user.total_bookings || 0;
+              document.getElementById("stat-completed-bookings").textContent =
+                user.completed_bookings || 0;
+              document.getElementById("stat-rating").textContent = parseFloat(
+                user.average_rating || 0,
+              ).toFixed(1);
+
+              const reviewsEl = document.getElementById("stat-reviews");
+              const totalReviewsEl =
+                document.getElementById("stat-total-reviews");
+              if (user.total_reviews && user.total_reviews > 0) {
+                totalReviewsEl.textContent = user.total_reviews;
+                reviewsEl.style.display = "flex";
+              }
+            }
+          } catch (error) {
+            console.error("Error loading provider profile:", error);
+            await Auth.showModal({
+              type: "error",
+              title: "Failed to load profile",
+              message:
+                "Could not load your profile data. Please refresh the page.",
+            });
+          }
+        },
+
+        async loadStatistics() {
+          try {
+            const token = Auth.getToken();
+            const response = await fetch(
+              "/backend/api/v1/providers/statistics",
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            );
+
+            if (response.ok) {
+              const result = await response.json();
+              if (result.success && result.data) {
+                // Additional stats can be displayed here
+                console.log("Provider statistics:", result.data);
+              }
+            }
+          } catch (error) {
+            console.log("Statistics endpoint not available yet");
+          }
+        },
+
+        async loadRecentBookings() {
+          try {
+            const token = Auth.getToken();
+            const response = await fetch("/backend/api/v1/providers/bookings", {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+
+            const result = await response.json();
+            const bookingsList = document.getElementById("bookings-list");
+
+            if (result.success && result.data && result.data.length > 0) {
+              const bookings = result.data.slice(0, 5);
+
+              // Update pending count
+              const pending = result.data.filter(
+                (b) => b.booking_status === "pending",
+              ).length;
+              document.getElementById("stat-pending-bookings").textContent =
+                pending;
+
+              bookingsList.innerHTML = bookings
+                .map(
+                  (booking) => `
+                <div class="booking-item">
+                  <img
+                    src="${booking.customer_picture || "https://ui-avatars.com/api/?name=Customer&background=6b7280&color=fff&size=50"}"
+                    alt="${booking.customer_first_name}"
+                    class="booking-avatar"
+                  />
+                  <div class="booking-info">
+                    <h4>${booking.service_name || "Service"}</h4>
+                    <p><i class="fas fa-user"></i> ${booking.customer_first_name} ${booking.customer_last_name}</p>
+                    <p style="margin-top: 3px;"><i class="fas fa-dollar-sign"></i> $${parseFloat(booking.total_price || 0).toFixed(2)}</p>
+                  </div>
+                  <div class="booking-date">
+                    <div class="date">
+                      <i class="far fa-calendar"></i> ${this.formatDate(booking.booking_date)}
+                    </div>
+                    <div class="time">
+                      <i class="far fa-clock"></i> ${booking.booking_time || "TBD"}
+                    </div>
+                  </div>
+                  <div class="booking-actions">
+                    <span class="badge badge-${this.getStatusClass(booking.booking_status)}" style="padding: 8px 16px;">
+                      ${this.capitalizeFirst(booking.booking_status)}
+                    </span>
+                  </div>
+                </div>
+              `,
+                )
+                .join("");
+            } else {
+              bookingsList.innerHTML = `
+                <div class="empty-state">
+                  <i class="fas fa-calendar-times"></i>
+                  <h4 style="margin-top: 15px; color: var(--text-dark);">No bookings yet</h4>
+                  <p>Your upcoming bookings will appear here</p>
+                </div>
+              `;
+            }
+          } catch (error) {
+            console.error("Error loading bookings:", error);
+            document.getElementById("bookings-list").innerHTML = `
+              <div class="empty-state">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Failed to load bookings</p>
+              </div>
+            `;
+          }
+        },
+
+        setupEventListeners() {
+          // User menu dropdown toggle
+          const userMenu = document.getElementById("user-menu");
+          if (userMenu) {
+            userMenu
+              .querySelector(".user-menu-trigger")
+              .addEventListener("click", (e) => {
+                e.stopPropagation();
+                userMenu.classList.toggle("active");
+              });
+
+            // Close dropdown when clicking outside
+            document.addEventListener("click", () => {
+              userMenu.classList.remove("active");
+            });
+          }
+
+          // Logout handlers
+          const logoutBtn = document.getElementById("logout-btn");
+          const headerLogoutBtn = document.getElementById("header-logout-btn");
+
+          if (logoutBtn) {
+            logoutBtn.addEventListener("click", async (e) => {
+              e.preventDefault();
+              await Auth.logout();
+            });
+          }
+
+          if (headerLogoutBtn) {
+            headerLogoutBtn.addEventListener("click", async (e) => {
+              e.preventDefault();
+              await Auth.logout();
+            });
+          }
+
+          // Sidebar navigation
+          document.querySelectorAll(".sidebar-nav a").forEach((link) => {
+            link.addEventListener("click", function (e) {
+              if (
+                this.getAttribute("href").startsWith("#") &&
+                this.getAttribute("href") !== "#"
+              ) {
+                e.preventDefault();
+                // For demo purposes, show coming soon
+                if (!this.id) {
+                  Auth.showModal({
+                    type: "info",
+                    title: "Coming Soon",
+                    message: "This feature is currently under development.",
+                  });
+                }
+              }
+            });
+          });
+
+          // Mobile menu toggle
+          const hamburger = document.querySelector(".hamburger");
+          const navMenu = document.querySelector(".nav-menu");
+          if (hamburger) {
+            hamburger.addEventListener("click", () => {
+              navMenu.classList.toggle("active");
+            });
+          }
+        },
+
+        formatDate(dateString) {
+          if (!dateString) return "TBD";
+          const date = new Date(dateString);
+          return date.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          });
+        },
+
+        capitalizeFirst(str) {
+          if (!str) return "";
+          return str.charAt(0).toUpperCase() + str.slice(1);
+        },
+
+        getStatusClass(status) {
+          const classes = {
+            pending: "warning",
+            confirmed: "success",
+            completed: "info",
+            cancelled: "danger",
+          };
+          return classes[status] || "secondary";
+        },
+      };
+
+      // Initialize dashboard when DOM is ready
+      document.addEventListener("DOMContentLoaded", () => {
+        ProviderDashboard.init();
+      });
+    </script>
+  </body>
+</html>

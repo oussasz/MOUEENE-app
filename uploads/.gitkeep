@@ -1,0 +1,9 @@
+# Uploads Directory
+
+User-uploaded files will be stored here.
+
+## Subdirectories:
+- profiles/ - User and provider profile pictures
+- documents/ - Provider verification documents
+- services/ - Service images
+- categories/ - Category images

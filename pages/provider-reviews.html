@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reviews - Provider Dashboard</title>
+    <link rel="icon" type="image/png" href="../logo.png" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Dashboard Header Styles */
+      .dashboard-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-bottom: 1px solid #e5e7eb;
+        z-index: 100;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+
+      .dashboard-header .container {
+        max-width: 100%;
+        padding: 0 30px;
+      }
+
+      .dashboard-navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 70px;
+        gap: 30px;
+      }
+
+      .dashboard-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: var(--text-dark);
+      }
+
+      .dashboard-logo img {
+        height: 38px;
+        width: auto;
+      }
+
+      .dashboard-search {
+        flex: 1;
+        max-width: 500px;
+        position: relative;
+      }
+
+      .dashboard-search input {
+        width: 100%;
+        padding: 10px 20px 10px 45px;
+        border: 1px solid #e5e7eb;
+        border-radius: 25px;
+        background: #f9fafb;
+        outline: none;
+        transition: all 0.3s;
+        font-size: 0.95rem;
+      }
+
+      .dashboard-search input:focus {
+        background: white;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 201, 167, 0.1);
+      }
+
+      .dashboard-search i {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        font-size: 0.9rem;
+      }
+
+      .dashboard-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .dashboard-icon-btn {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: #f9fafb;
+        border: none;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: #6b7280;
+      }
+
+      .dashboard-icon-btn:hover {
+        background: #f3f4f6;
+        color: var(--primary-color);
+      }
+
+      .dashboard-icon-btn .badge-dot {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 8px;
+        height: 8px;
+        background: #ef4444;
+        border-radius: 50%;
+        border: 2px solid white;
+      }
+
+      .user-menu {
+        position: relative;
+      }
+
+      .user-menu-trigger {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 12px 6px 6px;
+        border-radius: 25px;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .user-menu-trigger:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+      }
+
+      .user-menu-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .user-menu-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .user-menu-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        line-height: 1.2;
+      }
+
+      .user-menu-role {
+        font-size: 0.75rem;
+        color: #6b7280;
+      }
+
+      .user-menu-chevron {
+        color: #9ca3af;
+        font-size: 0.75rem;
+      }
+
+      .user-dropdown {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        min-width: 220px;
+        padding: 8px 0;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s;
+        z-index: 1000;
+      }
+
+      .user-menu.active .user-dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .user-dropdown-header {
+        padding: 12px 16px;
+        border-bottom: 1px solid #f3f4f6;
+        margin-bottom: 8px;
+      }
+
+      .user-dropdown-name {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--text-dark);
+        margin-bottom: 2px;
+      }
+
+      .user-dropdown-email {
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+
+      .user-dropdown a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 16px;
+        color: #4b5563;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+
+      .user-dropdown a:hover {
+        background: #f9fafb;
+        color: var(--primary-color);
+      }
+
+      .user-dropdown a i {
+        width: 18px;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+
+      .user-dropdown-divider {
+        height: 1px;
+        background: #f3f4f6;
+        margin: 8px 0;
+      }
+
+      .user-dropdown a.logout {
+        color: #ef4444;
+      }
+
+      .user-dropdown a.logout:hover {
+        background: #fef2f2;
+      }
+
+      @media (max-width: 768px) {
+        .dashboard-search {
+          display: none;
+        }
+
+        .user-menu-info {
+          display: none;
+        }
+
+        .dashboard-header .container {
+          padding: 0 20px;
+        }
+      }
+
+      .provider-dashboard {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        padding-top: 80px;
+      }
+      .dashboard-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 30px 20px;
+      }
+      .dashboard-layout {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 30px;
+      }
+      @media (max-width: 992px) {
+        .dashboard-layout {
+          grid-template-columns: 1fr;
+        }
+        .provider-sidebar {
+          display: none;
+        }
+      }
+      .provider-sidebar {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        height: fit-content;
+        position: sticky;
+        top: 100px;
+      }
+      .provider-profile-card {
+        padding: 30px 20px;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .provider-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto 15px;
+        border: 4px solid var(--primary-color);
+        object-fit: cover;
+      }
+      .provider-profile-card h3 {
+        margin: 0 0 5px;
+        font-size: 1.2rem;
+        color: var(--text-dark);
+      }
+      .provider-profile-card .badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-top: 8px;
+      }
+      .badge-verified {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: white;
+      }
+      .badge-pending {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+      }
+      .sidebar-nav {
+        padding: 15px 0;
+      }
+      .sidebar-nav a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 25px;
+        color: var(--text-light);
+        transition: all 0.3s ease;
+        font-weight: 500;
+        border-left: 3px solid transparent;
+        text-decoration: none;
+      }
+      .sidebar-nav a:hover,
+      .sidebar-nav a.active {
+        background: rgba(0, 201, 167, 0.08);
+        color: var(--primary-color);
+        border-left-color: var(--primary-color);
+      }
+      .sidebar-nav a i {
+        width: 20px;
+        text-align: center;
+      }
+
+      /* Reviews Specific Styles */
+      .content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+      }
+      .review-card {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
+      .review-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+      .reviewer-info {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+      .reviewer-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #eee;
+        object-fit: cover;
+      }
+      .reviewer-name {
+        font-weight: 600;
+        color: var(--text-dark);
+        margin: 0;
+      }
+      .review-date {
+        font-size: 0.85rem;
+        color: var(--text-light);
+      }
+      .rating-stars {
+        color: #fbbf24;
+        font-size: 0.9rem;
+      }
+      .review-text {
+        color: var(--text-dark);
+        line-height: 1.6;
+        margin-bottom: 15px;
+        opacity: 0.9;
+      }
+      .review-service {
+        font-size: 0.85rem;
+        color: var(--primary-color);
+        background: rgba(0, 201, 167, 0.1);
+        padding: 5px 12px;
+        border-radius: 15px;
+        display: inline-block;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+      .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin: 10px 0;
+      }
+      .stat-label {
+        color: var(--text-light);
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="dashboard-header">
+      <div class="container">
+        <nav class="dashboard-navbar">
+          <a href="provider-dashboard.html" class="dashboard-logo">
+            <img src="../logo.png" alt="Moueene Logo" />
+          </a>
+
+          <div class="dashboard-search">
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              placeholder="Search services, bookings, customers..."
+            />
+          </div>
+
+          <div class="dashboard-actions">
+            <button
+              class="dashboard-icon-btn"
+              id="notifications-btn"
+              title="Notifications"
+            >
+              <i class="fas fa-bell"></i>
+              <span class="badge-dot"></span>
+            </button>
+
+            <button class="dashboard-icon-btn" title="Messages">
+              <i class="fas fa-envelope"></i>
+            </button>
+
+            <div class="user-menu" id="user-menu">
+              <div class="user-menu-trigger">
+                <img
+                  src="https://ui-avatars.com/api/?name=Provider&background=00c9a7&color=fff&size=36"
+                  alt="User"
+                  class="user-menu-avatar"
+                  id="header-avatar"
+                />
+                <div class="user-menu-info">
+                  <div class="user-menu-name" id="header-user-name">
+                    Loading...
+                  </div>
+                  <div class="user-menu-role">Service Provider</div>
+                </div>
+                <i class="fas fa-chevron-down user-menu-chevron"></i>
+              </div>
+
+              <div class="user-dropdown">
+                <div class="user-dropdown-header">
+                  <div class="user-dropdown-name" id="dropdown-user-name">
+                    Loading...
+                  </div>
+                  <div class="user-dropdown-email" id="dropdown-user-email">
+                    email@example.com
+                  </div>
+                </div>
+                <a href="provider-profile.html">
+                  <i class="fas fa-user"></i>
+                  <span>My Profile</span>
+                </a>
+                <a href="provider-settings.html">
+                  <i class="fas fa-cog"></i>
+                  <span>Settings</span>
+                </a>
+                <a href="provider-earnings.html">
+                  <i class="fas fa-wallet"></i>
+                  <span>Earnings</span>
+                </a>
+                <div class="user-dropdown-divider"></div>
+                <a href="#" class="logout" id="header-logout-btn">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Logout</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <div class="provider-dashboard">
+      <div class="dashboard-container">
+        <div class="dashboard-layout">
+          <!-- Sidebar -->
+          <aside class="provider-sidebar">
+            <div class="provider-profile-card">
+              <img
+                id="provider-avatar"
+                src="https://ui-avatars.com/api/?name=Provider&background=00c9a7&color=fff&size=100"
+                alt="Provider Avatar"
+                class="provider-avatar"
+              />
+              <h3 id="provider-name">Loading...</h3>
+              <p
+                style="
+                  color: var(--text-light);
+                  font-size: 0.85rem;
+                  margin: 5px 0;
+                "
+              >
+                Service Provider
+              </p>
+              <span class="badge badge-pending" id="verification-badge">
+                <i class="fas fa-clock"></i> Pending Verification
+              </span>
+            </div>
+
+            <nav class="sidebar-nav">
+              <a href="provider-dashboard.html" class="">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+              </a>
+              <a href="provider-services.html" class="">
+                <i class="fas fa-briefcase"></i>
+                <span>My Services</span>
+              </a>
+              <a href="provider-bookings.html" class="">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Bookings</span>
+              </a>
+              <a href="provider-messages.html" class="">
+                <i class="fas fa-envelope"></i>
+                <span>Messages</span>
+              </a>
+              <a href="provider-reviews.html" class="active">
+                <i class="fas fa-star"></i>
+                <span>Reviews</span>
+              </a>
+              <a href="provider-earnings.html" class="">
+                <i class="fas fa-wallet"></i>
+                <span>Earnings</span>
+              </a>
+              <a href="provider-settings.html" class="">
+                <i class="fas fa-user-edit"></i>
+                <span>Settings</span>
+              </a>
+              <a href="#" id="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+              </a>
+            </nav>
+          </aside>
+
+          <!-- Main Content -->
+          <main class="provider-main">
+            <div class="content-header">
+              <h1>Client Reviews</h1>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-number">4.8</div>
+                <div class="stat-label">Average Rating</div>
+                <div class="rating-stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">124</div>
+                <div class="stat-label">Total Reviews</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Recommendation Rate</div>
+              </div>
+            </div>
+
+            <!-- Reviews List -->
+            <div class="reviews-list">
+              <!-- Review 1 -->
+              <div class="review-card">
+                <div class="review-header">
+                  <div class="reviewer-info">
+                    <img
+                      src="https://via.placeholder.com/50"
+                      alt="Reviewer"
+                      class="reviewer-avatar"
+                    />
+                    <div>
+                      <h4 class="reviewer-name">Sarah Jenkins</h4>
+                      <span class="review-date">Oct 15, 2023</span>
+                    </div>
+                  </div>
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i>
+                  </div>
+                </div>
+                <p class="review-text">
+                  Absolutley fantastic service! Arrived on time and did an
+                  amazing job cleaning our entire house. Very professional and
+                  friendly. Highly recommended!
+                </p>
+                <span class="review-service">Deep Home Cleaning</span>
+              </div>
+
+              <!-- Review 2 -->
+              <div class="review-card">
+                <div class="review-header">
+                  <div class="reviewer-info">
+                    <img
+                      src="https://via.placeholder.com/50"
+                      alt="Reviewer"
+                      class="reviewer-avatar"
+                    />
+                    <div>
+                      <h4 class="reviewer-name">Mike Ross</h4>
+                      <span class="review-date">Sep 28, 2023</span>
+                    </div>
+                  </div>
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="far fa-star"></i>
+                  </div>
+                </div>
+                <p class="review-text">
+                  Good service overall. The mechanic identified the issue
+                  quickly, but the repair took a bit longer than expected. Price
+                  was fair though.
+                </p>
+                <span class="review-service">Car Diagnostics</span>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!Auth.isAuthenticated()) {
+          window.location.href = "login.html";
+          return;
+        }
+        const user = Auth.getUser();
+        if (user) {
+          const fullName = `${user.first_name} ${user.last_name}`;
+          document.getElementById("provider-name").textContent = fullName;
+          document.getElementById("header-user-name").textContent =
+            user.first_name;
+          document.getElementById("dropdown-user-name").textContent = fullName;
+          document.getElementById("dropdown-user-email").textContent =
+            user.email;
+          if (user.avatar) {
+            document.getElementById("provider-avatar").src =
+              "../" + user.avatar;
+            document.getElementById("header-avatar").src = "../" + user.avatar;
+          }
+        }
+
+        // User menu dropdown
+        const userMenu = document.getElementById("user-menu");
+        userMenu
+          .querySelector(".user-menu-trigger")
+          .addEventListener("click", (e) => {
+            e.stopPropagation();
+            userMenu.classList.toggle("active");
+          });
+        document.addEventListener("click", () => {
+          userMenu.classList.remove("active");
+        });
+
+        // Logout handlers
+        document.getElementById("logout-btn").addEventListener("click", (e) => {
+          e.preventDefault();
+          Auth.logout();
+        });
+        document
+          .getElementById("header-logout-btn")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            Auth.logout();
+          });
+      });
+    </script>
+  </body>
+</html>
