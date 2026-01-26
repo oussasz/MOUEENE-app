@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Customer Dashboard - Manage your bookings on Moueene"
+    />
+    <title>Dashboard - Moueene</title>
+    <link rel="icon" type="image/png" href="../logo.png" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <nav class="navbar">
+          <a href="../index.html" class="logo">
+            <img src="../logo.png" alt="Moueene Logo" />
+          </a>
+          <ul class="nav-menu">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="providers.html">Providers</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+          <div class="nav-buttons">
+            <a href="#" class="btn btn-outline"><i class="fas fa-bell"></i></a>
+            <a href="dashboard.html" class="btn btn-primary">Dashboard</a>
+          </div>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard-section" style="padding-top: 100px">
+      <div class="container">
+        <div class="dashboard-grid">
+          <!-- Sidebar -->
+          <div class="dashboard-sidebar">
+            <div class="dashboard-user">
+              <img
+                src="../assets/images/testimonials/user1.jpg"
+                alt="User Avatar"
+              />
+              <h4>Jennifer Lee</h4>
+              <span>Customer</span>
+            </div>
+            <nav class="dashboard-nav">
+              <a href="#" class="active"
+                ><i class="fas fa-tachometer-alt"></i> Dashboard</a
+              >
+              <a href="#"><i class="fas fa-calendar-alt"></i> My Bookings</a>
+              <a href="#"><i class="fas fa-heart"></i> Favorites</a>
+              <a href="#"><i class="fas fa-envelope"></i> Messages</a>
+              <a href="#"><i class="fas fa-star"></i> Reviews</a>
+              <a href="#"><i class="fas fa-credit-card"></i> Payments</a>
+              <a href="#"><i class="fas fa-cog"></i> Settings</a>
+              <a href="login.html"
+                ><i class="fas fa-sign-out-alt"></i> Logout</a
+              >
+            </nav>
+          </div>
+
+          <!-- Main Content -->
+          <div class="dashboard-content">
+            <div class="dashboard-header">
+              <div>
+                <h2>Welcome back, Jennifer!</h2>
+                <p style="color: var(--text-light); margin: 0">
+                  Here's what's happening with your bookings.
+                </p>
+              </div>
+              <a href="services.html" class="btn btn-primary"
+                >Book New Service</a
+              >
+            </div>
+
+            <!-- Stats -->
+            <div class="dashboard-stats">
+              <div class="dashboard-stat-card">
+                <i class="fas fa-calendar-check"></i>
+                <h3>12</h3>
+                <p>Total Bookings</p>
+              </div>
+              <div class="dashboard-stat-card">
+                <i class="fas fa-clock"></i>
+                <h3>2</h3>
+                <p>Upcoming</p>
+              </div>
+              <div class="dashboard-stat-card">
+                <i class="fas fa-check-circle"></i>
+                <h3>10</h3>
+                <p>Completed</p>
+              </div>
+              <div class="dashboard-stat-card">
+                <i class="fas fa-heart"></i>
+                <h3>5</h3>
+                <p>Favorites</p>
+              </div>
+            </div>
+
+            <!-- Upcoming Bookings -->
+            <div style="margin-bottom: 30px">
+              <h3 style="margin-bottom: 20px">Upcoming Bookings</h3>
+              <div
+                style="
+                  background: var(--bg-light);
+                  border-radius: var(--radius-md);
+                  overflow: hidden;
+                "
+              >
+                <!-- Booking 1 -->
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    padding: 20px;
+                    background: var(--bg-white);
+                    border-bottom: 1px solid var(--border-color);
+                  "
+                >
+                  <img
+                    src="../assets/images/providers/provider1.jpg"
+                    alt="Sarah Johnson"
+                    style="
+                      width: 60px;
+                      height: 60px;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                  <div style="flex: 1">
+                    <h4 style="margin-bottom: 5px">Babysitting Service</h4>
+                    <p style="margin: 0; color: var(--text-light)">
+                      Sarah Johnson
+                    </p>
+                  </div>
+                  <div style="text-align: right">
+                    <div style="font-weight: 600; color: var(--primary-color)">
+                      Jan 25, 2026
+                    </div>
+                    <div style="color: var(--text-light)">
+                      2:00 PM - 6:00 PM
+                    </div>
+                  </div>
+                  <span
+                    style="
+                      background: rgba(0, 201, 167, 0.1);
+                      color: var(--primary-color);
+                      padding: 5px 15px;
+                      border-radius: 20px;
+                      font-size: 0.85rem;
+                    "
+                    >Confirmed</span
+                  >
+                  <div style="display: flex; gap: 10px">
+                    <button class="btn btn-outline btn-sm">
+                      <i class="fas fa-envelope"></i>
+                    </button>
+                    <button class="btn btn-outline btn-sm">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- Booking 2 -->
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    padding: 20px;
+                    background: var(--bg-white);
+                  "
+                >
+                  <img
+                    src="../assets/images/providers/provider3.jpg"
+                    alt="Emily Davis"
+                    style="
+                      width: 60px;
+                      height: 60px;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                  <div style="flex: 1">
+                    <h4 style="margin-bottom: 5px">Deep House Cleaning</h4>
+                    <p style="margin: 0; color: var(--text-light)">
+                      Emily Davis
+                    </p>
+                  </div>
+                  <div style="text-align: right">
+                    <div style="font-weight: 600; color: var(--primary-color)">
+                      Jan 28, 2026
+                    </div>
+                    <div style="color: var(--text-light)">
+                      9:00 AM - 12:00 PM
+                    </div>
+                  </div>
+                  <span
+                    style="
+                      background: rgba(255, 165, 0, 0.1);
+                      color: orange;
+                      padding: 5px 15px;
+                      border-radius: 20px;
+                      font-size: 0.85rem;
+                    "
+                    >Pending</span
+                  >
+                  <div style="display: flex; gap: 10px">
+                    <button class="btn btn-outline btn-sm">
+                      <i class="fas fa-envelope"></i>
+                    </button>
+                    <button class="btn btn-outline btn-sm">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Activity & Favorites -->
+            <div
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px"
+            >
+              <!-- Recent Activity -->
+              <div>
+                <h3 style="margin-bottom: 20px">Recent Activity</h3>
+                <div
+                  style="
+                    background: var(--bg-light);
+                    border-radius: var(--radius-md);
+                    padding: 20px;
+                  "
+                >
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 15px;
+                      padding: 15px 0;
+                      border-bottom: 1px solid var(--border-color);
+                    "
+                  >
+                    <div
+                      style="
+                        width: 40px;
+                        height: 40px;
+                        background: rgba(0, 201, 167, 0.1);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <i
+                        class="fas fa-star"
+                        style="color: var(--primary-color)"
+                      ></i>
+                    </div>
+                    <div>
+                      <p style="margin: 0; font-weight: 500">
+                        You left a review for Sarah Johnson
+                      </p>
+                      <small style="color: var(--text-light)">2 days ago</small>
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 15px;
+                      padding: 15px 0;
+                      border-bottom: 1px solid var(--border-color);
+                    "
+                  >
+                    <div
+                      style="
+                        width: 40px;
+                        height: 40px;
+                        background: rgba(0, 201, 167, 0.1);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <i
+                        class="fas fa-check"
+                        style="color: var(--primary-color)"
+                      ></i>
+                    </div>
+                    <div>
+                      <p style="margin: 0; font-weight: 500">
+                        Booking completed with Michael Chen
+                      </p>
+                      <small style="color: var(--text-light)">5 days ago</small>
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 15px;
+                      padding: 15px 0;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 40px;
+                        height: 40px;
+                        background: rgba(0, 201, 167, 0.1);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <i
+                        class="fas fa-credit-card"
+                        style="color: var(--primary-color)"
+                      ></i>
+                    </div>
+                    <div>
+                      <p style="margin: 0; font-weight: 500">
+                        Payment processed - $105.00
+                      </p>
+                      <small style="color: var(--text-light)">1 week ago</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Favorite Providers -->
+              <div>
+                <h3 style="margin-bottom: 20px">Favorite Providers</h3>
+                <div
+                  style="
+                    background: var(--bg-light);
+                    border-radius: var(--radius-md);
+                    padding: 20px;
+                  "
+                >
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 15px;
+                      padding: 10px 0;
+                      border-bottom: 1px solid var(--border-color);
+                    "
+                  >
+                    <img
+                      src="../assets/images/providers/provider1.jpg"
+                      alt="Sarah Johnson"
+                      style="
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                      "
+                    />
+                    <div style="flex: 1">
+                      <h4 style="margin: 0; font-size: 1rem">Sarah Johnson</h4>
+                      <small style="color: var(--text-light)">Childcare</small>
+                    </div>
+                    <a
+                      href="provider-profile.html"
+                      class="btn btn-outline btn-sm"
+                      >View</a
+                    >
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 15px;
+                      padding: 10px 0;
+                      border-bottom: 1px solid var(--border-color);
+                    "
+                  >
+                    <img
+                      src="../assets/images/providers/provider2.jpg"
+                      alt="Michael Chen"
+                      style="
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                      "
+                    />
+                    <div style="flex: 1">
+                      <h4 style="margin: 0; font-size: 1rem">Michael Chen</h4>
+                      <small style="color: var(--text-light)">Tutoring</small>
+                    </div>
+                    <a
+                      href="provider-profile.html"
+                      class="btn btn-outline btn-sm"
+                      >View</a
+                    >
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 15px;
+                      padding: 10px 0;
+                    "
+                  >
+                    <img
+                      src="../assets/images/providers/provider3.jpg"
+                      alt="Emily Davis"
+                      style="
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                      "
+                    />
+                    <div style="flex: 1">
+                      <h4 style="margin: 0; font-size: 1rem">Emily Davis</h4>
+                      <small style="color: var(--text-light)">Cleaning</small>
+                    </div>
+                    <a
+                      href="provider-profile.html"
+                      class="btn btn-outline btn-sm"
+                      >View</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-bottom" style="border-top: none">
+          <p>&copy; 2026 Moueene. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

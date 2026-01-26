@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Moueene - Connect with trusted service providers for all your needs"
+    />
+    <title>Moueene - Home Services Platform</title>
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="smooth-scroll">
+    <!-- Header -->
+    <header class="header glass-header" id="header">
+      <div class="container">
+        <nav class="navbar">
+          <a href="index.html" class="logo">
+             <img src="assets/images/logo.webp" alt="Moueene Logo" />
+             <span>Moueene</span>
+          </a>
+          <ul class="nav-menu">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="pages/services.html">Services</a></li>
+            <li><a href="pages/providers.html">Providers</a></li>
+            <li><a href="pages/how-it-works.html">How It Works</a></li>
+            <li><a href="pages/about.html">About Us</a></li>
+            <li><a href="pages/contact.html">Contact</a></li>
+          </ul>
+          <div class="nav-buttons">
+            <a href="pages/login.html" class="btn btn-glass">Login</a>
+            <a href="pages/register.html" class="btn btn-primary pulse-btn">Sign Up</a>
+          </div>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-bg-parallax"></div>
+      <div class="container relative z-10">
+        <div class="hero-banner" data-aos="zoom-in" data-aos-duration="1000">
+          <div class="hero-content">
+            <h1 data-aos="fade-up" data-aos-delay="200">WELCOME TO MOUEENE</h1>
+            <p data-aos="fade-up" data-aos-delay="400">
+              Your one-stop solution for all home service needs, connecting you
+              with trusted professionals for cleaning, gardening, nursing, and
+              more.
+            </p>
+
+            <div class="hero-search-wrapper" data-aos="fade-up" data-aos-delay="600">
+              <form
+                action="pages/services.html"
+                method="GET"
+                class="hero-search-form glass-effect"
+              >
+                <input
+                  type="text"
+                  name="q"
+                  placeholder="What service do you need today?"
+                />
+                <button type="submit"><i class="fas fa-search"></i></button>
+              </form>
+            </div>
+
+            <div class="hero-cta-buttons" data-aos="fade-up" data-aos-delay="800">
+              <a href="pages/services.html" class="btn btn-primary glow-effect">Book Now</a>
+              <a href="pages/register.html?type=provider" class="btn btn-white hover-slide"
+                >Become a Service Provider</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+      <div class="container-fluid">
+        <div class="section-header" data-aos="fade-down">
+          <h2>Discover Popular Categories</h2>
+          <p>Browse through our most requested service categories</p>
+        </div>
+
+        <!-- Infinite Scrolling Ticker -->
+        <div class="categories-ticker" data-aos="fade-in" data-aos-delay="200">
+          <div class="ticker-track">
+            <!-- Batch 1 -->
+            <a
+              href="pages/services.html?category=childcare"
+              class="ticker-item glass-card"
+            >
+              <div class="ticker-icon">
+                <i class="fas fa-baby-carriage"></i>
+              </div>
+              <h3>Childcare</h3>
+            </a>
+            <a href="pages/services.html?category=tutoring" class="ticker-item glass-card">
+              <div class="ticker-icon">
+                <i class="fas fa-book-reader"></i>
+              </div>
+              <h3>Tutoring</h3>
+            </a>
+            <a href="pages/services.html?category=cleaning" class="ticker-item glass-card">
+              <div class="ticker-icon">
+                <i class="fas fa-broom"></i>
+              </div>
+              <h3>Cleaning</h3>
+            </a>
+            <a
+              href="pages/services.html?category=gardening"
+              class="ticker-item glass-card"
+            >
+              <div class="ticker-icon">
+                <i class="fas fa-leaf"></i>
+              </div>
+              <h3>Gardening</h3>
+            </a>
+            <a href="pages/services.html?category=petcare" class="ticker-item glass-card">
+              <div class="ticker-icon">
+                <i class="fas fa-paw"></i>
+              </div>
+              <h3>Pet Care</h3>
+            </a>
+            <a href="pages/services.html?category=elderly" class="ticker-item glass-card">
+              <div class="ticker-icon">
+                <i class="fas fa-wheelchair"></i>
+              </div>
+              <h3>Elderly Care</h3>
+            </a>
+            <a href="pages/services.html?category=repairs" class="ticker-item glass-card">
+              <div class="ticker-icon">
+                <i class="fas fa-tools"></i>
+              </div>
+              <h3>Home Repairs</h3>
+            </a>
+
+            <!-- Batch 2 (Duplicate for loop) -->
+             <a
+              href="pages/services.html?category=childcare"
+              class="ticker-item glass-card"
+            >
+              <div class="ticker-icon">
+                <i class="fas fa-baby-carriage"></i>
+              </div>
+              <h3>Childcare</h3>
+            </a>
+            <a href="pages/services.html?category=tutoring" class="ticker-item glass-card">
+              <div class="ticker-icon">
+                <i class="fas fa-book-reader"></i>
+              </div>
+              <h3>Tutoring</h3>
+            </a>
+            <a href="pages/services.html?category=cleaning" class="ticker-item glass-card">
+              <div class="ticker-icon">
+                <i class="fas fa-broom"></i>
+              </div>
+              <h3>Cleaning</h3>
+            </a>
+            <a
+              href="pages/services.html?category=gardening"
+              class="ticker-item glass-card"
+            >
+              <div class="ticker-icon">
+                <i class="fas fa-leaf"></i>
+              </div>
+              <h3>Gardening</h3>
+            </a>
+            <a href="pages/services.html?category=petcare" class="ticker-item glass-card">
+              <div class="ticker-icon">
+                <i class="fas fa-paw"></i>
+              </div>
+              <h3>Pet Care</h3>
+            </a>
+            <a href="pages/services.html?category=elderly" class="ticker-item glass-card">
+              <div class="ticker-icon">
+                <i class="fas fa-wheelchair"></i>
+              </div>
+              <h3>Elderly Care</h3>
+            </a>
+            <a href="pages/services.html?category=repairs" class="ticker-item glass-card">
+              <div class="ticker-icon">
+                <i class="fas fa-tools"></i>
+              </div>
+              <h3>Home Repairs</h3>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <!-- Top Curve -->
+        <div class="custom-shape-divider-top-1689366681">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+
+      <div class="container relative z-10">
+        <div class="section-header" data-aos="fade-up">
+          <h2>How It Works</h2>
+          <p>Getting started with Moueene is easy</p>
+        </div>
+        <div class="steps-container">
+          <div class="step step-down" data-aos="fade-up" data-aos-delay="100">
+            <div class="step-number">1</div>
+            <div class="step-icon">
+              <i class="fas fa-search"></i>
+            </div>
+            <h3>Choose Service</h3>
+            <p>Browse through our categories and find the service you need</p>
+          </div>
+          <div class="step-connector-curve"></div>
+          <div class="step step-up" data-aos="fade-up" data-aos-delay="300">
+            <div class="step-number">2</div>
+            <div class="step-icon">
+              <i class="fas fa-user-check"></i>
+            </div>
+            <h3>Find Provider</h3>
+            <p>
+              Compare profiles, reviews, and rates to find your perfect match
+            </p>
+          </div>
+          <div class="step-connector-curve"></div>
+          <div class="step step-down" data-aos="fade-up" data-aos-delay="500">
+            <div class="step-number">3</div>
+            <div class="step-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3>Book</h3>
+            <p>Schedule your service at a time that works best for you</p>
+          </div>
+          <div class="step-connector-curve"></div>
+          <div class="step step-up" data-aos="fade-up" data-aos-delay="700">
+            <div class="step-number">4</div>
+            <div class="step-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <h3>Evaluation</h3>
+            <p>Rate your experience and help others find great service</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Curve -->
+      <div class="custom-shape-divider-bottom-1689366681">
+          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+          </svg>
+      </div>
+    </section>
+
+    <!-- Featured Services Section -->
+    <section class="featured-providers">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up">
+          <h2>Top Services</h2>
+          <p>Explore our most booked services right now</p>
+        </div>
+        <div class="services-grid">
+          <!-- Service Card 1 -->
+          <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-image-container">
+              <img src="assets/images/services/childcare1.jpg" alt="Professional Babysitting" class="service-img" />
+              <div class="service-overlay">
+                  <a href="pages/service-detail.html" class="btn btn-white btn-sm">Quick View</a>
+              </div>
+            </div>
+            <div class="service-content">
+              <span class="service-category">Childcare</span>
+              <h3>Professional Babysitting</h3>
+              <p>Trusted care for infants and young children.</p>
+              <div class="service-provider">
+                <img src="assets/images/providers/provider1.jpg" alt="Sarah Johnson" />
+                <span>Sarah Johnson</span>
+              </div>
+              <div class="service-meta">
+                <div class="service-rating">
+                  <i class="fas fa-star"></i>
+                  <span>4.9 (127)</span>
+                </div>
+                <div class="service-price">$25/hr</div>
+              </div>
+            </div>
+          </div>
+          
+           <!-- Service Card 2 -->
+          <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+             <div class="service-image-container">
+              <img src="assets/images/services/cleaning1.jpg" alt="Home Cleaning" class="service-img" />
+              <div class="service-overlay">
+                  <a href="pages/service-detail.html" class="btn btn-white btn-sm">Quick View</a>
+              </div>
+            </div>
+            <div class="service-content">
+              <span class="service-category">Cleaning</span>
+              <h3>Deep Home Cleaning</h3>
+              <p>Spotless cleaning for homes and apartments.</p>
+              <div class="service-provider">
+                <img src="assets/images/providers/provider3.jpg" alt="Emily Davis" />
+                <span>Emily Davis</span>
+              </div>
+              <div class="service-meta">
+                <div class="service-rating">
+                  <i class="fas fa-star"></i>
+                  <span>4.9 (203)</span>
+                </div>
+                <div class="service-price">$30/hr</div>
+              </div>
+            </div>
+          </div>
+
+           <!-- Service Card 3 -->
+          <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-image-container">
+              <img src="assets/images/services/tutoring1.jpg" alt="Math Tutoring" class="service-img" />
+               <div class="service-overlay">
+                  <a href="pages/service-detail.html" class="btn btn-white btn-sm">Quick View</a>
+              </div>
+            </div>
+            <div class="service-content">
+              <span class="service-category">Tutoring</span>
+              <h3>Math & Science Tutoring</h3>
+              <p>Personalized sessions for all levels.</p>
+              <div class="service-provider">
+                <img src="assets/images/providers/provider2.jpg" alt="Michael Chen" />
+                <span>Michael Chen</span>
+              </div>
+              <div class="service-meta">
+                <div class="service-rating">
+                  <i class="fas fa-star"></i>
+                  <span>4.8 (95)</span>
+                </div>
+                <div class="service-price">$35/hr</div>
+              </div>
+            </div>
+          </div>
+
+           <!-- Service Card 4 -->
+          <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-image-container">
+              <img src="assets/images/services/gardening1.jpg" alt="Garden Care" class="service-img" />
+              <div class="service-overlay">
+                  <a href="pages/service-detail.html" class="btn btn-white btn-sm">Quick View</a>
+              </div>
+            </div>
+            <div class="service-content">
+              <span class="service-category">Gardening</span>
+              <h3>Garden & Landscape Care</h3>
+              <p>Seasonal maintenance and garden cleanup.</p>
+              <div class="service-provider">
+                <img src="assets/images/providers/provider4.jpg" alt="Robert Garcia" />
+                <span>Robert Garcia</span>
+              </div>
+              <div class="service-meta">
+                <div class="service-rating">
+                  <i class="fas fa-star"></i>
+                  <span>4.7 (78)</span>
+                </div>
+                <div class="service-price">$40/hr</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-40" data-aos="fade-up">
+          <a href="pages/services.html" class="btn btn-primary pulse-btn">Browse All Services</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" data-aos="zoom-in">
+      <div class="container">
+        <div class="cta-content glass-panel">
+          <h2>Ready to Get Started?</h2>
+          <p>
+            Join thousands of satisfied customers and trusted service providers
+            on Moueene
+          </p>
+          <div class="cta-buttons">
+            <a href="pages/register.html" class="btn btn-white glow-effect">Sign Up Now</a>
+            <a href="pages/contact.html" class="btn btn-outline-white"
+              >Contact Us</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-about">
+            <a href="index.html" class="footer-logo">
+               <div style="font-size: 24px; font-weight: 800; color: var(--primary-color);">MOUEENE</div>
+            </a>
+            <p>
+              Moueene connects customers with trusted service providers for all
+              their home and personal needs.
+            </p>
+            <div class="social-links">
+              <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="pages/services.html">Services</a></li>
+              <li><a href="pages/providers.html">Find Providers</a></li>
+              <li><a href="pages/how-it-works.html">How It Works</a></li>
+              <li><a href="pages/about.html">About Us</a></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Services</h4>
+            <ul>
+              <li>
+                <a href="pages/services.html?category=childcare">Childcare</a>
+              </li>
+              <li>
+                <a href="pages/services.html?category=tutoring">Tutoring</a>
+              </li>
+              <li>
+                <a href="pages/services.html?category=cleaning">Cleaning</a>
+              </li>
+              <li>
+                <a href="pages/services.html?category=gardening">Gardening</a>
+              </li>
+              <li>
+                <a href="pages/services.html?category=petcare">Pet Care</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="pages/contact.html">Contact Us</a></li>
+              <li><a href="pages/faq.html">FAQ</a></li>
+              <li><a href="pages/privacy.html">Privacy Policy</a></li>
+              <li><a href="pages/terms.html">Terms of Service</a></li>
+              <li><a href="pages/help.html">Help Center</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 Moueene. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+      // Initialize AOS for this page
+      document.addEventListener('DOMContentLoaded', function() {
+          AOS.init({
+              duration: 800,
+              easing: 'ease-out-cubic',
+              once: true
+          });
+      });
+    </script>
+  </body>
+</html>

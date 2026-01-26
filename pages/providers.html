@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Browse verified service providers on Moueene - Find trusted professionals for your needs"
+    />
+    <title>Providers - Moueene</title>
+    <link rel="icon" type="image/png" href="../logo.png" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <nav class="navbar">
+          <a href="../index.html" class="logo">
+            <img src="../logo.png" alt="Moueene Logo" />
+          </a>
+          <ul class="nav-menu">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="providers.html" class="active">Providers</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+          <div class="nav-buttons">
+            <a href="login.html" class="btn btn-outline">Login</a>
+            <a href="register.html" class="btn btn-primary">Sign Up</a>
+          </div>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+      <div class="container">
+        <h1>Service Providers</h1>
+        <p>Meet our trusted and verified service professionals</p>
+        <div class="breadcrumb">
+          <a href="../index.html">Home</a>
+          <span>/</span>
+          <span>Providers</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Providers Section -->
+    <section class="services-section">
+      <div class="container">
+        <!-- Filters -->
+        <div class="services-filters">
+          <div class="filter-group">
+            <label for="service-filter">Service Type:</label>
+            <select id="service-filter">
+              <option value="">All Services</option>
+              <option value="childcare">Childcare</option>
+              <option value="tutoring">Tutoring</option>
+              <option value="cleaning">Cleaning</option>
+              <option value="gardening">Gardening</option>
+              <option value="petcare">Pet Care</option>
+              <option value="elderly">Elderly Care</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="location-filter">Location:</label>
+            <input
+              type="text"
+              id="location-filter"
+              placeholder="Enter city or zip code"
+            />
+          </div>
+          <div class="filter-group">
+            <label for="rating-filter">Minimum Rating:</label>
+            <select id="rating-filter">
+              <option value="">Any Rating</option>
+              <option value="4.5">4.5+ Stars</option>
+              <option value="4">4+ Stars</option>
+              <option value="3">3+ Stars</option>
+            </select>
+          </div>
+          <button class="btn btn-primary">Search</button>
+        </div>
+
+        <!-- Providers Grid -->
+        <div class="providers-grid">
+          <!-- Provider Card 1 -->
+          <div class="provider-card">
+            <div class="provider-image">
+              <img
+                src="../assets/images/providers/provider1.jpg"
+                alt="Sarah Johnson"
+              />
+              <span class="provider-badge">Top Rated</span>
+            </div>
+            <div class="provider-info">
+              <h3>Sarah Johnson</h3>
+              <p class="provider-service">Childcare Specialist</p>
+              <div class="provider-rating">
+                <i class="fas fa-star"></i>
+                <span>4.9 (127 reviews)</span>
+              </div>
+              <p>
+                10+ years of experience in childcare with certifications in
+                early childhood development.
+              </p>
+              <p class="provider-price">From $25/hour</p>
+              <a href="provider-profile.html" class="btn btn-outline btn-sm"
+                >View Profile</a
+              >
+            </div>
+          </div>
+
+          <!-- Provider Card 2 -->
+          <div class="provider-card">
+            <div class="provider-image">
+              <img
+                src="../assets/images/providers/provider2.jpg"
+                alt="Michael Chen"
+              />
+              <span class="provider-badge">Verified</span>
+            </div>
+            <div class="provider-info">
+              <h3>Michael Chen</h3>
+              <p class="provider-service">Math & Science Tutor</p>
+              <div class="provider-rating">
+                <i class="fas fa-star"></i>
+                <span>4.8 (95 reviews)</span>
+              </div>
+              <p>
+                PhD in Physics, passionate about making complex subjects easy to
+                understand.
+              </p>
+              <p class="provider-price">From $35/hour</p>
+              <a href="provider-profile.html" class="btn btn-outline btn-sm"
+                >View Profile</a
+              >
+            </div>
+          </div>
+
+          <!-- Provider Card 3 -->
+          <div class="provider-card">
+            <div class="provider-image">
+              <img
+                src="../assets/images/providers/provider3.jpg"
+                alt="Emily Davis"
+              />
+              <span class="provider-badge">Top Rated</span>
+            </div>
+            <div class="provider-info">
+              <h3>Emily Davis</h3>
+              <p class="provider-service">Home Cleaning Expert</p>
+              <div class="provider-rating">
+                <i class="fas fa-star"></i>
+                <span>4.9 (203 reviews)</span>
+              </div>
+              <p>
+                Eco-friendly cleaning specialist with attention to detail and
+                reliability.
+              </p>
+              <p class="provider-price">From $30/hour</p>
+              <a href="provider-profile.html" class="btn btn-outline btn-sm"
+                >View Profile</a
+              >
+            </div>
+          </div>
+
+          <!-- Provider Card 4 -->
+          <div class="provider-card">
+            <div class="provider-image">
+              <img
+                src="../assets/images/providers/provider4.jpg"
+                alt="Robert Garcia"
+              />
+              <span class="provider-badge">Verified</span>
+            </div>
+            <div class="provider-info">
+              <h3>Robert Garcia</h3>
+              <p class="provider-service">Garden & Landscape</p>
+              <div class="provider-rating">
+                <i class="fas fa-star"></i>
+                <span>4.7 (78 reviews)</span>
+              </div>
+              <p>
+                Licensed landscaper specializing in sustainable garden design.
+              </p>
+              <p class="provider-price">From $40/hour</p>
+              <a href="provider-profile.html" class="btn btn-outline btn-sm"
+                >View Profile</a
+              >
+            </div>
+          </div>
+
+          <!-- Provider Card 5 -->
+          <div class="provider-card">
+            <div class="provider-image">
+              <img
+                src="../assets/images/providers/provider5.jpg"
+                alt="Lisa Martinez"
+              />
+              <span class="provider-badge">Top Rated</span>
+            </div>
+            <div class="provider-info">
+              <h3>Lisa Martinez</h3>
+              <p class="provider-service">Pet Care Specialist</p>
+              <div class="provider-rating">
+                <i class="fas fa-star"></i>
+                <span>4.8 (156 reviews)</span>
+              </div>
+              <p>
+                Animal lover with veterinary assistant background and pet first
+                aid certified.
+              </p>
+              <p class="provider-price">From $20/hour</p>
+              <a href="provider-profile.html" class="btn btn-outline btn-sm"
+                >View Profile</a
+              >
+            </div>
+          </div>
+
+          <!-- Provider Card 6 -->
+          <div class="provider-card">
+            <div class="provider-image">
+              <img
+                src="../assets/images/providers/provider6.jpg"
+                alt="James Wilson"
+              />
+              <span class="provider-badge">Verified</span>
+            </div>
+            <div class="provider-info">
+              <h3>James Wilson</h3>
+              <p class="provider-service">Senior Care Provider</p>
+              <div class="provider-rating">
+                <i class="fas fa-star"></i>
+                <span>4.9 (89 reviews)</span>
+              </div>
+              <p>
+                Certified nursing assistant with compassionate approach to
+                elderly care.
+              </p>
+              <p class="provider-price">From $28/hour</p>
+              <a href="provider-profile.html" class="btn btn-outline btn-sm"
+                >View Profile</a
+              >
+            </div>
+          </div>
+
+          <!-- Provider Card 7 -->
+          <div class="provider-card">
+            <div class="provider-image">
+              <img
+                src="../assets/images/providers/provider7.jpg"
+                alt="Maria Lopez"
+              />
+              <span class="provider-badge">Top Rated</span>
+            </div>
+            <div class="provider-info">
+              <h3>Maria Lopez</h3>
+              <p class="provider-service">Language Tutor</p>
+              <div class="provider-rating">
+                <i class="fas fa-star"></i>
+                <span>4.9 (112 reviews)</span>
+              </div>
+              <p>
+                Native Spanish speaker teaching Spanish, French, and Italian for
+                all levels.
+              </p>
+              <p class="provider-price">From $40/hour</p>
+              <a href="provider-profile.html" class="btn btn-outline btn-sm"
+                >View Profile</a
+              >
+            </div>
+          </div>
+
+          <!-- Provider Card 8 -->
+          <div class="provider-card">
+            <div class="provider-image">
+              <img
+                src="../assets/images/providers/provider8.jpg"
+                alt="David Brown"
+              />
+              <span class="provider-badge">Verified</span>
+            </div>
+            <div class="provider-info">
+              <h3>David Brown</h3>
+              <p class="provider-service">Home Organizer</p>
+              <div class="provider-rating">
+                <i class="fas fa-star"></i>
+                <span>4.7 (64 reviews)</span>
+              </div>
+              <p>
+                Professional organizer helping families declutter and create
+                functional spaces.
+              </p>
+              <p class="provider-price">From $45/hour</p>
+              <a href="provider-profile.html" class="btn btn-outline btn-sm"
+                >View Profile</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <a href="#"><i class="fas fa-chevron-left"></i></a>
+          <a href="#" class="active">1</a>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <span>...</span>
+          <a href="#">15</a>
+          <a href="#"><i class="fas fa-chevron-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Are You a Service Provider?</h2>
+          <p>
+            Join our platform and connect with customers looking for your skills
+          </p>
+          <div class="cta-buttons">
+            <a href="register.html?type=provider" class="btn btn-white"
+              >Become a Provider</a
+            >
+            <a href="how-it-works.html" class="btn btn-outline-white"
+              >Learn More</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-about">
+            <a href="../index.html" class="footer-logo">
+              <img src="../logo.png" alt="Moueene Logo" />
+            </a>
+            <p>
+              Moueene connects customers with trusted service providers for all
+              their home and personal needs.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="services.html">Services</a></li>
+              <li><a href="providers.html">Find Providers</a></li>
+              <li><a href="how-it-works.html">How It Works</a></li>
+              <li><a href="about.html">About Us</a></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="services.html?category=childcare">Childcare</a></li>
+              <li><a href="services.html?category=tutoring">Tutoring</a></li>
+              <li><a href="services.html?category=cleaning">Cleaning</a></li>
+              <li><a href="services.html?category=gardening">Gardening</a></li>
+              <li><a href="services.html?category=petcare">Pet Care</a></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="privacy.html">Privacy Policy</a></li>
+              <li><a href="terms.html">Terms of Service</a></li>
+              <li><a href="help.html">Help Center</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 Moueene. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

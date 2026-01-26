@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Help Center - Moueene Support and Resources"
+    />
+    <title>Help Center - Moueene</title>
+    <link rel="icon" type="image/png" href="../logo.png" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <nav class="navbar">
+          <a href="../index.html" class="logo">
+            <img src="../logo.png" alt="Moueene Logo" />
+          </a>
+          <ul class="nav-menu">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="providers.html">Providers</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+          <div class="nav-buttons">
+            <a href="login.html" class="btn btn-outline">Login</a>
+            <a href="register.html" class="btn btn-primary">Sign Up</a>
+          </div>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+      <div class="container">
+        <h1>Help Center</h1>
+        <p>Find answers and get the support you need</p>
+        <!-- Search -->
+        <div style="max-width: 600px; margin: 30px auto 0">
+          <div
+            style="
+              background: var(--bg-white);
+              padding: 10px;
+              border-radius: var(--radius-full);
+              display: flex;
+            "
+          >
+            <input
+              type="text"
+              placeholder="Search for help articles..."
+              style="
+                flex: 1;
+                padding: 15px 20px;
+                border: none;
+                outline: none;
+                font-size: 1rem;
+              "
+            />
+            <button class="btn btn-primary">Search</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Help Categories -->
+    <section class="services-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Browse by Topic</h2>
+          <p>Select a category to find what you're looking for</p>
+        </div>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+          "
+        >
+          <!-- Category 1 -->
+          <div
+            style="
+              background: var(--bg-white);
+              padding: 30px;
+              border-radius: var(--radius-lg);
+              box-shadow: var(--shadow-sm);
+              text-align: center;
+              transition: var(--transition);
+            "
+            class="help-card"
+          >
+            <div
+              style="
+                width: 80px;
+                height: 80px;
+                background: linear-gradient(
+                  135deg,
+                  var(--gradient-start),
+                  var(--gradient-end)
+                );
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px;
+              "
+            >
+              <i
+                class="fas fa-user-plus"
+                style="font-size: 2rem; color: white"
+              ></i>
+            </div>
+            <h3>Getting Started</h3>
+            <p>Learn how to create an account and use Moueene</p>
+            <ul style="text-align: left; margin: 20px 0">
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Creating your account</a
+                >
+              </li>
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Completing your profile</a
+                >
+              </li>
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Finding services</a
+                >
+              </li>
+            </ul>
+            <a href="#" style="color: var(--primary-color); font-weight: 500"
+              >View all articles →</a
+            >
+          </div>
+
+          <!-- Category 2 -->
+          <div
+            style="
+              background: var(--bg-white);
+              padding: 30px;
+              border-radius: var(--radius-lg);
+              box-shadow: var(--shadow-sm);
+              text-align: center;
+              transition: var(--transition);
+            "
+            class="help-card"
+          >
+            <div
+              style="
+                width: 80px;
+                height: 80px;
+                background: linear-gradient(
+                  135deg,
+                  var(--gradient-start),
+                  var(--gradient-end)
+                );
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px;
+              "
+            >
+              <i
+                class="fas fa-calendar-check"
+                style="font-size: 2rem; color: white"
+              ></i>
+            </div>
+            <h3>Bookings</h3>
+            <p>Everything about booking and managing services</p>
+            <ul style="text-align: left; margin: 20px 0">
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >How to book a service</a
+                >
+              </li>
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Cancellation policy</a
+                >
+              </li>
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Rescheduling bookings</a
+                >
+              </li>
+            </ul>
+            <a href="#" style="color: var(--primary-color); font-weight: 500"
+              >View all articles →</a
+            >
+          </div>
+
+          <!-- Category 3 -->
+          <div
+            style="
+              background: var(--bg-white);
+              padding: 30px;
+              border-radius: var(--radius-lg);
+              box-shadow: var(--shadow-sm);
+              text-align: center;
+              transition: var(--transition);
+            "
+            class="help-card"
+          >
+            <div
+              style="
+                width: 80px;
+                height: 80px;
+                background: linear-gradient(
+                  135deg,
+                  var(--gradient-start),
+                  var(--gradient-end)
+                );
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px;
+              "
+            >
+              <i
+                class="fas fa-credit-card"
+                style="font-size: 2rem; color: white"
+              ></i>
+            </div>
+            <h3>Payments</h3>
+            <p>Payment methods, refunds, and billing</p>
+            <ul style="text-align: left; margin: 20px 0">
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)">Payment methods</a>
+              </li>
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >How refunds work</a
+                >
+              </li>
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Viewing receipts</a
+                >
+              </li>
+            </ul>
+            <a href="#" style="color: var(--primary-color); font-weight: 500"
+              >View all articles →</a
+            >
+          </div>
+
+          <!-- Category 4 -->
+          <div
+            style="
+              background: var(--bg-white);
+              padding: 30px;
+              border-radius: var(--radius-lg);
+              box-shadow: var(--shadow-sm);
+              text-align: center;
+              transition: var(--transition);
+            "
+            class="help-card"
+          >
+            <div
+              style="
+                width: 80px;
+                height: 80px;
+                background: linear-gradient(
+                  135deg,
+                  var(--gradient-start),
+                  var(--gradient-end)
+                );
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px;
+              "
+            >
+              <i
+                class="fas fa-user-tie"
+                style="font-size: 2rem; color: white"
+              ></i>
+            </div>
+            <h3>For Providers</h3>
+            <p>Resources for service providers</p>
+            <ul style="text-align: left; margin: 20px 0">
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Becoming a provider</a
+                >
+              </li>
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Setting your rates</a
+                >
+              </li>
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Managing bookings</a
+                >
+              </li>
+            </ul>
+            <a href="#" style="color: var(--primary-color); font-weight: 500"
+              >View all articles →</a
+            >
+          </div>
+
+          <!-- Category 5 -->
+          <div
+            style="
+              background: var(--bg-white);
+              padding: 30px;
+              border-radius: var(--radius-lg);
+              box-shadow: var(--shadow-sm);
+              text-align: center;
+              transition: var(--transition);
+            "
+            class="help-card"
+          >
+            <div
+              style="
+                width: 80px;
+                height: 80px;
+                background: linear-gradient(
+                  135deg,
+                  var(--gradient-start),
+                  var(--gradient-end)
+                );
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px;
+              "
+            >
+              <i
+                class="fas fa-shield-alt"
+                style="font-size: 2rem; color: white"
+              ></i>
+            </div>
+            <h3>Trust & Safety</h3>
+            <p>How we keep our community safe</p>
+            <ul style="text-align: left; margin: 20px 0">
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Verification process</a
+                >
+              </li>
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Reporting issues</a
+                >
+              </li>
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Safety guidelines</a
+                >
+              </li>
+            </ul>
+            <a href="#" style="color: var(--primary-color); font-weight: 500"
+              >View all articles →</a
+            >
+          </div>
+
+          <!-- Category 6 -->
+          <div
+            style="
+              background: var(--bg-white);
+              padding: 30px;
+              border-radius: var(--radius-lg);
+              box-shadow: var(--shadow-sm);
+              text-align: center;
+              transition: var(--transition);
+            "
+            class="help-card"
+          >
+            <div
+              style="
+                width: 80px;
+                height: 80px;
+                background: linear-gradient(
+                  135deg,
+                  var(--gradient-start),
+                  var(--gradient-end)
+                );
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px;
+              "
+            >
+              <i class="fas fa-cog" style="font-size: 2rem; color: white"></i>
+            </div>
+            <h3>Account Settings</h3>
+            <p>Manage your account and preferences</p>
+            <ul style="text-align: left; margin: 20px 0">
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Updating your profile</a
+                >
+              </li>
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Changing password</a
+                >
+              </li>
+              <li style="padding: 8px 0">
+                <a href="#" style="color: var(--text-light)"
+                  >Notification settings</a
+                >
+              </li>
+            </ul>
+            <a href="#" style="color: var(--primary-color); font-weight: 500"
+              >View all articles →</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Support -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Still Need Help?</h2>
+          <p>Our support team is available to assist you</p>
+          <div class="cta-buttons">
+            <a href="contact.html" class="btn btn-white"
+              ><i class="fas fa-envelope"></i> Contact Support</a
+            >
+            <a href="faq.html" class="btn btn-outline-white"
+              ><i class="fas fa-question-circle"></i> View FAQs</a
+            >
+          </div>
+          <p style="margin-top: 20px; opacity: 0.9">
+            Or call us at: +1 (555) 123-4567
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-about">
+            <a href="../index.html" class="footer-logo">
+              <img src="../logo.png" alt="Moueene Logo" />
+            </a>
+            <p>
+              Moueene connects customers with trusted service providers for all
+              their home and personal needs.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="services.html">Services</a></li>
+              <li><a href="providers.html">Find Providers</a></li>
+              <li><a href="how-it-works.html">How It Works</a></li>
+              <li><a href="about.html">About Us</a></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="services.html?category=childcare">Childcare</a></li>
+              <li><a href="services.html?category=tutoring">Tutoring</a></li>
+              <li><a href="services.html?category=cleaning">Cleaning</a></li>
+              <li><a href="services.html?category=gardening">Gardening</a></li>
+              <li><a href="services.html?category=petcare">Pet Care</a></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="privacy.html">Privacy Policy</a></li>
+              <li><a href="terms.html">Terms of Service</a></li>
+              <li><a href="help.html">Help Center</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 Moueene. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="View provider profile on Moueene - See services, reviews, and availability"
+    />
+    <title>Provider Profile - Moueene</title>
+    <link rel="icon" type="image/png" href="../logo.png" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <nav class="navbar">
+          <a href="../index.html" class="logo">
+            <img src="../logo.png" alt="Moueene Logo" />
+          </a>
+          <ul class="nav-menu">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="providers.html" class="active">Providers</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+          <div class="nav-buttons">
+            <a href="login.html" class="btn btn-outline">Login</a>
+            <a href="register.html" class="btn btn-primary">Sign Up</a>
+          </div>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Profile Header Section -->
+    <section class="page-banner" style="padding-bottom: 40px">
+      <div class="container">
+        <div
+          class="breadcrumb"
+          style="
+            margin-top: 0;
+            margin-bottom: 20px;
+            justify-content: flex-start;
+          "
+        >
+          <a href="../index.html">Home</a>
+          <span>/</span>
+          <a href="providers.html">Providers</a>
+          <span>/</span>
+          <span>Sarah Johnson</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section class="profile-header" style="margin-top: -60px; padding-top: 0">
+      <div class="container">
+        <div class="profile-card">
+          <div class="profile-image">
+            <img
+              src="../assets/images/providers/provider1.jpg"
+              alt="Sarah Johnson"
+            />
+          </div>
+          <div class="profile-info">
+            <div class="profile-badges">
+              <span class="badge badge-verified"
+                ><i class="fas fa-check-circle"></i> Verified</span
+              >
+              <span class="badge badge-top"
+                ><i class="fas fa-star"></i> Top Rated</span
+              >
+            </div>
+            <h1>Sarah Johnson</h1>
+            <p
+              class="provider-service"
+              style="
+                color: var(--primary-color);
+                font-weight: 500;
+                font-size: 1.1rem;
+              "
+            >
+              Childcare Specialist
+            </p>
+            <div class="provider-rating" style="margin: 15px 0">
+              <i class="fas fa-star" style="color: #ffd700"></i>
+              <i class="fas fa-star" style="color: #ffd700"></i>
+              <i class="fas fa-star" style="color: #ffd700"></i>
+              <i class="fas fa-star" style="color: #ffd700"></i>
+              <i class="fas fa-star" style="color: #ffd700"></i>
+              <span style="margin-left: 10px">4.9 (127 reviews)</span>
+            </div>
+            <p style="color: var(--text-light)">
+              <i class="fas fa-map-marker-alt" style="margin-right: 8px"></i>New
+              York, NY
+            </p>
+            <p style="color: var(--text-light)">
+              <i class="fas fa-clock" style="margin-right: 8px"></i>Member since
+              2022
+            </p>
+            <div
+              style="
+                margin-top: 20px;
+                display: flex;
+                gap: 15px;
+                flex-wrap: wrap;
+              "
+            >
+              <a href="#booking" class="btn btn-primary">Book Now</a>
+              <a href="#" class="btn btn-outline"
+                ><i class="fas fa-envelope"></i> Message</a
+              >
+              <a href="#" class="btn btn-outline"
+                ><i class="fas fa-heart"></i> Save</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile Content -->
+    <section class="services-section">
+      <div class="container">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px">
+          <!-- Main Content -->
+          <div>
+            <!-- About -->
+            <div
+              style="
+                background: var(--bg-white);
+                padding: 30px;
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow-sm);
+                margin-bottom: 30px;
+              "
+            >
+              <h3 style="margin-bottom: 20px">About Me</h3>
+              <p>
+                Hello! I'm Sarah, a passionate childcare specialist with over 10
+                years of experience working with children of all ages. I hold a
+                degree in Early Childhood Education and multiple certifications
+                in child development and first aid.
+              </p>
+              <p>
+                I believe in creating a nurturing, safe, and fun environment
+                where children can learn, play, and grow. My approach combines
+                structured activities with free play to support children's
+                physical, emotional, and cognitive development.
+              </p>
+              <p>
+                I'm experienced in caring for infants, toddlers, and school-age
+                children. I can help with homework, prepare nutritious meals,
+                and organize engaging activities. References are available upon
+                request.
+              </p>
+            </div>
+
+            <!-- Services Offered -->
+            <div
+              style="
+                background: var(--bg-white);
+                padding: 30px;
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow-sm);
+                margin-bottom: 30px;
+              "
+            >
+              <h3 style="margin-bottom: 20px">Services Offered</h3>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(2, 1fr);
+                  gap: 20px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    padding: 15px;
+                    background: var(--bg-light);
+                    border-radius: var(--radius-md);
+                  "
+                >
+                  <i
+                    class="fas fa-baby"
+                    style="font-size: 1.5rem; color: var(--primary-color)"
+                  ></i>
+                  <div>
+                    <h4 style="margin: 0; font-size: 1rem">Babysitting</h4>
+                    <span style="color: var(--text-light); font-size: 0.9rem"
+                      >$25/hour</span
+                    >
+                  </div>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    padding: 15px;
+                    background: var(--bg-light);
+                    border-radius: var(--radius-md);
+                  "
+                >
+                  <i
+                    class="fas fa-child"
+                    style="font-size: 1.5rem; color: var(--primary-color)"
+                  ></i>
+                  <div>
+                    <h4 style="margin: 0; font-size: 1rem">
+                      After School Care
+                    </h4>
+                    <span style="color: var(--text-light); font-size: 0.9rem"
+                      >$22/hour</span
+                    >
+                  </div>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    padding: 15px;
+                    background: var(--bg-light);
+                    border-radius: var(--radius-md);
+                  "
+                >
+                  <i
+                    class="fas fa-moon"
+                    style="font-size: 1.5rem; color: var(--primary-color)"
+                  ></i>
+                  <div>
+                    <h4 style="margin: 0; font-size: 1rem">Overnight Care</h4>
+                    <span style="color: var(--text-light); font-size: 0.9rem"
+                      >$150/night</span
+                    >
+                  </div>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    padding: 15px;
+                    background: var(--bg-light);
+                    border-radius: var(--radius-md);
+                  "
+                >
+                  <i
+                    class="fas fa-book"
+                    style="font-size: 1.5rem; color: var(--primary-color)"
+                  ></i>
+                  <div>
+                    <h4 style="margin: 0; font-size: 1rem">Homework Help</h4>
+                    <span style="color: var(--text-light); font-size: 0.9rem"
+                      >Included</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Qualifications -->
+            <div
+              style="
+                background: var(--bg-white);
+                padding: 30px;
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow-sm);
+                margin-bottom: 30px;
+              "
+            >
+              <h3 style="margin-bottom: 20px">Qualifications & Experience</h3>
+              <ul style="list-style: none; padding: 0">
+                <li
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    padding: 12px 0;
+                    border-bottom: 1px solid var(--border-color);
+                  "
+                >
+                  <i
+                    class="fas fa-graduation-cap"
+                    style="color: var(--primary-color)"
+                  ></i>
+                  <span>B.A. in Early Childhood Education - NYU</span>
+                </li>
+                <li
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    padding: 12px 0;
+                    border-bottom: 1px solid var(--border-color);
+                  "
+                >
+                  <i
+                    class="fas fa-certificate"
+                    style="color: var(--primary-color)"
+                  ></i>
+                  <span>CPR & First Aid Certified</span>
+                </li>
+                <li
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    padding: 12px 0;
+                    border-bottom: 1px solid var(--border-color);
+                  "
+                >
+                  <i
+                    class="fas fa-shield-alt"
+                    style="color: var(--primary-color)"
+                  ></i>
+                  <span>Background Check Verified</span>
+                </li>
+                <li
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    padding: 12px 0;
+                    border-bottom: 1px solid var(--border-color);
+                  "
+                >
+                  <i
+                    class="fas fa-briefcase"
+                    style="color: var(--primary-color)"
+                  ></i>
+                  <span>10+ Years of Experience</span>
+                </li>
+                <li
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    padding: 12px 0;
+                  "
+                >
+                  <i
+                    class="fas fa-award"
+                    style="color: var(--primary-color)"
+                  ></i>
+                  <span>Child Development Associate (CDA) Credential</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Reviews -->
+            <div
+              style="
+                background: var(--bg-white);
+                padding: 30px;
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow-sm);
+              "
+            >
+              <h3 style="margin-bottom: 20px">Reviews (127)</h3>
+
+              <!-- Review 1 -->
+              <div
+                style="
+                  padding: 20px 0;
+                  border-bottom: 1px solid var(--border-color);
+                "
+              >
+                <div style="display: flex; gap: 15px">
+                  <img
+                    src="../assets/images/testimonials/user1.jpg"
+                    alt="Jennifer L."
+                    style="
+                      width: 50px;
+                      height: 50px;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                  <div style="flex: 1">
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                      "
+                    >
+                      <h4 style="margin: 0">Jennifer L.</h4>
+                      <span style="color: var(--text-light); font-size: 0.9rem"
+                        >2 weeks ago</span
+                      >
+                    </div>
+                    <div style="color: #ffd700; margin: 5px 0">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                    <p style="margin: 0">
+                      Sarah is amazing with my kids! They absolutely love her
+                      and always look forward to her visits. She's reliable,
+                      professional, and goes above and beyond. Highly recommend!
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Review 2 -->
+              <div
+                style="
+                  padding: 20px 0;
+                  border-bottom: 1px solid var(--border-color);
+                "
+              >
+                <div style="display: flex; gap: 15px">
+                  <img
+                    src="../assets/images/testimonials/user2.jpg"
+                    alt="Michael S."
+                    style="
+                      width: 50px;
+                      height: 50px;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                  <div style="flex: 1">
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                      "
+                    >
+                      <h4 style="margin: 0">Michael S.</h4>
+                      <span style="color: var(--text-light); font-size: 0.9rem"
+                        >1 month ago</span
+                      >
+                    </div>
+                    <div style="color: #ffd700; margin: 5px 0">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                    <p style="margin: 0">
+                      We've been using Sarah for after-school care for 6 months
+                      now. She helps with homework, prepares healthy snacks, and
+                      keeps our kids engaged with educational activities.
+                      Couldn't ask for better!
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Review 3 -->
+              <div style="padding: 20px 0">
+                <div style="display: flex; gap: 15px">
+                  <img
+                    src="../assets/images/testimonials/user3.jpg"
+                    alt="Emma R."
+                    style="
+                      width: 50px;
+                      height: 50px;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                  <div style="flex: 1">
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                      "
+                    >
+                      <h4 style="margin: 0">Emma R.</h4>
+                      <span style="color: var(--text-light); font-size: 0.9rem"
+                        >2 months ago</span
+                      >
+                    </div>
+                    <div style="color: #ffd700; margin: 5px 0">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p style="margin: 0">
+                      Very professional and caring. Sarah took care of our
+                      toddler during a date night and sent us updates throughout
+                      the evening. Will definitely book again!
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center mt-20">
+                <a href="#" class="btn btn-outline">Load More Reviews</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div>
+            <!-- Booking Card -->
+            <div
+              id="booking"
+              style="
+                background: var(--bg-white);
+                padding: 30px;
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow-md);
+                position: sticky;
+                top: 100px;
+              "
+            >
+              <h3 style="margin-bottom: 20px">Book This Provider</h3>
+              <div
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    var(--gradient-start),
+                    var(--gradient-end)
+                  );
+                  color: white;
+                  padding: 20px;
+                  border-radius: var(--radius-md);
+                  text-align: center;
+                  margin-bottom: 20px;
+                "
+              >
+                <div style="font-size: 2rem; font-weight: 700">$25</div>
+                <div>per hour</div>
+              </div>
+              <form>
+                <div class="form-group">
+                  <label for="service_type">Service Type</label>
+                  <select id="service_type" name="service_type" required>
+                    <option value="">Select service</option>
+                    <option value="babysitting">Babysitting - $25/hr</option>
+                    <option value="afterschool">
+                      After School Care - $22/hr
+                    </option>
+                    <option value="overnight">
+                      Overnight Care - $150/night
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="booking_date">Date</label>
+                  <input
+                    type="date"
+                    id="booking_date"
+                    name="booking_date"
+                    required
+                  />
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="start_time">Start Time</label>
+                    <input
+                      type="time"
+                      id="start_time"
+                      name="start_time"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="end_time">End Time</label>
+                    <input type="time" id="end_time" name="end_time" required />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="children">Number of Children</label>
+                  <select id="children" name="children" required>
+                    <option value="1">1 Child</option>
+                    <option value="2">2 Children</option>
+                    <option value="3">3 Children</option>
+                    <option value="4">4+ Children</option>
+                  </select>
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-lg"
+                  style="width: 100%"
+                >
+                  Request Booking
+                </button>
+              </form>
+              <p
+                style="
+                  text-align: center;
+                  color: var(--text-light);
+                  font-size: 0.9rem;
+                  margin-top: 15px;
+                "
+              >
+                <i class="fas fa-lock" style="margin-right: 5px"></i>Secure
+                payment through Moueene
+              </p>
+            </div>
+
+            <!-- Availability -->
+            <div
+              style="
+                background: var(--bg-white);
+                padding: 30px;
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow-sm);
+                margin-top: 30px;
+              "
+            >
+              <h4 style="margin-bottom: 20px">Availability</h4>
+              <ul style="list-style: none; padding: 0">
+                <li
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 10px 0;
+                    border-bottom: 1px solid var(--border-color);
+                  "
+                >
+                  <span>Monday</span>
+                  <span style="color: var(--primary-color)">8am - 8pm</span>
+                </li>
+                <li
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 10px 0;
+                    border-bottom: 1px solid var(--border-color);
+                  "
+                >
+                  <span>Tuesday</span>
+                  <span style="color: var(--primary-color)">8am - 8pm</span>
+                </li>
+                <li
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 10px 0;
+                    border-bottom: 1px solid var(--border-color);
+                  "
+                >
+                  <span>Wednesday</span>
+                  <span style="color: var(--primary-color)">8am - 8pm</span>
+                </li>
+                <li
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 10px 0;
+                    border-bottom: 1px solid var(--border-color);
+                  "
+                >
+                  <span>Thursday</span>
+                  <span style="color: var(--primary-color)">8am - 8pm</span>
+                </li>
+                <li
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 10px 0;
+                    border-bottom: 1px solid var(--border-color);
+                  "
+                >
+                  <span>Friday</span>
+                  <span style="color: var(--primary-color)">8am - 10pm</span>
+                </li>
+                <li
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 10px 0;
+                    border-bottom: 1px solid var(--border-color);
+                  "
+                >
+                  <span>Saturday</span>
+                  <span style="color: var(--primary-color)">9am - 10pm</span>
+                </li>
+                <li
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 10px 0;
+                  "
+                >
+                  <span>Sunday</span>
+                  <span style="color: var(--text-light)">Not Available</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-about">
+            <a href="../index.html" class="footer-logo">
+              <img src="../logo.png" alt="Moueene Logo" />
+            </a>
+            <p>
+              Moueene connects customers with trusted service providers for all
+              their home and personal needs.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="services.html">Services</a></li>
+              <li><a href="providers.html">Find Providers</a></li>
+              <li><a href="how-it-works.html">How It Works</a></li>
+              <li><a href="about.html">About Us</a></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="services.html?category=childcare">Childcare</a></li>
+              <li><a href="services.html?category=tutoring">Tutoring</a></li>
+              <li><a href="services.html?category=cleaning">Cleaning</a></li>
+              <li><a href="services.html?category=gardening">Gardening</a></li>
+              <li><a href="services.html?category=petcare">Pet Care</a></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="privacy.html">Privacy Policy</a></li>
+              <li><a href="terms.html">Terms of Service</a></li>
+              <li><a href="help.html">Help Center</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 Moueene. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>
