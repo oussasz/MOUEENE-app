@@ -1,14 +1,17 @@
 # Moueene Database Setup Guide
 
 ## Overview
+
 This directory contains the database schema and configuration files for the Moueene Home Services Platform.
 
 ## Files Description
 
 ### 1. `schema.sql`
+
 Complete database schema with all tables, indexes, triggers, and initial data.
 
 **Tables Created:**
+
 - **languages** - Supported platform languages (English, French, Arabic)
 - **users** - Customer accounts
 - **providers** - Service provider accounts
@@ -31,11 +34,13 @@ Complete database schema with all tables, indexes, triggers, and initial data.
 - **admin_users** - Admin panel users
 
 ### 2. `test_connection.php`
+
 Web-based utility to test database connectivity and display configuration.
 
 ## Initial Setup Instructions
 
 ### Step 1: Create the Database
+
 ```bash
 # Option 1: Using command line
 mysql -u root -p < schema.sql
@@ -45,6 +50,7 @@ mysql -u root -p < schema.sql
 ```
 
 ### Step 2: Configure Database Connection
+
 Edit `../config/database.php` and update the following credentials:
 
 ```php
@@ -55,6 +61,7 @@ private static $password = '';            // Your MySQL password
 ```
 
 ### Step 3: Test Connection
+
 1. Place the project on your web server (Apache/Nginx)
 2. Navigate to: `http://localhost/your-project/backend/database/test_connection.php`
 3. Verify the connection is successful
@@ -62,6 +69,7 @@ private static $password = '';            // Your MySQL password
 ## Database Schema Highlights
 
 ### Key Features:
+
 - **Multilingual Platform**: Arabic (RTL), French, and English via translation tables
 - **Comprehensive User Management**: Separate tables for customers and providers
 - **Service Marketplace**: Categories, services, and provider offerings
@@ -74,6 +82,7 @@ private static $password = '';            // Your MySQL password
 - **CMS Pages**: Localized static pages like Terms, Privacy, FAQ, About
 
 ### Security Features:
+
 - Password hashing support
 - Email verification tokens
 - Phone verification
@@ -82,6 +91,7 @@ private static $password = '';            // Your MySQL password
 - Background check verification
 
 ### Performance Optimizations:
+
 - Strategic indexes on frequently queried columns
 - Efficient foreign key relationships
 - Optimized views for common queries
@@ -98,6 +108,7 @@ private static $password = '';            // Your MySQL password
 ## Sample Data Included
 
 The schema includes initial data:
+
 - 3 Supported languages (English, French, Arabic)
 - 10 Service categories (Cleaning, Gardening, Childcare, etc.)
 - 16 Sample services across categories
@@ -122,18 +133,21 @@ The schema includes initial data:
 ## Maintenance
 
 ### Backup Database
+
 ```bash
 mysqldump -u root -p moueene_db > backup_$(date +%Y%m%d).sql
 ```
 
 ### Restore Database
+
 ```bash
 mysql -u root -p moueene_db < backup_20260126.sql
 ```
 
 ### Check Database Size
+
 ```sql
-SELECT 
+SELECT
     table_schema AS 'Database',
     ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS 'Size (MB)'
 FROM information_schema.tables
@@ -144,18 +158,21 @@ GROUP BY table_schema;
 ## Common Queries
 
 ### Get Total Users
+
 ```sql
 SELECT COUNT(*) as total_users FROM users WHERE account_status = 'active';
 ```
 
 ### Get Total Providers
+
 ```sql
 SELECT COUNT(*) as total_providers FROM providers WHERE verification_status = 'verified';
 ```
 
 ### Get Booking Statistics
+
 ```sql
-SELECT 
+SELECT
     booking_status,
     COUNT(*) as count,
     SUM(final_price) as total_revenue
@@ -164,8 +181,9 @@ GROUP BY booking_status;
 ```
 
 ### Top Rated Providers
+
 ```sql
-SELECT 
+SELECT
     provider_id,
     CONCAT(first_name, ' ', last_name) as provider_name,
     average_rating,
@@ -179,17 +197,20 @@ LIMIT 10;
 ## Troubleshooting
 
 ### Connection Issues
+
 1. Verify MySQL service is running
 2. Check credentials in database.php
 3. Ensure database exists
 4. Verify user permissions
 
 ### Import Errors
+
 1. Check MySQL version compatibility (MySQL 5.7+ or MariaDB 10.2+)
 2. Ensure sufficient privileges
 3. Check for syntax errors in schema.sql
 
 ### Performance Issues
+
 1. Check indexes are created properly
 2. Monitor slow query log
 3. Optimize table periodically: `OPTIMIZE TABLE table_name`
@@ -198,6 +219,7 @@ LIMIT 10;
 ## Support
 
 For database-related issues, please check:
+
 - MySQL error logs: `/var/log/mysql/error.log`
 - PHP error logs: Check your php.ini configuration
 - Application logs: Will be in `../logs/` directory

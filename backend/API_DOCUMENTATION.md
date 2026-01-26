@@ -1,12 +1,15 @@
 # Moueene Platform API Documentation
 
 ## Base URL
+
 ```
 http://localhost/backend/api/v1
 ```
 
 ## Authentication
+
 Most endpoints require authentication using JWT tokens. Include the token in the Authorization header:
+
 ```
 Authorization: Bearer YOUR_JWT_TOKEN
 ```
@@ -16,11 +19,13 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ## Authentication Endpoints
 
 ### Register User/Provider
+
 **POST** `/auth/register`
 
 Register a new user or provider account.
 
 **Request Body:**
+
 ```json
 {
   "email": "user@example.com",
@@ -33,6 +38,7 @@ Register a new user or provider account.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -51,11 +57,13 @@ Register a new user or provider account.
 ---
 
 ### Login
+
 **POST** `/auth/login`
 
 Authenticate user and receive JWT token.
 
 **Request Body:**
+
 ```json
 {
   "email": "user@example.com",
@@ -65,6 +73,7 @@ Authenticate user and receive JWT token.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -86,16 +95,19 @@ Authenticate user and receive JWT token.
 ---
 
 ### Get Current User
+
 **GET** `/auth/me`
 
 Get authenticated user's data.
 
 **Headers:**
+
 ```
 Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -113,11 +125,13 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ---
 
 ### Verify Email
+
 **POST** `/auth/verify-email`
 
 Verify user email address.
 
 **Request Body:**
+
 ```json
 {
   "token": "verification_token_from_email"
@@ -127,11 +141,13 @@ Verify user email address.
 ---
 
 ### Forgot Password
+
 **POST** `/auth/forgot-password`
 
 Request password reset email.
 
 **Request Body:**
+
 ```json
 {
   "email": "user@example.com",
@@ -142,11 +158,13 @@ Request password reset email.
 ---
 
 ### Reset Password
+
 **POST** `/auth/reset-password`
 
 Reset password using token from email.
 
 **Request Body:**
+
 ```json
 {
   "token": "reset_token_from_email",
@@ -160,11 +178,13 @@ Reset password using token from email.
 ## Services Endpoints
 
 ### Get All Services
+
 **GET** `/services`
 
 Retrieve all services with optional filters.
 
 **Query Parameters:**
+
 - `category_id` (optional) - Filter by category
 - `search` (optional) - Search in name/description
 - `lang` (optional) - Language code (en, fr, ar) - default: en
@@ -172,11 +192,13 @@ Retrieve all services with optional filters.
 - `limit` (optional) - Items per page - default: 20
 
 **Example Request:**
+
 ```
 GET /services?category_id=1&lang=en&page=1&limit=10
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -187,7 +209,7 @@ GET /services?category_id=1&lang=en&page=1&limit=10
       "category_id": 1,
       "service_name": "House Cleaning",
       "description": "Complete house cleaning service",
-      "base_price": 150.00,
+      "base_price": 150.0,
       "duration_minutes": 120,
       "is_popular": true,
       "average_rating": 4.5
@@ -206,15 +228,18 @@ GET /services?category_id=1&lang=en&page=1&limit=10
 ---
 
 ### Get Popular Services
+
 **GET** `/services/popular`
 
 Retrieve popular services.
 
 **Query Parameters:**
+
 - `lang` (optional) - Language code - default: en
 - `limit` (optional) - Number of results - default: 10
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -223,7 +248,7 @@ Retrieve popular services.
       "service_id": 1,
       "service_name": "House Cleaning",
       "description": "Complete house cleaning service",
-      "base_price": 150.00,
+      "base_price": 150.0,
       "is_popular": true
     }
   ]
@@ -233,14 +258,17 @@ Retrieve popular services.
 ---
 
 ### Get Single Service
+
 **GET** `/services/{service_id}`
 
 Get detailed information about a specific service.
 
 **Query Parameters:**
+
 - `lang` (optional) - Language code - default: en
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -251,7 +279,7 @@ Get detailed information about a specific service.
     "service_name": "House Cleaning",
     "description": "Complete house cleaning service",
     "detailed_description": "Detailed service information...",
-    "base_price": 150.00,
+    "base_price": 150.0,
     "duration_minutes": 120,
     "is_popular": true,
     "average_rating": 4.5,
@@ -265,14 +293,17 @@ Get detailed information about a specific service.
 ## Categories Endpoints
 
 ### Get All Categories
+
 **GET** `/categories`
 
 Retrieve all service categories.
 
 **Query Parameters:**
+
 - `lang` (optional) - Language code (en, fr, ar) - default: en
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -294,19 +325,23 @@ Retrieve all service categories.
 ## Content Pages Endpoints
 
 ### Get Content Page
+
 **GET** `/content/{page_slug}`
 
 Retrieve CMS page content (About, Terms, Privacy, FAQ, etc.)
 
 **Query Parameters:**
+
 - `lang` (optional) - Language code - default: en
 
 **Example:**
+
 ```
 GET /content/about?lang=en
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -335,6 +370,7 @@ All error responses follow this format:
 ```
 
 ### Common HTTP Status Codes:
+
 - `200` - Success
 - `201` - Created
 - `400` - Bad Request
@@ -346,6 +382,7 @@ All error responses follow this format:
 - `500` - Internal Server Error
 
 ### Validation Error Response:
+
 ```json
 {
   "success": false,
@@ -360,11 +397,13 @@ All error responses follow this format:
 ---
 
 ## Rate Limiting
+
 API requests are limited to **100 requests per minute** per IP address.
 
 ---
 
 ## Supported Languages
+
 - `en` - English (default)
 - `fr` - French (Français)
 - `ar` - Arabic (العربية)
@@ -372,7 +411,9 @@ API requests are limited to **100 requests per minute** per IP address.
 ---
 
 ## Coming Soon
+
 The following endpoints are under development:
+
 - `/users` - User profile management
 - `/providers` - Provider listings and profiles
 - `/bookings` - Service bookings
@@ -386,6 +427,7 @@ The following endpoints are under development:
 ## Testing the API
 
 ### Using cURL:
+
 ```bash
 # Register
 curl -X POST http://localhost/backend/api/v1/auth/register \
@@ -405,6 +447,7 @@ curl http://localhost/backend/api/v1/categories?lang=fr
 ```
 
 ### Using Postman:
+
 1. Import the endpoints into Postman
 2. Set base URL: `http://localhost/backend/api/v1`
 3. For authenticated endpoints, add Authorization header with Bearer token
@@ -412,4 +455,5 @@ curl http://localhost/backend/api/v1/categories?lang=fr
 ---
 
 ## Support
+
 For issues or questions about the API, please contact the development team.

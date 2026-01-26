@@ -3,9 +3,11 @@
 ## 🎉 What Has Been Created
 
 ### 1. Database Schema (Enhanced)
+
 **Location:** `backend/database/schema.sql`
 
 **Tables Created:** 21 tables
+
 - ✅ `languages` - Platform languages (EN, FR, AR)
 - ✅ `users` - Customer accounts
 - ✅ `providers` - Service provider accounts
@@ -28,6 +30,7 @@
 - ✅ `admin_users` - Admin accounts
 
 **Features:**
+
 - 6 triggers for automated calculations
 - 2 views for optimized queries
 - Full multilingual support (EN/FR/AR with RTL)
@@ -38,12 +41,14 @@
 ### 2. Configuration Files
 
 #### `backend/config/database.php`
+
 - Singleton PDO connection
 - Helper functions (fetchAll, fetchOne, executeQuery)
 - Error handling and logging
 - Connection testing utilities
 
 #### `backend/config/app.php`
+
 - Application settings
 - Localization config
 - Security settings (JWT, passwords)
@@ -54,6 +59,7 @@
 - API settings
 
 #### `backend/config/constants.php`
+
 - Global constants
 - Roles, statuses, types
 - HTTP codes
@@ -62,6 +68,7 @@
 - Date formats
 
 #### `backend/config/.env.example`
+
 - Environment variables template
 - Database credentials
 - API keys
@@ -71,6 +78,7 @@
 ### 3. Utility Classes
 
 #### `backend/utils/Response.php`
+
 - Consistent JSON responses
 - Success/error responses
 - Paginated responses
@@ -78,6 +86,7 @@
 - Validation error formatting
 
 #### `backend/utils/Validator.php`
+
 - Comprehensive validation
 - Required, email, phone validation
 - Min/max length and value
@@ -86,6 +95,7 @@
 - Custom error messages
 
 #### `backend/utils/Auth.php`
+
 - JWT token generation
 - Token verification
 - Bearer token extraction
@@ -96,6 +106,7 @@
 ### 4. Middleware
 
 #### `backend/middleware/CORS.php`
+
 - Cross-origin resource sharing
 - Configurable allowed origins
 - Preflight request handling
@@ -104,6 +115,7 @@
 ### 5. API Endpoints
 
 #### Main Router: `backend/api/index.php`
+
 - RESTful routing
 - Error handling
 - Endpoint registration
@@ -111,6 +123,7 @@
 #### Implemented Endpoints:
 
 **Authentication** (`/api/v1/auth/*`)
+
 - ✅ POST `/register` - User/provider registration
 - ✅ POST `/login` - Authentication
 - ✅ POST `/logout` - Logout
@@ -120,17 +133,21 @@
 - ✅ POST `/reset-password` - Password reset
 
 **Services** (`/api/v1/services/*`)
+
 - ✅ GET `/` - List services (pagination, filters, i18n)
 - ✅ GET `/{id}` - Get single service
 - ✅ GET `/popular` - Popular services
 
 **Categories** (`/api/v1/categories`)
+
 - ✅ GET `/` - List categories (i18n)
 
 **Content** (`/api/v1/content/{slug}`)
+
 - ✅ GET `/{slug}` - Get CMS page (i18n)
 
 **Placeholder Endpoints:**
+
 - 🔜 `/users` - User management
 - 🔜 `/providers` - Provider management
 - 🔜 `/bookings` - Booking system
@@ -216,11 +233,13 @@ Mouin/
 ## 🚀 Quick Start
 
 ### Step 1: Import Database
+
 ```bash
 mysql -u root -p < backend/database/schema.sql
 ```
 
 ### Step 2: Configure Environment
+
 ```bash
 # Copy environment template
 cp backend/config/.env.example backend/config/.env
@@ -230,7 +249,9 @@ nano backend/config/.env
 ```
 
 ### Step 3: Update Database Credentials
+
 Edit `backend/config/database.php`:
+
 ```php
 private static $host = 'localhost';
 private static $db_name = 'moueene_db';
@@ -239,13 +260,17 @@ private static $password = 'your_password';
 ```
 
 ### Step 4: Test Database Connection
+
 Navigate to:
+
 ```
 http://localhost/Mouin/backend/database/test_connection.php
 ```
 
 ### Step 5: Test API
+
 Navigate to:
+
 ```
 http://localhost/Mouin/backend/api/v1
 ```
@@ -257,16 +282,19 @@ http://localhost/Mouin/backend/api/v1
 ### Using cURL
 
 **Get Services:**
+
 ```bash
 curl http://localhost/Mouin/backend/api/v1/services?lang=en
 ```
 
 **Get Categories in French:**
+
 ```bash
 curl http://localhost/Mouin/backend/api/v1/categories?lang=fr
 ```
 
 **Register User:**
+
 ```bash
 curl -X POST http://localhost/Mouin/backend/api/v1/auth/register \
   -H "Content-Type: application/json" \
@@ -281,6 +309,7 @@ curl -X POST http://localhost/Mouin/backend/api/v1/auth/register \
 ```
 
 **Login:**
+
 ```bash
 curl -X POST http://localhost/Mouin/backend/api/v1/auth/login \
   -H "Content-Type: application/json" \
@@ -292,6 +321,7 @@ curl -X POST http://localhost/Mouin/backend/api/v1/auth/login \
 ```
 
 **Get Current User (with token):**
+
 ```bash
 curl http://localhost/Mouin/backend/api/v1/auth/me \
   -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE"
@@ -310,6 +340,7 @@ curl http://localhost/Mouin/backend/api/v1/auth/me \
 ## 🔐 Default Credentials
 
 ### Admin Panel
+
 - **Email:** admin@moueene.com
 - **Password:** Admin@123456
 - **Type:** admin
@@ -322,13 +353,14 @@ curl http://localhost/Mouin/backend/api/v1/auth/me \
 
 The platform supports 3 languages:
 
-| Code | Language | Direction | Status |
-|------|----------|-----------|--------|
+| Code | Language | Direction | Status  |
+| ---- | -------- | --------- | ------- |
 | `en` | English  | LTR       | Default |
 | `fr` | Français | LTR       | Active  |
 | `ar` | العربية  | RTL       | Active  |
 
 Use `?lang=` parameter in API requests:
+
 ```
 GET /api/v1/services?lang=fr
 GET /api/v1/categories?lang=ar
@@ -340,6 +372,7 @@ GET /api/v1/content/about?lang=en
 ## ✨ Key Features
 
 ### Security
+
 - ✅ JWT authentication
 - ✅ Password hashing (bcrypt)
 - ✅ Email verification
@@ -348,6 +381,7 @@ GET /api/v1/content/about?lang=en
 - ✅ SQL injection prevention (PDO prepared statements)
 
 ### API Features
+
 - ✅ RESTful architecture
 - ✅ Pagination
 - ✅ Search & filtering
@@ -356,6 +390,7 @@ GET /api/v1/content/about?lang=en
 - ✅ Rate limiting ready
 
 ### Database
+
 - ✅ 21 normalized tables
 - ✅ Translation tables
 - ✅ Automated triggers
@@ -363,6 +398,7 @@ GET /api/v1/content/about?lang=en
 - ✅ Foreign key constraints
 
 ### Development
+
 - ✅ Clean code structure
 - ✅ Comprehensive documentation
 - ✅ Environment configuration
@@ -374,6 +410,7 @@ GET /api/v1/content/about?lang=en
 ## 📝 Next Development Steps
 
 ### Immediate Priorities
+
 1. **Test all implemented endpoints**
 2. **Configure SMTP for emails**
 3. **Implement remaining endpoints:**
@@ -385,18 +422,21 @@ GET /api/v1/content/about?lang=en
    - Messaging system
 
 ### Short Term
+
 4. **File upload system** (profiles, documents)
 5. **Email notifications**
 6. **SMS verification** (optional)
 7. **Search optimization**
 
 ### Medium Term
+
 8. **Payment gateway integration** (Stripe/PayPal)
 9. **Admin dashboard backend**
 10. **Reporting & analytics**
 11. **Real-time notifications**
 
 ### Long Term
+
 12. **Unit & integration tests**
 13. **Performance optimization**
 14. **Caching layer** (Redis)
@@ -418,42 +458,46 @@ GET /api/v1/content/about?lang=en
 
 ## 📚 Documentation Files
 
-| File | Description |
-|------|-------------|
+| File                                                 | Description                          |
+| ---------------------------------------------------- | ------------------------------------ |
 | [API_DOCUMENTATION.md](backend/API_DOCUMENTATION.md) | Complete API reference with examples |
-| [backend/README.md](backend/README.md) | Backend setup and usage guide |
-| [database/README.md](backend/database/README.md) | Database schema documentation |
+| [backend/README.md](backend/README.md)               | Backend setup and usage guide        |
+| [database/README.md](backend/database/README.md)     | Database schema documentation        |
 
 ---
 
 ## ⚙️ Configuration Files
 
-| File | Purpose |
-|------|---------|
-| `config/database.php` | Database connection settings |
-| `config/app.php` | Application configuration |
-| `config/constants.php` | Global constants |
-| `config/.env.example` | Environment variables template |
+| File                   | Purpose                        |
+| ---------------------- | ------------------------------ |
+| `config/database.php`  | Database connection settings   |
+| `config/app.php`       | Application configuration      |
+| `config/constants.php` | Global constants               |
+| `config/.env.example`  | Environment variables template |
 
 ---
 
 ## 🐛 Troubleshooting
 
 ### Database Connection Failed
+
 - Verify MySQL is running: `systemctl status mysql`
 - Check credentials in `config/database.php`
 - Ensure database exists: `mysql -u root -p -e "SHOW DATABASES;"`
 
 ### API Returns 404
+
 - Check `.htaccess` file exists in backend/
 - Verify mod_rewrite is enabled: `a2enmod rewrite`
 - Restart Apache: `systemctl restart apache2`
 
 ### CORS Errors
+
 - Update allowed origins in `config/app.php`
 - Check CORS middleware is loaded
 
 ### JWT Token Invalid
+
 - Verify secret key is set in `config/app.php`
 - Check token hasn't expired (default: 1 hour)
 
@@ -462,6 +506,7 @@ GET /api/v1/content/about?lang=en
 ## 📞 Support
 
 For issues or questions:
+
 1. Check documentation files
 2. Review error logs in `logs/` directory
 3. Enable debug mode in `config/app.php`
@@ -478,6 +523,7 @@ Copyright © 2026 Moueene Platform. All rights reserved.
 **Status:** Backend framework is complete and ready for development! ✅
 
 All core infrastructure is in place. You can now:
+
 - Test the API endpoints
 - Start implementing remaining features
 - Connect your frontend

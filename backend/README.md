@@ -53,6 +53,7 @@ backend/
 ## Quick Start Guide
 
 ### Prerequisites
+
 - PHP 7.4 or higher
 - MySQL 5.7+ or MariaDB 10.2+
 - Web server (Apache/Nginx with mod_rewrite enabled)
@@ -62,18 +63,21 @@ backend/
 ### Installation Steps
 
 1. **Import Database Schema**
+
    ```bash
    mysql -u root -p < database/schema.sql
    ```
 
 2. **Configure Environment**
-   
+
    Copy `.env.example` to `.env` and update:
+
    ```bash
    cp config/.env.example config/.env
    ```
-   
+
    Edit `config/.env` with your credentials:
+
    ```env
    DB_HOST=localhost
    DB_NAME=moueene_db
@@ -83,10 +87,11 @@ backend/
    ```
 
 3. **Update Database Credentials**
-   
+
    EdMaking API Requests
 
 **Register a new user:**
+
 ```bash
 curl -X POST http://localhost/backend/api/v1/auth/register \
   -H "Content-Type: application/json" \
@@ -100,6 +105,7 @@ curl -X POST http://localhost/backend/api/v1/auth/register \
 ```
 
 **Login:**
+
 ```bash
 curl -X POST http://localhost/backend/api/v1/auth/login \
   -H "Content-Type: application/json" \
@@ -111,32 +117,38 @@ curl -X POST http://localhost/backend/api/v1/auth/login \
 ```
 
 **Get Services:**
+
 ```bash
 curl http://localhost/backend/api/v1/services?lang=en&page=1&limit=10
 ```
 
 **Get Categories (in French):**
+
 ```bash
 curl http://localhost/backend/api/v1/categories?lang=fr
 ```
 
 **Get Authenticated User:**
+
 ```bash
 curl http://localhost/backend/api/v1/auth/me \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
 #### Database Operations (Internal)
-   Navigate to:
-   ```
-   http://localhost/your-project/backend/api/v1
-   ```
-   
-   You should see the API welcome response with available endpoints.
+
+Navigate to:
+
+```
+http://localhost/your-project/backend/api/v1
+```
+
+You should see the API welcome response with available endpoints.
 
 ### Usage Examples
 
 #### Connect to Database
+
 ```php
 <?php
 require_once 'backend/config/database.php';
@@ -153,6 +165,7 @@ if ($result['status'] === 'success') {
 ```
 
 #### Execute Queries
+
 ```php
 <?php
 require_once 'backend/config/database.php';
@@ -164,7 +177,7 @@ $users = fetchAll("SELECT * FROM users WHERE account_status = ?", ['active']);
 $user = fetchOne("SELECT * FROM users WHERE email = ?", ['user@example.com']);
 
 // Execute insert/update
-executeQuery("INSERT INTO users (email, password_hash, first_name, last_name) VALUES (?, ?, ?, ?)", 
+executeQuery("INSERT INTO users (email, password_hash, first_name, last_name) VALUES (?, ?, ?, ?)",
     ['john@example.com', password_hash('password123', PASSWORD_DEFAULT), 'John', 'Doe']
 );
 
@@ -176,6 +189,7 @@ $lastId = getLastInsertId();
 ## Database Features
 
 ### Security
+
 - ✅ Password hashing ready
 - ✅ Email verification system
 - ✅ Phone verification support
@@ -184,6 +198,7 @@ $lastId = getLastInsertId();
 - ✅ Document verification for providers
 
 ### Functionality
+
 - ✅ User and provider management
 - ✅ Service catalog system
 - ✅API Endpoints
@@ -193,6 +208,7 @@ The backend provides the following REST API endpoints:
 ### ✅ Implemented Endpoints
 
 **Authentication:**
+
 - `POST /api/v1/auth/register` - User/Provider registration
 - `POST /api/v1/auth/login` - User/Provider login
 - `POST /api/v1/auth/logout` - Logout
@@ -201,12 +217,14 @@ The backend provides the following REST API endpoints:
 - `Features Implemented
 
 ✅ **RESTful API Architecture**
+
 - Clean URL routing
 - Consistent JSON responses
 - Proper HTTP status codes
 - Error handling
 
 ✅ **Authentication & Security**
+
 - JWT token-based authentication
 - Password hashing with bcrypt
 - Email verification system
@@ -214,33 +232,39 @@ The backend provides the following REST API endpoints:
 - CORS support
 
 ✅ **Multilingual Support**
+
 - English, French, Arabic
 - RTL support for Arabic
 - Translation tables for dynamic content
 - Language detection from query params
 
 ✅ **Data Validation**
+
 - Comprehensive validator class
 - Required fields, email, phone validation
 - Min/max length and value checks
 - Pattern matching support
 
 ✅ **Database Layer**
+
 - PDO with prepared statements
 - Connection pooling
 - Helper functions for common operations
 - Transaction support ready
 
 ✅ **API Features**
+
 - Pagination support
 - Search and filtering
 - Multilingual content delivery
 - Structured error responses**Implement Remaining Endpoints** - Users, Providers, Bookings, Payments
+
 6. **Email Service** - Configure SMTP for notifications
 7. **Payment Gateway** - Integrate Stripe/PayPal
 8. **File Upload** - Implement profile pictures and documents
 9. **Admin Panel** - Build backend management interface
 10. **Testing** - Write unit and integration tests
+
 - ✅ Optimized indexes
 - ✅ Foreign key relationships
 - ✅ Automated triggers
@@ -250,6 +274,7 @@ The backend provides the following REST API endpoints:
 ## Default Credentials
 
 ### Admin Panel
+
 - **Username:** admin
 - **Email:** admin@moueene.com
 - **Password:** Admin@123456
@@ -337,11 +362,13 @@ STRIPE_SECRET=your_stripe_secret
 ## Troubleshooting
 
 ### Database Connection Failed
+
 - Verify MySQL is running: `systemctl status mysql`
 - Check credentials in database.php
 - Ensure database exists: `SHOW DATABASES;`
 
 ### Permission Denied
+
 - Grant proper privileges:
   ```sql
   GRANT ALL PRIVILEGES ON moueene_db.* TO 'your_user'@'localhost';
@@ -349,16 +376,19 @@ STRIPE_SECRET=your_stripe_secret
   ```
 
 ### Table Not Found
+
 - Ensure schema.sql was imported correctly
 - Check database name in connection config
 
 ### Missing Translations
+
 - Ensure entries exist in `languages`
 - Add entries to `service_category_translations`, `service_translations`, and `content_page_translations`
 
 ## Support
 
 For issues or questions:
+
 - Check database/README.md for detailed documentation
 - Review error logs in `/var/log/mysql/`
 - Enable PHP error reporting for debugging

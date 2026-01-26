@@ -3,6 +3,7 @@
 This directory will contain model classes for database entities.
 
 ## Planned Classes:
+
 - User.php - User model
 - Provider.php - Provider model
 - Service.php - Service model
