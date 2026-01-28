@@ -7,6 +7,20 @@
  * @version 1.0.0
  */
 
+// DEBUG MODE - Remove after testing
+if (isset($_GET['debug'])) {
+    header('Content-Type: application/json');
+    echo json_encode([
+        'REQUEST_URI' => $_SERVER['REQUEST_URI'] ?? '',
+        'SCRIPT_NAME' => $_SERVER['SCRIPT_NAME'] ?? '',
+        'PHP_SELF' => $_SERVER['PHP_SELF'] ?? '',
+        'PATH_INFO' => $_SERVER['PATH_INFO'] ?? 'not set',
+        'QUERY_STRING' => $_SERVER['QUERY_STRING'] ?? '',
+        'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'] ?? '',
+    ], JSON_PRETTY_PRINT);
+    exit;
+}
+
 // Define access constant
 define('APP_ACCESS', true);
 
