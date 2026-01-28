@@ -19,11 +19,13 @@
   const PHRASES = {
     fr: {
       // Brand
-      "Moueene": "Moueene",
-      "MOUEENE": "MOUEENE",
-      "Moueene - Home Services Platform": "Moueene - Plateforme de services à domicile",
-      "Moueene - Connect with trusted service providers for all your needs": "Moueene - Connectez-vous avec des prestataires de confiance pour tous vos besoins",
-      
+      Moueene: "Moueene",
+      MOUEENE: "MOUEENE",
+      "Moueene - Home Services Platform":
+        "Moueene - Plateforme de services à domicile",
+      "Moueene - Connect with trusted service providers for all your needs":
+        "Moueene - Connectez-vous avec des prestataires de confiance pour tous vos besoins",
+
       // Navigation
       Home: "Accueil",
       Services: "Services",
@@ -36,62 +38,76 @@
       "Sign Up Now": "Inscrivez-vous maintenant",
       "Book Now": "Réserver",
       "Become a Service Provider": "Devenir prestataire",
-      
+
       // Hero Section
       "WELCOME TO MOUEENE": "BIENVENUE SUR MOUEENE",
-      "Your one-stop solution for all home service needs, connecting you with trusted professionals for cleaning, gardening, nursing, and more.": "Votre solution unique pour tous vos besoins de services à domicile, vous connectant avec des professionnels de confiance pour le nettoyage, le jardinage, les soins infirmiers et plus encore.",
-      "What service do you need today?": "De quel service avez-vous besoin aujourd'hui ?",
-      
+      "Your one-stop solution for all home service needs, connecting you with trusted professionals for cleaning, gardening, nursing, and more.":
+        "Votre solution unique pour tous vos besoins de services à domicile, vous connectant avec des professionnels de confiance pour le nettoyage, le jardinage, les soins infirmiers et plus encore.",
+      "What service do you need today?":
+        "De quel service avez-vous besoin aujourd'hui ?",
+
       // Categories
       "Discover Popular Categories": "Découvrez les catégories populaires",
-      "Browse through our most requested service categories": "Parcourez nos catégories de services les plus demandées",
-      "Childcare": "Garde d'enfants",
-      "Tutoring": "Cours particuliers",
-      "Cleaning": "Nettoyage",
-      "Gardening": "Jardinage",
+      "Browse through our most requested service categories":
+        "Parcourez nos catégories de services les plus demandées",
+      Childcare: "Garde d'enfants",
+      Tutoring: "Cours particuliers",
+      Cleaning: "Nettoyage",
+      Gardening: "Jardinage",
       "Pet Care": "Soins pour animaux",
       "Elderly Care": "Soins aux personnes âgées",
-      "Repairs": "Réparations",
+      Repairs: "Réparations",
       "Home Services": "Services à domicile",
-      
+
       // How It Works
-      "Getting started with Moueene is easy": "Commencer avec Moueene est facile",
+      "Getting started with Moueene is easy":
+        "Commencer avec Moueene est facile",
       "Choose Service": "Choisir un service",
-      "Browse through our categories and find the service you need": "Parcourez nos catégories et trouvez le service dont vous avez besoin",
+      "Browse through our categories and find the service you need":
+        "Parcourez nos catégories et trouvez le service dont vous avez besoin",
       "Find Provider": "Trouver un prestataire",
-      "Compare profiles, reviews, and rates to find your perfect match": "Comparez les profils, les avis et les tarifs pour trouver votre partenaire idéal",
-      "Book": "Réserver",
-      "Schedule your service at a time that works best for you": "Planifiez votre service au moment qui vous convient le mieux",
-      "Evaluation": "Évaluation",
-      "Rate your experience and help others find great service": "Évaluez votre expérience et aidez les autres à trouver un excellent service",
-      
+      "Compare profiles, reviews, and rates to find your perfect match":
+        "Comparez les profils, les avis et les tarifs pour trouver votre partenaire idéal",
+      Book: "Réserver",
+      "Schedule your service at a time that works best for you":
+        "Planifiez votre service au moment qui vous convient le mieux",
+      Evaluation: "Évaluation",
+      "Rate your experience and help others find great service":
+        "Évaluez votre expérience et aidez les autres à trouver un excellent service",
+
       // Featured Services
       "Top Services": "Meilleurs services",
-      "Explore our most booked services right now": "Explorez nos services les plus réservés en ce moment",
+      "Explore our most booked services right now":
+        "Explorez nos services les plus réservés en ce moment",
       "Browse All Services": "Parcourir tous les services",
       "Quick View": "Aperçu rapide",
       "Loading top services...": "Chargement des meilleurs services...",
-      "No services available right now.": "Aucun service disponible pour le moment.",
-      "Failed to load top services": "Échec du chargement des meilleurs services",
-      
+      "No services available right now.":
+        "Aucun service disponible pour le moment.",
+      "Failed to load top services":
+        "Échec du chargement des meilleurs services",
+
       // CTA Section
       "Ready to Get Started?": "Prêt à commencer ?",
-      "Join thousands of satisfied customers and trusted service providers on Moueene": "Rejoignez des milliers de clients satisfaits et de prestataires de confiance sur Moueene",
+      "Join thousands of satisfied customers and trusted service providers on Moueene":
+        "Rejoignez des milliers de clients satisfaits et de prestataires de confiance sur Moueene",
       "Contact Us": "Contactez-nous",
-      
+
       // Footer
       "Quick Links": "Liens rapides",
       "Find Providers": "Trouver des prestataires",
-      "Support": "Assistance",
-      "FAQ": "FAQ",
+      Support: "Assistance",
+      FAQ: "FAQ",
       "Privacy Policy": "Politique de confidentialité",
       "Terms of Service": "Conditions d'utilisation",
       "Help Center": "Centre d'aide",
       "All rights reserved.": "Tous droits réservés.",
-      "© 2026 Moueene. All rights reserved.": "© 2026 Moueene. Tous droits réservés.",
+      "© 2026 Moueene. All rights reserved.":
+        "© 2026 Moueene. Tous droits réservés.",
       "2026 Moueene": "2026 Moueene",
-      "Moueene connects customers with trusted service providers for all their home and personal needs.": "Moueene connecte les clients avec des prestataires de confiance pour tous leurs besoins domestiques et personnels.",
-      
+      "Moueene connects customers with trusted service providers for all their home and personal needs.":
+        "Moueene connecte les clients avec des prestataires de confiance pour tous leurs besoins domestiques et personnels.",
+
       // Auth Pages
       "Welcome Back": "Bon retour",
       "Welcome back": "Bon retour",
@@ -99,23 +115,26 @@
       Customer: "Client",
       Provider: "Prestataire",
       "Admin Portal": "Portail Admin",
-      "Sign in to manage the platform": "Connectez-vous pour gérer la plateforme",
+      "Sign in to manage the platform":
+        "Connectez-vous pour gérer la plateforme",
       "Email Address": "Adresse e-mail",
-      "Email": "E-mail",
+      Email: "E-mail",
       Password: "Mot de passe",
       "Enter your password": "Entrez votre mot de passe",
       "Sign In": "Se connecter",
       "Signing in...": "Connexion...",
       "Back to main site": "Retour au site",
       "Invalid credentials": "Identifiants invalides",
-      "Connection error. Please try again.": "Erreur de connexion. Veuillez réessayer.",
+      "Connection error. Please try again.":
+        "Erreur de connexion. Veuillez réessayer.",
       "Remember me": "Se souvenir de moi",
       "Forgot Password?": "Mot de passe oublié ?",
       "Or continue with": "Ou continuer avec",
       "Don't have an account?": "Vous n'avez pas de compte ?",
       "Already have an account?": "Vous avez déjà un compte ?",
-      "Connecting you with trusted professionals for all your home service needs.": "Vous connecter avec des professionnels de confiance pour tous vos besoins de services à domicile.",
-      
+      "Connecting you with trusted professionals for all your home service needs.":
+        "Vous connecter avec des professionnels de confiance pour tous vos besoins de services à domicile.",
+
       // Registration
       "Create Account": "Créer un compte",
       "Join Moueene today": "Rejoignez Moueene aujourd'hui",
@@ -125,10 +144,10 @@
       "Confirm Password": "Confirmer le mot de passe",
       "I agree to the": "J'accepte les",
       "Terms and Conditions": "Conditions générales",
-      "and": "et",
+      and: "et",
       "Create your account": "Créer votre compte",
       "hello@example.com": "bonjour@exemple.com",
-      
+
       // Dashboard
       "Loading bookings...": "Chargement des réservations...",
       "No active bookings found.": "Aucune réservation active trouvée.",
@@ -148,25 +167,29 @@
       "Active Bookings": "Réservations actives",
       "Completed Bookings": "Réservations terminées",
       "My Bookings": "Mes réservations",
-      "Favorites": "Favoris",
-      "Notifications": "Notifications",
+      Favorites: "Favoris",
+      Notifications: "Notifications",
       "View All": "Voir tout",
-      
+
       // Validation
       "This field is required": "Ce champ est obligatoire",
-      "Please enter a valid email address": "Veuillez saisir une adresse e-mail valide",
+      "Please enter a valid email address":
+        "Veuillez saisir une adresse e-mail valide",
       "Passwords do not match": "Les mots de passe ne correspondent pas",
-      "Registration failed. Please try again.": "L'inscription a échoué. Veuillez réessayer.",
-      "Login failed. Please try again.": "La connexion a échoué. Veuillez réessayer.",
+      "Registration failed. Please try again.":
+        "L'inscription a échoué. Veuillez réessayer.",
+      "Login failed. Please try again.":
+        "La connexion a échoué. Veuillez réessayer.",
       "Failed to update profile.": "Échec de la mise à jour du profil.",
       "Failed to change password.": "Échec du changement de mot de passe.",
-      
+
       // Access
       "Access denied": "Accès refusé",
-      "You do not have permission to view this page.": "Vous n'avez pas la permission de voir cette page.",
+      "You do not have permission to view this page.":
+        "Vous n'avez pas la permission de voir cette page.",
       Message: "Message",
       OK: "OK",
-      
+
       // Provider Status
       Account: "Compte",
       "Account Suspended": "Compte suspendu",
@@ -174,28 +197,29 @@
       "Verified Provider": "Prestataire vérifié",
       "Verification Rejected": "Vérification refusée",
       "Pending Verification": "Vérification en attente",
-      
+
       // Services Page
       "All Services": "Tous les services",
-      "Find the perfect service for your needs": "Trouvez le service parfait pour vos besoins",
-      "Filter": "Filtrer",
-      "Filters": "Filtres",
-      "Category": "Catégorie",
-      "Categories": "Catégories",
+      "Find the perfect service for your needs":
+        "Trouvez le service parfait pour vos besoins",
+      Filter: "Filtrer",
+      Filters: "Filtres",
+      Category: "Catégorie",
+      Categories: "Catégories",
       "All Categories": "Toutes les catégories",
       "Price Range": "Fourchette de prix",
-      "Min": "Min",
-      "Max": "Max",
-      "Rating": "Note",
+      Min: "Min",
+      Max: "Max",
+      Rating: "Note",
       "Apply Filters": "Appliquer les filtres",
       "Clear Filters": "Effacer les filtres",
       "Sort by": "Trier par",
       "Most Popular": "Plus populaires",
-      "Newest": "Plus récents",
+      Newest: "Plus récents",
       "Price: Low to High": "Prix : croissant",
       "Price: High to Low": "Prix : décroissant",
       "Highest Rated": "Mieux notés",
-      "reviews": "avis",
+      reviews: "avis",
       "No services found": "Aucun service trouvé",
       "per hour": "par heure",
       "/hr": "/h",
@@ -203,7 +227,7 @@
       "Starting from": "À partir de",
       "Book Service": "Réserver le service",
       "View Details": "Voir les détails",
-      
+
       // About Page
       "About Moueene": "À propos de Moueene",
       "Our Story": "Notre histoire",
@@ -211,22 +235,22 @@
       "Our Vision": "Notre vision",
       "Our Values": "Nos valeurs",
       "Meet Our Team": "Rencontrez notre équipe",
-      "Trust": "Confiance",
-      "Quality": "Qualité",
-      "Innovation": "Innovation",
-      "Community": "Communauté",
-      
+      Trust: "Confiance",
+      Quality: "Qualité",
+      Innovation: "Innovation",
+      Community: "Communauté",
+
       // Contact Page
       "Get in Touch": "Contactez-nous",
       "Send us a message": "Envoyez-nous un message",
       "Your Name": "Votre nom",
       "Your Email": "Votre e-mail",
-      "Subject": "Sujet",
+      Subject: "Sujet",
       "Your Message": "Votre message",
       "Send Message": "Envoyer le message",
-      "Address": "Adresse",
-      "Phone": "Téléphone",
-      
+      Address: "Adresse",
+      Phone: "Téléphone",
+
       // Admin
       "Admin Dashboard": "Tableau de bord Admin",
       "Admin Panel": "Panneau Admin",
@@ -234,11 +258,11 @@
       "Admin Login - Moueene": "Connexion Admin - Moueene",
       "Dashboard Overview": "Aperçu du tableau de bord",
       "Super Admin": "Super Admin",
-      "Users": "Utilisateurs",
-      "Transactions": "Transactions",
-      "Analytics": "Analytiques",
-      "Documents": "Documents",
-      "Verifications": "Vérifications",
+      Users: "Utilisateurs",
+      Transactions: "Transactions",
+      Analytics: "Analytiques",
+      Documents: "Documents",
+      Verifications: "Vérifications",
       "Total Users": "Total utilisateurs",
       "Total Providers": "Total prestataires",
       "Total Bookings": "Total réservations",
@@ -246,7 +270,8 @@
       "Total Revenue": "Revenu total",
       "Total Amount": "Montant total",
       "Pending Verifications": "Vérifications en attente",
-      "Pending Provider Verifications": "Vérifications de prestataires en attente",
+      "Pending Provider Verifications":
+        "Vérifications de prestataires en attente",
       "No pending verifications": "Aucune vérification en attente",
       "Recent Activity": "Activité récente",
       "Recent Providers": "Prestataires récents",
@@ -257,87 +282,93 @@
       "Manage Services": "Gérer les services",
       "Manage Bookings": "Gérer les réservations",
       "Manage Users - Admin - Moueene": "Gérer utilisateurs - Admin - Moueene",
-      "Manage Providers - Admin - Moueene": "Gérer prestataires - Admin - Moueene",
+      "Manage Providers - Admin - Moueene":
+        "Gérer prestataires - Admin - Moueene",
       "Manage Services - Admin - Moueene": "Gérer services - Admin - Moueene",
-      "Manage Bookings - Admin - Moueene": "Gérer réservations - Admin - Moueene",
+      "Manage Bookings - Admin - Moueene":
+        "Gérer réservations - Admin - Moueene",
       "Analytics - Admin - Moueene": "Analytiques - Admin - Moueene",
       "Transactions - Admin - Moueene": "Transactions - Admin - Moueene",
-      "Provider Documents - Admin - Moueene": "Documents prestataires - Admin - Moueene",
-      "Provider Verifications - Admin - Moueene": "Vérifications prestataires - Admin - Moueene",
-      "Management": "Gestion",
-      "Approve": "Approuver",
-      "Reject": "Rejeter",
+      "Provider Documents - Admin - Moueene":
+        "Documents prestataires - Admin - Moueene",
+      "Provider Verifications - Admin - Moueene":
+        "Vérifications prestataires - Admin - Moueene",
+      Management: "Gestion",
+      Approve: "Approuver",
+      Reject: "Rejeter",
       "Reject Provider": "Rejeter le prestataire",
       "Rejection Reason": "Motif de rejet",
       "Provide a reason": "Fournir une raison",
-      "Please provide a reason for rejection": "Veuillez fournir un motif de rejet",
+      "Please provide a reason for rejection":
+        "Veuillez fournir un motif de rejet",
       "Confirm Action": "Confirmer l'action",
       "Please confirm to continue": "Veuillez confirmer pour continuer",
       "This action cannot be undone": "Cette action ne peut pas être annulée",
       "This will be saved in records": "Ceci sera enregistré dans les dossiers",
-      "Suspend": "Suspendre",
-      "Suspended": "Suspendu",
-      "Deactivated": "Désactivé",
-      "Activate": "Activer",
-      "Delete": "Supprimer",
-      "Edit": "Modifier",
-      "Save": "Enregistrer",
-      "Cancel": "Annuler",
-      "Cancelled": "Annulé",
-      "Close": "Fermer",
-      "Actions": "Actions",
-      "Status": "Statut",
+      Suspend: "Suspendre",
+      Suspended: "Suspendu",
+      Deactivated: "Désactivé",
+      Activate: "Activer",
+      Delete: "Supprimer",
+      Edit: "Modifier",
+      Save: "Enregistrer",
+      Cancel: "Annuler",
+      Cancelled: "Annulé",
+      Close: "Fermer",
+      Actions: "Actions",
+      Status: "Statut",
       "Account Status": "Statut du compte",
       "All Account Status": "Tous les statuts de compte",
       "All Statuses": "Tous les statuts",
       "All Verification Status": "Tous les statuts de vérification",
-      "Date": "Date",
-      "Amount": "Montant",
-      "Active": "Actif",
-      "Inactive": "Inactif",
+      Date: "Date",
+      Amount: "Montant",
+      Active: "Actif",
+      Inactive: "Inactif",
       "Active Users": "Utilisateurs actifs",
       "Active Providers": "Prestataires actifs",
       "Active Services": "Services actifs",
-      "Verified": "Vérifié",
-      "Unverified": "Non vérifié",
+      Verified: "Vérifié",
+      Unverified: "Non vérifié",
       "Verified Emails": "Emails vérifiés",
       "Email Verified": "Email vérifié",
-      "Registered": "Inscrit",
-      "Rejected": "Rejeté",
-      "Pending": "En attente",
+      Registered: "Inscrit",
+      Rejected: "Rejeté",
+      Pending: "En attente",
       "Pending Verification": "Vérification en attente",
       "In Progress": "En cours",
-      "Popular": "Populaire",
+      Popular: "Populaire",
       "Popular Services": "Services populaires",
       "New This Month": "Nouveau ce mois-ci",
-      
+
       // Admin Tables
       "Booking ID": "ID de réservation",
-      "Customer": "Client",
-      "Provider": "Prestataire",
-      "Service": "Service",
-      "Duration": "Durée",
+      Customer: "Client",
+      Provider: "Prestataire",
+      Service: "Service",
+      Duration: "Durée",
       "Base Price": "Prix de base",
       "Price Type": "Type de prix",
-      "Experience": "Expérience",
-      "Category": "Catégorie",
+      Experience: "Expérience",
+      Category: "Catégorie",
       "Provider Details": "Détails du prestataire",
       "Provider Documents": "Documents du prestataire",
       "Provider Verifications": "Vérifications du prestataire",
       "Identity Verification": "Vérification d'identité",
       "Insurance Documents": "Documents d'assurance",
       "Document Verification System": "Système de vérification des documents",
-      "Verification": "Vérification",
+      Verification: "Vérification",
       "Transaction History": "Historique des transactions",
       "Financial Reports": "Rapports financiers",
-      "Reports": "Rapports",
+      Reports: "Rapports",
       "Payment Processing": "Traitement des paiements",
       "Platform Analytics": "Analytiques de la plateforme",
-      "Chart visualization coming soon": "Visualisation graphique bientôt disponible",
+      "Chart visualization coming soon":
+        "Visualisation graphique bientôt disponible",
       "Coming Soon": "Bientôt disponible",
       "Under Construction": "En construction",
       "No data available": "Aucune donnée disponible",
-      
+
       // Error messages
       "No bookings found": "Aucune réservation trouvée",
       "No providers found": "Aucun prestataire trouvé",
@@ -347,22 +378,26 @@
       "Error loading providers": "Erreur de chargement des prestataires",
       "Error loading services": "Erreur de chargement des services",
       "Error loading users": "Erreur de chargement des utilisateurs",
-      "Error loading provider details": "Erreur de chargement des détails du prestataire",
+      "Error loading provider details":
+        "Erreur de chargement des détails du prestataire",
       "Failed to load bookings": "Échec du chargement des réservations",
       "Failed to load providers": "Échec du chargement des prestataires",
       "Failed to load services": "Échec du chargement des services",
       "Failed to load users": "Échec du chargement des utilisateurs",
-      
+
       // Services Page Additional
       "Find the Perfect Service": "Trouvez le service parfait",
-      "From home cleaning to tutoring, connect with trusted professionals in your area.": "Du nettoyage à domicile aux cours particuliers, connectez-vous avec des professionnels de confiance dans votre région.",
+      "From home cleaning to tutoring, connect with trusted professionals in your area.":
+        "Du nettoyage à domicile aux cours particuliers, connectez-vous avec des professionnels de confiance dans votre région.",
       "Show Filters": "Afficher les filtres",
       "Hide Filters": "Masquer les filtres",
       "Search services...": "Rechercher des services...",
       "Search providers...": "Rechercher des prestataires...",
       "Search chats...": "Rechercher des conversations...",
-      "Search for services or providers...": "Rechercher des services ou prestataires...",
-      "Search services, bookings, customers...": "Rechercher des services, réservations, clients...",
+      "Search for services or providers...":
+        "Rechercher des services ou prestataires...",
+      "Search services, bookings, customers...":
+        "Rechercher des services, réservations, clients...",
       "Search for help articles...": "Rechercher des articles d'aide...",
       "Search for answers...": "Rechercher des réponses...",
       "Services - Moueene": "Services - Moueene",
@@ -374,10 +409,11 @@
       "Dashboard - Moueene": "Tableau de bord - Moueene",
       "Provider Dashboard - Moueene": "Tableau de bord Prestataire - Moueene",
       "Edit Profile - Moueene": "Modifier le profil - Moueene",
-      
+
       // Dashboard Additional
       "Welcome back!": "Bon retour !",
-      "Your upcoming bookings will appear here": "Vos prochaines réservations apparaîtront ici",
+      "Your upcoming bookings will appear here":
+        "Vos prochaines réservations apparaîtront ici",
       "No bookings yet": "Aucune réservation pour le moment",
       "Failed to load bookings": "Échec du chargement des réservations",
       "Recent Bookings": "Réservations récentes",
@@ -392,7 +428,7 @@
       "Update your information": "Mettre à jour vos informations",
       "Email cannot be changed": "L'e-mail ne peut pas être modifié",
       "Verified Customer": "Client vérifié",
-      
+
       // Provider Dashboard
       "Service Provider": "Prestataire de services",
       "Add Service": "Ajouter un service",
@@ -410,15 +446,17 @@
       "All Bookings": "Toutes les réservations",
       "Accept Booking": "Accepter la réservation",
       "Start Job": "Commencer le travail",
-      "Availability": "Disponibilité",
+      Availability: "Disponibilité",
       "By appointment": "Sur rendez-vous",
-      "Weekends": "Week-ends",
-      "Online": "En ligne",
-      "Custom": "Personnalisé",
+      Weekends: "Week-ends",
+      Online: "En ligne",
+      Custom: "Personnalisé",
       "Profile Information": "Informations du profil",
-      "Profile Settings - Provider Dashboard": "Paramètres du profil - Tableau de bord Prestataire",
+      "Profile Settings - Provider Dashboard":
+        "Paramètres du profil - Tableau de bord Prestataire",
       "Reviews - Provider Dashboard": "Avis - Tableau de bord Prestataire",
-      "Verification - Provider Dashboard": "Vérification - Tableau de bord Prestataire",
+      "Verification - Provider Dashboard":
+        "Vérification - Tableau de bord Prestataire",
       "Provider Profile": "Profil du prestataire",
       "Provider Profile - Moueene": "Profil du prestataire - Moueene",
       "Provider not found": "Prestataire non trouvé",
@@ -435,8 +473,10 @@
       "No services yet": "Pas encore de services",
       "Could not load services.": "Impossible de charger les services.",
       "No biography available.": "Aucune biographie disponible.",
-      "This provider has not listed any specific services yet.": "Ce prestataire n'a pas encore listé de services spécifiques.",
-      "Select a service to see details": "Sélectionnez un service pour voir les détails",
+      "This provider has not listed any specific services yet.":
+        "Ce prestataire n'a pas encore listé de services spécifiques.",
+      "Select a service to see details":
+        "Sélectionnez un service pour voir les détails",
       "Please refresh the page.": "Veuillez actualiser la page.",
       "Your Price": "Votre prix",
       "Per Item": "Par article",
@@ -446,16 +486,16 @@
       "New Password": "Nouveau mot de passe",
       "Confirm New Password": "Confirmer le nouveau mot de passe",
       "When will you arrive?": "Quand arriverez-vous ?",
-      "Yesterday": "Hier",
-      
+      Yesterday: "Hier",
+
       // About Page Additional
       "Our Core Values": "Nos valeurs fondamentales",
       "Quality Excellence": "Excellence qualité",
       "Community First": "La communauté d'abord",
-      "Partnership": "Partenariat",
+      Partnership: "Partenariat",
       "Join our community today": "Rejoignez notre communauté aujourd'hui",
       "Soumia Lagoune": "Soumia Lagoune",
-      
+
       // Contact Page Additional
       "Contact Information": "Informations de contact",
       "Business Address": "Adresse professionnelle",
@@ -467,26 +507,29 @@
       "Billing Question": "Question facturation",
       "Write your message here...": "Écrivez votre message ici...",
       "Type a message...": "Tapez un message...",
-      
+
       // FAQ
       "Common Questions": "Questions fréquentes",
       "Frequently Asked Questions": "Questions fréquemment posées",
       "How do I book a service?": "Comment réserver un service ?",
-      "How are providers verified?": "Comment les prestataires sont-ils vérifiés ?",
+      "How are providers verified?":
+        "Comment les prestataires sont-ils vérifiés ?",
       "How do payments work?": "Comment fonctionnent les paiements ?",
-      
+
       // Help & Support Pages
       "Help Center - Moueene": "Centre d'aide - Moueene",
       "Frequently Asked Questions - Moueene": "Questions fréquentes - Moueene",
       "Privacy Policy - Moueene": "Politique de confidentialité - Moueene",
       "Terms of Service - Moueene": "Conditions d'utilisation - Moueene",
       "How can we help you?": "Comment pouvons-nous vous aider ?",
-      "Find answers and get the support you need": "Trouvez des réponses et obtenez le support dont vous avez besoin",
+      "Find answers and get the support you need":
+        "Trouvez des réponses et obtenez le support dont vous avez besoin",
       "Browse by Topic": "Parcourir par sujet",
       "Getting Started": "Commencer",
       "For Providers": "Pour les prestataires",
-      "Payments": "Paiements",
-      "Learn how to create an account and use Moueene": "Apprenez à créer un compte et utiliser Moueene",
+      Payments: "Paiements",
+      "Learn how to create an account and use Moueene":
+        "Apprenez à créer un compte et utiliser Moueene",
       "Creating your account": "Créer votre compte",
       "Completing your profile": "Compléter votre profil",
       "Finding services": "Trouver des services",
@@ -507,13 +550,18 @@
       "Safety guidelines": "Consignes de sécurité",
       "Resources for service providers": "Ressources pour les prestataires",
       "Still Need Help?": "Besoin d'aide supplémentaire ?",
-      "Our support team is available to assist you": "Notre équipe de support est disponible pour vous aider",
+      "Our support team is available to assist you":
+        "Notre équipe de support est disponible pour vous aider",
       "Cancellation policy": "Politique d'annulation",
-      "Payment methods, refunds, and billing": "Méthodes de paiement, remboursements et facturation",
-      "Everything about booking and managing services": "Tout sur la réservation et la gestion des services",
-      "Manage your account and preferences": "Gérer votre compte et préférences",
-      "How we keep our community safe": "Comment nous gardons notre communauté en sécurité",
-      
+      "Payment methods, refunds, and billing":
+        "Méthodes de paiement, remboursements et facturation",
+      "Everything about booking and managing services":
+        "Tout sur la réservation et la gestion des services",
+      "Manage your account and preferences":
+        "Gérer votre compte et préférences",
+      "How we keep our community safe":
+        "Comment nous gardons notre communauté en sécurité",
+
       // Placeholders
       "Enter your email": "Entrez votre e-mail",
       "Enter your password": "Entrez votre mot de passe",
@@ -527,76 +575,79 @@
       "Your city": "Votre ville",
       "Enter zip or city": "Code postal ou ville",
       "Select Date": "Sélectionnez une date",
-      "Tell customers about your experience, skills, and services...": "Décrivez votre expérience, compétences et services...",
-      "Describe what you offer, what's included, etc.": "Décrivez ce que vous offrez, ce qui est inclus, etc.",
-      
+      "Tell customers about your experience, skills, and services...":
+        "Décrivez votre expérience, compétences et services...",
+      "Describe what you offer, what's included, etc.":
+        "Décrivez ce que vous offrez, ce qui est inclus, etc.",
+
       // Misc
       "Loading...": "Chargement...",
-      "Error": "Erreur",
-      "Success": "Succès",
-      "Warning": "Attention",
-      "Info": "Info",
-      "Yes": "Oui",
-      "No": "Non",
-      "Back": "Retour",
-      "Next": "Suivant",
-      "Previous": "Précédent",
-      "Submit": "Soumettre",
-      "Continue": "Continuer",
+      Error: "Erreur",
+      Success: "Succès",
+      Warning: "Attention",
+      Info: "Info",
+      Yes: "Oui",
+      No: "Non",
+      Back: "Retour",
+      Next: "Suivant",
+      Previous: "Précédent",
+      Submit: "Soumettre",
+      Continue: "Continuer",
       "Learn More": "En savoir plus",
       "Read More": "Lire la suite",
       "Show More": "Afficher plus",
       "Show Less": "Afficher moins",
       "See All": "Voir tout",
-      "from": "de",
-      "to": "à",
-      "or": "ou",
-      "and": "et",
-      "the": "le",
-      "for": "pour",
-      "in": "dans",
-      "at": "à",
-      "by": "par",
-      "on": "sur",
-      "is": "est",
-      "are": "sont",
-      "was": "était",
-      "were": "étaient",
-      "has": "a",
-      "have": "ont",
-      "will": "sera",
-      "would": "serait",
-      "can": "peut",
-      "could": "pourrait",
-      "should": "devrait",
-      "must": "doit",
-      "may": "peut",
-      "might": "pourrait",
-      "all": "tous",
-      "your": "votre",
-      "our": "notre",
-      "their": "leur",
-      "this": "ceci",
-      "that": "cela",
-      "these": "ces",
-      "those": "ceux",
-      "here": "ici",
-      "there": "là",
-      "where": "où",
-      "when": "quand",
-      "why": "pourquoi",
-      "how": "comment",
-      "what": "quoi",
-      "which": "lequel",
-      "who": "qui",
+      from: "de",
+      to: "à",
+      or: "ou",
+      and: "et",
+      the: "le",
+      for: "pour",
+      in: "dans",
+      at: "à",
+      by: "par",
+      on: "sur",
+      is: "est",
+      are: "sont",
+      was: "était",
+      were: "étaient",
+      has: "a",
+      have: "ont",
+      will: "sera",
+      would: "serait",
+      can: "peut",
+      could: "pourrait",
+      should: "devrait",
+      must: "doit",
+      may: "peut",
+      might: "pourrait",
+      all: "tous",
+      your: "votre",
+      our: "notre",
+      their: "leur",
+      this: "ceci",
+      that: "cela",
+      these: "ces",
+      those: "ceux",
+      here: "ici",
+      there: "là",
+      where: "où",
+      when: "quand",
+      why: "pourquoi",
+      how: "comment",
+      what: "quoi",
+      which: "lequel",
+      who: "qui",
     },
     ar: {
       // Brand - Moueene = معين
-      "Moueene": "معين",
-      "MOUEENE": "معين",
+      Moueene: "معين",
+      MOUEENE: "معين",
       "Moueene - Home Services Platform": "معين - منصة الخدمات المنزلية",
-      "Moueene - Connect with trusted service providers for all your needs": "معين - تواصل مع مزودي خدمات موثوقين لجميع احتياجاتك",
-      
+      "Moueene - Connect with trusted service providers for all your needs":
+        "معين - تواصل مع مزودي خدمات موثوقين لجميع احتياجاتك",
+
       // Navigation
       Home: "الرئيسية",
       Services: "الخدمات",
@@ -609,62 +660,72 @@
       "Sign Up Now": "سجّل الآن",
       "Book Now": "احجز الآن",
       "Become a Service Provider": "كن مزود خدمة",
-      
+
       // Hero Section
       "WELCOME TO MOUEENE": "مرحبًا بك في معين",
-      "Your one-stop solution for all home service needs, connecting you with trusted professionals for cleaning, gardening, nursing, and more.": "حلك الشامل لجميع احتياجات الخدمات المنزلية، يربطك بمحترفين موثوقين للتنظيف والبستنة والتمريض والمزيد.",
+      "Your one-stop solution for all home service needs, connecting you with trusted professionals for cleaning, gardening, nursing, and more.":
+        "حلك الشامل لجميع احتياجات الخدمات المنزلية، يربطك بمحترفين موثوقين للتنظيف والبستنة والتمريض والمزيد.",
       "What service do you need today?": "ما الخدمة التي تحتاجها اليوم؟",
-      
+
       // Categories
       "Discover Popular Categories": "اكتشف الفئات الشائعة",
-      "Browse through our most requested service categories": "تصفّح أكثر فئات الخدمات طلبًا",
-      "Childcare": "رعاية الأطفال",
-      "Tutoring": "دروس خصوصية",
-      "Cleaning": "تنظيف",
-      "Gardening": "بستنة",
+      "Browse through our most requested service categories":
+        "تصفّح أكثر فئات الخدمات طلبًا",
+      Childcare: "رعاية الأطفال",
+      Tutoring: "دروس خصوصية",
+      Cleaning: "تنظيف",
+      Gardening: "بستنة",
       "Pet Care": "رعاية الحيوانات الأليفة",
       "Elderly Care": "رعاية المسنين",
-      "Repairs": "إصلاحات",
+      Repairs: "إصلاحات",
       "Home Services": "الخدمات المنزلية",
-      
+
       // How It Works
       "Getting started with Moueene is easy": "البدء مع معين سهل",
       "Choose Service": "اختر الخدمة",
-      "Browse through our categories and find the service you need": "تصفح فئاتنا وابحث عن الخدمة التي تحتاجها",
+      "Browse through our categories and find the service you need":
+        "تصفح فئاتنا وابحث عن الخدمة التي تحتاجها",
       "Find Provider": "ابحث عن مزود",
-      "Compare profiles, reviews, and rates to find your perfect match": "قارن الملفات الشخصية والمراجعات والأسعار للعثور على تطابقك المثالي",
-      "Book": "احجز",
-      "Schedule your service at a time that works best for you": "حدد موعد خدمتك في الوقت الذي يناسبك",
-      "Evaluation": "التقييم",
-      "Rate your experience and help others find great service": "قيّم تجربتك وساعد الآخرين في العثور على خدمة رائعة",
-      
+      "Compare profiles, reviews, and rates to find your perfect match":
+        "قارن الملفات الشخصية والمراجعات والأسعار للعثور على تطابقك المثالي",
+      Book: "احجز",
+      "Schedule your service at a time that works best for you":
+        "حدد موعد خدمتك في الوقت الذي يناسبك",
+      Evaluation: "التقييم",
+      "Rate your experience and help others find great service":
+        "قيّم تجربتك وساعد الآخرين في العثور على خدمة رائعة",
+
       // Featured Services
       "Top Services": "أفضل الخدمات",
-      "Explore our most booked services right now": "استكشف خدماتنا الأكثر حجزًا الآن",
+      "Explore our most booked services right now":
+        "استكشف خدماتنا الأكثر حجزًا الآن",
       "Browse All Services": "تصفح جميع الخدمات",
       "Quick View": "عرض سريع",
       "Loading top services...": "جارٍ تحميل أفضل الخدمات...",
       "No services available right now.": "لا توجد خدمات متاحة حاليًا.",
       "Failed to load top services": "فشل تحميل أفضل الخدمات",
-      
+
       // CTA Section
       "Ready to Get Started?": "مستعد للبدء؟",
-      "Join thousands of satisfied customers and trusted service providers on Moueene": "انضم إلى آلاف العملاء الراضين ومزودي الخدمات الموثوقين في معين",
+      "Join thousands of satisfied customers and trusted service providers on Moueene":
+        "انضم إلى آلاف العملاء الراضين ومزودي الخدمات الموثوقين في معين",
       "Contact Us": "اتصل بنا",
-      
+
       // Footer
       "Quick Links": "روابط سريعة",
       "Find Providers": "ابحث عن مزودين",
-      "Support": "الدعم",
-      "FAQ": "الأسئلة الشائعة",
+      Support: "الدعم",
+      FAQ: "الأسئلة الشائعة",
       "Privacy Policy": "سياسة الخصوصية",
       "Terms of Service": "شروط الخدمة",
       "Help Center": "مركز المساعدة",
       "All rights reserved.": "جميع الحقوق محفوظة.",
-      "© 2026 Moueene. All rights reserved.": "© 2026 معين. جميع الحقوق محفوظة.",
+      "© 2026 Moueene. All rights reserved.":
+        "© 2026 معين. جميع الحقوق محفوظة.",
       "2026 Moueene": "2026 معين",
-      "Moueene connects customers with trusted service providers for all their home and personal needs.": "معين يربط العملاء بمزودي خدمات موثوقين لجميع احتياجاتهم المنزلية والشخصية.",
-      
+      "Moueene connects customers with trusted service providers for all their home and personal needs.":
+        "معين يربط العملاء بمزودي خدمات موثوقين لجميع احتياجاتهم المنزلية والشخصية.",
+
       // Auth Pages
       "Welcome Back": "مرحبًا بعودتك",
       "Welcome back": "مرحبًا بعودتك",
@@ -674,21 +735,23 @@
       "Admin Portal": "بوابة الإدارة",
       "Sign in to manage the platform": "سجّل الدخول لإدارة المنصة",
       "Email Address": "البريد الإلكتروني",
-      "Email": "البريد الإلكتروني",
+      Email: "البريد الإلكتروني",
       Password: "كلمة المرور",
       "Enter your password": "أدخل كلمة المرور",
       "Sign In": "دخول",
       "Signing in...": "جارٍ تسجيل الدخول...",
       "Back to main site": "العودة إلى الموقع",
       "Invalid credentials": "بيانات الدخول غير صحيحة",
-      "Connection error. Please try again.": "خطأ في الاتصال. يرجى المحاولة مرة أخرى.",
+      "Connection error. Please try again.":
+        "خطأ في الاتصال. يرجى المحاولة مرة أخرى.",
       "Remember me": "تذكرني",
       "Forgot Password?": "نسيت كلمة المرور؟",
       "Or continue with": "أو تابع مع",
       "Don't have an account?": "ليس لديك حساب؟",
       "Already have an account?": "لديك حساب بالفعل؟",
-      "Connecting you with trusted professionals for all your home service needs.": "نربطك بمحترفين موثوقين لجميع احتياجات خدماتك المنزلية.",
-      
+      "Connecting you with trusted professionals for all your home service needs.":
+        "نربطك بمحترفين موثوقين لجميع احتياجات خدماتك المنزلية.",
+
       // Registration
       "Create Account": "إنشاء حساب",
       "Join Moueene today": "انضم إلى معين اليوم",
@@ -698,10 +761,10 @@
       "Confirm Password": "تأكيد كلمة المرور",
       "I agree to the": "أوافق على",
       "Terms and Conditions": "الشروط والأحكام",
-      "and": "و",
+      and: "و",
       "Create your account": "أنشئ حسابك",
       "hello@example.com": "مثال@example.com",
-      
+
       // Dashboard
       "Loading bookings...": "جارٍ تحميل الحجوزات...",
       "No active bookings found.": "لا توجد حجوزات نشطة.",
@@ -721,25 +784,28 @@
       "Active Bookings": "الحجوزات النشطة",
       "Completed Bookings": "الحجوزات المكتملة",
       "My Bookings": "حجوزاتي",
-      "Favorites": "المفضلة",
-      "Notifications": "الإشعارات",
+      Favorites: "المفضلة",
+      Notifications: "الإشعارات",
       "View All": "عرض الكل",
-      
+
       // Validation
       "This field is required": "هذا الحقل مطلوب",
       "Please enter a valid email address": "يرجى إدخال بريد إلكتروني صحيح",
       "Passwords do not match": "كلمتا المرور غير متطابقتين",
-      "Registration failed. Please try again.": "فشل التسجيل. يرجى المحاولة مرة أخرى.",
-      "Login failed. Please try again.": "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.",
+      "Registration failed. Please try again.":
+        "فشل التسجيل. يرجى المحاولة مرة أخرى.",
+      "Login failed. Please try again.":
+        "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.",
       "Failed to update profile.": "فشل تحديث الملف الشخصي.",
       "Failed to change password.": "فشل تغيير كلمة المرور.",
-      
+
       // Access
       "Access denied": "تم رفض الوصول",
-      "You do not have permission to view this page.": "ليست لديك صلاحية لعرض هذه الصفحة.",
+      "You do not have permission to view this page.":
+        "ليست لديك صلاحية لعرض هذه الصفحة.",
       Message: "رسالة",
       OK: "حسنًا",
-      
+
       // Provider Status
       Account: "الحساب",
       "Account Suspended": "تم تعليق الحساب",
@@ -747,28 +813,29 @@
       "Verified Provider": "مزود موثوق",
       "Verification Rejected": "تم رفض التحقق",
       "Pending Verification": "التحقق قيد الانتظار",
-      
+
       // Services Page
       "All Services": "جميع الخدمات",
-      "Find the perfect service for your needs": "ابحث عن الخدمة المثالية لاحتياجاتك",
-      "Filter": "تصفية",
-      "Filters": "عوامل التصفية",
-      "Category": "الفئة",
-      "Categories": "الفئات",
+      "Find the perfect service for your needs":
+        "ابحث عن الخدمة المثالية لاحتياجاتك",
+      Filter: "تصفية",
+      Filters: "عوامل التصفية",
+      Category: "الفئة",
+      Categories: "الفئات",
       "All Categories": "جميع الفئات",
       "Price Range": "نطاق السعر",
-      "Min": "الحد الأدنى",
-      "Max": "الحد الأقصى",
-      "Rating": "التقييم",
+      Min: "الحد الأدنى",
+      Max: "الحد الأقصى",
+      Rating: "التقييم",
       "Apply Filters": "تطبيق الفلاتر",
       "Clear Filters": "مسح الفلاتر",
       "Sort by": "ترتيب حسب",
       "Most Popular": "الأكثر شعبية",
-      "Newest": "الأحدث",
+      Newest: "الأحدث",
       "Price: Low to High": "السعر: من الأقل للأعلى",
       "Price: High to Low": "السعر: من الأعلى للأقل",
       "Highest Rated": "الأعلى تقييمًا",
-      "reviews": "مراجعات",
+      reviews: "مراجعات",
       "No services found": "لم يتم العثور على خدمات",
       "per hour": "في الساعة",
       "/hr": "/ساعة",
@@ -776,7 +843,7 @@
       "Starting from": "بدءًا من",
       "Book Service": "احجز الخدمة",
       "View Details": "عرض التفاصيل",
-      
+
       // About Page
       "About Moueene": "عن معين",
       "Our Story": "قصتنا",
@@ -784,22 +851,22 @@
       "Our Vision": "رؤيتنا",
       "Our Values": "قيمنا",
       "Meet Our Team": "تعرف على فريقنا",
-      "Trust": "الثقة",
-      "Quality": "الجودة",
-      "Innovation": "الابتكار",
-      "Community": "المجتمع",
-      
+      Trust: "الثقة",
+      Quality: "الجودة",
+      Innovation: "الابتكار",
+      Community: "المجتمع",
+
       // Contact Page
       "Get in Touch": "تواصل معنا",
       "Send us a message": "أرسل لنا رسالة",
       "Your Name": "اسمك",
       "Your Email": "بريدك الإلكتروني",
-      "Subject": "الموضوع",
+      Subject: "الموضوع",
       "Your Message": "رسالتك",
       "Send Message": "إرسال الرسالة",
-      "Address": "العنوان",
-      "Phone": "الهاتف",
-      
+      Address: "العنوان",
+      Phone: "الهاتف",
+
       // Admin
       "Admin Dashboard": "لوحة تحكم الإدارة",
       "Admin Panel": "لوحة الإدارة",
@@ -807,11 +874,11 @@
       "Admin Login - Moueene": "تسجيل دخول الإدارة - معين",
       "Dashboard Overview": "نظرة عامة على لوحة التحكم",
       "Super Admin": "المسؤول الأعلى",
-      "Users": "المستخدمون",
-      "Transactions": "المعاملات",
-      "Analytics": "التحليلات",
-      "Documents": "المستندات",
-      "Verifications": "التحققات",
+      Users: "المستخدمون",
+      Transactions: "المعاملات",
+      Analytics: "التحليلات",
+      Documents: "المستندات",
+      Verifications: "التحققات",
       "Total Users": "إجمالي المستخدمين",
       "Total Providers": "إجمالي المزودين",
       "Total Bookings": "إجمالي الحجوزات",
@@ -835,11 +902,13 @@
       "Manage Bookings - Admin - Moueene": "إدارة الحجوزات - الإدارة - معين",
       "Analytics - Admin - Moueene": "التحليلات - الإدارة - معين",
       "Transactions - Admin - Moueene": "المعاملات - الإدارة - معين",
-      "Provider Documents - Admin - Moueene": "مستندات المزودين - الإدارة - معين",
-      "Provider Verifications - Admin - Moueene": "تحققات المزودين - الإدارة - معين",
-      "Management": "الإدارة",
-      "Approve": "موافقة",
-      "Reject": "رفض",
+      "Provider Documents - Admin - Moueene":
+        "مستندات المزودين - الإدارة - معين",
+      "Provider Verifications - Admin - Moueene":
+        "تحققات المزودين - الإدارة - معين",
+      Management: "الإدارة",
+      Approve: "موافقة",
+      Reject: "رفض",
       "Reject Provider": "رفض المزود",
       "Rejection Reason": "سبب الرفض",
       "Provide a reason": "قدّم سببًا",
@@ -848,69 +917,69 @@
       "Please confirm to continue": "يرجى التأكيد للمتابعة",
       "This action cannot be undone": "لا يمكن التراجع عن هذا الإجراء",
       "This will be saved in records": "سيتم حفظ هذا في السجلات",
-      "Suspend": "تعليق",
-      "Suspended": "معلق",
-      "Deactivated": "معطّل",
-      "Activate": "تفعيل",
-      "Delete": "حذف",
-      "Edit": "تعديل",
-      "Save": "حفظ",
-      "Cancel": "إلغاء",
-      "Cancelled": "ملغي",
-      "Close": "إغلاق",
-      "Actions": "الإجراءات",
-      "Status": "الحالة",
+      Suspend: "تعليق",
+      Suspended: "معلق",
+      Deactivated: "معطّل",
+      Activate: "تفعيل",
+      Delete: "حذف",
+      Edit: "تعديل",
+      Save: "حفظ",
+      Cancel: "إلغاء",
+      Cancelled: "ملغي",
+      Close: "إغلاق",
+      Actions: "الإجراءات",
+      Status: "الحالة",
       "Account Status": "حالة الحساب",
       "All Account Status": "جميع حالات الحساب",
       "All Statuses": "جميع الحالات",
       "All Verification Status": "جميع حالات التحقق",
-      "Date": "التاريخ",
-      "Amount": "المبلغ",
-      "Active": "نشط",
-      "Inactive": "غير نشط",
+      Date: "التاريخ",
+      Amount: "المبلغ",
+      Active: "نشط",
+      Inactive: "غير نشط",
       "Active Users": "المستخدمون النشطون",
       "Active Providers": "المزودون النشطون",
       "Active Services": "الخدمات النشطة",
-      "Verified": "موثق",
-      "Unverified": "غير موثق",
+      Verified: "موثق",
+      Unverified: "غير موثق",
       "Verified Emails": "الإيميلات الموثقة",
       "Email Verified": "البريد موثق",
-      "Registered": "مسجّل",
-      "Rejected": "مرفوض",
-      "Pending": "قيد الانتظار",
+      Registered: "مسجّل",
+      Rejected: "مرفوض",
+      Pending: "قيد الانتظار",
       "Pending Verification": "التحقق قيد الانتظار",
       "In Progress": "قيد التنفيذ",
-      "Popular": "شائع",
+      Popular: "شائع",
       "Popular Services": "الخدمات الشائعة",
       "New This Month": "جديد هذا الشهر",
-      
+
       // Admin Tables
       "Booking ID": "معرف الحجز",
-      "Customer": "عميل",
-      "Provider": "مزود",
-      "Service": "خدمة",
-      "Duration": "المدة",
+      Customer: "عميل",
+      Provider: "مزود",
+      Service: "خدمة",
+      Duration: "المدة",
       "Base Price": "السعر الأساسي",
       "Price Type": "نوع السعر",
-      "Experience": "الخبرة",
-      "Category": "الفئة",
+      Experience: "الخبرة",
+      Category: "الفئة",
       "Provider Details": "تفاصيل المزود",
       "Provider Documents": "مستندات المزود",
       "Provider Verifications": "تحققات المزود",
       "Identity Verification": "التحقق من الهوية",
       "Insurance Documents": "مستندات التأمين",
       "Document Verification System": "نظام التحقق من المستندات",
-      "Verification": "التحقق",
+      Verification: "التحقق",
       "Transaction History": "سجل المعاملات",
       "Financial Reports": "التقارير المالية",
-      "Reports": "التقارير",
+      Reports: "التقارير",
       "Payment Processing": "معالجة الدفع",
       "Platform Analytics": "تحليلات المنصة",
       "Chart visualization coming soon": "تصور الرسم البياني قريبًا",
       "Coming Soon": "قريبًا",
       "Under Construction": "تحت الإنشاء",
       "No data available": "لا توجد بيانات متاحة",
-      
+
       // Error messages
       "No bookings found": "لم يتم العثور على حجوزات",
       "No providers found": "لم يتم العثور على مزودين",
@@ -925,17 +994,19 @@
       "Failed to load providers": "فشل تحميل المزودين",
       "Failed to load services": "فشل تحميل الخدمات",
       "Failed to load users": "فشل تحميل المستخدمين",
-      
+
       // Services Page Additional
       "Find the Perfect Service": "ابحث عن الخدمة المثالية",
-      "From home cleaning to tutoring, connect with trusted professionals in your area.": "من تنظيف المنزل إلى الدروس الخصوصية، تواصل مع محترفين موثوقين في منطقتك.",
+      "From home cleaning to tutoring, connect with trusted professionals in your area.":
+        "من تنظيف المنزل إلى الدروس الخصوصية، تواصل مع محترفين موثوقين في منطقتك.",
       "Show Filters": "إظهار الفلاتر",
       "Hide Filters": "إخفاء الفلاتر",
       "Search services...": "ابحث عن خدمات...",
       "Search providers...": "ابحث عن مزودين...",
       "Search chats...": "ابحث في المحادثات...",
       "Search for services or providers...": "ابحث عن خدمات أو مزودين...",
-      "Search services, bookings, customers...": "ابحث عن خدمات، حجوزات، عملاء...",
+      "Search services, bookings, customers...":
+        "ابحث عن خدمات، حجوزات، عملاء...",
       "Search for help articles...": "ابحث عن مقالات المساعدة...",
       "Search for answers...": "ابحث عن إجابات...",
       "Services - Moueene": "الخدمات - معين",
@@ -947,7 +1018,7 @@
       "Dashboard - Moueene": "لوحة التحكم - معين",
       "Provider Dashboard - Moueene": "لوحة تحكم المزود - معين",
       "Edit Profile - Moueene": "تعديل الملف الشخصي - معين",
-      
+
       // Dashboard Additional
       "Welcome back!": "مرحبًا بعودتك!",
       "Your upcoming bookings will appear here": "ستظهر حجوزاتك القادمة هنا",
@@ -965,7 +1036,7 @@
       "Update your information": "تحديث معلوماتك",
       "Email cannot be changed": "لا يمكن تغيير البريد الإلكتروني",
       "Verified Customer": "عميل موثق",
-      
+
       // Provider Dashboard
       "Service Provider": "مزود خدمة",
       "Add Service": "إضافة خدمة",
@@ -983,13 +1054,14 @@
       "All Bookings": "جميع الحجوزات",
       "Accept Booking": "قبول الحجز",
       "Start Job": "بدء العمل",
-      "Availability": "التوفر",
+      Availability: "التوفر",
       "By appointment": "بموعد مسبق",
-      "Weekends": "عطلات نهاية الأسبوع",
-      "Online": "متصل",
-      "Custom": "مخصص",
+      Weekends: "عطلات نهاية الأسبوع",
+      Online: "متصل",
+      Custom: "مخصص",
       "Profile Information": "معلومات الملف الشخصي",
-      "Profile Settings - Provider Dashboard": "إعدادات الملف - لوحة تحكم المزود",
+      "Profile Settings - Provider Dashboard":
+        "إعدادات الملف - لوحة تحكم المزود",
       "Reviews - Provider Dashboard": "التقييمات - لوحة تحكم المزود",
       "Verification - Provider Dashboard": "التحقق - لوحة تحكم المزود",
       "Provider Profile": "ملف المزود",
@@ -1008,7 +1080,8 @@
       "No services yet": "لا توجد خدمات بعد",
       "Could not load services.": "تعذر تحميل الخدمات.",
       "No biography available.": "لا توجد سيرة ذاتية متاحة.",
-      "This provider has not listed any specific services yet.": "لم يقم هذا المزود بإدراج خدمات محددة بعد.",
+      "This provider has not listed any specific services yet.":
+        "لم يقم هذا المزود بإدراج خدمات محددة بعد.",
       "Select a service to see details": "اختر خدمة لرؤية التفاصيل",
       "Please refresh the page.": "يرجى تحديث الصفحة.",
       "Your Price": "سعرك",
@@ -1019,16 +1092,16 @@
       "New Password": "كلمة المرور الجديدة",
       "Confirm New Password": "تأكيد كلمة المرور الجديدة",
       "When will you arrive?": "متى ستصل؟",
-      "Yesterday": "أمس",
-      
+      Yesterday: "أمس",
+
       // About Page Additional
       "Our Core Values": "قيمنا الأساسية",
       "Quality Excellence": "التميز في الجودة",
       "Community First": "المجتمع أولاً",
-      "Partnership": "الشراكة",
+      Partnership: "الشراكة",
       "Join our community today": "انضم إلى مجتمعنا اليوم",
       "Soumia Lagoune": "سمية لاغون",
-      
+
       // Contact Page Additional
       "Contact Information": "معلومات الاتصال",
       "Business Address": "عنوان العمل",
@@ -1040,26 +1113,28 @@
       "Billing Question": "سؤال عن الفواتير",
       "Write your message here...": "اكتب رسالتك هنا...",
       "Type a message...": "اكتب رسالة...",
-      
+
       // FAQ
       "Common Questions": "أسئلة شائعة",
       "Frequently Asked Questions": "الأسئلة المتكررة",
       "How do I book a service?": "كيف أحجز خدمة؟",
       "How are providers verified?": "كيف يتم التحقق من المزودين؟",
       "How do payments work?": "كيف تعمل المدفوعات؟",
-      
+
       // Help & Support Pages
       "Help Center - Moueene": "مركز المساعدة - معين",
       "Frequently Asked Questions - Moueene": "الأسئلة المتكررة - معين",
       "Privacy Policy - Moueene": "سياسة الخصوصية - معين",
       "Terms of Service - Moueene": "شروط الخدمة - معين",
       "How can we help you?": "كيف يمكننا مساعدتك؟",
-      "Find answers and get the support you need": "ابحث عن إجابات واحصل على الدعم الذي تحتاجه",
+      "Find answers and get the support you need":
+        "ابحث عن إجابات واحصل على الدعم الذي تحتاجه",
       "Browse by Topic": "تصفح حسب الموضوع",
       "Getting Started": "البداية",
       "For Providers": "للمزودين",
-      "Payments": "المدفوعات",
-      "Learn how to create an account and use Moueene": "تعرف على كيفية إنشاء حساب واستخدام معين",
+      Payments: "المدفوعات",
+      "Learn how to create an account and use Moueene":
+        "تعرف على كيفية إنشاء حساب واستخدام معين",
       "Creating your account": "إنشاء حسابك",
       "Completing your profile": "إكمال ملفك الشخصي",
       "Finding services": "البحث عن خدمات",
@@ -1080,13 +1155,16 @@
       "Safety guidelines": "إرشادات السلامة",
       "Resources for service providers": "موارد لمزودي الخدمات",
       "Still Need Help?": "لا تزال بحاجة للمساعدة؟",
-      "Our support team is available to assist you": "فريق الدعم لدينا متاح لمساعدتك",
+      "Our support team is available to assist you":
+        "فريق الدعم لدينا متاح لمساعدتك",
       "Cancellation policy": "سياسة الإلغاء",
-      "Payment methods, refunds, and billing": "طرق الدفع والمبالغ المستردة والفواتير",
-      "Everything about booking and managing services": "كل شيء عن حجز وإدارة الخدمات",
+      "Payment methods, refunds, and billing":
+        "طرق الدفع والمبالغ المستردة والفواتير",
+      "Everything about booking and managing services":
+        "كل شيء عن حجز وإدارة الخدمات",
       "Manage your account and preferences": "إدارة حسابك وتفضيلاتك",
       "How we keep our community safe": "كيف نحافظ على أمان مجتمعنا",
-      
+
       // Placeholders
       "Enter your email": "أدخل بريدك الإلكتروني",
       "Enter your password": "أدخل كلمة المرور",
@@ -1100,68 +1178,70 @@
       "Your city": "مدينتك",
       "Enter zip or city": "أدخل الرمز البريدي أو المدينة",
       "Select Date": "اختر التاريخ",
-      "Tell customers about your experience, skills, and services...": "أخبر العملاء عن خبرتك ومهاراتك وخدماتك...",
-      "Describe what you offer, what's included, etc.": "صِف ما تقدمه، ما هو مشمول، إلخ...",
-      
+      "Tell customers about your experience, skills, and services...":
+        "أخبر العملاء عن خبرتك ومهاراتك وخدماتك...",
+      "Describe what you offer, what's included, etc.":
+        "صِف ما تقدمه، ما هو مشمول، إلخ...",
+
       // Misc
       "Loading...": "جارٍ التحميل...",
-      "Error": "خطأ",
-      "Success": "نجاح",
-      "Warning": "تحذير",
-      "Info": "معلومات",
-      "Yes": "نعم",
-      "No": "لا",
-      "Back": "رجوع",
-      "Next": "التالي",
-      "Previous": "السابق",
-      "Submit": "إرسال",
-      "Continue": "متابعة",
+      Error: "خطأ",
+      Success: "نجاح",
+      Warning: "تحذير",
+      Info: "معلومات",
+      Yes: "نعم",
+      No: "لا",
+      Back: "رجوع",
+      Next: "التالي",
+      Previous: "السابق",
+      Submit: "إرسال",
+      Continue: "متابعة",
       "Learn More": "اعرف المزيد",
       "Read More": "اقرأ المزيد",
       "Show More": "عرض المزيد",
       "Show Less": "عرض أقل",
       "See All": "مشاهدة الكل",
-      "from": "من",
-      "to": "إلى",
-      "or": "أو",
-      "and": "و",
-      "the": "ال",
-      "for": "لـ",
-      "in": "في",
-      "at": "في",
-      "by": "بواسطة",
-      "on": "على",
-      "is": "هو",
-      "are": "هم",
-      "was": "كان",
-      "were": "كانوا",
-      "has": "لديه",
-      "have": "لديهم",
-      "will": "سوف",
-      "would": "سيكون",
-      "can": "يستطيع",
-      "could": "يمكن",
-      "should": "يجب",
-      "must": "يجب",
-      "may": "قد",
-      "might": "ربما",
-      "all": "الكل",
-      "your": "لك",
-      "our": "لنا",
-      "their": "لهم",
-      "this": "هذا",
-      "that": "ذلك",
-      "these": "هؤلاء",
-      "those": "أولئك",
-      "here": "هنا",
-      "there": "هناك",
-      "where": "أين",
-      "when": "متى",
-      "why": "لماذا",
-      "how": "كيف",
-      "what": "ماذا",
-      "which": "أي",
-      "who": "من",
+      from: "من",
+      to: "إلى",
+      or: "أو",
+      and: "و",
+      the: "ال",
+      for: "لـ",
+      in: "في",
+      at: "في",
+      by: "بواسطة",
+      on: "على",
+      is: "هو",
+      are: "هم",
+      was: "كان",
+      were: "كانوا",
+      has: "لديه",
+      have: "لديهم",
+      will: "سوف",
+      would: "سيكون",
+      can: "يستطيع",
+      could: "يمكن",
+      should: "يجب",
+      must: "يجب",
+      may: "قد",
+      might: "ربما",
+      all: "الكل",
+      your: "لك",
+      our: "لنا",
+      their: "لهم",
+      this: "هذا",
+      that: "ذلك",
+      these: "هؤلاء",
+      those: "أولئك",
+      here: "هنا",
+      there: "هناك",
+      where: "أين",
+      when: "متى",
+      why: "لماذا",
+      how: "كيف",
+      what: "ماذا",
+      which: "أي",
+      who: "من",
     },
   };
 
@@ -1170,7 +1250,7 @@
     fr: {
       // Brand
       moueene: "moueene",
-      
+
       // Common words
       home: "accueil",
       service: "service",
@@ -1208,7 +1288,7 @@
       no: "aucun",
       yes: "oui",
       active: "actif",
-      
+
       // Additional common words
       connecting: "connectant",
       solution: "solution",
@@ -1235,7 +1315,7 @@
       again: "encore",
       invalid: "invalide",
       credentials: "identifiants",
-      
+
       // Categories
       childcare: "garde d'enfants",
       tutoring: "cours particuliers",
@@ -1246,7 +1326,7 @@
       pet: "animal",
       care: "soins",
       nursing: "soins infirmiers",
-      
+
       // Actions
       book: "réserver",
       cancel: "annuler",
@@ -1269,7 +1349,7 @@
       create: "créer",
       update: "mettre à jour",
       manage: "gérer",
-      
+
       // Adjectives
       popular: "populaire",
       trusted: "confiance",
@@ -1282,7 +1362,7 @@
       all: "tous",
       more: "plus",
       less: "moins",
-      
+
       // Time
       today: "aujourd'hui",
       now: "maintenant",
@@ -1296,7 +1376,7 @@
       week: "semaine",
       month: "mois",
       year: "année",
-      
+
       // Other
       name: "nom",
       first: "prénom",
@@ -1330,7 +1410,7 @@
       personal: "personnel",
       account: "compte",
       portal: "portail",
-      
+
       // Pronouns & articles
       the: "le",
       a: "un",
@@ -1340,7 +1420,7 @@
       your: "votre",
       our: "notre",
       my: "mon",
-      
+
       // Prepositions & conjunctions
       to: "à",
       for: "pour",
@@ -1353,7 +1433,7 @@
       and: "et",
       or: "ou",
       but: "mais",
-      
+
       // Verbs
       is: "est",
       are: "sont",
@@ -1367,7 +1447,7 @@
     ar: {
       // Brand - Moueene = معين
       moueene: "معين",
-      
+
       // Common words
       home: "الرئيسية",
       service: "خدمة",
@@ -1408,7 +1488,7 @@
       inactive: "غير نشط",
       found: "موجود",
       with: "مع",
-      
+
       // Additional common words
       connecting: "يربطك",
       solution: "حل",
@@ -1437,7 +1517,7 @@
       again: "مرة أخرى",
       invalid: "غير صالح",
       credentials: "بيانات الدخول",
-      
+
       // Categories
       childcare: "رعاية الأطفال",
       tutoring: "دروس خصوصية",
@@ -1448,7 +1528,7 @@
       pet: "حيوان أليف",
       care: "رعاية",
       nursing: "تمريض",
-      
+
       // Actions
       book: "احجز",
       cancel: "إلغاء",
@@ -1471,7 +1551,7 @@
       create: "إنشاء",
       update: "تحديث",
       manage: "إدارة",
-      
+
       // Adjectives
       popular: "شائع",
       trusted: "موثوق",
@@ -1484,7 +1564,7 @@
       all: "الكل",
       more: "المزيد",
       less: "أقل",
-      
+
       // Time
       today: "اليوم",
       now: "الآن",
@@ -1498,7 +1578,7 @@
       week: "أسبوع",
       month: "شهر",
       year: "سنة",
-      
+
       // Other
       name: "اسم",
       first: "الأول",
@@ -1532,7 +1612,7 @@
       personal: "شخصي",
       account: "حساب",
       portal: "بوابة",
-      
+
       // Pronouns & articles
       the: "ال",
       a: "",
@@ -1542,7 +1622,7 @@
       your: "لك",
       our: "لنا",
       my: "لي",
-      
+
       // Prepositions & conjunctions
       to: "إلى",
       for: "لـ",
@@ -1555,7 +1635,7 @@
       and: "و",
       or: "أو",
       but: "لكن",
-      
+
       // Verbs
       is: "هو",
       are: "هم",
@@ -1613,13 +1693,13 @@
   function translateCore(core) {
     if (currentLang === "en") return core;
     const phraseMap = PHRASES[currentLang] || {};
-    
+
     // First try exact match
     const exact = phraseMap[core];
     if (exact) return exact;
-    
+
     // Try with normalized whitespace (collapse multiple spaces/newlines to single space)
-    const normalized = core.replace(/\s+/g, ' ').trim();
+    const normalized = core.replace(/\s+/g, " ").trim();
     const normalizedMatch = phraseMap[normalized];
     if (normalizedMatch) return normalizedMatch;
 
@@ -1758,9 +1838,9 @@
     // Update toggle label
     const label = document.querySelector(".lang-switcher .lang-current");
     if (label) {
-        label.textContent = currentLang.toUpperCase();
+      label.textContent = currentLang.toUpperCase();
     }
-    
+
     // Update options state
     const btns = document.querySelectorAll(".lang-switcher .lang-option");
     btns.forEach((b) => {
@@ -1776,7 +1856,7 @@
     const switcher = document.createElement("div");
     switcher.className = "lang-switcher dropdown-wrapper";
     switcher.setAttribute("data-i18n-ignore", "true");
-    
+
     // Main Toggle Button
     const toggleBtn = document.createElement("button");
     toggleBtn.type = "button";
@@ -1787,31 +1867,31 @@
       <span class="lang-current">${currentLang.toUpperCase()}</span>
       <i class="fas fa-chevron-down"></i>
     `;
-    
+
     // Dropdown Menu
     const menu = document.createElement("div");
     menu.className = "lang-menu";
-    
+
     const options = [
-      { code: 'en', label: 'English' },
-      { code: 'fr', label: 'Français' },
-      { code: 'ar', label: 'العربية' }
+      { code: "en", label: "English" },
+      { code: "fr", label: "Français" },
+      { code: "ar", label: "العربية" },
     ];
-    
-    options.forEach(opt => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "lang-option";
-        btn.dataset.lang = opt.code;
-        btn.textContent = opt.label;
-        if (opt.code === currentLang) btn.classList.add("active");
-        
-        btn.addEventListener("click", (e) => {
-             e.stopPropagation(); // prevent bubbling to document click
-             switcher.classList.remove("open");
-             api.setLanguage(opt.code);
-        });
-        menu.appendChild(btn);
+
+    options.forEach((opt) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "lang-option";
+      btn.dataset.lang = opt.code;
+      btn.textContent = opt.label;
+      if (opt.code === currentLang) btn.classList.add("active");
+
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation(); // prevent bubbling to document click
+        switcher.classList.remove("open");
+        api.setLanguage(opt.code);
+      });
+      menu.appendChild(btn);
     });
 
     switcher.appendChild(toggleBtn);
@@ -1819,18 +1899,18 @@
 
     // Toggle Logic
     toggleBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        switcher.classList.toggle("open");
-    });
-    
-    // Close on click outside
-    document.addEventListener("click", (e) => {
-        if (!switcher.contains(e.target)) {
-            switcher.classList.remove("open");
-        }
+      e.stopPropagation();
+      switcher.classList.toggle("open");
     });
 
-    const navButtons = 
+    // Close on click outside
+    document.addEventListener("click", (e) => {
+      if (!switcher.contains(e.target)) {
+        switcher.classList.remove("open");
+      }
+    });
+
+    const navButtons =
       document.querySelector(".navbar .nav-buttons") ||
       document.querySelector(".header .nav-buttons") ||
       document.querySelector(".dashboard-actions");

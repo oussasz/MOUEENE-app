@@ -567,6 +567,16 @@ h2 {
 .categories-orbital .categories-image {
   position: relative;
   z-index: 2;
+  width: 100%;
+  min-height: 320px;
+  background: url("/assets/categories-transparent.png") center/contain no-repeat;
+}
+
+.categories-orbital .categories-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .orbital-item {
@@ -1247,16 +1257,31 @@ h2 {
 }
 /* Desktop: Hide hamburger, show everything */
 @media (min-width: 1025px) {
-  .hamburger { display: none !important; }
-  .nav-menu, .nav-buttons { display: flex !important; }
+  .hamburger {
+    display: none !important;
+  }
+  .nav-menu,
+  .nav-buttons {
+    display: flex !important;
+  }
 }
 
 /* Tablet: Compact layout */
 @media (max-width: 1024px) and (min-width: 769px) {
-  .nav-menu { gap: 12px; }
-  .nav-menu a { font-size: 0.85rem; }
-  .nav-buttons .btn { padding: 6px 12px; font-size: 0.8rem; }
-  .lang-toggle { padding: 6px 10px; font-size: 0.8rem; }
+  .nav-menu {
+    gap: 12px;
+  }
+  .nav-menu a {
+    font-size: 0.85rem;
+  }
+  .nav-buttons .btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  .lang-toggle {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
 }
 
 /* Mobile: Hamburger menu */
@@ -1301,7 +1326,7 @@ h2 {
     margin-top: 10px;
     border-top: 2px solid var(--primary-color);
   }
-  
+
   /* Language switcher always visible on mobile */
   .lang-switcher {
     margin-right: 5px;
@@ -1311,8 +1336,12 @@ h2 {
     font-size: 0.75rem;
     gap: 4px;
   }
-  .lang-toggle .fa-globe { font-size: 0.9rem; }
-  .lang-toggle .fa-chevron-down { display: none; }
+  .lang-toggle .fa-globe {
+    font-size: 0.9rem;
+  }
+  .lang-toggle .fa-chevron-down {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2062,8 +2091,12 @@ body.i18n-ready.i18n-switching {
   opacity: 1;
 }
 
-html[lang="ar"] h1, html[lang="ar"] h2, html[lang="ar"] h3,
-html[lang="ar"] h4, html[lang="ar"] h5, html[lang="ar"] h6 {
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3,
+html[lang="ar"] h4,
+html[lang="ar"] h5,
+html[lang="ar"] h6 {
   font-family: "Tajawal", "Cairo", sans-serif;
   letter-spacing: 0;
 }
@@ -2094,7 +2127,7 @@ html[lang="ar"] {
   font-weight: 600;
   color: var(--text-dark);
   transition: var(--transition-smooth);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
 }
 
 .glass-header .lang-toggle {
@@ -2105,7 +2138,7 @@ html[lang="ar"] {
 
 .lang-toggle:hover {
   background: white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   transform: translateY(-1px);
   border-color: var(--primary-color);
 }
@@ -2129,11 +2162,11 @@ html[lang="ar"] {
 .lang-menu {
   position: absolute;
   top: calc(100% + 10px);
-  right: 0; 
+  right: 0;
   left: auto;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.15);
   padding: 6px;
   min-width: 140px;
   border: 1px solid var(--border-color);
@@ -2206,11 +2239,11 @@ html[dir="rtl"] .lang-menu {
 
 html[dir="rtl"] .lang-option {
   text-align: right;
-  flex-direction: row-reverse; 
+  flex-direction: row-reverse;
 }
 
 html[dir="rtl"] .lang-toggle {
-    flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }
 
 html.lang-ar body {
