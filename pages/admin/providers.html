@@ -652,6 +652,7 @@
         </div>
       </nav>
     </aside>
+    <script src="../../assets/js/i18n.js"></script>
 
     <!-- Main Content -->
     <main class="admin-main">
@@ -1254,7 +1255,8 @@
             title: "Suspend Provider",
             subtitle: "Please provide a reason for suspension.",
             label: "Suspension Reason",
-            placeholder: "Enter the reason why this provider is being suspended...",
+            placeholder:
+              "Enter the reason why this provider is being suspended...",
             buttonText: "Suspend",
             variant: "warning",
           },
@@ -1273,7 +1275,10 @@
               loadProviders();
               loadStats();
             } else {
-              showToast(result?.message || "Failed to suspend provider", "error");
+              showToast(
+                result?.message || "Failed to suspend provider",
+                "error",
+              );
             }
           },
         );
@@ -1303,7 +1308,10 @@
               loadProviders();
               loadStats();
             } else {
-              showToast(result?.message || "Failed to activate provider", "error");
+              showToast(
+                result?.message || "Failed to activate provider",
+                "error",
+              );
             }
           },
         );
@@ -1330,7 +1338,10 @@
               loadProviders();
               loadStats();
             } else {
-              showToast(result?.message || "Failed to delete provider", "error");
+              showToast(
+                result?.message || "Failed to delete provider",
+                "error",
+              );
             }
           },
         );

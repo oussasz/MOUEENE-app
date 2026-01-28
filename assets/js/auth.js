@@ -6,6 +6,41 @@
  * @version 1.0.0
  */
 
+// --- i18n bootstrap (loads assets/js/i18n.js once, then initializes) ---
+(function ensureI18NLoaded() {
+  if (window.__moueeneI18NReady) {
+    window.__moueeneI18NReady.then((i18n) => i18n && i18n.init && i18n.init());
+    return;
+  }
+
+  window.__moueeneI18NReady = new Promise((resolve) => {
+    if (window.I18N) {
+      resolve(window.I18N);
+      return;
+    }
+
+    try {
+      const base =
+        document.currentScript && document.currentScript.src
+          ? new URL(".", document.currentScript.src)
+          : new URL("/assets/js/", window.location.origin);
+      const src = new URL("i18n.js", base).toString();
+      const script = document.createElement("script");
+      script.src = src;
+      script.defer = true;
+      script.onload = () => resolve(window.I18N);
+      script.onerror = () => resolve(null);
+      document.head.appendChild(script);
+    } catch (e) {
+      resolve(null);
+    }
+  });
+
+  window.__moueeneI18NReady.then((i18n) => i18n && i18n.init && i18n.init());
+})();
+
+const __t = (s) => (window.I18N && window.I18N.t ? window.I18N.t(s) : s);
+
 const Auth = {
   // API base URL
   apiUrl: "/backend/api/v1",
@@ -94,7 +129,7 @@ const Auth = {
       console.error("Registration error:", error);
       return {
         success: false,
-        message: "Registration failed. Please try again.",
+        message: __t("Registration failed. Please try again."),
       };
     }
   },
@@ -129,7 +164,10 @@ const Auth = {
       }
     } catch (error) {
       console.error("Login error:", error);
-      return { success: false, message: "Login failed. Please try again." };
+      return {
+        success: false,
+        message: __t("Login failed. Please try again."),
+      };
     }
   },
 
@@ -216,7 +254,7 @@ const Auth = {
       }
     } catch (error) {
       console.error("Update profile error:", error);
-      return { success: false, message: "Failed to update profile." };
+      return { success: false, message: __t("Failed to update profile.") };
     }
   },
 
@@ -244,7 +282,7 @@ const Auth = {
       };
     } catch (error) {
       console.error("Change password error:", error);
-      return { success: false, message: "Failed to change password." };
+      return { success: false, message: __t("Failed to change password.") };
     }
   },
 
@@ -363,8 +401,8 @@ const Auth = {
     if (!types.includes(userType)) {
       this.showModal({
         type: "error",
-        title: "Access denied",
-        message: "You do not have permission to view this page.",
+        title: __t("Access denied"),
+        message: __t("You do not have permission to view this page."),
       }).then(() => this.redirectToDashboard());
       return false;
     }
@@ -377,9 +415,9 @@ const Auth = {
 Auth.showModal = function (options = {}) {
   const config = {
     type: options.type || "info",
-    title: options.title || "Message",
+    title: options.title || __t("Message"),
     message: options.message || "",
-    okText: options.okText || "OK",
+    okText: options.okText || __t("OK"),
   };
 
   const overlayId = "mm-modal-overlay";
@@ -437,9 +475,9 @@ Auth.showModal = function (options = {}) {
     iconEl.className = `mm-modal-icon ${icon.klass}`;
     iconEl.textContent = icon.text;
 
-    titleEl.textContent = config.title;
-    msgEl.textContent = config.message;
-    okBtn.textContent = config.okText;
+    titleEl.textContent = __t(config.title);
+    msgEl.textContent = __t(config.message);
+    okBtn.textContent = __t(config.okText);
 
     let lastActive = document.activeElement;
 

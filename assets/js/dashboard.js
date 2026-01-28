@@ -6,6 +6,10 @@
  * @version 1.0.0
  */
 
+const __t = (s) => (window.I18N && window.I18N.t ? window.I18N.t(s) : s);
+const __lang = () =>
+  window.I18N && window.I18N.getLanguage ? window.I18N.getLanguage() : "en";
+
 const Dashboard = {
   apiUrl: "/backend/api/v1",
 
@@ -41,7 +45,7 @@ const Dashboard = {
         // Update username in header
         const headerNameEl = document.getElementById("headerName");
         if (headerNameEl) {
-          headerNameEl.textContent = user.first_name || "User";
+          headerNameEl.textContent = user.first_name || __t("User");
         }
 
         // Update sidebar and dropdown names
@@ -69,7 +73,8 @@ const Dashboard = {
         // Update welcome message
         const welcomeMessage = document.querySelector(".dashboard-welcome h1");
         if (welcomeMessage) {
-          welcomeMessage.textContent = `Welcome back, ${user.first_name || "User"}!`;
+          const name = user.first_name || __t("User");
+          welcomeMessage.textContent = `${__t("Welcome back")}, ${name}!`;
         }
       }
     } catch (error) {
@@ -208,7 +213,7 @@ const Dashboard = {
     if (bookings.length === 0) {
       container.innerHTML = `
         <div style="text-align: center; padding: 2rem;">
-            <p style="color: var(--text-light);">No active bookings found.</p>
+            <p style="color: var(--text-light);">${__t("No active bookings found.")}</p>
         </div>
       `;
       return;
@@ -226,7 +231,7 @@ const Dashboard = {
                 <div>
                     <div style="font-weight: 600; color: var(--text-dark);">${booking.service_name}</div>
                     <div style="font-size: 0.85rem; color: #64748b;">
-                        with ${booking.provider_first_name} ${booking.provider_last_name}
+                      ${__t("with")} ${booking.provider_first_name} ${booking.provider_last_name}
                     </div>
                 </div>
             </div>
@@ -236,13 +241,17 @@ const Dashboard = {
                 </div>
                 <span class="badge badge-${this.getStatusClass(booking.booking_status)}" 
                       style="padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; background: ${this.getStatusColor(booking.booking_status)}; color: white;">
-                    ${this.capitalizeFirst(booking.booking_status)}
+                    ${__t(this.capitalizeFirst(booking.booking_status))}
                 </span>
             </div>
         </div>
     `,
       )
       .join("");
+
+    if (window.I18N && window.I18N.refresh) {
+      window.I18N.refresh();
+    }
   },
 
   getStatusColor(status) {
@@ -283,7 +292,9 @@ const Dashboard = {
    */
   formatDate(dateString) {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
+    const lang = __lang();
+    const locale = lang === "fr" ? "fr-FR" : lang === "ar" ? "ar" : "en-US";
+    return date.toLocaleDateString(locale, {
       month: "short",
       day: "numeric",
       year: "numeric",
