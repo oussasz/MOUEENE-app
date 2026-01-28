@@ -26,8 +26,13 @@
 
       /* Hero Section */
       .page-hero {
-        background: linear-gradient(135deg, rgba(0, 201, 167, 0.9), rgba(255, 89, 148, 0.85)),
-                    url("../assets/images/hero_services.jpeg");
+        background:
+          linear-gradient(
+            135deg,
+            rgba(0, 201, 167, 0.9),
+            rgba(255, 89, 148, 0.85)
+          ),
+          url("../assets/images/hero_services.jpeg");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -445,11 +450,11 @@
 
       <!-- Services List -->
       <div class="services-content">
-        <div id="services-status" style="margin-bottom: 1rem;"></div>
+        <div id="services-status" style="margin-bottom: 1rem"></div>
         <div id="services-grid" class="services-grid-layout"></div>
 
-        <div class="text-center mt-40" style="margin-top: 2rem;">
-          <button id="load-more" class="btn btn-outline" style="display: none;">
+        <div class="text-center mt-40" style="margin-top: 2rem">
+          <button id="load-more" class="btn btn-outline" style="display: none">
             Load More
           </button>
         </div>
@@ -566,16 +571,17 @@
           const response = await fetch(url);
           const json = await response.json().catch(() => null);
           if (!response.ok || !json || json.success !== true) {
-            const message = json?.message || `Request failed (${response.status})`;
+            const message =
+              json?.message || `Request failed (${response.status})`;
             throw new Error(message);
           }
           return json;
         }
 
         function renderCategories(categories) {
-          const allOption = elements.categoriesList.querySelector(
-            'input[name="category"][value=""]'
-          )?.closest("label");
+          const allOption = elements.categoriesList
+            .querySelector('input[name="category"][value=""]')
+            ?.closest("label");
 
           elements.categoriesList.innerHTML = "";
           if (allOption) elements.categoriesList.appendChild(allOption);
@@ -598,7 +604,7 @@
 
         function readFiltersFromUI() {
           const selectedCategory = document.querySelector(
-            'input[name="category"]:checked'
+            'input[name="category"]:checked',
           );
           state.categoryId = selectedCategory?.value
             ? Number(selectedCategory.value)
@@ -606,13 +612,21 @@
 
           state.search = (elements.searchInput.value || "").trim();
 
-          const minPrice = elements.minPrice.value ? Number(elements.minPrice.value) : null;
-          const maxPrice = elements.maxPrice.value ? Number(elements.maxPrice.value) : null;
+          const minPrice = elements.minPrice.value
+            ? Number(elements.minPrice.value)
+            : null;
+          const maxPrice = elements.maxPrice.value
+            ? Number(elements.maxPrice.value)
+            : null;
           state.minPrice = Number.isFinite(minPrice) ? minPrice : null;
           state.maxPrice = Number.isFinite(maxPrice) ? maxPrice : null;
 
-          const ratingInput = document.querySelector('input[name="rating"]:checked');
-          const minRating = ratingInput?.value ? Number(ratingInput.value) : null;
+          const ratingInput = document.querySelector(
+            'input[name="rating"]:checked',
+          );
+          const minRating = ratingInput?.value
+            ? Number(ratingInput.value)
+            : null;
           state.minRating = Number.isFinite(minRating) ? minRating : null;
         }
 
@@ -623,7 +637,8 @@
 
             if (state.minPrice !== null && price < state.minPrice) return false;
             if (state.maxPrice !== null && price > state.maxPrice) return false;
-            if (state.minRating !== null && rating < state.minRating) return false;
+            if (state.minRating !== null && rating < state.minRating)
+              return false;
             return true;
           });
         }
@@ -647,7 +662,10 @@
             const rating = Number(service.average_rating || 0).toFixed(1);
             const bookings = Number(service.total_bookings || 0);
             const providers = Number(service.total_providers || 0);
-            const priceText = formatPrice(service.base_price, service.price_type);
+            const priceText = formatPrice(
+              service.base_price,
+              service.price_type,
+            );
 
             card.innerHTML = `
               <div class="service-img-wrapper">
@@ -707,7 +725,8 @@
           elements.searchInput.value = q;
 
           const categoryId = params.get("category_id");
-          const categorySlug = params.get("category") || params.get("category_slug");
+          const categorySlug =
+            params.get("category") || params.get("category_slug");
 
           if (categoryId && !Number.isNaN(Number(categoryId))) {
             const selector = `input[name="category"][value="${CSS.escape(String(categoryId))}"]`;
@@ -719,7 +738,7 @@
           if (categorySlug) {
             const desired = mapLegacyCategorySlug(categorySlug);
             const match = state.categories.find(
-              (c) => normalizeSlug(c.category_slug) === desired
+              (c) => normalizeSlug(c.category_slug) === desired,
             );
             if (match) {
               const selector = `input[name="category"][value="${CSS.escape(String(match.category_id))}"]`;
@@ -760,11 +779,16 @@
 
             renderServices(filtered, { append: !reset });
 
-            if ((reset && filtered.length === 0) || elements.grid.children.length === 0) {
+            if (
+              (reset && filtered.length === 0) ||
+              elements.grid.children.length === 0
+            ) {
               setStatus("No services found.");
             } else {
               const shown = elements.grid.children.length;
-              setStatus(`Showing ${shown}${state.total ? ` of ${state.total}` : ""} services`);
+              setStatus(
+                `Showing ${shown}${state.total ? ` of ${state.total}` : ""} services`,
+              );
             }
 
             if (state.hasMore) {

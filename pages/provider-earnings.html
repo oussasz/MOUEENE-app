@@ -473,7 +473,8 @@
                   </div>
                   <div class="uc-note">
                     Tip: Once payments are ready, this page will show your total
-                    earnings, available balance, payout history, and transactions.
+                    earnings, available balance, payout history, and
+                    transactions.
                   </div>
                 </div>
               </div>
@@ -506,10 +507,12 @@
         });
 
         // Logout handlers
-        document.getElementById("logout-btn").addEventListener("click", async (e) => {
-          e.preventDefault();
-          await Auth.logout();
-        });
+        document
+          .getElementById("logout-btn")
+          .addEventListener("click", async (e) => {
+            e.preventDefault();
+            await Auth.logout();
+          });
         document
           .getElementById("header-logout-btn")
           .addEventListener("click", async (e) => {

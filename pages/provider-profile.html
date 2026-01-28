@@ -18,25 +18,31 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  
+
     <style>
       /* Modern Profile Styles */
       :root {
-          --primary: #00c9a7;
-          --primary-dark: #00a88c;
-          --secondary: #ff5994;
-          --text: #2d3748;
-          --text-light: #718096;
+        --primary: #00c9a7;
+        --primary-dark: #00a88c;
+        --secondary: #ff5994;
+        --text: #2d3748;
+        --text-light: #718096;
       }
-      
+
       body {
         background-color: #f7f9fc;
         color: var(--text);
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
       }
-      
+
       .page-banner {
-        background: linear-gradient(135deg, rgba(0, 201, 167, 0.9), rgba(255, 89, 148, 0.85)), url('../assets/images/hero_services.jpeg');
+        background:
+          linear-gradient(
+            135deg,
+            rgba(0, 201, 167, 0.9),
+            rgba(255, 89, 148, 0.85)
+          ),
+          url("../assets/images/hero_services.jpeg");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -45,33 +51,40 @@
         margin-bottom: 20px;
         position: relative;
       }
-      
+
       .page-banner::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: rgba(0,0,0,0.4);
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
       }
-      
-      .page-banner .container { position: relative; z-index: 1; }
-      
+
+      .page-banner .container {
+        position: relative;
+        z-index: 1;
+      }
+
       .breadcrumb {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-size: 0.95rem;
-          font-weight: 500;
-          margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        margin: 0;
       }
-      
+
       .breadcrumb a {
-          color: rgba(255,255,255,0.9);
-          text-decoration: none;
-          transition: color 0.3s;
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        transition: color 0.3s;
       }
-      
-      .breadcrumb a:hover { color: white; }
-      .breadcrumb span { color: rgba(255,255,255,0.6); }
+
+      .breadcrumb a:hover {
+        color: white;
+      }
+      .breadcrumb span {
+        color: rgba(255, 255, 255, 0.6);
+      }
 
       .profile-header {
         position: relative;
@@ -79,33 +92,33 @@
         margin-top: -80px;
         padding-bottom: 20px;
       }
-      
+
       .profile-card {
         background: white;
         border-radius: 24px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
         padding: 40px;
         display: flex;
         gap: 40px;
         align-items: flex-start;
-        border: 1px solid rgba(0,0,0,0.03);
+        border: 1px solid rgba(0, 0, 0, 0.03);
       }
-      
+
       .profile-image-container {
-         position: relative;
-         flex-shrink: 0;
+        position: relative;
+        flex-shrink: 0;
       }
 
       .profile-image {
-          width: 160px;
-          height: 160px;
-          border-radius: 50%;
-          border: 6px solid white;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-          object-fit: cover;
-          background: #f0f0f0;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        border: 6px solid white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        object-fit: cover;
+        background: #f0f0f0;
       }
-      
+
       .badge-verified-float {
         position: absolute;
         bottom: 10px;
@@ -118,238 +131,287 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         font-size: 1.2rem;
         border: 3px solid white;
         z-index: 2;
       }
 
       .profile-info {
-          flex: 1;
-          padding-top: 10px;
+        flex: 1;
+        padding-top: 10px;
       }
-      
+
       .badge {
-          display: inline-flex;
-          align-items: center;
-          padding: 6px 14px;
-          border-radius: 50px;
-          font-size: 0.8rem;
-          font-weight: 600;
-          letter-spacing: 0.3px;
-          margin-bottom: 10px;
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        margin-bottom: 10px;
       }
-      
-      .badge i { margin-right: 6px; }
+
+      .badge i {
+        margin-right: 6px;
+      }
 
       .badge-verified {
-          background-color: rgba(0, 201, 167, 0.1);
-          color: var(--primary);
+        background-color: rgba(0, 201, 167, 0.1);
+        color: var(--primary);
       }
-      
+
       .badge-pending {
-          background-color: rgba(245, 158, 11, 0.1);
-          color: #f59e0b;
+        background-color: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
       }
 
       .profile-name {
-          font-size: 2.5rem;
-          margin: 0 0 5px 0;
-          color: var(--text);
-          font-weight: 800;
-          line-height: 1.2;
+        font-size: 2.5rem;
+        margin: 0 0 5px 0;
+        color: var(--text);
+        font-weight: 800;
+        line-height: 1.2;
       }
-      
+
       .profile-specialty {
-         color: var(--primary);
-         font-size: 1.1rem;
-         font-weight: 600;
-         margin-bottom: 15px;
-         display: inline-block;
-         background: rgba(0, 201, 167, 0.08);
-         padding: 4px 12px;
-         border-radius: 8px;
+        color: var(--primary);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        display: inline-block;
+        background: rgba(0, 201, 167, 0.08);
+        padding: 4px 12px;
+        border-radius: 8px;
       }
-      
+
       .profile-meta {
-         display: flex;
-         gap: 20px;
-         color: var(--text-light);
-         margin-bottom: 25px;
-         font-size: 0.95rem;
-         flex-wrap: wrap;
+        display: flex;
+        gap: 20px;
+        color: var(--text-light);
+        margin-bottom: 25px;
+        font-size: 0.95rem;
+        flex-wrap: wrap;
       }
-      
-      .profile-meta span { display: flex; align-items: center; gap: 8px; }
-      
+
+      .profile-meta span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
       .profile-actions {
-          display: flex;
-          gap: 15px;
-          flex-wrap: wrap;
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
       }
-      
+
       .btn {
-          padding: 12px 28px;
-          border-radius: 12px;
-          font-weight: 600;
-          text-decoration: none;
-          transition: all 0.3s;
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          border: none;
-          cursor: pointer;
-          font-size: 1rem;
+        padding: 12px 28px;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
       }
-      
+
       .btn-primary {
-          background: linear-gradient(135deg, var(--primary), #00b395);
-          color: white;
-          box-shadow: 0 4px 15px rgba(0, 201, 167, 0.3);
+        background: linear-gradient(135deg, var(--primary), #00b395);
+        color: white;
+        box-shadow: 0 4px 15px rgba(0, 201, 167, 0.3);
       }
-      
+
       .btn-primary:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(0, 201, 167, 0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 201, 167, 0.4);
       }
-      
+
       .btn-outline {
-          background: white;
-          border: 2px solid #e2e8f0;
-          color: var(--text);
+        background: white;
+        border: 2px solid #e2e8f0;
+        color: var(--text);
       }
-      
+
       .btn-outline:hover {
-          border-color: var(--primary);
-          color: var(--primary);
-          background: rgba(0, 201, 167, 0.05);
+        border-color: var(--primary);
+        color: var(--primary);
+        background: rgba(0, 201, 167, 0.05);
       }
-      
+
       .section-card {
-          background: white;
-          padding: 30px;
-          border-radius: 20px;
-          box-shadow: 0 5px 20px rgba(0,0,0,0.03);
-          border: 1px solid rgba(0,0,0,0.03);
-          margin-bottom: 30px;
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        margin-bottom: 30px;
       }
-      
+
       .section-title {
-          font-size: 1.4rem;
-          font-weight: 700;
-          margin-bottom: 20px;
-          padding-bottom: 15px;
-          border-bottom: 1px solid #edf2f7;
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #edf2f7;
       }
-      
+
       /* Services Grid */
       .services-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-          gap: 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
       }
-      
+
       .service-item {
-          background: white;
-          border-radius: 16px;
-          padding: 20px;
-          border: 1px solid #edf2f7;
-          transition: all 0.3s;
-          position: relative;
-          overflow: hidden;
+        background: white;
+        border-radius: 16px;
+        padding: 20px;
+        border: 1px solid #edf2f7;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
       }
-      
+
       .service-item:hover {
-          border-color: var(--primary);
-          box-shadow: 0 10px 30px rgba(0, 201, 167, 0.1);
-          transform: translateY(-3px);
+        border-color: var(--primary);
+        box-shadow: 0 10px 30px rgba(0, 201, 167, 0.1);
+        transform: translateY(-3px);
       }
-      
+
       .service-item::before {
-          content: '';
-          position: absolute;
-          left: 0; top: 0; bottom: 0; width: 4px;
-          background: var(--primary);
-          opacity: 0;
-          transition: opacity 0.3s;
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--primary);
+        opacity: 0;
+        transition: opacity 0.3s;
       }
-      
-      .service-item:hover::before { opacity: 1; }
-      
-      .service-name { font-weight: 700; margin-bottom: 8px; color: var(--text); font-size: 1.1rem; }
-      .service-desc { font-size: 0.9rem; color: var(--text-light); margin-bottom: 15px; line-height: 1.5; }
-      .service-price { 
-          font-weight: 700; 
-          color: var(--primary); 
-          font-size: 1.1rem; 
-          display: flex;
-          align-items: center;
-          gap: 5px;
+
+      .service-item:hover::before {
+        opacity: 1;
+      }
+
+      .service-name {
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--text);
+        font-size: 1.1rem;
+      }
+      .service-desc {
+        font-size: 0.9rem;
+        color: var(--text-light);
+        margin-bottom: 15px;
+        line-height: 1.5;
+      }
+      .service-price {
+        font-weight: 700;
+        color: var(--primary);
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 5px;
       }
 
       /* Reviews */
-      .review-list { display: flex; flex-direction: column; gap: 20px; }
-      
+      .review-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
       .review-item {
-          padding-bottom: 20px;
-          border-bottom: 1px solid #edf2f7;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #edf2f7;
       }
-      .review-item:last-child { border: none; padding-bottom: 0; }
-      
+      .review-item:last-child {
+        border: none;
+        padding-bottom: 0;
+      }
+
       .review-header {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 10px;
       }
-      
+
       .review-avatar {
-          width: 48px; height: 48px; border-radius: 50%; object-fit: cover;
-          border: 2px solid #edf2f7;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #edf2f7;
       }
-      
-      .review-author h5 { margin: 0; font-size: 1rem; font-weight: 700; }
-      .review-date { font-size: 0.8rem; color: #a0aec0; }
-      .review-rating { color: #fbbf24; font-size: 0.9rem; margin-top: 2px; }
-      .review-text { color: var(--text-light); line-height: 1.6; font-size: 0.95rem; }
-      
+
+      .review-author h5 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .review-date {
+        font-size: 0.8rem;
+        color: #a0aec0;
+      }
+      .review-rating {
+        color: #fbbf24;
+        font-size: 0.9rem;
+        margin-top: 2px;
+      }
+      .review-text {
+        color: var(--text-light);
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+
       .no-data {
-          text-align: center;
-          color: var(--text-light);
-          padding: 40px;
-          background: #f8fafc;
-          border-radius: 12px;
-          font-style: italic;
+        text-align: center;
+        color: var(--text-light);
+        padding: 40px;
+        background: #f8fafc;
+        border-radius: 12px;
+        font-style: italic;
       }
-      
+
       @media (max-width: 768px) {
-          .profile-card {
-              flex-direction: column;
-              align-items: center;
-              text-align: center;
-              padding: 30px 20px;
-              gap: 20px;
-          }
-          
-          .profile-meta {
-              flex-direction: column;
-              gap: 10px;
-              justify-content: center;
-          }
-          
-          .profile-actions {
-              justify-content: center;
-              width: 100%;
-          }
-          
-          .btn { width: 100%; justify-content: center; }
-          
-           .services-section .container > div {
-              grid-template-columns: 1fr !important;
-          }
+        .profile-card {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 30px 20px;
+          gap: 20px;
+        }
+
+        .profile-meta {
+          flex-direction: column;
+          gap: 10px;
+          justify-content: center;
+        }
+
+        .profile-actions {
+          justify-content: center;
+          width: 100%;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .services-section .container > div {
+          grid-template-columns: 1fr !important;
+        }
       }
     </style>
-</head>
+  </head>
   <body>
     <!-- Header -->
     <header class="header">
@@ -397,27 +459,47 @@
       <div class="container">
         <div class="profile-card">
           <div class="profile-image-container">
-            <img src="../assets/images/default-avatar.jpg" alt="Provider" class="profile-image" id="profile-image"/>
+            <img
+              src="../assets/images/default-avatar.jpg"
+              alt="Provider"
+              class="profile-image"
+              id="profile-image"
+            />
             <div id="verified-badge-container"></div>
           </div>
-          
+
           <div class="profile-info">
             <div class="profile-badges" id="profile-badges">
-                <!-- Badges injected here -->
+              <!-- Badges injected here -->
             </div>
-            
+
             <h1 class="profile-name" id="profile-name">Loading...</h1>
-            <div class="profile-specialty" id="profile-specialty">Service Provider</div>
-            
-            <div class="profile-meta">
-                <span id="rating-container"><i class="fas fa-star text-warning"></i> <span id="rating-text">0.0 (0 reviews)</span></span>
-                <span id="location-container"><i class="fas fa-map-marker-alt"></i> <span id="location-text">Location</span></span>
-                <span id="member-since"><i class="fas fa-clock"></i> Member since <span id="joined-date">-</span></span>
+            <div class="profile-specialty" id="profile-specialty">
+              Service Provider
             </div>
-            
+
+            <div class="profile-meta">
+              <span id="rating-container"
+                ><i class="fas fa-star text-warning"></i>
+                <span id="rating-text">0.0 (0 reviews)</span></span
+              >
+              <span id="location-container"
+                ><i class="fas fa-map-marker-alt"></i>
+                <span id="location-text">Location</span></span
+              >
+              <span id="member-since"
+                ><i class="fas fa-clock"></i> Member since
+                <span id="joined-date">-</span></span
+              >
+            </div>
+
             <div class="profile-actions">
-              <a href="#booking" class="btn btn-primary" id="btn-book-now">Book Now</a>
-              <button class="btn btn-outline"><i class="fas fa-envelope"></i> Message</button>
+              <a href="#booking" class="btn btn-primary" id="btn-book-now"
+                >Book Now</a
+              >
+              <button class="btn btn-outline">
+                <i class="fas fa-envelope"></i> Message
+              </button>
             </div>
           </div>
         </div>
@@ -427,14 +509,17 @@
     <!-- Profile Content -->
     <section class="services-section">
       <div class="container">
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px" class="responsive-grid">
+        <div
+          style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px"
+          class="responsive-grid"
+        >
           <!-- Main Content -->
           <div>
             <!-- About -->
             <div class="section-card">
               <h3 class="section-title">About Me</h3>
               <div id="biography-content">
-                  <p class="text-muted">No biography available.</p>
+                <p class="text-muted">No biography available.</p>
               </div>
             </div>
 
@@ -442,48 +527,86 @@
             <div class="section-card">
               <h3 class="section-title">Services Offered</h3>
               <div class="services-grid" id="services-list">
-                  <p class="no-data">Loading services...</p>
+                <p class="no-data">Loading services...</p>
               </div>
             </div>
 
             <!-- Reviews -->
             <div class="section-card">
-              <h3 class="section-title">Reviews <span id="reviews-count-badge" class="text-muted" style="font-size: 0.9rem;"></span></h3>
+              <h3 class="section-title">
+                Reviews
+                <span
+                  id="reviews-count-badge"
+                  class="text-muted"
+                  style="font-size: 0.9rem"
+                ></span>
+              </h3>
               <div class="review-list" id="reviews-list">
-                  <p class="no-data">Loading reviews...</p>
+                <p class="no-data">Loading reviews...</p>
               </div>
             </div>
           </div>
-          
+
           <!-- Sidebar -->
           <div>
             <!-- Availability -->
             <div class="section-card">
-                <h3 class="section-title">Availability</h3>
-                 <ul style="list-style: none; padding: 0" id="availability-list">
-                    <li style="padding: 10px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
-                        <span>Monday - Friday</span>
-                        <span class="text-primary font-weight-bold">9:00 AM - 6:00 PM</span>
-                    </li>
-                    <li style="padding: 10px 0; display: flex; justify-content: space-between;">
-                         <span>Weekends</span>
-                         <span class="text-muted">By appointment</span>
-                    </li>
-                 </ul>
+              <h3 class="section-title">Availability</h3>
+              <ul style="list-style: none; padding: 0" id="availability-list">
+                <li
+                  style="
+                    padding: 10px 0;
+                    border-bottom: 1px solid #eee;
+                    display: flex;
+                    justify-content: space-between;
+                  "
+                >
+                  <span>Monday - Friday</span>
+                  <span class="text-primary font-weight-bold"
+                    >9:00 AM - 6:00 PM</span
+                  >
+                </li>
+                <li
+                  style="
+                    padding: 10px 0;
+                    display: flex;
+                    justify-content: space-between;
+                  "
+                >
+                  <span>Weekends</span>
+                  <span class="text-muted">By appointment</span>
+                </li>
+              </ul>
             </div>
-             
-             <!-- Contact Info -->
-             <div class="section-card">
-                 <h3 class="section-title">Contact Info</h3>
-                 <div style="margin-bottom: 15px;">
-                     <label style="font-size: 0.8rem; color: #a0aec0; display: block; margin-bottom: 5px;">Member Since</label>
-                     <div style="font-weight: 600;" id="sidebar-joined">2024</div>
-                 </div>
-                 <div style="margin-bottom: 15px;">
-                     <label style="font-size: 0.8rem; color: #a0aec0; display: block; margin-bottom: 5px;">Response Time</label>
-                     <div style="font-weight: 600;">Usually within 2 hours</div>
-                 </div>
-             </div>
+
+            <!-- Contact Info -->
+            <div class="section-card">
+              <h3 class="section-title">Contact Info</h3>
+              <div style="margin-bottom: 15px">
+                <label
+                  style="
+                    font-size: 0.8rem;
+                    color: #a0aec0;
+                    display: block;
+                    margin-bottom: 5px;
+                  "
+                  >Member Since</label
+                >
+                <div style="font-weight: 600" id="sidebar-joined">2024</div>
+              </div>
+              <div style="margin-bottom: 15px">
+                <label
+                  style="
+                    font-size: 0.8rem;
+                    color: #a0aec0;
+                    display: block;
+                    margin-bottom: 5px;
+                  "
+                  >Response Time</label
+                >
+                <div style="font-weight: 600">Usually within 2 hours</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -547,24 +670,24 @@
 
     <script src="../assets/js/main.js"></script>
     <script>
-      (function() {
+      (function () {
         // API Base configuration
         const API_BASE = "/backend/api/v1";
 
         // Helpers
         async function apiGet(path, params = {}) {
-            const url = new URL(API_BASE + path, window.location.origin);
-            Object.keys(params).forEach(key => {
-                if(params[key]) url.searchParams.append(key, params[key]);
-            });
+          const url = new URL(API_BASE + path, window.location.origin);
+          Object.keys(params).forEach((key) => {
+            if (params[key]) url.searchParams.append(key, params[key]);
+          });
 
-            const response = await fetch(url);
-            const data = await response.json();
-            
-            if (!response.ok) {
-                throw new Error(data.message || "Something went wrong");
-            }
-            return data;
+          const response = await fetch(url);
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.message || "Something went wrong");
+          }
+          return data;
         }
 
         function resolveImageUrl(path) {
@@ -573,7 +696,7 @@
           const cleanPath = path.replace(/^\/+/, "");
           return `../${cleanPath}`;
         }
-        
+
         function escapeHtml(text) {
           if (text == null) return "";
           return String(text)
@@ -585,140 +708,167 @@
         }
 
         function formatDate(dateString) {
-            try {
-                return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
-            } catch(e) { return dateString; }
+          try {
+            return new Date(dateString).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+            });
+          } catch (e) {
+            return dateString;
+          }
         }
 
         // State & Elements
         const params = new URLSearchParams(window.location.search);
-        const providerId = params.get('provider_id');
+        const providerId = params.get("provider_id");
 
         async function init() {
-            if (!providerId) {
-                // If no provider ID, redirect or show error (in dev let's stay)
-                // window.location.href = 'providers.html';
-                console.warn("No provider_id found in URL");
-                document.getElementById('profile-name').textContent = "Provider ID Missing";
-                return;
+          if (!providerId) {
+            // If no provider ID, redirect or show error (in dev let's stay)
+            // window.location.href = 'providers.html';
+            console.warn("No provider_id found in URL");
+            document.getElementById("profile-name").textContent =
+              "Provider ID Missing";
+            return;
+          }
+
+          try {
+            // Load Provider Details
+            const response = await apiGet(`/providers/${providerId}`);
+            if (response.data) {
+              renderProfile(response.data);
+            } else {
+              throw new Error("Provider not found");
             }
 
-            try {
-                // Load Provider Details
-                const response = await apiGet(`/providers/${providerId}`);
-                if(response.data) {
-                   renderProfile(response.data);
-                } else {
-                   throw new Error("Provider not found");
-                }
-                
-                // Load Services
-                loadServices();
-                
-                // Load Reviews
-                loadReviews();
+            // Load Services
+            loadServices();
 
-            } catch (error) {
-                console.error("Error loading profile:", error);
-                document.querySelector('.profile-header').innerHTML = 
-                    `<div class="container text-center py-5"><h3>Provider not found</h3><a href="providers.html" class="btn btn-primary">Return to List</a></div>`;
-            }
+            // Load Reviews
+            loadReviews();
+          } catch (error) {
+            console.error("Error loading profile:", error);
+            document.querySelector(".profile-header").innerHTML =
+              `<div class="container text-center py-5"><h3>Provider not found</h3><a href="providers.html" class="btn btn-primary">Return to List</a></div>`;
+          }
         }
-        
+
         function renderProfile(p) {
-            document.title = `${p.business_name || p.first_name + ' ' + p.last_name} - Moueene`;
-            document.getElementById('breadcrumb-current').textContent = p.business_name || p.first_name + ' ' + p.last_name;
-            
-            // Header Image & Badge
-            const avatar = resolveImageUrl(p.profile_picture) || '../assets/images/default-avatar.jpg';
-            document.getElementById('profile-image').src = avatar;
-            
-            if(p.verification_status === 'verified') {
-               document.getElementById('verified-badge-container').innerHTML = 
-               `<div class="badge-verified-float" title="Verified Provider"><i class="fas fa-check"></i></div>`;
-            }
-            
-            // Name & Info
-            const name = p.business_name || `${p.first_name} ${p.last_name}`;
-            document.getElementById('profile-name').textContent = name;
-            document.getElementById('profile-specialty').textContent = p.specialization || 'Service Provider';
-            
-            // Badges
-            const badgesContainer = document.getElementById('profile-badges');
-            if(p.verification_status === 'verified') {
-                badgesContainer.innerHTML += `<span class="badge badge-verified"><i class="fas fa-check-circle"></i> Verified Identity</span>`;
-            }
-            // Assuming we check rating for top rated
-            if(parseFloat(p.average_rating) >= 4.5) {
-                 badgesContainer.innerHTML += `<span class="badge badge-pending" style="color:#d97706; background:rgba(251, 191, 36, 0.1)"><i class="fas fa-trophy"></i> Top Rated</span>`;
-            }
-            
-            // Meta
-            document.getElementById('rating-text').textContent = `${parseFloat(p.average_rating || 0).toFixed(1)} (${p.total_reviews || 0} reviews)`;
-            document.getElementById('location-text').textContent = p.city ? `${p.city}, ${p.country || 'Morocco'}` : 'Location Available';
-            document.getElementById('joined-date').textContent = formatDate(p.created_at);
-            document.getElementById('sidebar-joined').textContent = formatDate(p.created_at);
-            
-            // Bio
-            if(p.bio) {
-                document.getElementById('biography-content').innerHTML = `<p>${escapeHtml(p.bio).replace(/\n/g, '<br>')}</p>`;
-            }
+          document.title = `${p.business_name || p.first_name + " " + p.last_name} - Moueene`;
+          document.getElementById("breadcrumb-current").textContent =
+            p.business_name || p.first_name + " " + p.last_name;
+
+          // Header Image & Badge
+          const avatar =
+            resolveImageUrl(p.profile_picture) ||
+            "../assets/images/default-avatar.jpg";
+          document.getElementById("profile-image").src = avatar;
+
+          if (p.verification_status === "verified") {
+            document.getElementById("verified-badge-container").innerHTML =
+              `<div class="badge-verified-float" title="Verified Provider"><i class="fas fa-check"></i></div>`;
+          }
+
+          // Name & Info
+          const name = p.business_name || `${p.first_name} ${p.last_name}`;
+          document.getElementById("profile-name").textContent = name;
+          document.getElementById("profile-specialty").textContent =
+            p.specialization || "Service Provider";
+
+          // Badges
+          const badgesContainer = document.getElementById("profile-badges");
+          if (p.verification_status === "verified") {
+            badgesContainer.innerHTML += `<span class="badge badge-verified"><i class="fas fa-check-circle"></i> Verified Identity</span>`;
+          }
+          // Assuming we check rating for top rated
+          if (parseFloat(p.average_rating) >= 4.5) {
+            badgesContainer.innerHTML += `<span class="badge badge-pending" style="color:#d97706; background:rgba(251, 191, 36, 0.1)"><i class="fas fa-trophy"></i> Top Rated</span>`;
+          }
+
+          // Meta
+          document.getElementById("rating-text").textContent =
+            `${parseFloat(p.average_rating || 0).toFixed(1)} (${p.total_reviews || 0} reviews)`;
+          document.getElementById("location-text").textContent = p.city
+            ? `${p.city}, ${p.country || "Morocco"}`
+            : "Location Available";
+          document.getElementById("joined-date").textContent = formatDate(
+            p.created_at,
+          );
+          document.getElementById("sidebar-joined").textContent = formatDate(
+            p.created_at,
+          );
+
+          // Bio
+          if (p.bio) {
+            document.getElementById("biography-content").innerHTML =
+              `<p>${escapeHtml(p.bio).replace(/\n/g, "<br>")}</p>`;
+          }
         }
-        
+
         async function loadServices() {
-            try {
-               const res = await apiGet(`/providers/${providerId}/services`);
-               const services = res.data || [];
-               
-               const container = document.getElementById('services-list');
-               if(services.length === 0) {
-                   container.innerHTML = `<p class="no-data">This provider has not listed any specific services yet.</p>`;
-                   return;
-               }
-               
-               let html = '';
-               services.forEach(s => {
-                   const priceDisplay = s.price_type === 'hourly' ? `$${s.price}/hr` : `$${s.price}`;
-                   html += `
+          try {
+            const res = await apiGet(`/providers/${providerId}/services`);
+            const services = res.data || [];
+
+            const container = document.getElementById("services-list");
+            if (services.length === 0) {
+              container.innerHTML = `<p class="no-data">This provider has not listed any specific services yet.</p>`;
+              return;
+            }
+
+            let html = "";
+            services.forEach((s) => {
+              const priceDisplay =
+                s.price_type === "hourly" ? `$${s.price}/hr` : `$${s.price}`;
+              html += `
                    <div class="service-item">
                        <div class="service-name">${escapeHtml(s.service_name || s.category_name)}</div>
-                       <div class="service-desc">${escapeHtml(s.description || s.master_description || '')}</div>
+                       <div class="service-desc">${escapeHtml(s.description || s.master_description || "")}</div>
                        <div class="service-price">
                            <i class="fas fa-tag"></i> ${priceDisplay}
                        </div>
                    </div>
                    `;
-               });
-               container.innerHTML = html;
-               
-            } catch(e) {
-                console.error(e);
-                document.getElementById('services-list').innerHTML = `<p class="no-data">Could not load services.</p>`;
-            }
+            });
+            container.innerHTML = html;
+          } catch (e) {
+            console.error(e);
+            document.getElementById("services-list").innerHTML =
+              `<p class="no-data">Could not load services.</p>`;
+          }
         }
-        
+
         async function loadReviews() {
-             try {
-               const res = await apiGet(`/providers/${providerId}/reviews`, { limit: 5 });
-               const reviews = res.data || [];
-               const total = res.meta?.total || 0;
-               
-               document.getElementById('reviews-count-badge').textContent = `(${total})`;
-               
-               const container = document.getElementById('reviews-list');
-               if(reviews.length === 0) {
-                   container.innerHTML = `<p class="no-data">No reviews yet.</p>`;
-                   return;
-               }
-               
-               let html = '';
-               reviews.forEach(r => {
-                   const avatar = resolveImageUrl(r.profile_picture) || `https://ui-avatars.com/api/?name=${encodeURIComponent(r.first_name)}+${encodeURIComponent(r.last_name)}&background=random`;
-                   const ratingStars = Array(5).fill(0).map((_, i) => 
-                       `<i class="fas fa-star${i < r.rating ? '' : '-o'}" style="color: ${i < r.rating ? '#fbbf24' : '#e2e8f0'}"></i>`
-                   ).join('');
-                   
-                   html += `
+          try {
+            const res = await apiGet(`/providers/${providerId}/reviews`, {
+              limit: 5,
+            });
+            const reviews = res.data || [];
+            const total = res.meta?.total || 0;
+
+            document.getElementById("reviews-count-badge").textContent =
+              `(${total})`;
+
+            const container = document.getElementById("reviews-list");
+            if (reviews.length === 0) {
+              container.innerHTML = `<p class="no-data">No reviews yet.</p>`;
+              return;
+            }
+
+            let html = "";
+            reviews.forEach((r) => {
+              const avatar =
+                resolveImageUrl(r.profile_picture) ||
+                `https://ui-avatars.com/api/?name=${encodeURIComponent(r.first_name)}+${encodeURIComponent(r.last_name)}&background=random`;
+              const ratingStars = Array(5)
+                .fill(0)
+                .map(
+                  (_, i) =>
+                    `<i class="fas fa-star${i < r.rating ? "" : "-o"}" style="color: ${i < r.rating ? "#fbbf24" : "#e2e8f0"}"></i>`,
+                )
+                .join("");
+
+              html += `
                     <div class="review-item">
                         <div class="review-header">
                             <img src="${avatar}" alt="User" class="review-avatar">
@@ -731,14 +881,14 @@
                         <div class="review-text">${escapeHtml(r.comment)}</div>
                     </div>
                    `;
-               });
-               
-               container.innerHTML = html;
-               
-            } catch(e) {
-                console.error(e);
-                 document.getElementById('reviews-list').innerHTML = `<p class="no-data">Could not load reviews.</p>`;
-            }
+            });
+
+            container.innerHTML = html;
+          } catch (e) {
+            console.error(e);
+            document.getElementById("reviews-list").innerHTML =
+              `<p class="no-data">Could not load reviews.</p>`;
+          }
         }
 
         // Initialize

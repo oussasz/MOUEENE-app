@@ -271,7 +271,11 @@
           <p>Explore our most booked services right now</p>
         </div>
         <div id="top-services-grid" class="services-grid"></div>
-        <div id="top-services-status" class="text-center" style="margin-top: 1rem;"></div>
+        <div
+          id="top-services-status"
+          class="text-center"
+          style="margin-top: 1rem"
+        ></div>
         <div class="text-center mt-40" data-aos="fade-up">
           <a href="pages/services.html" class="btn btn-primary pulse-btn"
             >Browse All Services</a
@@ -437,7 +441,8 @@
           const response = await fetch(url);
           const json = await response.json().catch(() => null);
           if (!response.ok || !json || json.success !== true) {
-            const message = json?.message || `Request failed (${response.status})`;
+            const message =
+              json?.message || `Request failed (${response.status})`;
             throw new Error(message);
           }
           return json;
@@ -452,7 +457,10 @@
             const card = document.createElement("div");
             card.className = "service-card";
             card.setAttribute("data-aos", "fade-up");
-            card.setAttribute("data-aos-delay", String((index % 4) * 100 + 100));
+            card.setAttribute(
+              "data-aos-delay",
+              String((index % 4) * 100 + 100),
+            );
 
             const imageUrl = service.service_image
               ? resolveImageUrl(service.service_image)
@@ -461,7 +469,10 @@
             const categoryName = service.category_name || "Service";
             const rating = Number(service.average_rating || 0).toFixed(1);
             const bookings = Number(service.total_bookings || 0);
-            const priceText = formatPrice(service.base_price, service.price_type);
+            const priceText = formatPrice(
+              service.base_price,
+              service.price_type,
+            );
 
             const href = `pages/service-detail.html?service_id=${encodeURIComponent(service.service_id)}`;
 
@@ -506,14 +517,17 @@
             const result = await apiGet("/services/popular", { limit: 4 });
             const services = Array.isArray(result.data) ? result.data : [];
             if (services.length === 0) {
-              if (topStatus) topStatus.textContent = "No services available right now.";
+              if (topStatus)
+                topStatus.textContent = "No services available right now.";
               return;
             }
             renderTopServices(services);
             if (topStatus) topStatus.textContent = "";
           } catch (err) {
             console.error(err);
-            if (topStatus) topStatus.textContent = err?.message || "Failed to load top services";
+            if (topStatus)
+              topStatus.textContent =
+                err?.message || "Failed to load top services";
           }
         }
 
