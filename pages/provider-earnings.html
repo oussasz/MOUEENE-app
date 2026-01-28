@@ -300,6 +300,15 @@
       .transactions-table tr { box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
       .status-paid { color: #22c55e; background: rgba(34, 197, 94, 0.1); padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: 500; }
       .status-process { color: #f59e0b; background: rgba(245, 158, 11, 0.1); padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: 500; }
+
+      /* Under construction */
+      .uc-card { background: white; border-radius: 16px; padding: 35px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+      .uc-hero { display: flex; align-items: flex-start; gap: 18px; }
+      .uc-icon { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; background: rgba(245, 158, 11, 0.12); color: #f59e0b; font-size: 1.6rem; flex-shrink: 0; }
+      .uc-title { margin: 0; font-size: 1.6rem; color: var(--text-dark); }
+      .uc-subtitle { margin: 8px 0 0; color: var(--text-light); line-height: 1.55; }
+      .uc-actions { margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap; }
+      .uc-note { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: rgba(0, 201, 167, 0.08); color: var(--text-dark); font-size: 0.92rem; }
     </style>
   </head>
   <body>
@@ -445,91 +454,30 @@
 
           <!-- Main Content -->
           <main class="provider-main">
-            <div class="content-header">
-              <h1>Earnings & Payouts</h1>
-              <button class="btn btn-outline">
-                <i class="fas fa-download"></i> Export Report
-              </button>
-            </div>
-
-            <div class="earnings-overview">
-              <div class="earning-card">
-                <div class="earning-title">Total Earnings</div>
-                <div class="earning-amount">$4,250.00</div>
-                <div class="earning-trend trend-up">
-                  <i class="fas fa-arrow-up"></i> 12% vs last month
-                </div>
-              </div>
-              <div class="earning-card">
-                <div class="earning-title">Available for Payout</div>
-                <div class="earning-amount">$680.00</div>
-                <div class="earning-trend">
-                  <button
-                    class="btn btn-sm btn-primary"
-                    style="padding: 5px 10px; font-size: 0.8rem"
-                  >
-                    Withdraw
-                  </button>
-                </div>
-              </div>
-              <div class="earning-card">
-                <div class="earning-title">Pending Clearance</div>
-                <div class="earning-amount">$120.00</div>
-                <div class="earning-trend trend-down">
-                  <i class="fas fa-clock"></i> clears in 2 days
+            <div class="uc-card">
+              <div class="uc-hero">
+                <div class="uc-icon"><i class="fas fa-tools"></i></div>
+                <div>
+                  <h1 class="uc-title">Earnings & Payments</h1>
+                  <p class="uc-subtitle">
+                    This section is under construction. We haven’t implemented
+                    payouts/payments yet, so earnings data is not available.
+                  </p>
+                  <div class="uc-actions">
+                    <a href="provider-dashboard.html" class="btn btn-outline">
+                      <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                    <a href="provider-bookings.html" class="btn btn-primary">
+                      <i class="fas fa-calendar-alt"></i> View Bookings
+                    </a>
+                  </div>
+                  <div class="uc-note">
+                    Tip: Once payments are ready, this page will show your total
+                    earnings, available balance, payout history, and transactions.
+                  </div>
                 </div>
               </div>
             </div>
-
-            <!-- Chart Placeholder -->
-            <div class="chart-container">
-              <i
-                class="fas fa-chart-line"
-                style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5"
-              ></i>
-              <h3>Earnings Chart Placeholder</h3>
-              <p>Chart.js or similar library would render here</p>
-            </div>
-
-            <h3>Recent Transactions</h3>
-            <table class="transactions-table">
-              <thead>
-                <tr>
-                  <th>Transaction ID</th>
-                  <th>Date</th>
-                  <th>Customer</th>
-                  <th>Service</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>#TRX-4829</td>
-                  <td>Oct 20, 2023</td>
-                  <td>Alice Smith</td>
-                  <td>Deep Home Cleaning</td>
-                  <td>$160.00</td>
-                  <td><span class="status-process">Pending</span></td>
-                </tr>
-                <tr>
-                  <td>#TRX-4801</td>
-                  <td>Oct 18, 2023</td>
-                  <td>John Owner</td>
-                  <td>Car Diagnostics</td>
-                  <td>$50.00</td>
-                  <td><span class="status-paid">Paid</span></td>
-                </tr>
-                <tr>
-                  <td>#TRX-4752</td>
-                  <td>Oct 15, 2023</td>
-                  <td>Mike Ross</td>
-                  <td>Home Cleaning</td>
-                  <td>$85.00</td>
-                  <td><span class="status-paid">Paid</span></td>
-                </tr>
-              </tbody>
-            </table>
           </main>
         </div>
       </div>
@@ -540,13 +488,10 @@
     <script src="../assets/js/main.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
-        if (!Auth.isAuthenticated()) {
-          window.location.href = "login.html";
-          return;
-        }
-        if (window.ProviderUI) {
-          await ProviderUI.loadAndApply();
-        }
+        if (!Auth.requireAuth()) return;
+        if (!Auth.requireUserType("provider")) return;
+
+        if (window.ProviderUI) await ProviderUI.loadAndApply();
 
         // User menu dropdown
         const userMenu = document.getElementById("user-menu");
@@ -561,15 +506,15 @@
         });
 
         // Logout handlers
-        document.getElementById("logout-btn").addEventListener("click", (e) => {
+        document.getElementById("logout-btn").addEventListener("click", async (e) => {
           e.preventDefault();
-          Auth.logout();
+          await Auth.logout();
         });
         document
           .getElementById("header-logout-btn")
-          .addEventListener("click", (e) => {
+          .addEventListener("click", async (e) => {
             e.preventDefault();
-            Auth.logout();
+            await Auth.logout();
           });
       });
     </script>

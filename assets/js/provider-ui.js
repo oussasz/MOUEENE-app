@@ -31,7 +31,9 @@
     if (!badge || !user) return;
 
     const accountStatus = (user.account_status || "active").toLowerCase();
-    const verificationStatus = (user.verification_status || "pending").toLowerCase();
+    const verificationStatus = (
+      user.verification_status || "pending"
+    ).toLowerCase();
 
     // Account status takes precedence if it's not active
     if (accountStatus && accountStatus !== "active") {
@@ -40,7 +42,7 @@
           badge,
           "badge",
           '<i class="fas fa-ban"></i> Account Suspended',
-          "linear-gradient(135deg, #ef4444, #dc2626)"
+          "linear-gradient(135deg, #ef4444, #dc2626)",
         );
         return;
       }
@@ -49,7 +51,7 @@
           badge,
           "badge",
           '<i class="fas fa-user-slash"></i> Account Deactivated',
-          "linear-gradient(135deg, #6b7280, #374151)"
+          "linear-gradient(135deg, #6b7280, #374151)",
         );
         return;
       }
@@ -57,7 +59,7 @@
         badge,
         "badge",
         `<i class="fas fa-info-circle"></i> Account: ${accountStatus}`,
-        "linear-gradient(135deg, #f59e0b, #d97706)"
+        "linear-gradient(135deg, #f59e0b, #d97706)",
       );
       return;
     }
@@ -67,7 +69,7 @@
       setBadge(
         badge,
         "badge badge-verified",
-        '<i class="fas fa-check-circle"></i> Verified Provider'
+        '<i class="fas fa-check-circle"></i> Verified Provider',
       );
       return;
     }
@@ -77,7 +79,7 @@
         badge,
         "badge",
         '<i class="fas fa-times-circle"></i> Verification Rejected',
-        "linear-gradient(135deg, #ef4444, #dc2626)"
+        "linear-gradient(135deg, #ef4444, #dc2626)",
       );
       return;
     }
@@ -86,7 +88,7 @@
     setBadge(
       badge,
       "badge badge-pending",
-      '<i class="fas fa-clock"></i> Pending Verification'
+      '<i class="fas fa-clock"></i> Pending Verification',
     );
   }
 
@@ -96,9 +98,13 @@
         const fresh = await Auth.getCurrentUser();
         return fresh || (Auth.getUser ? Auth.getUser() : null);
       }
-      return typeof Auth !== "undefined" && Auth.getUser ? Auth.getUser() : null;
+      return typeof Auth !== "undefined" && Auth.getUser
+        ? Auth.getUser()
+        : null;
     } catch {
-      return typeof Auth !== "undefined" && Auth.getUser ? Auth.getUser() : null;
+      return typeof Auth !== "undefined" && Auth.getUser
+        ? Auth.getUser()
+        : null;
     }
   }
 

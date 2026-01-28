@@ -18,6 +18,14 @@ $method = $_SERVER['REQUEST_METHOD'];
 $input = json_decode(file_get_contents('php://input'), true) ?? [];
 
 switch ($action) {
+    case '':
+        if ($method === 'GET') {
+            handlePublicList();
+        } else {
+            Response::error('Method not allowed', 405);
+        }
+        break;
+
     case 'profile':
         if ($method === 'GET') {
             handleGetProfile();
@@ -68,7 +76,168 @@ switch ($action) {
         break;
         
     default:
-        Response::error('Invalid providers endpoint', 404);
+        // Numeric ID - public provider details (non-sensitive) or sub-resources
+        if (is_numeric($action)) {
+            $subAction = $parts[3] ?? '';
+            
+            if ($subAction === 'services' && $method === 'GET') {
+                handlePublicGetProviderServices((int)$action);
+            } elseif ($subAction === 'reviews' && $method === 'GET') {
+                handlePublicGetProviderReviews((int)$action);
+            } elseif ($subAction === '' && $method === 'GET') {
+                handlePublicGetProvider((int)$action);
+            } else {
+                 Response::error('Invalid provider endpoint', 404);
+            }
+        } else {
+            Response::error('Invalid providers endpoint', 404);
+        }
+}
+
+/**
+ * Public: List providers
+ * GET /api/v1/providers
+ */
+function handlePublicList() {
+    try {
+        $db = Database::getConnection();
+
+        $search = trim($_GET['search'] ?? '');
+        $city = trim($_GET['city'] ?? '');
+        $specialty = trim($_GET['specialty'] ?? '');
+        $minRating = isset($_GET['min_rating']) ? (float)$_GET['min_rating'] : null;
+        $verification = trim($_GET['verification_status'] ?? '');
+
+        $page = max(1, intval($_GET['page'] ?? 1));
+        $limit = min(100, max(1, intval($_GET['limit'] ?? 20)));
+        $offset = ($page - 1) * $limit;
+
+        $where = [];
+        $params = [];
+
+        // Hide deactivated/suspended providers from public listing
+        $where[] = "account_status NOT IN ('deactivated', 'suspended')";
+
+        if ($verification !== '') {
+            $where[] = "verification_status = ?";
+            $params[] = $verification;
+        }
+
+        if ($city !== '') {
+            $where[] = "city LIKE ?";
+            $params[] = "%{$city}%";
+        }
+
+        if ($specialty !== '') {
+            $where[] = "(specialization LIKE ? OR business_name LIKE ?)";
+            $params[] = "%{$specialty}%";
+            $params[] = "%{$specialty}%";
+        }
+
+        if ($search !== '') {
+            $where[] = "(first_name LIKE ? OR last_name LIKE ? OR business_name LIKE ? OR specialization LIKE ? OR city LIKE ?)";
+            $params[] = "%{$search}%";
+            $params[] = "%{$search}%";
+            $params[] = "%{$search}%";
+            $params[] = "%{$search}%";
+            $params[] = "%{$search}%";
+        }
+
+        if ($minRating !== null && $minRating > 0) {
+            $where[] = "average_rating >= ?";
+            $params[] = $minRating;
+        }
+
+        $whereClause = count($where) ? ('WHERE ' . implode(' AND ', $where)) : '';
+
+        $countSql = "SELECT COUNT(*) FROM providers {$whereClause}";
+        $stmt = $db->prepare($countSql);
+        $stmt->execute($params);
+        $total = (int)$stmt->fetchColumn();
+
+        $sql = "SELECT
+                    provider_id,
+                    business_name,
+                    first_name,
+                    last_name,
+                    profile_picture,
+                    bio,
+                    city,
+                    specialization,
+                    experience_years,
+                    hourly_rate,
+                    verification_status,
+                    account_status,
+                    average_rating,
+                    total_reviews,
+                    total_bookings,
+                    completed_bookings,
+                    availability_status,
+                    created_at
+                FROM providers
+                {$whereClause}
+                ORDER BY verification_status = 'verified' DESC, average_rating DESC, total_reviews DESC, created_at DESC
+                LIMIT ? OFFSET ?";
+
+        $queryParams = array_merge($params, [$limit, $offset]);
+        $stmt = $db->prepare($sql);
+        $stmt->execute($queryParams);
+        $providers = $stmt->fetchAll();
+
+        Response::paginated($providers, $total, $page, $limit);
+    } catch (Exception $e) {
+        error_log($e->getMessage());
+        Response::serverError('Failed to load providers');
+    }
+}
+
+/**
+ * Public: Get provider by ID (non-sensitive)
+ * GET /api/v1/providers/{id}
+ */
+function handlePublicGetProvider($providerId) {
+    try {
+        $db = Database::getConnection();
+
+        $sql = "SELECT
+                    provider_id,
+                    business_name,
+                    first_name,
+                    last_name,
+                    profile_picture,
+                    bio,
+                    address,
+                    city,
+                    state,
+                    country,
+                    specialization,
+                    experience_years,
+                    hourly_rate,
+                    verification_status,
+                    account_status,
+                    average_rating,
+                    total_reviews,
+                    total_bookings,
+                    completed_bookings,
+                    cancelled_bookings,
+                    availability_status,
+                    created_at
+                FROM providers
+                WHERE provider_id = ?";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$providerId]);
+        $provider = $stmt->fetch();
+
+        if (!$provider) {
+            Response::notFound('Provider');
+        }
+
+        Response::success($provider);
+    } catch (Exception $e) {
+        error_log($e->getMessage());
+        Response::serverError('Failed to load provider');
+    }
 }
 
 /**
@@ -376,5 +545,68 @@ function handleGetStatistics() {
     } catch (Exception $e) {
         error_log($e->getMessage());
         Response::serverError('Failed to get statistics');
+    }
+}
+
+/**
+ * Public: Get provider services
+ * GET /api/v1/providers/{id}/services
+ */
+function handlePublicGetProviderServices($providerId) {
+    try {
+        $db = Database::getConnection();
+        
+        $sql = "SELECT ps.*, s.service_name, s.service_slug, s.description as master_description, sc.category_name
+                FROM provider_services ps
+                JOIN services s ON ps.service_id = s.service_id
+                JOIN service_categories sc ON s.category_id = sc.category_id
+                WHERE ps.provider_id = ? AND ps.is_active = TRUE
+                ORDER BY s.service_name ASC";
+                
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$providerId]);
+        $services = $stmt->fetchAll();
+        
+        Response::success($services);
+    } catch (Exception $e) {
+        error_log($e->getMessage());
+        Response::serverError('Failed to load provider services');
+    }
+}
+
+/**
+ * Public: Get provider reviews
+ * GET /api/v1/providers/{id}/reviews
+ */
+function handlePublicGetProviderReviews($providerId) {
+    try {
+        $db = Database::getConnection();
+        
+        $page = max(1, intval($_GET['page'] ?? 1));
+        $limit = min(50, max(1, intval($_GET['limit'] ?? 10)));
+        $offset = ($page - 1) * $limit;
+        
+        // Count reviews
+        $countSql = "SELECT COUNT(*) FROM reviews WHERE provider_id = ? AND is_visible = TRUE";
+        $stmt = $db->prepare($countSql);
+        $stmt->execute([$providerId]);
+        $total = $stmt->fetchColumn();
+        
+        // Get reviews
+        $sql = "SELECT r.*, u.first_name, u.last_name, u.profile_picture
+                FROM reviews r
+                JOIN users u ON r.user_id = u.user_id
+                WHERE r.provider_id = ? AND r.is_visible = TRUE
+                ORDER BY r.created_at DESC
+                LIMIT ? OFFSET ?";
+                
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$providerId, $limit, $offset]);
+        $reviews = $stmt->fetchAll();
+        
+        Response::paginated($reviews, $total, $page, $limit);
+    } catch (Exception $e) {
+        error_log($e->getMessage());
+        Response::serverError('Failed to load provider reviews');
     }
 }

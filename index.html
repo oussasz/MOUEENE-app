@@ -270,147 +270,8 @@
           <h2>Top Services</h2>
           <p>Explore our most booked services right now</p>
         </div>
-        <div class="services-grid">
-          <!-- Service Card 1 -->
-          <div class="service-card" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-image-container">
-              <img
-                src="assets/images/services/childcare1.jpg"
-                alt="Professional Babysitting"
-                class="service-img"
-              />
-              <div class="service-overlay">
-                <a href="pages/service-detail.html" class="btn btn-white btn-sm"
-                  >Quick View</a
-                >
-              </div>
-            </div>
-            <div class="service-content">
-              <span class="service-category">Childcare</span>
-              <h3>Professional Babysitting</h3>
-              <p>Trusted care for infants and young children.</p>
-              <div class="service-provider">
-                <img
-                  src="assets/images/providers/provider1.jpg"
-                  alt="Sarah Johnson"
-                />
-                <span>Sarah Johnson</span>
-              </div>
-              <div class="service-meta">
-                <div class="service-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.9 (127)</span>
-                </div>
-                <div class="service-price">$25/hr</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Service Card 2 -->
-          <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-image-container">
-              <img
-                src="assets/images/services/cleaning1.jpg"
-                alt="Home Cleaning"
-                class="service-img"
-              />
-              <div class="service-overlay">
-                <a href="pages/service-detail.html" class="btn btn-white btn-sm"
-                  >Quick View</a
-                >
-              </div>
-            </div>
-            <div class="service-content">
-              <span class="service-category">Cleaning</span>
-              <h3>Deep Home Cleaning</h3>
-              <p>Spotless cleaning for homes and apartments.</p>
-              <div class="service-provider">
-                <img
-                  src="assets/images/providers/provider3.jpg"
-                  alt="Emily Davis"
-                />
-                <span>Emily Davis</span>
-              </div>
-              <div class="service-meta">
-                <div class="service-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.9 (203)</span>
-                </div>
-                <div class="service-price">$30/hr</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Service Card 3 -->
-          <div class="service-card" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-image-container">
-              <img
-                src="assets/images/services/tutoring1.jpg"
-                alt="Math Tutoring"
-                class="service-img"
-              />
-              <div class="service-overlay">
-                <a href="pages/service-detail.html" class="btn btn-white btn-sm"
-                  >Quick View</a
-                >
-              </div>
-            </div>
-            <div class="service-content">
-              <span class="service-category">Tutoring</span>
-              <h3>Math & Science Tutoring</h3>
-              <p>Personalized sessions for all levels.</p>
-              <div class="service-provider">
-                <img
-                  src="assets/images/providers/provider2.jpg"
-                  alt="Michael Chen"
-                />
-                <span>Michael Chen</span>
-              </div>
-              <div class="service-meta">
-                <div class="service-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.8 (95)</span>
-                </div>
-                <div class="service-price">$35/hr</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Service Card 4 -->
-          <div class="service-card" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-image-container">
-              <img
-                src="assets/images/services/gardening1.jpg"
-                alt="Garden Care"
-                class="service-img"
-              />
-              <div class="service-overlay">
-                <a href="pages/service-detail.html" class="btn btn-white btn-sm"
-                  >Quick View</a
-                >
-              </div>
-            </div>
-            <div class="service-content">
-              <span class="service-category">Gardening</span>
-              <h3>Garden & Landscape Care</h3>
-              <p>Seasonal maintenance and garden cleanup.</p>
-              <div class="service-provider">
-                <img
-                  src="assets/images/providers/provider4.jpg"
-                  alt="Robert Garcia"
-                />
-                <span>Robert Garcia</span>
-              </div>
-              <div class="service-meta">
-                <div class="service-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.7 (78)</span>
-                </div>
-                <div class="service-price">$40/hr</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div id="top-services-grid" class="services-grid"></div>
+        <div id="top-services-status" class="text-center" style="margin-top: 1rem;"></div>
         <div class="text-center mt-40" data-aos="fade-up">
           <a href="pages/services.html" class="btn btn-primary pulse-btn"
             >Browse All Services</a
@@ -531,6 +392,132 @@
           easing: "ease-out-cubic",
           once: true,
         });
+
+        const API_BASE = "/backend/api/v1";
+        const topGrid = document.getElementById("top-services-grid");
+        const topStatus = document.getElementById("top-services-status");
+
+        function escapeHtml(text) {
+          return String(text ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/\"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        }
+
+        function getCategoryFallbackImage(categoryId) {
+          const index = ((Number(categoryId || 1) - 1) % 6) + 1;
+          return `assets/images/categories/category${index}.jpg`;
+        }
+
+        function resolveImageUrl(rawUrl) {
+          const value = String(rawUrl || "").trim();
+          if (!value) return "";
+          if (/^https?:\/\//i.test(value)) return value;
+          if (value.startsWith("/")) return value;
+          // index.html is at site root; relative paths can be used as-is.
+          return value.replace(/^\.\//, "");
+        }
+
+        function formatPrice(basePrice, priceType) {
+          const price = Number(basePrice || 0);
+          const formatted = `$${price.toFixed(2).replace(/\.00$/, "")}`;
+          if (priceType === "hourly") return `${formatted}/hr`;
+          if (priceType === "per_item") return `${formatted}/item`;
+          return formatted;
+        }
+
+        async function apiGet(path, params = {}) {
+          const url = new URL(API_BASE + path, window.location.origin);
+          Object.entries(params).forEach(([key, value]) => {
+            if (value === null || value === undefined || value === "") return;
+            url.searchParams.set(key, value);
+          });
+          const response = await fetch(url);
+          const json = await response.json().catch(() => null);
+          if (!response.ok || !json || json.success !== true) {
+            const message = json?.message || `Request failed (${response.status})`;
+            throw new Error(message);
+          }
+          return json;
+        }
+
+        function renderTopServices(services) {
+          if (!topGrid) return;
+          topGrid.innerHTML = "";
+
+          const fragment = document.createDocumentFragment();
+          services.forEach((service, index) => {
+            const card = document.createElement("div");
+            card.className = "service-card";
+            card.setAttribute("data-aos", "fade-up");
+            card.setAttribute("data-aos-delay", String((index % 4) * 100 + 100));
+
+            const imageUrl = service.service_image
+              ? resolveImageUrl(service.service_image)
+              : getCategoryFallbackImage(service.category_id);
+
+            const categoryName = service.category_name || "Service";
+            const rating = Number(service.average_rating || 0).toFixed(1);
+            const bookings = Number(service.total_bookings || 0);
+            const priceText = formatPrice(service.base_price, service.price_type);
+
+            const href = `pages/service-detail.html?service_id=${encodeURIComponent(service.service_id)}`;
+
+            card.innerHTML = `
+              <div class="service-image-container">
+                <img
+                  src="${escapeHtml(imageUrl)}"
+                  alt="${escapeHtml(service.service_name)}"
+                  class="service-img"
+                  onerror="this.src='${escapeHtml(getCategoryFallbackImage(service.category_id))}'"
+                />
+                <div class="service-overlay">
+                  <a href="${escapeHtml(href)}" class="btn btn-white btn-sm">Quick View</a>
+                </div>
+              </div>
+              <div class="service-content">
+                <span class="service-category">${escapeHtml(categoryName)}</span>
+                <h3>${escapeHtml(service.service_name)}</h3>
+                <p>${escapeHtml(service.description || "")}</p>
+                <div class="service-meta">
+                  <div class="service-rating">
+                    <i class="fas fa-star"></i>
+                    <span>${escapeHtml(rating)} (${escapeHtml(bookings)})</span>
+                  </div>
+                  <div class="service-price">${escapeHtml(priceText)}</div>
+                </div>
+              </div>
+            `;
+            fragment.appendChild(card);
+          });
+
+          topGrid.appendChild(fragment);
+          if (window.AOS && typeof window.AOS.refreshHard === "function") {
+            window.AOS.refreshHard();
+          }
+        }
+
+        async function initTopServices() {
+          if (!topGrid) return;
+          try {
+            if (topStatus) topStatus.textContent = "Loading top services...";
+            const result = await apiGet("/services/popular", { limit: 4 });
+            const services = Array.isArray(result.data) ? result.data : [];
+            if (services.length === 0) {
+              if (topStatus) topStatus.textContent = "No services available right now.";
+              return;
+            }
+            renderTopServices(services);
+            if (topStatus) topStatus.textContent = "";
+          } catch (err) {
+            console.error(err);
+            if (topStatus) topStatus.textContent = err?.message || "Failed to load top services";
+          }
+        }
+
+        initTopServices();
       });
     </script>
   </body>

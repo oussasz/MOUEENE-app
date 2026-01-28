@@ -108,10 +108,11 @@ function handleGetPopularServices() {
         $language = $_GET['lang'] ?? 'en';
         $limit = min(20, max(1, intval($_GET['limit'] ?? 10)));
         
-        $sql = "SELECT s.*, 
+    $sql = "SELECT s.*, sc.category_name,
                 COALESCE(st.translated_name, s.service_name) as service_name,
                 COALESCE(st.translated_description, s.description) as description
                 FROM services s
+        LEFT JOIN service_categories sc ON s.category_id = sc.category_id
                 LEFT JOIN service_translations st ON s.service_id = st.service_id AND st.language_code = ?
                 WHERE s.is_active = TRUE AND s.is_popular = TRUE
                 ORDER BY s.total_bookings DESC, s.average_rating DESC
