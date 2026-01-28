@@ -10,8 +10,9 @@
 // Load required classes
 require_once CLASSES_PATH . '/Provider.php';
 
-// Get action from URL
-$action = $parts[2] ?? '';
+// Get action from URL (normalize index in case of extra segments)
+$resourceIndex = array_search('providers', $parts, true);
+$action = $resourceIndex !== false ? ($parts[$resourceIndex + 1] ?? '') : ($parts[2] ?? '');
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Get request body
@@ -53,7 +54,7 @@ switch ($action) {
         break;
         
     case 'services':
-        $providerServiceId = $parts[3] ?? null;
+        $providerServiceId = $resourceIndex !== false ? ($parts[$resourceIndex + 2] ?? null) : ($parts[3] ?? null);
         if ($method === 'GET') {
             handleGetServices();
         } elseif ($method === 'POST') {
@@ -78,7 +79,7 @@ switch ($action) {
     default:
         // Numeric ID - public provider details (non-sensitive) or sub-resources
         if (is_numeric($action)) {
-            $subAction = $parts[3] ?? '';
+            $subAction = $resourceIndex !== false ? ($parts[$resourceIndex + 2] ?? '') : ($parts[3] ?? '');
             
             if ($subAction === 'services' && $method === 'GET') {
                 handlePublicGetProviderServices((int)$action);
