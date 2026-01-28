@@ -12,7 +12,7 @@
  */
 
 class Database {
-    // Database credentials
+    // Database credentials - PRODUCTION (cPanel)
     private static $host = 'localhost';
     private static $db_name = 'ukqhmzdc_moueene';
     private static $username = 'ukqhmzdc_admin';
@@ -21,16 +21,24 @@ class Database {
     
     /**
      * Load environment variables from .env file
+     * Only loads on localhost for development
      */
     private static function loadEnv() {
+        // Skip .env loading on production - use hardcoded credentials above
+        $serverName = $_SERVER['SERVER_NAME'] ?? '';
+        if (strpos($serverName, 'localhost') === false && strpos($serverName, '127.0.0.1') === false) {
+            return; // Production - don't load .env
+        }
+        
         $envFile = __DIR__ . '/.env';
         if (file_exists($envFile)) {
             $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             foreach ($lines as $line) {
                 if (strpos(trim($line), '#') === 0) continue;
-                list($key, $value) = explode('=', $line, 2);
-                $key = trim($key);
-                $value = trim($value);
+                $parts = explode('=', $line, 2);
+                if (count($parts) !== 2) continue;
+                $key = trim($parts[0]);
+                $value = trim($parts[1]);
                 
                 switch ($key) {
                     case 'DB_HOST':
