@@ -100,6 +100,196 @@
         text-align: center;
       }
 
+      /* Custom Modal Styles */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+      .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .modal-container {
+        background: white;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        transform: scale(0.9) translateY(-20px);
+        transition: all 0.3s ease;
+      }
+      .modal-overlay.active .modal-container {
+        transform: scale(1) translateY(0);
+      }
+      .modal-header {
+        padding: 24px 24px 16px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .modal-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+      }
+      .modal-icon.success {
+        background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+        color: #059669;
+      }
+      .modal-icon.danger {
+        background: linear-gradient(135deg, #fee2e2, #fecaca);
+        color: #dc2626;
+      }
+      .modal-icon.warning {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        color: #d97706;
+      }
+      .modal-header-text h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 4px;
+      }
+      .modal-header-text p {
+        font-size: 0.85rem;
+        color: #6b7280;
+      }
+      .modal-body {
+        padding: 0 24px 24px;
+      }
+      .modal-body textarea,
+      .modal-body input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-family: inherit;
+        resize: none;
+        transition: all 0.2s;
+      }
+      .modal-body textarea:focus,
+      .modal-body input:focus {
+        outline: none;
+        border-color: var(--admin-accent);
+        box-shadow: 0 0 0 3px rgba(0, 201, 167, 0.15);
+      }
+      .modal-body textarea {
+        min-height: 100px;
+      }
+      .modal-body label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 8px;
+      }
+      .modal-footer {
+        padding: 16px 24px 24px;
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+      }
+      .modal-btn {
+        padding: 12px 24px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+        font-family: inherit;
+      }
+      .modal-btn-cancel {
+        background: #f3f4f6;
+        color: #4b5563;
+      }
+      .modal-btn-cancel:hover {
+        background: #e5e7eb;
+      }
+      .modal-btn-success {
+        background: linear-gradient(135deg, #059669, #10b981);
+        color: white;
+      }
+      .modal-btn-success:hover {
+        background: linear-gradient(135deg, #047857, #059669);
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+      }
+      .modal-btn-danger {
+        background: linear-gradient(135deg, #dc2626, #ef4444);
+        color: white;
+      }
+      .modal-btn-danger:hover {
+        background: linear-gradient(135deg, #b91c1c, #dc2626);
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+      }
+      .modal-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      /* Toast Notification */
+      .toast-container {
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        z-index: 10000;
+      }
+      .toast {
+        background: white;
+        padding: 16px 20px;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+        transform: translateX(120%);
+        transition: all 0.3s ease;
+        max-width: 360px;
+      }
+      .toast.show {
+        transform: translateX(0);
+      }
+      .toast-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .toast.success .toast-icon {
+        background: #d1fae5;
+        color: #059669;
+      }
+      .toast.error .toast-icon {
+        background: #fee2e2;
+        color: #dc2626;
+      }
+      .toast-message {
+        font-size: 0.9rem;
+        color: #1f2937;
+      }
+      }
+
       /* Main Content */
       .admin-main {
         margin-left: 260px;
@@ -515,6 +705,78 @@
       </div>
     </main>
 
+    <!-- Confirm Modal -->
+    <div class="modal-overlay" id="confirmModal">
+      <div class="modal-container">
+        <div class="modal-header">
+          <div class="modal-icon success" id="confirmModalIcon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="modal-header-text">
+            <h3 id="confirmModalTitle">Confirm Action</h3>
+            <p id="confirmModalSubtitle">This action cannot be undone</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="modal-btn modal-btn-cancel"
+            onclick="closeConfirmModal()"
+          >
+            Cancel
+          </button>
+          <button
+            class="modal-btn modal-btn-success"
+            id="confirmModalBtn"
+            onclick="confirmModalAction()"
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reject Modal -->
+    <div class="modal-overlay" id="rejectModal">
+      <div class="modal-container">
+        <div class="modal-header">
+          <div class="modal-icon danger">
+            <i class="fas fa-times-circle"></i>
+          </div>
+          <div class="modal-header-text">
+            <h3>Reject Provider</h3>
+            <p>Please provide a reason for rejection</p>
+          </div>
+        </div>
+        <div class="modal-body">
+          <label for="rejectReason"
+            >Rejection Reason <span style="color: #dc2626">*</span></label
+          >
+          <textarea
+            id="rejectReason"
+            placeholder="Enter the reason why this provider is being rejected..."
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="modal-btn modal-btn-cancel"
+            onclick="closeRejectModal()"
+          >
+            Cancel
+          </button>
+          <button
+            class="modal-btn modal-btn-danger"
+            id="rejectModalBtn"
+            onclick="submitReject()"
+          >
+            Reject Provider
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
     <script>
       const API_URL = "/backend/api/v1";
 
@@ -706,11 +968,98 @@
         }
       }
 
-      // Verify provider
-      async function verifyProvider(providerId) {
-        if (!confirm("Are you sure you want to verify this provider?")) return;
+      // Modal state
+      let currentProviderId = null;
+      let confirmCallback = null;
 
+      // Show toast notification
+      function showToast(message, type = "success") {
+        const container = document.getElementById("toastContainer");
+        const toast = document.createElement("div");
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+          <div class="toast-icon">
+            <i class="fas fa-${type === "success" ? "check" : "exclamation-circle"}"></i>
+          </div>
+          <div class="toast-message">${message}</div>
+        `;
+        container.appendChild(toast);
+
+        // Trigger animation
+        setTimeout(() => toast.classList.add("show"), 10);
+
+        // Remove after 4 seconds
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => toast.remove(), 300);
+        }, 4000);
+      }
+
+      // Show confirm modal
+      function showConfirmModal(
+        title,
+        subtitle,
+        iconClass,
+        btnClass,
+        callback,
+      ) {
+        const modal = document.getElementById("confirmModal");
+        document.getElementById("confirmModalTitle").textContent = title;
+        document.getElementById("confirmModalSubtitle").textContent = subtitle;
+
+        const icon = document.getElementById("confirmModalIcon");
+        icon.className = `modal-icon ${iconClass}`;
+        icon.innerHTML = `<i class="fas fa-${iconClass === "success" ? "check-circle" : "exclamation-circle"}"></i>`;
+
+        const btn = document.getElementById("confirmModalBtn");
+        btn.className = `modal-btn modal-btn-${btnClass}`;
+
+        confirmCallback = callback;
+        modal.classList.add("active");
+      }
+
+      function closeConfirmModal() {
+        document.getElementById("confirmModal").classList.remove("active");
+        confirmCallback = null;
+      }
+
+      function confirmModalAction() {
+        if (confirmCallback) {
+          confirmCallback();
+        }
+        closeConfirmModal();
+      }
+
+      // Show reject modal
+      function showRejectModal(providerId) {
+        currentProviderId = providerId;
+        document.getElementById("rejectReason").value = "";
+        document.getElementById("rejectModal").classList.add("active");
+        document.getElementById("rejectReason").focus();
+      }
+
+      function closeRejectModal() {
+        document.getElementById("rejectModal").classList.remove("active");
+        currentProviderId = null;
+      }
+
+      // Verify provider
+      function verifyProvider(providerId) {
+        showConfirmModal(
+          "Verify Provider",
+          "Are you sure you want to verify this provider? They will be able to offer services.",
+          "success",
+          "success",
+          () => executeVerifyProvider(providerId),
+        );
+      }
+
+      async function executeVerifyProvider(providerId) {
         const token = checkAuth();
+        const btn = document.getElementById("confirmModalBtn");
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+
         try {
           const response = await fetch(
             `${API_URL}/admin/providers/${providerId}/verify`,
@@ -726,28 +1075,42 @@
 
           const result = await response.json();
           if (result.success) {
-            alert("Provider verified successfully!");
+            showToast("Provider verified successfully!", "success");
             loadPendingVerifications();
             loadRecentProviders();
             loadStats();
           } else {
-            alert(result.message || "Failed to verify provider");
+            showToast(result.message || "Failed to verify provider", "error");
           }
         } catch (error) {
           console.error("Error:", error);
-          alert("An error occurred");
+          showToast("An error occurred while verifying provider", "error");
         }
+
+        btn.disabled = false;
+        btn.textContent = "Confirm";
       }
 
       // Reject provider
-      async function rejectProvider(providerId) {
-        const reason = prompt("Please enter the reason for rejection:");
-        if (!reason) return;
+      function rejectProvider(providerId) {
+        showRejectModal(providerId);
+      }
+
+      async function submitReject() {
+        const reason = document.getElementById("rejectReason").value.trim();
+        if (!reason) {
+          document.getElementById("rejectReason").style.borderColor = "#dc2626";
+          return;
+        }
+
+        const btn = document.getElementById("rejectModalBtn");
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Rejecting...';
 
         const token = checkAuth();
         try {
           const response = await fetch(
-            `${API_URL}/admin/providers/${providerId}/verify`,
+            `${API_URL}/admin/providers/${currentProviderId}/verify`,
             {
               method: "POST",
               headers: {
@@ -759,19 +1122,40 @@
           );
 
           const result = await response.json();
+          closeRejectModal();
+
           if (result.success) {
-            alert("Provider rejected");
+            showToast("Provider has been rejected", "success");
             loadPendingVerifications();
             loadRecentProviders();
             loadStats();
           } else {
-            alert(result.message || "Failed to reject provider");
+            showToast(result.message || "Failed to reject provider", "error");
           }
         } catch (error) {
           console.error("Error:", error);
-          alert("An error occurred");
+          showToast("An error occurred while rejecting provider", "error");
+          closeRejectModal();
         }
+
+        btn.disabled = false;
+        btn.innerHTML = "Reject Provider";
       }
+
+      // Close modals on overlay click
+      document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("modal-overlay")) {
+          e.target.classList.remove("active");
+        }
+      });
+
+      // Close modals on Escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeConfirmModal();
+          closeRejectModal();
+        }
+      });
 
       // Initialize
       document.addEventListener("DOMContentLoaded", () => {

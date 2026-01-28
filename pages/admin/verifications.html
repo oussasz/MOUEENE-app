@@ -100,6 +100,193 @@
         text-align: center;
       }
 
+      /* Action Modals + Toast (avoid clashing with Provider Details Modal) */
+      .action-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.25s ease;
+      }
+      .action-modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .action-modal-container {
+        background: white;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 440px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        transform: scale(0.94) translateY(-12px);
+        transition: all 0.25s ease;
+      }
+      .action-modal-overlay.active .action-modal-container {
+        transform: scale(1) translateY(0);
+      }
+      .action-modal-header {
+        padding: 22px 22px 12px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .action-modal-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+      }
+      .action-modal-icon.success {
+        background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+        color: #059669;
+      }
+      .action-modal-icon.danger {
+        background: linear-gradient(135deg, #fee2e2, #fecaca);
+        color: #dc2626;
+      }
+      .action-modal-icon.warning {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        color: #d97706;
+      }
+      .action-modal-header-text h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 4px;
+      }
+      .action-modal-header-text p {
+        font-size: 0.85rem;
+        color: #6b7280;
+      }
+      .action-modal-body {
+        padding: 0 22px 22px;
+      }
+      .action-modal-body label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 8px;
+      }
+      .action-modal-body textarea {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-family: inherit;
+        resize: none;
+        min-height: 110px;
+        transition: all 0.2s;
+      }
+      .action-modal-body textarea:focus {
+        outline: none;
+        border-color: var(--admin-accent);
+        box-shadow: 0 0 0 3px rgba(0, 201, 167, 0.15);
+      }
+      .action-modal-footer {
+        padding: 14px 22px 22px;
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+      }
+      .action-modal-btn {
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+        font-family: inherit;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .action-modal-btn-cancel {
+        background: #f3f4f6;
+        color: #4b5563;
+      }
+      .action-modal-btn-cancel:hover {
+        background: #e5e7eb;
+      }
+      .action-modal-btn-success {
+        background: linear-gradient(135deg, #059669, #10b981);
+        color: white;
+      }
+      .action-modal-btn-success:hover {
+        background: linear-gradient(135deg, #047857, #059669);
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.28);
+      }
+      .action-modal-btn-danger {
+        background: linear-gradient(135deg, #dc2626, #ef4444);
+        color: white;
+      }
+      .action-modal-btn-danger:hover {
+        background: linear-gradient(135deg, #b91c1c, #dc2626);
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.28);
+      }
+      .action-modal-btn:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
+
+      .toast-container {
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        z-index: 10000;
+      }
+      .toast {
+        background: white;
+        padding: 14px 18px;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+        transform: translateX(120%);
+        transition: all 0.25s ease;
+        max-width: 360px;
+      }
+      .toast.show {
+        transform: translateX(0);
+      }
+      .toast-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .toast.success .toast-icon {
+        background: #d1fae5;
+        color: #059669;
+      }
+      .toast.error .toast-icon {
+        background: #fee2e2;
+        color: #dc2626;
+      }
+      .toast-message {
+        font-size: 0.9rem;
+        color: #1f2937;
+      }
+
       /* Main Content */
       .admin-main {
         margin-left: 260px;
@@ -530,6 +717,74 @@
       </div>
     </div>
 
+    <!-- Action Confirm Modal -->
+    <div class="action-modal-overlay" id="actionConfirmModal">
+      <div class="action-modal-container">
+        <div class="action-modal-header">
+          <div class="action-modal-icon success" id="actionConfirmIcon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="action-modal-header-text">
+            <h3 id="actionConfirmTitle">Confirm Action</h3>
+            <p id="actionConfirmSubtitle">Please confirm to continue</p>
+          </div>
+        </div>
+        <div class="action-modal-footer">
+          <button
+            class="action-modal-btn action-modal-btn-cancel"
+            onclick="closeActionConfirm()"
+          >
+            Cancel
+          </button>
+          <button
+            class="action-modal-btn action-modal-btn-success"
+            id="actionConfirmBtn"
+            onclick="actionConfirm()"
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Reason Modal -->
+    <div class="action-modal-overlay" id="actionReasonModal">
+      <div class="action-modal-container">
+        <div class="action-modal-header">
+          <div class="action-modal-icon danger" id="actionReasonIcon">
+            <i class="fas fa-times-circle"></i>
+          </div>
+          <div class="action-modal-header-text">
+            <h3 id="actionReasonTitle">Provide a reason</h3>
+            <p id="actionReasonSubtitle">This will be saved in records</p>
+          </div>
+        </div>
+        <div class="action-modal-body">
+          <label for="actionReasonText" id="actionReasonLabel"
+            >Reason <span style="color: #dc2626">*</span></label
+          >
+          <textarea id="actionReasonText" placeholder="Type here..."></textarea>
+        </div>
+        <div class="action-modal-footer">
+          <button
+            class="action-modal-btn action-modal-btn-cancel"
+            onclick="closeActionReason()"
+          >
+            Cancel
+          </button>
+          <button
+            class="action-modal-btn action-modal-btn-danger"
+            id="actionReasonBtn"
+            onclick="submitActionReason()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
     <script>
       const API_URL = "/backend/api/v1";
       let searchTimeout;
@@ -808,57 +1063,209 @@
         document.getElementById("providerModal").classList.remove("active");
       }
 
-      // Verify provider
-      async function verifyProvider(providerId) {
-        if (!confirm("Are you sure you want to verify this provider?")) return;
+      // Toast notifications
+      function showToast(message, type = "success") {
+        const container = document.getElementById("toastContainer");
+        const toast = document.createElement("div");
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+          <div class="toast-icon">
+            <i class="fas fa-${type === "success" ? "check" : "exclamation-circle"}"></i>
+          </div>
+          <div class="toast-message">${message}</div>
+        `;
+        container.appendChild(toast);
+        setTimeout(() => toast.classList.add("show"), 10);
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => toast.remove(), 250);
+        }, 4000);
+      }
+
+      // Action confirm modal
+      let actionConfirmCallback = null;
+      function openActionConfirm(
+        { title, subtitle, variant, confirmText },
+        cb,
+      ) {
+        document.getElementById("actionConfirmTitle").textContent = title;
+        document.getElementById("actionConfirmSubtitle").textContent = subtitle;
+
+        const icon = document.getElementById("actionConfirmIcon");
+        icon.className = `action-modal-icon ${variant}`;
+        icon.innerHTML = `<i class="fas fa-${variant === "success" ? "check-circle" : variant === "warning" ? "exclamation-triangle" : "exclamation-circle"}"></i>`;
+
+        const btn = document.getElementById("actionConfirmBtn");
+        btn.className = `action-modal-btn action-modal-btn-${variant === "danger" ? "danger" : "success"}`;
+        btn.textContent = confirmText;
+        btn.disabled = false;
+
+        actionConfirmCallback = cb;
+        document.getElementById("actionConfirmModal").classList.add("active");
+      }
+
+      function closeActionConfirm() {
+        document
+          .getElementById("actionConfirmModal")
+          .classList.remove("active");
+        actionConfirmCallback = null;
+      }
+
+      async function actionConfirm() {
+        const btn = document.getElementById("actionConfirmBtn");
+        if (!actionConfirmCallback || btn.disabled) return;
+
+        const originalText = btn.textContent;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
         try {
-          const result = await fetchWithAuth(
-            `${API_URL}/admin/providers/${providerId}/verify`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ status: "verified" }),
-            },
-          );
-
-          if (result && result.success) {
-            alert("Provider verified successfully!");
-            loadProviders();
-          } else {
-            alert(result?.message || "Failed to verify provider");
-          }
-        } catch (error) {
-          console.error("Error:", error);
-          alert("An error occurred");
+          await actionConfirmCallback();
+          closeActionConfirm();
+        } finally {
+          btn.disabled = false;
+          btn.textContent = originalText;
         }
       }
 
-      // Reject provider
-      async function rejectProvider(providerId) {
-        const reason = prompt("Please enter the reason for rejection:");
-        if (!reason) return;
+      // Action reason modal
+      let actionReasonCallback = null;
+      function openActionReason(
+        { title, subtitle, label, placeholder, buttonText, variant },
+        cb,
+      ) {
+        document.getElementById("actionReasonTitle").textContent = title;
+        document.getElementById("actionReasonSubtitle").textContent = subtitle;
+        document.getElementById("actionReasonLabel").innerHTML =
+          `${label} <span style="color:#dc2626">*</span>`;
+        const textarea = document.getElementById("actionReasonText");
+        textarea.value = "";
+        textarea.placeholder = placeholder;
+        textarea.style.borderColor = "#e5e7eb";
+
+        const icon = document.getElementById("actionReasonIcon");
+        icon.className = `action-modal-icon ${variant}`;
+        icon.innerHTML = `<i class="fas fa-${variant === "danger" ? "times-circle" : "exclamation-circle"}"></i>`;
+
+        const btn = document.getElementById("actionReasonBtn");
+        btn.className = `action-modal-btn action-modal-btn-${variant === "danger" ? "danger" : "success"}`;
+        btn.textContent = buttonText;
+        btn.disabled = false;
+
+        actionReasonCallback = cb;
+        document.getElementById("actionReasonModal").classList.add("active");
+        setTimeout(() => textarea.focus(), 50);
+      }
+
+      function closeActionReason() {
+        document.getElementById("actionReasonModal").classList.remove("active");
+        actionReasonCallback = null;
+      }
+
+      async function submitActionReason() {
+        const textarea = document.getElementById("actionReasonText");
+        const btn = document.getElementById("actionReasonBtn");
+        if (!actionReasonCallback || btn.disabled) return;
+
+        const reason = textarea.value.trim();
+        if (!reason) {
+          textarea.style.borderColor = "#dc2626";
+          textarea.focus();
+          return;
+        }
+
+        const originalText = btn.textContent;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
         try {
-          const result = await fetchWithAuth(
-            `${API_URL}/admin/providers/${providerId}/verify`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ status: "rejected", reason: reason }),
-            },
-          );
-
-          if (result && result.success) {
-            alert("Provider rejected");
-            loadProviders();
-          } else {
-            alert(result?.message || "Failed to reject provider");
-          }
-        } catch (error) {
-          console.error("Error:", error);
-          alert("An error occurred");
+          await actionReasonCallback(reason);
+          closeActionReason();
+        } finally {
+          btn.disabled = false;
+          btn.textContent = originalText;
         }
+      }
+
+      // Close action modals on overlay click and Escape
+      document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("action-modal-overlay")) {
+          e.target.classList.remove("active");
+        }
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeActionConfirm();
+          closeActionReason();
+        }
+      });
+
+      // Verify provider
+      function verifyProvider(providerId) {
+        openActionConfirm(
+          {
+            title: "Verify Provider",
+            subtitle:
+              "Are you sure you want to verify this provider? They will be able to offer services.",
+            variant: "success",
+            confirmText: "Verify",
+          },
+          async () => {
+            const result = await fetchWithAuth(
+              `${API_URL}/admin/providers/${providerId}/verify`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: "verified" }),
+              },
+            );
+
+            if (result && result.success) {
+              showToast("Provider verified successfully!", "success");
+              loadProviders();
+            } else {
+              showToast(
+                result?.message || "Failed to verify provider",
+                "error",
+              );
+            }
+          },
+        );
+      }
+
+      // Reject provider
+      function rejectProvider(providerId) {
+        openActionReason(
+          {
+            title: "Reject Provider",
+            subtitle: "Please provide a reason for rejection.",
+            label: "Rejection Reason",
+            placeholder:
+              "Enter the reason why this provider is being rejected...",
+            buttonText: "Reject",
+            variant: "danger",
+          },
+          async (reason) => {
+            const result = await fetchWithAuth(
+              `${API_URL}/admin/providers/${providerId}/verify`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: "rejected", reason }),
+              },
+            );
+
+            if (result && result.success) {
+              showToast("Provider rejected", "success");
+              loadProviders();
+            } else {
+              showToast(
+                result?.message || "Failed to reject provider",
+                "error",
+              );
+            }
+          },
+        );
       }
 
       // Close modal on outside click

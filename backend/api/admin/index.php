@@ -145,11 +145,17 @@ function handleGetProviders() {
         
         $status = $_GET['status'] ?? null;
         $verification = $_GET['verification'] ?? null;
+        $includeDeactivated = isset($_GET['include_deactivated']) && (string)$_GET['include_deactivated'] === '1';
         $limit = min((int)($_GET['limit'] ?? 20), 100);
         $offset = (int)($_GET['offset'] ?? 0);
         
         $where = [];
         $params = [];
+
+        // By default, hide deactivated/deleted providers unless explicitly requested
+        if (!$includeDeactivated && ($status === null || $status === '' || $status === 'pending')) {
+            $where[] = "account_status NOT IN ('deactivated', 'deleted')";
+        }
         
         if ($status === 'pending') {
             $where[] = "verification_status = 'pending'";
@@ -315,16 +321,38 @@ function handleUpdateProvider($providerId, $data) {
 function handleDeleteProvider($providerId) {
     try {
         $db = Database::getConnection();
-        
-        // Soft delete - set status to deleted
-        $stmt = $db->prepare("UPDATE providers SET account_status = 'deactivated' WHERE provider_id = ?");
+
+        // Check provider exists
+        $stmt = $db->prepare("SELECT provider_id FROM providers WHERE provider_id = ?");
         $stmt->execute([$providerId]);
+        if (!$stmt->fetch()) {
+            Response::notFound('Provider');
+        }
         
-        Response::success(null, 'Provider deactivated successfully');
+        // Try permanent delete first
+        try {
+            $stmt = $db->prepare("DELETE FROM providers WHERE provider_id = ?");
+            $stmt->execute([$providerId]);
+
+            if ($stmt->rowCount() > 0) {
+                Response::success(null, 'Provider deleted permanently');
+            }
+        } catch (PDOException $e) {
+            // If FK constraints prevent deletion, fall back to deactivation
+            $stmt = $db->prepare("UPDATE providers SET account_status = 'deactivated' WHERE provider_id = ?");
+            $stmt->execute([$providerId]);
+            Response::success(
+                ['soft_deleted' => true],
+                'Provider has related records; account deactivated instead'
+            );
+        }
+
+        // If DELETE affected no rows, treat as not found
+        Response::notFound('Provider');
         
     } catch (Exception $e) {
         error_log($e->getMessage());
-        Response::serverError('Failed to deactivate provider');
+        Response::serverError('Failed to delete provider');
     }
 }
 
@@ -336,11 +364,17 @@ function handleGetUsers() {
         $db = Database::getConnection();
         
         $status = $_GET['status'] ?? null;
+        $includeDeactivated = isset($_GET['include_deactivated']) && (string)$_GET['include_deactivated'] === '1';
         $limit = min((int)($_GET['limit'] ?? 20), 100);
         $offset = (int)($_GET['offset'] ?? 0);
         
         $where = [];
         $params = [];
+
+        // By default, hide deactivated/deleted users unless explicitly requested
+        if (!$includeDeactivated && ($status === null || $status === '')) {
+            $where[] = "account_status NOT IN ('deactivated', 'deleted')";
+        }
         
         if ($status) {
             $where[] = "account_status = ?";
@@ -448,16 +482,38 @@ function handleUpdateUser($userId, $data) {
 function handleDeleteUser($userId) {
     try {
         $db = Database::getConnection();
-        
-        // Soft delete - set status to deleted
-        $stmt = $db->prepare("UPDATE users SET account_status = 'deactivated' WHERE user_id = ?");
+
+        // Check user exists
+        $stmt = $db->prepare("SELECT user_id FROM users WHERE user_id = ?");
         $stmt->execute([$userId]);
+        if (!$stmt->fetch()) {
+            Response::notFound('User');
+        }
         
-        Response::success(null, 'User deactivated successfully');
+        // Try permanent delete first
+        try {
+            $stmt = $db->prepare("DELETE FROM users WHERE user_id = ?");
+            $stmt->execute([$userId]);
+
+            if ($stmt->rowCount() > 0) {
+                Response::success(null, 'User deleted permanently');
+            }
+        } catch (PDOException $e) {
+            // If FK constraints prevent deletion, fall back to deactivation
+            $stmt = $db->prepare("UPDATE users SET account_status = 'deactivated' WHERE user_id = ?");
+            $stmt->execute([$userId]);
+            Response::success(
+                ['soft_deleted' => true],
+                'User has related records; account deactivated instead'
+            );
+        }
+
+        // If DELETE affected no rows, treat as not found
+        Response::notFound('User');
         
     } catch (Exception $e) {
         error_log($e->getMessage());
-        Response::serverError('Failed to deactivate user');
+        Response::serverError('Failed to delete user');
     }
 }
 

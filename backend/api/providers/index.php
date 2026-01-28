@@ -45,8 +45,15 @@ switch ($action) {
         break;
         
     case 'services':
+        $providerServiceId = $parts[3] ?? null;
         if ($method === 'GET') {
             handleGetServices();
+        } elseif ($method === 'POST') {
+            handleAddService($input);
+        } elseif ($method === 'PUT' && is_numeric($providerServiceId)) {
+            handleUpdateServiceOffering((int)$providerServiceId, $input);
+        } elseif ($method === 'DELETE' && is_numeric($providerServiceId)) {
+            handleDeleteServiceOffering((int)$providerServiceId);
         } else {
             Response::error('Method not allowed', 405);
         }
@@ -215,6 +222,137 @@ function handleGetServices() {
     } catch (Exception $e) {
         error_log($e->getMessage());
         Response::serverError('Failed to get services');
+    }
+}
+
+/**
+ * Add provider service offering
+ */
+function handleAddService($data) {
+    Auth::requireAuth();
+    $authUser = Auth::user();
+
+    if ($authUser['user_type'] !== 'provider') {
+        Response::error('Access denied', 403);
+    }
+
+    $validator = new Validator($data);
+    $validator
+        ->required('service_id')
+        ->numeric('service_id')
+        ->required('price')
+        ->numeric('price')
+        ->min('price', 0)
+        ->in('price_type', ['fixed', 'hourly', 'per_item', 'custom']);
+
+    if ($validator->fails()) {
+        Response::validationError($validator->getErrors());
+    }
+
+    try {
+        $provider = new Provider();
+        $created = $provider->addService($authUser['user_id'], [
+            'service_id' => (int)$data['service_id'],
+            'price' => $data['price'],
+            'price_type' => $data['price_type'] ?? 'fixed',
+            'description' => $data['description'] ?? null,
+            'is_active' => isset($data['is_active']) ? (bool)$data['is_active'] : true
+        ]);
+
+        Response::success($created, 'Service added successfully', 201);
+
+    } catch (Exception $e) {
+        $msg = $e->getMessage();
+        if ($msg === 'You already offer this service') {
+            Response::error($msg, 409);
+        }
+        if ($msg === 'Service not found' || $msg === 'Provider not found') {
+            Response::error($msg, 404);
+        }
+
+        error_log($e->getMessage());
+        Response::serverError('Failed to add service');
+    }
+}
+
+/**
+ * Update provider service offering
+ */
+function handleUpdateServiceOffering($providerServiceId, $data) {
+    Auth::requireAuth();
+    $authUser = Auth::user();
+
+    if ($authUser['user_type'] !== 'provider') {
+        Response::error('Access denied', 403);
+    }
+
+    $validator = new Validator($data);
+    if (isset($data['price'])) {
+        $validator->numeric('price')->min('price', 0);
+    }
+    if (isset($data['price_type'])) {
+        $validator->in('price_type', ['fixed', 'hourly', 'per_item', 'custom']);
+    }
+
+    if ($validator->fails()) {
+        Response::validationError($validator->getErrors());
+    }
+
+    try {
+        $provider = new Provider();
+        $payload = [];
+        if (array_key_exists('price', $data)) {
+            $payload['price'] = $data['price'];
+        }
+        if (array_key_exists('price_type', $data)) {
+            $payload['price_type'] = $data['price_type'];
+        }
+        if (array_key_exists('description', $data)) {
+            $payload['description'] = $data['description'];
+        }
+        if (array_key_exists('is_active', $data)) {
+            $payload['is_active'] = (bool)$data['is_active'];
+        }
+
+        $updated = $provider->updateServiceOffering($authUser['user_id'], $providerServiceId, $payload);
+
+        Response::success($updated, 'Service updated successfully');
+
+    } catch (Exception $e) {
+        $msg = $e->getMessage();
+        if ($msg === 'Service offering not found') {
+            Response::error($msg, 404);
+        }
+        if ($msg === 'No changes provided') {
+            Response::error($msg, 400);
+        }
+        error_log($e->getMessage());
+        Response::serverError('Failed to update service');
+    }
+}
+
+/**
+ * Delete provider service offering
+ */
+function handleDeleteServiceOffering($providerServiceId) {
+    Auth::requireAuth();
+    $authUser = Auth::user();
+
+    if ($authUser['user_type'] !== 'provider') {
+        Response::error('Access denied', 403);
+    }
+
+    try {
+        $provider = new Provider();
+        $provider->deleteServiceOffering($authUser['user_id'], $providerServiceId);
+        Response::success(null, 'Service deleted successfully');
+    } catch (Exception $e) {
+        $msg = $e->getMessage();
+        if ($msg === 'Service offering not found') {
+            Response::error($msg, 404);
+        }
+        error_log($e->getMessage());
+        Response::serverError('Failed to delete service');
     }
 }
 

@@ -416,6 +416,7 @@
         margin-bottom: 15px;
         display: -webkit-box;
         -webkit-line-clamp: 2;
+        line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
       }
@@ -536,14 +537,11 @@
                     email@example.com
                   </div>
                 </div>
-                <a href="provider-profile.html">
+                <a href="provider-settings.html">
                   <i class="fas fa-user"></i>
                   <span>My Profile</span>
                 </a>
-                <a href="provider-settings.html">
-                  <i class="fas fa-cog"></i>
-                  <span>Settings</span>
-                </a>
+
                 <a href="provider-earnings.html">
                   <i class="fas fa-wallet"></i>
                   <span>Earnings</span>
@@ -627,86 +625,18 @@
           <main class="provider-main">
             <div class="content-header">
               <h1>My Services</h1>
-              <button
-                class="btn btn-primary"
-                onclick="alert('Open Add Service Modal')"
-              >
+              <button class="btn btn-primary" onclick="openAddServiceModal()">
                 <i class="fas fa-plus"></i> Add New Service
               </button>
             </div>
 
             <!-- Services List -->
             <div class="services-list" id="services-list">
-              <!-- Service Item 1 -->
-              <div class="service-card">
-                <img
-                  src="https://via.placeholder.com/300x200"
-                  alt="Home Cleaning"
-                  class="service-image"
-                />
-                <div class="service-details">
-                  <div class="service-header">
-                    <h3 class="service-title">Deep Home Cleaning</h3>
-                    <span class="service-price">$80.00/hr</span>
-                  </div>
-                  <p class="service-desc">
-                    Complete home cleaning service including kitchen, bathrooms,
-                    and living areas. We use eco-friendly products.
-                  </p>
-                  <div class="service-meta">
-                    <span><i class="fas fa-tag"></i> Cleaning</span>
-                    <span><i class="far fa-clock"></i> 2h min</span>
-                  </div>
-                </div>
-                <div class="service-actions">
-                  <div class="status-toggle status-active">
-                    <span class="status-indicator"></span> Active
-                  </div>
-                  <div class="action-buttons">
-                    <button class="btn-icon btn-edit" title="Edit">
-                      <i class="fas fa-pen"></i>
-                    </button>
-                    <button class="btn-icon btn-delete" title="Delete">
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Service Item 2 -->
-              <div class="service-card">
-                <img
-                  src="https://via.placeholder.com/300x200"
-                  alt="Car Repair"
-                  class="service-image"
-                />
-                <div class="service-details">
-                  <div class="service-header">
-                    <h3 class="service-title">Car Diagnostics</h3>
-                    <span class="service-price">$50.00</span>
-                  </div>
-                  <p class="service-desc">
-                    Professional car diagnostics to identify engine and
-                    electrical issues accurately.
-                  </p>
-                  <div class="service-meta">
-                    <span><i class="fas fa-tag"></i> Auto Repair</span>
-                    <span><i class="far fa-clock"></i> Fixed</span>
-                  </div>
-                </div>
-                <div class="service-actions">
-                  <div class="status-toggle">
-                    <span class="status-indicator"></span> Inactive
-                  </div>
-                  <div class="action-buttons">
-                    <button class="btn-icon btn-edit" title="Edit">
-                      <i class="fas fa-pen"></i>
-                    </button>
-                    <button class="btn-icon btn-delete" title="Delete">
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </div>
-                </div>
+              <div class="loading" style="text-align: center; padding: 60px">
+                <i class="fas fa-spinner fa-spin" style="font-size: 2rem"></i>
+                <p style="margin-top: 12px; color: var(--text-light)">
+                  Loading your services...
+                </p>
               </div>
             </div>
           </main>
@@ -714,31 +644,1044 @@
       </div>
     </div>
 
+    <!-- Add Service Modal -->
+    <div id="add-service-modal" class="modal-overlay" style="display: none">
+      <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="add-service-title"
+      >
+        <div class="modal-header">
+          <div>
+            <h2 id="add-service-title">Add a Service</h2>
+            <p class="modal-subtitle">
+              Choose a service from the catalog and set your pricing.
+            </p>
+          </div>
+          <button
+            class="modal-close"
+            type="button"
+            onclick="closeAddServiceModal()"
+            aria-label="Close"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="modal-grid">
+            <div class="modal-panel">
+              <label class="field-label" for="add-category">Category</label>
+              <select id="add-category" class="field-input"></select>
+
+              <label class="field-label" for="add-search">Search</label>
+              <div class="field-with-icon">
+                <i class="fas fa-search"></i>
+                <input
+                  id="add-search"
+                  class="field-input"
+                  type="text"
+                  placeholder="Search services..."
+                />
+              </div>
+
+              <label class="field-label" for="add-service-select"
+                >Service</label
+              >
+              <select
+                id="add-service-select"
+                class="field-input"
+                size="8"
+              ></select>
+              <div
+                id="add-service-error"
+                class="field-error"
+                style="display: none"
+              ></div>
+            </div>
+
+            <div class="modal-panel">
+              <div id="service-preview" class="service-preview">
+                <div class="service-preview__placeholder">
+                  <i class="fas fa-layer-group"></i>
+                  <p>Select a service to see details</p>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div>
+                  <label class="field-label" for="add-price">Your Price</label>
+                  <input
+                    id="add-price"
+                    class="field-input"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="0.00"
+                  />
+                  <div
+                    id="add-price-error"
+                    class="field-error"
+                    style="display: none"
+                  ></div>
+                </div>
+                <div>
+                  <label class="field-label" for="add-price-type"
+                    >Price Type</label
+                  >
+                  <select id="add-price-type" class="field-input">
+                    <option value="fixed">Fixed</option>
+                    <option value="hourly">Hourly</option>
+                    <option value="per_item">Per Item</option>
+                    <option value="custom">Custom</option>
+                  </select>
+                </div>
+              </div>
+
+              <label class="field-label" for="add-description"
+                >Your Description (optional)</label
+              >
+              <textarea
+                id="add-description"
+                class="field-input"
+                rows="3"
+                placeholder="Describe what you offer, what's included, etc."
+              ></textarea>
+
+              <label class="toggle-row">
+                <input id="add-is-active" type="checkbox" checked />
+                <span>
+                  <strong>Active</strong>
+                  <small>Make this service visible to customers.</small>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            class="btn btn-outline"
+            type="button"
+            onclick="closeAddServiceModal()"
+          >
+            Cancel
+          </button>
+          <button
+            id="add-service-submit"
+            class="btn btn-primary"
+            type="button"
+            onclick="submitAddService()"
+          >
+            <span class="btn-label">Add Service</span>
+            <span class="btn-spinner" style="display: none"
+              ><i class="fas fa-spinner fa-spin"></i
+            ></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Service Modal -->
+    <div id="edit-service-modal" class="modal-overlay" style="display: none">
+      <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="edit-service-title"
+      >
+        <div class="modal-header">
+          <div>
+            <h2 id="edit-service-title">Edit Service</h2>
+            <p class="modal-subtitle">
+              Update your pricing, description, and status.
+            </p>
+          </div>
+          <button
+            class="modal-close"
+            type="button"
+            onclick="closeEditServiceModal()"
+            aria-label="Close"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="modal-grid">
+            <div class="modal-panel">
+              <div id="edit-service-preview" class="service-preview"></div>
+            </div>
+
+            <div class="modal-panel">
+              <div class="form-row">
+                <div>
+                  <label class="field-label" for="edit-price">Your Price</label>
+                  <input
+                    id="edit-price"
+                    class="field-input"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="0.00"
+                  />
+                  <div
+                    id="edit-price-error"
+                    class="field-error"
+                    style="display: none"
+                  ></div>
+                </div>
+                <div>
+                  <label class="field-label" for="edit-price-type"
+                    >Price Type</label
+                  >
+                  <select id="edit-price-type" class="field-input">
+                    <option value="fixed">Fixed</option>
+                    <option value="hourly">Hourly</option>
+                    <option value="per_item">Per Item</option>
+                    <option value="custom">Custom</option>
+                  </select>
+                </div>
+              </div>
+
+              <label class="field-label" for="edit-description"
+                >Your Description (optional)</label
+              >
+              <textarea
+                id="edit-description"
+                class="field-input"
+                rows="3"
+                placeholder="Describe what you offer, what's included, etc."
+              ></textarea>
+
+              <label class="toggle-row">
+                <input id="edit-is-active" type="checkbox" />
+                <span>
+                  <strong>Active</strong>
+                  <small>Make this service visible to customers.</small>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            class="btn btn-outline"
+            type="button"
+            onclick="closeEditServiceModal()"
+          >
+            Cancel
+          </button>
+          <button
+            id="edit-service-submit"
+            class="btn btn-primary"
+            type="button"
+            onclick="submitEditService()"
+          >
+            <span class="btn-label">Save Changes</span>
+            <span class="btn-spinner" style="display: none"
+              ><i class="fas fa-spinner fa-spin"></i
+            ></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirm Modal -->
+    <div id="delete-service-modal" class="modal-overlay" style="display: none">
+      <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="delete-service-title"
+        style="max-width: 560px"
+      >
+        <div class="modal-header">
+          <div>
+            <h2 id="delete-service-title">Delete Service</h2>
+            <p class="modal-subtitle">
+              This removes the service from your profile.
+            </p>
+          </div>
+          <button
+            class="modal-close"
+            type="button"
+            onclick="closeDeleteServiceModal()"
+            aria-label="Close"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="modal-panel" style="background: #fff">
+            <p
+              id="delete-service-message"
+              style="margin: 0; color: rgba(15, 23, 42, 0.82)"
+            ></p>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            class="btn btn-outline"
+            type="button"
+            onclick="closeDeleteServiceModal()"
+          >
+            Cancel
+          </button>
+          <button
+            id="delete-service-submit"
+            class="btn btn-primary"
+            type="button"
+            onclick="confirmDeleteService()"
+            style="background: #ef4444"
+          >
+            <span class="btn-label">Delete</span>
+            <span class="btn-spinner" style="display: none"
+              ><i class="fas fa-spinner fa-spin"></i
+            ></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/provider-ui.js"></script>
     <script src="../assets/js/main.js"></script>
     <script>
+      // Minimal styling for the modal (kept local to this page)
+      (function injectModalStyles() {
+        const style = document.createElement("style");
+        style.textContent = `
+          .modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:22px;z-index:9998}
+          .modal-card{width:min(980px,100%);background:#fff;border-radius:18px;box-shadow:0 30px 80px rgba(2,6,23,.35);overflow:hidden}
+          .modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:18px 20px;border-bottom:1px solid rgba(15,23,42,.08)}
+          .modal-header h2{margin:0;font-size:1.35rem;color:var(--text-dark)}
+          .modal-subtitle{margin:6px 0 0;color:var(--text-light);font-size:.95rem}
+          .modal-close{border:none;background:rgba(15,23,42,.06);width:40px;height:40px;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+          .modal-close:hover{background:rgba(15,23,42,.10)}
+          .modal-body{padding:18px 20px}
+          .modal-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:16px}
+          .modal-panel{background:rgba(248,250,252,.9);border:1px solid rgba(15,23,42,.08);border-radius:14px;padding:14px}
+          .field-label{display:block;margin:10px 0 6px;color:var(--text-dark);font-weight:600;font-size:.92rem}
+          .field-input{width:100%;padding:12px 12px;border-radius:12px;border:1px solid rgba(15,23,42,.12);background:#fff;outline:none}
+          .field-input:focus{border-color:rgba(59,130,246,.7);box-shadow:0 0 0 4px rgba(59,130,246,.12)}
+          .field-with-icon{position:relative}
+          .field-with-icon i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:rgba(15,23,42,.45)}
+          .field-with-icon .field-input{padding-left:38px}
+          .field-error{margin-top:6px;color:#ef4444;font-size:.88rem}
+          .service-preview{background:#fff;border:1px solid rgba(15,23,42,.08);border-radius:14px;min-height:160px;display:flex;align-items:center;justify-content:center;padding:14px}
+          .service-preview__placeholder{color:rgba(15,23,42,.5);text-align:center}
+          .service-preview__placeholder i{font-size:2rem;color:rgba(59,130,246,.65)}
+          .service-preview__card{display:grid;grid-template-columns:120px 1fr;gap:14px;width:100%}
+          .service-preview__img{width:120px;height:90px;border-radius:12px;object-fit:cover;background:#e2e8f0}
+          .service-preview__title{margin:0;color:var(--text-dark);font-size:1.05rem}
+          .service-preview__meta{margin-top:6px;color:var(--text-light);display:flex;flex-wrap:wrap;gap:10px;font-size:.9rem}
+          .service-preview__desc{margin-top:10px;color:rgba(15,23,42,.75);font-size:.95rem;line-height:1.35}
+          .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+          .toggle-row{display:flex;gap:12px;align-items:flex-start;margin-top:12px;padding:12px;border-radius:12px;background:#fff;border:1px dashed rgba(15,23,42,.16)}
+          .toggle-row input{margin-top:2px}
+          .toggle-row strong{display:block;color:var(--text-dark)}
+          .toggle-row small{display:block;color:var(--text-light);margin-top:2px}
+          .modal-footer{display:flex;justify-content:flex-end;gap:10px;padding:14px 20px;border-top:1px solid rgba(15,23,42,.08);background:rgba(248,250,252,.7)}
+          .btn.btn-outline{background:transparent;border:1px solid rgba(15,23,42,.18);color:var(--text-dark)}
+          .btn.btn-outline:hover{background:rgba(15,23,42,.05)}
+          @media (max-width: 880px){.modal-grid{grid-template-columns:1fr}.service-preview__card{grid-template-columns:1fr}.service-preview__img{width:100%;height:160px}}
+        `;
+        document.head.appendChild(style);
+      })();
+
+      function ensureToastContainer() {
+        let container = document.getElementById("toast-container");
+        if (container) return container;
+
+        container = document.createElement("div");
+        container.id = "toast-container";
+        container.style.position = "fixed";
+        container.style.top = "20px";
+        container.style.right = "20px";
+        container.style.zIndex = "9999";
+        container.style.display = "flex";
+        container.style.flexDirection = "column";
+        container.style.gap = "10px";
+        document.body.appendChild(container);
+        return container;
+      }
+
+      function showToast(message, type = "info") {
+        const container = ensureToastContainer();
+        const toast = document.createElement("div");
+        const bg =
+          type === "success"
+            ? "#10b981"
+            : type === "error"
+              ? "#ef4444"
+              : "#3b82f6";
+
+        toast.textContent = message;
+        toast.style.background = bg;
+        toast.style.color = "#fff";
+        toast.style.padding = "12px 14px";
+        toast.style.borderRadius = "12px";
+        toast.style.boxShadow = "0 10px 30px rgba(0,0,0,0.12)";
+        toast.style.fontSize = "0.95rem";
+        toast.style.maxWidth = "320px";
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(-6px)";
+        toast.style.transition = "opacity 180ms ease, transform 180ms ease";
+
+        container.appendChild(toast);
+        requestAnimationFrame(() => {
+          toast.style.opacity = "1";
+          toast.style.transform = "translateY(0)";
+        });
+
+        setTimeout(() => {
+          toast.style.opacity = "0";
+          toast.style.transform = "translateY(-6px)";
+          setTimeout(() => toast.remove(), 220);
+        }, 2600);
+      }
+
+      function formatPrice(price, priceType) {
+        const numeric = Number(price || 0);
+        const formatted = isFinite(numeric) ? numeric.toFixed(2) : "0.00";
+
+        switch (priceType) {
+          case "hourly":
+            return `$${formatted}/hr`;
+          case "per_item":
+            return `$${formatted}/item`;
+          case "custom":
+            return `From $${formatted}`;
+          case "fixed":
+          default:
+            return `$${formatted}`;
+        }
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      let _serviceCatalog = [];
+      let _serviceIdSet = new Set();
+      let _providerServicesById = new Map();
+      let _editProviderServiceId = null;
+      let _deleteProviderServiceId = null;
+
+      function initAddServiceModalUX() {
+        const overlay = document.getElementById("add-service-modal");
+        const card = overlay.querySelector(".modal-card");
+
+        overlay.addEventListener("click", () => closeAddServiceModal());
+        card.addEventListener("click", (e) => e.stopPropagation());
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && overlay.style.display !== "none") {
+            closeAddServiceModal();
+          }
+        });
+      }
+
+      function initGenericModalUX(modalId, closeFnName) {
+        const overlay = document.getElementById(modalId);
+        const card = overlay.querySelector(".modal-card");
+        overlay.addEventListener("click", () => window[closeFnName]());
+        card.addEventListener("click", (e) => e.stopPropagation());
+      }
+
+      function openAddServiceModal() {
+        const modal = document.getElementById("add-service-modal");
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+        resetAddServiceForm();
+        bootstrapAddService();
+      }
+
+      function closeAddServiceModal() {
+        const modal = document.getElementById("add-service-modal");
+        modal.style.display = "none";
+        document.body.style.overflow = "";
+      }
+
+      function resetAddServiceForm() {
+        document.getElementById("add-search").value = "";
+        document.getElementById("add-price").value = "";
+        document.getElementById("add-description").value = "";
+        document.getElementById("add-is-active").checked = true;
+        hideFieldError("add-service-error");
+        hideFieldError("add-price-error");
+        const preview = document.getElementById("service-preview");
+        preview.innerHTML = `
+          <div class="service-preview__placeholder">
+            <i class="fas fa-layer-group"></i>
+            <p>Select a service to see details</p>
+          </div>
+        `;
+      }
+
+      function setSubmitting(isSubmitting) {
+        const btn = document.getElementById("add-service-submit");
+        btn.disabled = isSubmitting;
+        btn.querySelector(".btn-label").style.display = isSubmitting
+          ? "none"
+          : "inline";
+        btn.querySelector(".btn-spinner").style.display = isSubmitting
+          ? "inline"
+          : "none";
+      }
+
+      function setSubmittingFor(buttonId, isSubmitting) {
+        const btn = document.getElementById(buttonId);
+        btn.disabled = isSubmitting;
+        btn.querySelector(".btn-label").style.display = isSubmitting
+          ? "none"
+          : "inline";
+        btn.querySelector(".btn-spinner").style.display = isSubmitting
+          ? "inline"
+          : "none";
+      }
+
+      function showFieldError(id, message) {
+        const el = document.getElementById(id);
+        el.textContent = message;
+        el.style.display = "block";
+      }
+
+      function hideFieldError(id) {
+        const el = document.getElementById(id);
+        el.textContent = "";
+        el.style.display = "none";
+      }
+
+      async function bootstrapAddService() {
+        try {
+          await loadCategoriesForAddModal();
+          await loadServicesForAddModal();
+
+          document.getElementById("add-category").onchange = () =>
+            loadServicesForAddModal();
+
+          const search = document.getElementById("add-search");
+          let timer;
+          search.oninput = () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => loadServicesForAddModal(), 250);
+          };
+
+          document.getElementById("add-service-select").onchange =
+            onSelectCatalogService;
+        } catch (e) {
+          console.error(e);
+          showToast("Failed to load service catalog", "error");
+        }
+      }
+
+      async function loadCategoriesForAddModal() {
+        const select = document.getElementById("add-category");
+        select.innerHTML = `<option value="">All categories</option>`;
+
+        const res = await fetch(`${Auth.apiUrl}/categories`);
+        const json = await res.json();
+        if (!res.ok || !json.success) return;
+
+        json.data.forEach((cat) => {
+          const opt = document.createElement("option");
+          opt.value = cat.category_id;
+          opt.textContent = cat.category_name;
+          select.appendChild(opt);
+        });
+      }
+
+      async function loadServicesForAddModal() {
+        const categoryId = document.getElementById("add-category").value;
+        const search = document.getElementById("add-search").value.trim();
+
+        const params = new URLSearchParams();
+        params.set("limit", "100");
+        if (categoryId) params.set("category_id", categoryId);
+        if (search) params.set("search", search);
+
+        const res = await fetch(`${Auth.apiUrl}/services?${params.toString()}`);
+        const json = await res.json();
+        if (!res.ok || !json.success) {
+          showToast(json.message || "Failed to load services", "error");
+          return;
+        }
+
+        _serviceCatalog = Array.isArray(json.data) ? json.data : [];
+
+        const select = document.getElementById("add-service-select");
+        select.innerHTML = "";
+
+        // Filter out services already offered
+        const filtered = _serviceCatalog.filter(
+          (s) => !_serviceIdSet.has(Number(s.service_id)),
+        );
+
+        if (filtered.length === 0) {
+          const opt = document.createElement("option");
+          opt.disabled = true;
+          opt.textContent = "No available services found";
+          select.appendChild(opt);
+          return;
+        }
+
+        filtered.forEach((svc) => {
+          const opt = document.createElement("option");
+          opt.value = svc.service_id;
+          const cat = svc.category_name ? ` • ${svc.category_name}` : "";
+          opt.textContent = `${svc.service_name}${cat}`;
+          select.appendChild(opt);
+        });
+      }
+
+      function onSelectCatalogService() {
+        hideFieldError("add-service-error");
+        const select = document.getElementById("add-service-select");
+        const serviceId = Number(select.value);
+        const svc = _serviceCatalog.find(
+          (s) => Number(s.service_id) === serviceId,
+        );
+        if (!svc) return;
+
+        // Pre-fill from base service
+        const price = document.getElementById("add-price");
+        if (!price.value) price.value = Number(svc.base_price || 0).toFixed(2);
+        document.getElementById("add-price-type").value =
+          svc.price_type || "fixed";
+
+        const preview = document.getElementById("service-preview");
+        const img = normalizeImageUrl(svc.service_image);
+        const cat = escapeHtml(svc.category_name || "Service");
+        const name = escapeHtml(svc.service_name || "Service");
+        const desc = escapeHtml(svc.description || "");
+        const duration = Number(svc.duration_minutes || 0);
+        const durationLabel = duration > 0 ? `${duration} min` : "Flexible";
+        const basePrice = formatPrice(svc.base_price, svc.price_type);
+
+        preview.innerHTML = `
+          <div class="service-preview__card">
+            <img class="service-preview__img" src="${img}" alt="${name}" onerror="this.src='../assets/images/services/cleaning1.jpg'" />
+            <div>
+              <h3 class="service-preview__title">${name}</h3>
+              <div class="service-preview__meta">
+                <span><i class="fas fa-tag"></i> ${cat}</span>
+                <span><i class="far fa-clock"></i> ${durationLabel}</span>
+                <span><i class="fas fa-coins"></i> Base: ${basePrice}</span>
+              </div>
+              <div class="service-preview__desc">${desc}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      async function submitAddService() {
+        hideFieldError("add-service-error");
+        hideFieldError("add-price-error");
+
+        const serviceId = Number(
+          document.getElementById("add-service-select").value,
+        );
+        const priceRaw = document.getElementById("add-price").value;
+        const price = Number(priceRaw);
+        const priceType = document.getElementById("add-price-type").value;
+        const description = document
+          .getElementById("add-description")
+          .value.trim();
+        const isActive = document.getElementById("add-is-active").checked;
+
+        if (!serviceId) {
+          showFieldError("add-service-error", "Please select a service.");
+          return;
+        }
+        if (!isFinite(price) || price < 0) {
+          showFieldError(
+            "add-price-error",
+            "Please enter a valid price (0 or more).",
+          );
+          return;
+        }
+
+        setSubmitting(true);
+        try {
+          const token = Auth.getToken();
+          const res = await fetch(`${Auth.apiUrl}/providers/services`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              service_id: serviceId,
+              price: price,
+              price_type: priceType,
+              description: description || null,
+              is_active: isActive,
+            }),
+          });
+
+          const json = await res.json();
+          if (!res.ok || !json.success) {
+            const msg =
+              json && json.message ? json.message : "Failed to add service";
+            showToast(msg, "error");
+            return;
+          }
+
+          showToast("Service added successfully", "success");
+          closeAddServiceModal();
+          await loadProviderServices();
+        } catch (e) {
+          console.error(e);
+          showToast("Failed to add service", "error");
+        } finally {
+          setSubmitting(false);
+        }
+      }
+
+      function normalizeImageUrl(url) {
+        if (!url) return "../assets/images/services/cleaning1.jpg";
+        if (url.startsWith("http://") || url.startsWith("https://")) return url;
+        if (url.startsWith("/")) return url;
+        return `../${url}`;
+      }
+
+      function renderEmptyServices(container) {
+        container.innerHTML = `
+          <div class="empty-state" style="text-align:center; padding: 60px 30px; color: var(--text-light); background: rgba(255,255,255,0.7); border-radius: 16px;">
+            <i class="fas fa-briefcase" style="font-size: 3rem; color: var(--primary-color);"></i>
+            <h3 style="margin-top: 15px; color: var(--text-dark);">No services yet</h3>
+            <p style="margin-top: 8px;">You haven't added any services. Click “Add New Service” to get started.</p>
+          </div>
+        `;
+      }
+
+      function renderServices(container, services) {
+        _providerServicesById = new Map(
+          services.map((s) => [Number(s.provider_service_id), s]),
+        );
+
+        container.innerHTML = services
+          .map((svc) => {
+            const title = escapeHtml(svc.service_name || "Service");
+            const description = escapeHtml(svc.description || "");
+            const category = escapeHtml(svc.category_name || "Service");
+            const duration = Number(svc.duration_minutes || 0);
+            const durationLabel = duration > 0 ? `${duration} min` : "Flexible";
+            const active = svc.is_active === 1 || svc.is_active === true;
+            const statusClass = active ? "status-active" : "";
+            const statusText = active ? "Active" : "Inactive";
+            const image = normalizeImageUrl(svc.service_image);
+            const priceLabel = formatPrice(svc.price, svc.price_type);
+            const providerServiceId = Number(svc.provider_service_id);
+
+            return `
+              <div class="service-card">
+                <img src="${image}" alt="${title}" class="service-image" onerror="this.src='../assets/images/services/cleaning1.jpg'" />
+                <div class="service-details">
+                  <div class="service-header">
+                    <h3 class="service-title">${title}</h3>
+                    <span class="service-price">${priceLabel}</span>
+                  </div>
+                  <p class="service-desc">${description}</p>
+                  <div class="service-meta">
+                    <span><i class="fas fa-tag"></i> ${category}</span>
+                    <span><i class="far fa-clock"></i> ${durationLabel}</span>
+                  </div>
+                </div>
+                <div class="service-actions">
+                  <div class="status-toggle ${statusClass}" role="button" tabindex="0" onclick="toggleServiceStatus(${providerServiceId})">
+                    <span class="status-indicator"></span> ${statusText}
+                  </div>
+                  <div class="action-buttons">
+                    <button class="btn-icon btn-edit" title="Edit" onclick="openEditServiceModal(${providerServiceId})">
+                      <i class="fas fa-pen"></i>
+                    </button>
+                    <button class="btn-icon btn-delete" title="Delete" onclick="openDeleteServiceModal(${providerServiceId})">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function openEditServiceModal(providerServiceId) {
+        const svc = _providerServicesById.get(Number(providerServiceId));
+        if (!svc) {
+          showToast("Service not found", "error");
+          return;
+        }
+
+        _editProviderServiceId = Number(providerServiceId);
+        hideFieldError("edit-price-error");
+
+        document.getElementById("edit-price").value = Number(
+          svc.price || 0,
+        ).toFixed(2);
+        document.getElementById("edit-price-type").value =
+          svc.price_type || "fixed";
+        document.getElementById("edit-description").value =
+          svc.description || "";
+        document.getElementById("edit-is-active").checked =
+          svc.is_active === 1 || svc.is_active === true;
+
+        const preview = document.getElementById("edit-service-preview");
+        const img = normalizeImageUrl(svc.service_image);
+        const cat = escapeHtml(svc.category_name || "Service");
+        const name = escapeHtml(svc.service_name || "Service");
+        const desc = escapeHtml(svc.description || "");
+        const duration = Number(svc.duration_minutes || 0);
+        const durationLabel = duration > 0 ? `${duration} min` : "Flexible";
+
+        preview.innerHTML = `
+          <div class="service-preview__card">
+            <img class="service-preview__img" src="${img}" alt="${name}" onerror="this.src='../assets/images/services/cleaning1.jpg'" />
+            <div>
+              <h3 class="service-preview__title">${name}</h3>
+              <div class="service-preview__meta">
+                <span><i class="fas fa-tag"></i> ${cat}</span>
+                <span><i class="far fa-clock"></i> ${durationLabel}</span>
+              </div>
+              <div class="service-preview__desc">${desc}</div>
+            </div>
+          </div>
+        `;
+
+        const modal = document.getElementById("edit-service-modal");
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeEditServiceModal() {
+        const modal = document.getElementById("edit-service-modal");
+        modal.style.display = "none";
+        document.body.style.overflow = "";
+        _editProviderServiceId = null;
+      }
+
+      async function submitEditService() {
+        hideFieldError("edit-price-error");
+        const providerServiceId = _editProviderServiceId;
+        if (!providerServiceId) return;
+
+        const priceRaw = document.getElementById("edit-price").value;
+        const price = Number(priceRaw);
+        const priceType = document.getElementById("edit-price-type").value;
+        const description = document
+          .getElementById("edit-description")
+          .value.trim();
+        const isActive = document.getElementById("edit-is-active").checked;
+
+        if (!isFinite(price) || price < 0) {
+          showFieldError(
+            "edit-price-error",
+            "Please enter a valid price (0 or more).",
+          );
+          return;
+        }
+
+        setSubmittingFor("edit-service-submit", true);
+        try {
+          const token = Auth.getToken();
+          const res = await fetch(
+            `${Auth.apiUrl}/providers/services/${providerServiceId}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                price,
+                price_type: priceType,
+                description: description || null,
+                is_active: isActive,
+              }),
+            },
+          );
+          const json = await res.json();
+
+          if (!res.ok || !json.success) {
+            showToast(json.message || "Failed to update service", "error");
+            return;
+          }
+
+          showToast("Service updated", "success");
+          closeEditServiceModal();
+          await loadProviderServices();
+        } catch (e) {
+          console.error(e);
+          showToast("Failed to update service", "error");
+        } finally {
+          setSubmittingFor("edit-service-submit", false);
+        }
+      }
+
+      function openDeleteServiceModal(providerServiceId) {
+        const svc = _providerServicesById.get(Number(providerServiceId));
+        if (!svc) {
+          showToast("Service not found", "error");
+          return;
+        }
+        _deleteProviderServiceId = Number(providerServiceId);
+
+        const name = escapeHtml(svc.service_name || "this service");
+        document.getElementById("delete-service-message").innerHTML =
+          `Are you sure you want to delete <strong>${name}</strong>?`;
+
+        const modal = document.getElementById("delete-service-modal");
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeDeleteServiceModal() {
+        const modal = document.getElementById("delete-service-modal");
+        modal.style.display = "none";
+        document.body.style.overflow = "";
+        _deleteProviderServiceId = null;
+      }
+
+      async function confirmDeleteService() {
+        const providerServiceId = _deleteProviderServiceId;
+        if (!providerServiceId) return;
+
+        setSubmittingFor("delete-service-submit", true);
+        try {
+          const token = Auth.getToken();
+          const res = await fetch(
+            `${Auth.apiUrl}/providers/services/${providerServiceId}`,
+            {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+          const json = await res.json();
+          if (!res.ok || !json.success) {
+            showToast(json.message || "Failed to delete service", "error");
+            return;
+          }
+
+          showToast("Service deleted", "success");
+          closeDeleteServiceModal();
+          await loadProviderServices();
+        } catch (e) {
+          console.error(e);
+          showToast("Failed to delete service", "error");
+        } finally {
+          setSubmittingFor("delete-service-submit", false);
+        }
+      }
+
+      async function toggleServiceStatus(providerServiceId) {
+        const svc = _providerServicesById.get(Number(providerServiceId));
+        if (!svc) return;
+        const next = !(svc.is_active === 1 || svc.is_active === true);
+
+        try {
+          const token = Auth.getToken();
+          const res = await fetch(
+            `${Auth.apiUrl}/providers/services/${providerServiceId}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ is_active: next }),
+            },
+          );
+          const json = await res.json();
+          if (!res.ok || !json.success) {
+            showToast(json.message || "Failed to update status", "error");
+            return;
+          }
+          await loadProviderServices();
+        } catch (e) {
+          console.error(e);
+          showToast("Failed to update status", "error");
+        }
+      }
+
+      async function loadProviderServices() {
+        const container = document.getElementById("services-list");
+        try {
+          const token = Auth.getToken();
+          const response = await fetch(`${Auth.apiUrl}/providers/services`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          const result = await response.json();
+
+          if (!response.ok || !result.success) {
+            container.innerHTML = `
+              <div class="empty-state" style="text-align:center; padding: 60px 30px; color: var(--text-light); background: rgba(255,255,255,0.7); border-radius: 16px;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #f59e0b;"></i>
+                <h3 style="margin-top: 15px; color: var(--text-dark);">Couldn't load services</h3>
+                <p style="margin-top: 8px;">${result.message || "Please try again later."}</p>
+              </div>
+            `;
+            return;
+          }
+
+          const services = Array.isArray(result.data) ? result.data : [];
+          _serviceIdSet = new Set(
+            services
+              .map((s) => Number(s.service_id))
+              .filter((n) => Number.isFinite(n)),
+          );
+          if (services.length === 0) {
+            renderEmptyServices(container);
+            return;
+          }
+
+          renderServices(container, services);
+        } catch (error) {
+          console.error("Error loading provider services:", error);
+          container.innerHTML = `
+            <div class="empty-state" style="text-align:center; padding: 60px 30px; color: var(--text-light); background: rgba(255,255,255,0.7); border-radius: 16px;">
+              <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #ef4444;"></i>
+              <h3 style="margin-top: 15px; color: var(--text-dark);">Failed to load services</h3>
+              <p style="margin-top: 8px;">Please refresh the page.</p>
+            </div>
+          `;
+        }
+      }
+
       // Page specific logic
       document.addEventListener("DOMContentLoaded", async () => {
         if (!Auth.isAuthenticated()) {
           window.location.href = "login.html";
           return;
         }
-        const user = Auth.getUser();
-        if (user) {
-          const fullName = `${user.first_name} ${user.last_name}`;
-          document.getElementById("provider-name").textContent = fullName;
-          document.getElementById("header-user-name").textContent =
-            user.first_name;
-          document.getElementById("dropdown-user-name").textContent = fullName;
-          document.getElementById("dropdown-user-email").textContent =
-            user.email;
 
-          const avatarSrc =
-            user.profile_picture && user.profile_picture !== ""
-              ? user.profile_picture
-              : "../assets/images/default-avatar.jpg";
-          document.getElementById("provider-avatar").src = avatarSrc;
-          document.getElementById("header-avatar").src = avatarSrc;
+        if (Auth.getUserType && Auth.getUserType() !== "provider") {
+          window.location.href = "login.html";
+          return;
+        }
+
+        initAddServiceModalUX();
+        initGenericModalUX("edit-service-modal", "closeEditServiceModal");
+        initGenericModalUX("delete-service-modal", "closeDeleteServiceModal");
+
+        if (window.ProviderUI) {
+          await ProviderUI.loadAndApply();
         }
 
         // User menu dropdown
@@ -764,6 +1707,8 @@
             e.preventDefault();
             Auth.logout();
           });
+
+        await loadProviderServices();
       });
     </script>
   </body>

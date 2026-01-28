@@ -526,14 +526,11 @@
                     email@example.com
                   </div>
                 </div>
-                <a href="provider-profile.html">
+                <a href="provider-settings.html">
                   <i class="fas fa-user"></i>
                   <span>My Profile</span>
                 </a>
-                <a href="provider-settings.html">
-                  <i class="fas fa-cog"></i>
-                  <span>Settings</span>
-                </a>
+
                 <a href="provider-earnings.html">
                   <i class="fas fa-wallet"></i>
                   <span>Earnings</span>
@@ -684,6 +681,7 @@
     </div>
 
     <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/provider-ui.js"></script>
     <script src="../assets/js/main.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
@@ -691,22 +689,8 @@
           window.location.href = "login.html";
           return;
         }
-        const user = Auth.getUser();
-        if (user) {
-          const fullName = `${user.first_name} ${user.last_name}`;
-          document.getElementById("provider-name").textContent = fullName;
-          document.getElementById("header-user-name").textContent =
-            user.first_name;
-          document.getElementById("dropdown-user-name").textContent = fullName;
-          document.getElementById("dropdown-user-email").textContent =
-            user.email;
-
-          const avatarSrc =
-            user.profile_picture && user.profile_picture !== ""
-              ? user.profile_picture
-              : "../assets/images/default-avatar.jpg";
-          document.getElementById("provider-avatar").src = avatarSrc;
-          document.getElementById("header-avatar").src = avatarSrc;
+        if (window.ProviderUI) {
+          await ProviderUI.loadAndApply();
         }
 
         // User menu dropdown

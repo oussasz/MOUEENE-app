@@ -224,13 +224,256 @@ class Provider {
      */
     public function getServices($providerId) {
         $stmt = $this->db->prepare(
-            "SELECT ps.*, s.service_name, s.description 
+            "SELECT 
+                ps.provider_service_id,
+                ps.provider_id,
+                ps.service_id,
+                ps.price,
+                ps.price_type,
+                ps.is_active,
+                ps.total_bookings,
+                ps.created_at,
+                ps.updated_at,
+                s.service_name,
+                COALESCE(ps.description, s.description) AS description,
+                s.service_image,
+                s.duration_minutes,
+                sc.category_name
              FROM provider_services ps
              JOIN services s ON ps.service_id = s.service_id
-             WHERE ps.provider_id = ? AND ps.status = 'active'"
+             LEFT JOIN service_categories sc ON s.category_id = sc.category_id
+             WHERE ps.provider_id = ?
+             ORDER BY ps.created_at DESC"
         );
         $stmt->execute([$providerId]);
         return $stmt->fetchAll();
+    }
+
+    /**
+     * Add a service offering for a provider
+     *
+     * @param int $providerId
+     * @param array $data
+     * @return array Newly created provider service row
+     */
+    public function addService($providerId, $data) {
+        // Ensure provider exists
+        $stmt = $this->db->prepare("SELECT provider_id FROM providers WHERE provider_id = ?");
+        $stmt->execute([$providerId]);
+        if (!$stmt->fetch()) {
+            throw new Exception('Provider not found');
+        }
+
+        $serviceId = (int)($data['service_id'] ?? 0);
+        if ($serviceId <= 0) {
+            throw new Exception('Invalid service');
+        }
+
+        // Ensure service exists and is active
+        $stmt = $this->db->prepare("SELECT service_id FROM services WHERE service_id = ? AND is_active = TRUE");
+        $stmt->execute([$serviceId]);
+        if (!$stmt->fetch()) {
+            throw new Exception('Service not found');
+        }
+
+        $price = $data['price'] ?? null;
+        $priceType = $data['price_type'] ?? 'fixed';
+        $description = $data['description'] ?? null;
+        $isActive = isset($data['is_active']) ? (bool)$data['is_active'] : true;
+
+        try {
+            $this->db->beginTransaction();
+
+            $stmt = $this->db->prepare(
+                "INSERT INTO provider_services (provider_id, service_id, price, price_type, description, is_active)
+                 VALUES (?, ?, ?, ?, ?, ?)"
+            );
+            $stmt->execute([
+                $providerId,
+                $serviceId,
+                $price,
+                $priceType,
+                $description,
+                $isActive ? 1 : 0
+            ]);
+
+            // Keep lightweight aggregate in sync
+            $stmt = $this->db->prepare(
+                "UPDATE services SET total_providers = total_providers + 1 WHERE service_id = ?"
+            );
+            $stmt->execute([$serviceId]);
+
+            $providerServiceId = (int)$this->db->lastInsertId();
+            $this->db->commit();
+
+            $stmt = $this->db->prepare(
+                "SELECT 
+                    ps.provider_service_id,
+                    ps.provider_id,
+                    ps.service_id,
+                    ps.price,
+                    ps.price_type,
+                    ps.is_active,
+                    ps.total_bookings,
+                    ps.created_at,
+                    ps.updated_at,
+                    s.service_name,
+                    COALESCE(ps.description, s.description) AS description,
+                    s.service_image,
+                    s.duration_minutes,
+                    sc.category_name
+                 FROM provider_services ps
+                 JOIN services s ON ps.service_id = s.service_id
+                 LEFT JOIN service_categories sc ON s.category_id = sc.category_id
+                 WHERE ps.provider_service_id = ?"
+            );
+            $stmt->execute([$providerServiceId]);
+            return $stmt->fetch() ?: [];
+
+        } catch (PDOException $e) {
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+            // MySQL duplicate entry (unique_provider_service) typically uses SQLSTATE 23000
+            if ($e->getCode() === '23000') {
+                throw new Exception('You already offer this service');
+            }
+            throw $e;
+        } catch (Exception $e) {
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Get a provider service offering by id (joined with service metadata)
+     *
+     * @param int $providerServiceId
+     * @return array|false
+     */
+    private function getServiceOfferingById($providerServiceId) {
+        $stmt = $this->db->prepare(
+            "SELECT 
+                ps.provider_service_id,
+                ps.provider_id,
+                ps.service_id,
+                ps.price,
+                ps.price_type,
+                ps.is_active,
+                ps.total_bookings,
+                ps.created_at,
+                ps.updated_at,
+                s.service_name,
+                COALESCE(ps.description, s.description) AS description,
+                s.service_image,
+                s.duration_minutes,
+                sc.category_name
+             FROM provider_services ps
+             JOIN services s ON ps.service_id = s.service_id
+             LEFT JOIN service_categories sc ON s.category_id = sc.category_id
+             WHERE ps.provider_service_id = ?"
+        );
+        $stmt->execute([(int)$providerServiceId]);
+        return $stmt->fetch();
+    }
+
+    /**
+     * Update a provider service offering (price, price_type, description, is_active)
+     *
+     * @param int $providerId
+     * @param int $providerServiceId
+     * @param array $data
+     * @return array Updated row
+     */
+    public function updateServiceOffering($providerId, $providerServiceId, $data) {
+        $providerServiceId = (int)$providerServiceId;
+        $providerId = (int)$providerId;
+
+        $existing = $this->getServiceOfferingById($providerServiceId);
+        if (!$existing || (int)$existing['provider_id'] !== $providerId) {
+            throw new Exception('Service offering not found');
+        }
+
+        $allowed = ['price', 'price_type', 'description', 'is_active'];
+        $fields = [];
+        $values = [];
+
+        foreach ($allowed as $field) {
+            if (array_key_exists($field, $data)) {
+                $fields[] = "$field = ?";
+                if ($field === 'is_active') {
+                    $values[] = (bool)$data[$field] ? 1 : 0;
+                } else {
+                    $values[] = $data[$field];
+                }
+            }
+        }
+
+        if (empty($fields)) {
+            throw new Exception('No changes provided');
+        }
+
+        $values[] = $providerServiceId;
+        $values[] = $providerId;
+
+        $sql = "UPDATE provider_services SET " . implode(', ', $fields) . " WHERE provider_service_id = ? AND provider_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($values);
+
+        $updated = $this->getServiceOfferingById($providerServiceId);
+        if (!$updated) {
+            throw new Exception('Service offering not found');
+        }
+        return $updated;
+    }
+
+    /**
+     * Delete a provider service offering
+     *
+     * @param int $providerId
+     * @param int $providerServiceId
+     * @return bool
+     */
+    public function deleteServiceOffering($providerId, $providerServiceId) {
+        $providerServiceId = (int)$providerServiceId;
+        $providerId = (int)$providerId;
+
+        $existing = $this->getServiceOfferingById($providerServiceId);
+        if (!$existing || (int)$existing['provider_id'] !== $providerId) {
+            throw new Exception('Service offering not found');
+        }
+
+        $serviceId = (int)$existing['service_id'];
+
+        try {
+            $this->db->beginTransaction();
+
+            $stmt = $this->db->prepare("DELETE FROM provider_services WHERE provider_service_id = ? AND provider_id = ?");
+            $stmt->execute([$providerServiceId, $providerId]);
+
+            if ($stmt->rowCount() === 0) {
+                $this->db->rollBack();
+                throw new Exception('Service offering not found');
+            }
+
+            // Keep lightweight aggregate in sync (avoid going below 0)
+            $stmt = $this->db->prepare(
+                "UPDATE services 
+                 SET total_providers = CASE WHEN total_providers > 0 THEN total_providers - 1 ELSE 0 END
+                 WHERE service_id = ?"
+            );
+            $stmt->execute([$serviceId]);
+
+            $this->db->commit();
+            return true;
+        } catch (Exception $e) {
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+            throw $e;
+        }
     }
     
     /**

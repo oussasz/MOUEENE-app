@@ -18,7 +18,151 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-  </head>
+  
+    <style>
+      /* Fixed Styles for Profile Page */
+      body {
+        background-color: #f7f9fc;
+        color: var(--text-dark);
+      }
+      
+      .page-banner {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #00a88c 100%);
+        padding: 100px 0 80px;
+        color: white;
+        margin-bottom: 20px;
+      }
+      
+      .breadcrumb {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 0.9rem;
+      }
+      
+      .breadcrumb a {
+          color: rgba(255,255,255,0.9);
+          text-decoration: none;
+          transition: color 0.3s;
+      }
+      
+      .breadcrumb a:hover {
+          color: white;
+      }
+      
+      .breadcrumb span {
+          color: rgba(255,255,255,0.6);
+      }
+
+      .profile-header {
+        position: relative;
+        z-index: 10;
+        margin-top: -60px;
+      }
+      
+      .profile-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        padding: 30px;
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+      }
+
+      .profile-image {
+          position: relative;
+          flex-shrink: 0;
+      }
+
+      .profile-image img {
+          width: 140px;
+          height: 140px;
+          border-radius: 50%;
+          border: 5px solid white;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          object-fit: cover;
+      }
+
+      .profile-info {
+          flex: 1;
+          padding-top: 5px;
+      }
+      
+      .profile-badges {
+          display: flex;
+          gap: 10px;
+          margin-bottom: 10px;
+      }
+
+      .badge {
+          display: inline-flex;
+          align-items: center;
+          padding: 6px 14px;
+          border-radius: 50px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          letter-spacing: 0.3px;
+      }
+
+      .badge i { margin-right: 6px; }
+
+      .badge-verified {
+          background-color: rgba(34, 197, 94, 0.1);
+          color: #22c55e;
+      }
+
+      .badge-top {
+          background-color: rgba(245, 158, 11, 0.1);
+          color: #f59e0b;
+      }
+
+      .profile-info h1 {
+          font-size: 2.2rem;
+          margin: 0 0 5px 0;
+          color: var(--text-dark);
+          font-weight: 700;
+      }
+      
+      .provider-rating {
+          display: flex;
+          align-items: center;
+          font-weight: 500;
+          color: var(--text-dark);
+      }
+      
+      /* Services Section */
+      .services-section {
+          padding: 40px 0 80px;
+      }
+      
+      /* Responsive */
+      @media (max-width: 768px) {
+          .profile-card {
+              flex-direction: column;
+              text-align: center;
+              padding: 25px;
+              align-items: center;
+          }
+          
+          .profile-badges {
+              justify-content: center;
+          }
+          
+          .provider-rating {
+              justify-content: center;
+          }
+          
+          .profile-info div[style*="display: flex"] {
+              justify-content: center;
+          }
+          
+          .services-section .container > div {
+              grid-template-columns: 1fr !important;
+          }
+      }
+    </style>
+</head>
   <body>
     <!-- Header -->
     <header class="header">

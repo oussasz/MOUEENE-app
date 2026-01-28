@@ -488,14 +488,11 @@
                     email@example.com
                   </div>
                 </div>
-                <a href="provider-profile.html">
+                <a href="provider-settings.html">
                   <i class="fas fa-user"></i>
                   <span>My Profile</span>
                 </a>
-                <a href="provider-settings.html">
-                  <i class="fas fa-cog"></i>
-                  <span>Settings</span>
-                </a>
+
                 <a href="provider-earnings.html">
                   <i class="fas fa-wallet"></i>
                   <span>Earnings</span>
@@ -579,7 +576,7 @@
           <main class="provider-main">
             <div class="settings-card">
               <h2>Profile Information</h2>
-              <form>
+              <form id="profile-form">
                 <div class="profile-upload">
                   <img
                     src="https://ui-avatars.com/api/?name=Provider&background=00c9a7&color=fff&size=80"
@@ -588,7 +585,11 @@
                     id="settings-avatar"
                   />
                   <div>
-                    <button type="button" class="btn btn-outline">
+                    <button
+                      type="button"
+                      class="btn btn-outline"
+                      id="change-photo-btn"
+                    >
                       Change Photo
                     </button>
                     <div
@@ -599,32 +600,41 @@
                   </div>
                 </div>
 
+                <input
+                  type="file"
+                  id="profile-photo-input"
+                  accept="image/*"
+                  style="display: none"
+                />
+
                 <div class="form-grid">
                   <div class="form-group">
                     <label>First Name</label>
                     <input
                       type="text"
+                      id="first-name"
                       class="form-control"
                       autocomplete="given-name"
-                      value="Ahmed"
+                      placeholder="First name"
                     />
                   </div>
                   <div class="form-group">
                     <label>Last Name</label>
                     <input
                       type="text"
+                      id="last-name"
                       class="form-control"
                       autocomplete="family-name"
-                      value="Provider"
+                      placeholder="Last name"
                     />
                   </div>
                   <div class="form-group">
                     <label>Email Address</label>
                     <input
                       type="email"
+                      id="email"
                       class="form-control"
                       autocomplete="email"
-                      value="ahmed@example.com"
                       disabled
                       style="background: #f9f9f9"
                     />
@@ -633,41 +643,49 @@
                     <label>Phone Number</label>
                     <input
                       type="tel"
+                      id="phone"
                       class="form-control"
                       autocomplete="tel"
-                      value="+213 555 123 456"
+                      placeholder="Phone number"
                     />
                   </div>
                 </div>
                 <div class="form-group" style="margin-top: 20px">
                   <label>Bio / Description</label>
-                  <textarea class="form-control" rows="4">
-Experienced service provider...</textarea
-                  >
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    id="bio"
+                    placeholder="Tell customers about your experience, skills, and services..."
+                  ></textarea>
                 </div>
                 <div class="form-group" style="margin-top: 20px">
                   <label>Address</label>
                   <input
                     type="text"
+                    id="address"
                     class="form-control"
                     autocomplete="street-address"
-                    value="123 Didouche Mourad St, Algiers"
+                    placeholder="Address"
                   />
                 </div>
 
                 <div style="margin-top: 30px; text-align: right">
-                  <button type="submit" class="btn-save">Save Changes</button>
+                  <button type="submit" class="btn-save" id="profile-save-btn">
+                    Save Changes
+                  </button>
                 </div>
               </form>
             </div>
 
             <div class="settings-card">
               <h2>Password & Security</h2>
-              <form>
+              <form id="password-form">
                 <div class="form-group">
                   <label>Current Password</label>
                   <input
                     type="password"
+                    id="current-password"
                     class="form-control"
                     autocomplete="current-password"
                   />
@@ -677,6 +695,7 @@ Experienced service provider...</textarea
                     <label>New Password</label>
                     <input
                       type="password"
+                      id="new-password"
                       class="form-control"
                       autocomplete="new-password"
                     />
@@ -685,13 +704,18 @@ Experienced service provider...</textarea
                     <label>Confirm New Password</label>
                     <input
                       type="password"
+                      id="confirm-password"
                       class="form-control"
                       autocomplete="new-password"
                     />
                   </div>
                 </div>
                 <div style="margin-top: 30px">
-                  <button type="submit" class="btn btn-outline">
+                  <button
+                    type="submit"
+                    class="btn btn-outline"
+                    id="password-save-btn"
+                  >
                     Update Password
                   </button>
                 </div>
@@ -703,55 +727,319 @@ Experienced service provider...</textarea
     </div>
 
     <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/provider-ui.js"></script>
     <script src="../assets/js/main.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        if (!Auth.isAuthenticated()) {
-          window.location.href = "login.html";
-          return;
-        }
-        const user = Auth.getUser();
-        if (user) {
-          const fullName = `${user.first_name} ${user.last_name}`;
-          document.getElementById("provider-name").textContent = fullName;
-          document.getElementById("header-user-name").textContent =
-            user.first_name;
-          document.getElementById("dropdown-user-name").textContent = fullName;
-          document.getElementById("dropdown-user-email").textContent =
-            user.email;
+      const ProviderSettings = {
+        els: {
+          profileForm: null,
+          passwordForm: null,
 
-          const avatarSrc =
-            user.profile_picture && user.profile_picture !== ""
-              ? user.profile_picture
-              : "../assets/images/default-avatar.jpg";
-          document.getElementById("provider-avatar").src = avatarSrc;
-          document.getElementById("header-avatar").src = avatarSrc;
-          document.getElementById("settings-avatar").src = avatarSrc;
-        }
+          firstName: null,
+          lastName: null,
+          email: null,
+          phone: null,
+          bio: null,
+          address: null,
 
-        // User menu dropdown
-        const userMenu = document.getElementById("user-menu");
-        userMenu
-          .querySelector(".user-menu-trigger")
-          .addEventListener("click", (e) => {
-            e.stopPropagation();
-            userMenu.classList.toggle("active");
+          profileSaveBtn: null,
+          passwordSaveBtn: null,
+
+          changePhotoBtn: null,
+          photoInput: null,
+          settingsAvatar: null,
+        },
+
+        cacheEls() {
+          this.els.profileForm = document.getElementById("profile-form");
+          this.els.passwordForm = document.getElementById("password-form");
+
+          this.els.firstName = document.getElementById("first-name");
+          this.els.lastName = document.getElementById("last-name");
+          this.els.email = document.getElementById("email");
+          this.els.phone = document.getElementById("phone");
+          this.els.bio = document.getElementById("bio");
+          this.els.address = document.getElementById("address");
+
+          this.els.profileSaveBtn = document.getElementById("profile-save-btn");
+          this.els.passwordSaveBtn =
+            document.getElementById("password-save-btn");
+
+          this.els.changePhotoBtn = document.getElementById("change-photo-btn");
+          this.els.photoInput = document.getElementById("profile-photo-input");
+          this.els.settingsAvatar = document.getElementById("settings-avatar");
+        },
+
+        async init() {
+          if (!Auth.requireAuth()) return;
+          if (!Auth.requireUserType("provider")) return;
+
+          this.cacheEls();
+
+          if (window.ProviderUI) {
+            await ProviderUI.loadAndApply();
+          }
+
+          await this.loadProfile();
+          this.setupHeaderMenu();
+          this.setupForms();
+          this.setupPhotoPreview();
+        },
+
+        async loadProfile() {
+          try {
+            const token = Auth.getToken();
+            const res = await fetch("/backend/api/v1/providers/profile", {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+
+            const result = await res.json().catch(() => null);
+            if (!res.ok || !result || !result.success) {
+              throw new Error(result?.message || "Failed to load profile");
+            }
+
+            const p = result.data || {};
+
+            // Persist for other pages
+            Auth.setUser(p, "provider");
+
+            // Populate form
+            this.els.firstName.value = p.first_name || "";
+            this.els.lastName.value = p.last_name || "";
+            this.els.email.value = p.email || "";
+            this.els.phone.value = p.phone || "";
+            this.els.bio.value = p.bio || "";
+            this.els.address.value = p.address || "";
+
+            // Re-apply header/sidebar names + avatar with freshest data
+            if (window.ProviderUI) {
+              await ProviderUI.loadAndApply();
+            }
+          } catch (err) {
+            console.error("Failed to load provider profile:", err);
+            await Auth.showModal({
+              type: "error",
+              title: "Profile load failed",
+              message:
+                "Could not load your profile data. Please refresh the page.",
+            });
+          }
+        },
+
+        setupHeaderMenu() {
+          const userMenu = document.getElementById("user-menu");
+          if (userMenu) {
+            userMenu
+              .querySelector(".user-menu-trigger")
+              .addEventListener("click", (e) => {
+                e.stopPropagation();
+                userMenu.classList.toggle("active");
+              });
+            document.addEventListener("click", () => {
+              userMenu.classList.remove("active");
+            });
+          }
+
+          const logoutBtn = document.getElementById("logout-btn");
+          const headerLogoutBtn = document.getElementById("header-logout-btn");
+
+          if (logoutBtn) {
+            logoutBtn.addEventListener("click", async (e) => {
+              e.preventDefault();
+              await Auth.logout();
+            });
+          }
+          if (headerLogoutBtn) {
+            headerLogoutBtn.addEventListener("click", async (e) => {
+              e.preventDefault();
+              await Auth.logout();
+            });
+          }
+        },
+
+        setupForms() {
+          if (this.els.profileForm) {
+            this.els.profileForm.addEventListener("submit", (e) => {
+              e.preventDefault();
+              this.saveProfile();
+            });
+          }
+
+          if (this.els.passwordForm) {
+            this.els.passwordForm.addEventListener("submit", (e) => {
+              e.preventDefault();
+              this.changePassword();
+            });
+          }
+        },
+
+        async saveProfile() {
+          const payload = {
+            first_name: this.els.firstName.value.trim(),
+            last_name: this.els.lastName.value.trim(),
+            phone: this.els.phone.value.trim(),
+            bio: this.els.bio.value.trim(),
+            address: this.els.address.value.trim(),
+          };
+
+          const btn = this.els.profileSaveBtn;
+          const prevText = btn ? btn.textContent : null;
+
+          try {
+            if (btn) {
+              btn.disabled = true;
+              btn.textContent = "Saving...";
+            }
+
+            const token = Auth.getToken();
+            const res = await fetch("/backend/api/v1/providers/profile", {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(payload),
+            });
+
+            const result = await res.json().catch(() => null);
+            if (!res.ok || !result || !result.success) {
+              throw new Error(result?.message || "Failed to update profile");
+            }
+
+            // Update local state + UI
+            Auth.setUser(result.data, "provider");
+            if (window.ProviderUI) {
+              await ProviderUI.loadAndApply();
+            }
+
+            await Auth.showModal({
+              type: "success",
+              title: "Saved",
+              message: result.message || "Profile updated successfully.",
+            });
+          } catch (err) {
+            console.error("Profile update failed:", err);
+            await Auth.showModal({
+              type: "error",
+              title: "Save failed",
+              message: err.message || "Failed to update profile.",
+            });
+          } finally {
+            if (btn) {
+              btn.disabled = false;
+              btn.textContent = prevText;
+            }
+          }
+        },
+
+        async changePassword() {
+          const currentPassword = document
+            .getElementById("current-password")
+            .value.trim();
+          const newPassword = document.getElementById("new-password").value;
+          const confirmPassword =
+            document.getElementById("confirm-password").value;
+
+          if (!currentPassword || !newPassword || !confirmPassword) {
+            await Auth.showModal({
+              type: "warning",
+              title: "Missing fields",
+              message: "Please fill in all password fields.",
+            });
+            return;
+          }
+
+          if (newPassword.length < 8) {
+            await Auth.showModal({
+              type: "warning",
+              title: "Password too short",
+              message: "New password must be at least 8 characters.",
+            });
+            return;
+          }
+
+          if (newPassword !== confirmPassword) {
+            await Auth.showModal({
+              type: "warning",
+              title: "Passwords do not match",
+              message: "Confirm password must match new password.",
+            });
+            return;
+          }
+
+          const btn = this.els.passwordSaveBtn;
+          const prevText = btn ? btn.textContent : null;
+
+          try {
+            if (btn) {
+              btn.disabled = true;
+              btn.textContent = "Updating...";
+            }
+
+            const token = Auth.getToken();
+            const res = await fetch(
+              "/backend/api/v1/providers/change-password",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                  current_password: currentPassword,
+                  new_password: newPassword,
+                  confirm_password: confirmPassword,
+                }),
+              },
+            );
+
+            const result = await res.json().catch(() => null);
+            if (!res.ok || !result || !result.success) {
+              throw new Error(result?.message || "Failed to change password");
+            }
+
+            this.els.passwordForm.reset();
+            await Auth.showModal({
+              type: "success",
+              title: "Password updated",
+              message: result.message || "Password changed successfully.",
+            });
+          } catch (err) {
+            console.error("Password change failed:", err);
+            await Auth.showModal({
+              type: "error",
+              title: "Update failed",
+              message: err.message || "Failed to change password.",
+            });
+          } finally {
+            if (btn) {
+              btn.disabled = false;
+              btn.textContent = prevText;
+            }
+          }
+        },
+
+        setupPhotoPreview() {
+          if (!this.els.changePhotoBtn || !this.els.photoInput) return;
+
+          this.els.changePhotoBtn.addEventListener("click", () => {
+            this.els.photoInput.click();
           });
-        document.addEventListener("click", () => {
-          userMenu.classList.remove("active");
-        });
 
-        // Logout handlers
-        document.getElementById("logout-btn").addEventListener("click", (e) => {
-          e.preventDefault();
-          Auth.logout();
-        });
-        document
-          .getElementById("header-logout-btn")
-          .addEventListener("click", (e) => {
-            e.preventDefault();
-            Auth.logout();
+          this.els.photoInput.addEventListener("change", () => {
+            const file = this.els.photoInput.files?.[0];
+            if (!file) return;
+
+            const url = URL.createObjectURL(file);
+            if (this.els.settingsAvatar) {
+              this.els.settingsAvatar.src = url;
+            }
           });
+        },
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        ProviderSettings.init();
       });
     </script>
   </body>
