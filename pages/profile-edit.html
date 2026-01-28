@@ -321,9 +321,10 @@
             document.getElementById("sidebar-type").textContent =
               userType === "provider" ? "Service Provider" : "Customer";
 
-            const avatarSrc = currentUser.profile_picture && currentUser.profile_picture !== '' 
-              ? currentUser.profile_picture 
-              : "../assets/images/default-avatar.jpg";
+            const avatarSrc =
+              currentUser.profile_picture && currentUser.profile_picture !== ""
+                ? currentUser.profile_picture
+                : "../assets/images/default-avatar.jpg";
             document.getElementById("sidebar-avatar").src = avatarSrc;
 
             // Populate form fields

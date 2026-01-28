@@ -60,9 +60,10 @@ const Dashboard = {
 
         // Update profile pictures (all instances)
         const userAvatars = document.querySelectorAll(".user-avatar");
-        const avatarSrc = user.profile_picture && user.profile_picture !== '' 
-          ? user.profile_picture 
-          : "../assets/images/default-avatar.jpg";
+        const avatarSrc =
+          user.profile_picture && user.profile_picture !== ""
+            ? user.profile_picture
+            : "../assets/images/default-avatar.jpg";
         userAvatars.forEach((img) => (img.src = avatarSrc));
 
         // Update welcome message

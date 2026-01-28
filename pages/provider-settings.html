@@ -602,11 +602,21 @@
                 <div class="form-grid">
                   <div class="form-group">
                     <label>First Name</label>
-                    <input type="text" class="form-control" autocomplete="given-name" value="Ahmed" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      autocomplete="given-name"
+                      value="Ahmed"
+                    />
                   </div>
                   <div class="form-group">
                     <label>Last Name</label>
-                    <input type="text" class="form-control" autocomplete="family-name" value="Provider" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      autocomplete="family-name"
+                      value="Provider"
+                    />
                   </div>
                   <div class="form-group">
                     <label>Email Address</label>
@@ -709,10 +719,11 @@ Experienced service provider...</textarea
           document.getElementById("dropdown-user-name").textContent = fullName;
           document.getElementById("dropdown-user-email").textContent =
             user.email;
-          
-          const avatarSrc = user.profile_picture && user.profile_picture !== '' 
-            ? user.profile_picture 
-            : "../assets/images/default-avatar.jpg";
+
+          const avatarSrc =
+            user.profile_picture && user.profile_picture !== ""
+              ? user.profile_picture
+              : "../assets/images/default-avatar.jpg";
           document.getElementById("provider-avatar").src = avatarSrc;
           document.getElementById("header-avatar").src = avatarSrc;
           document.getElementById("settings-avatar").src = avatarSrc;

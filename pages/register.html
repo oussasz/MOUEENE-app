@@ -337,7 +337,7 @@
             </div>
 
             <!-- Provider-only fields (hidden by default) -->
-            <div id="providerFields" style="display: none;">
+            <div id="providerFields" style="display: none">
               <div class="form-group mb-20" style="margin-bottom: 15px">
                 <label
                   for="address"
@@ -636,7 +636,9 @@
 
             // Add provider-specific fields if registering as provider
             if (accountType === "provider") {
-              userData.address = document.getElementById("address").value.trim();
+              userData.address = document
+                .getElementById("address")
+                .value.trim();
               userData.city = document.getElementById("city").value.trim();
             }
 

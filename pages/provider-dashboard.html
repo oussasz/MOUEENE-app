@@ -1027,9 +1027,10 @@
                 user.email;
 
               // Update avatar
-              const avatarSrc = user.profile_picture && user.profile_picture !== '' 
-                ? user.profile_picture 
-                : "../assets/images/default-avatar.jpg";
+              const avatarSrc =
+                user.profile_picture && user.profile_picture !== ""
+                  ? user.profile_picture
+                  : "../assets/images/default-avatar.jpg";
               document.getElementById("provider-avatar").src = avatarSrc;
               document.getElementById("header-avatar").src = avatarSrc;
 

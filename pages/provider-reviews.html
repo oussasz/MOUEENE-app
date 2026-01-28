@@ -692,10 +692,11 @@
           document.getElementById("dropdown-user-name").textContent = fullName;
           document.getElementById("dropdown-user-email").textContent =
             user.email;
-          
-          const avatarSrc = user.profile_picture && user.profile_picture !== '' 
-            ? user.profile_picture 
-            : "../assets/images/default-avatar.jpg";
+
+          const avatarSrc =
+            user.profile_picture && user.profile_picture !== ""
+              ? user.profile_picture
+              : "../assets/images/default-avatar.jpg";
           document.getElementById("provider-avatar").src = avatarSrc;
           document.getElementById("header-avatar").src = avatarSrc;
         }

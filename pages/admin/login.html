@@ -1,194 +1,219 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Login - Moueene</title>
-    <link rel="icon" type="image/png" href="../../assets/images/logo.webp">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../../assets/images/logo.webp" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #1e3a5f 0%, #0d1b2a 100%);
-            padding: 20px;
-        }
-        .admin-login-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 420px;
-            padding: 50px 40px;
-        }
-        .admin-logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .admin-logo img {
-            height: 50px;
-            margin-bottom: 15px;
-        }
-        .admin-logo h1 {
-            font-size: 1.5rem;
-            color: #1e3a5f;
-            margin: 0;
-        }
-        .admin-logo p {
-            color: #6b7280;
-            font-size: 0.9rem;
-            margin: 5px 0 0;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #374151;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-        .form-group input:focus {
-            outline: none;
-            border-color: #1e3a5f;
-            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
-        }
-        .btn-admin-login {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #1e3a5f, #0d1b2a);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .btn-admin-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(30, 58, 95, 0.3);
-        }
-        .btn-admin-login:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .error-message {
-            background: #fef2f2;
-            color: #dc2626;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-            display: none;
-        }
-        .back-link {
-            text-align: center;
-            margin-top: 25px;
-        }
-        .back-link a {
-            color: #6b7280;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        .back-link a:hover {
-            color: #1e3a5f;
-        }
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #1e3a5f 0%, #0d1b2a 100%);
+        padding: 20px;
+      }
+      .admin-login-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        max-width: 420px;
+        padding: 50px 40px;
+      }
+      .admin-logo {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .admin-logo img {
+        height: 50px;
+        margin-bottom: 15px;
+      }
+      .admin-logo h1 {
+        font-size: 1.5rem;
+        color: #1e3a5f;
+        margin: 0;
+      }
+      .admin-logo p {
+        color: #6b7280;
+        font-size: 0.9rem;
+        margin: 5px 0 0;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #374151;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s;
+      }
+      .form-group input:focus {
+        outline: none;
+        border-color: #1e3a5f;
+        box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+      }
+      .btn-admin-login {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #1e3a5f, #0d1b2a);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .btn-admin-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(30, 58, 95, 0.3);
+      }
+      .btn-admin-login:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+      }
+      .error-message {
+        background: #fef2f2;
+        color: #dc2626;
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+        display: none;
+      }
+      .back-link {
+        text-align: center;
+        margin-top: 25px;
+      }
+      .back-link a {
+        color: #6b7280;
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+      .back-link a:hover {
+        color: #1e3a5f;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="admin-login-card">
-        <div class="admin-logo">
-            <img src="../../assets/images/logo.webp" alt="Moueene">
-            <h1>Admin Portal</h1>
-            <p>Sign in to manage the platform</p>
+      <div class="admin-logo">
+        <img src="../../assets/images/logo.webp" alt="Moueene" />
+        <h1>Admin Portal</h1>
+        <p>Sign in to manage the platform</p>
+      </div>
+
+      <div class="error-message" id="errorMessage"></div>
+
+      <form id="adminLoginForm">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            autocomplete="email"
+            required
+            placeholder="admin@moueene.com"
+          />
         </div>
-
-        <div class="error-message" id="errorMessage"></div>
-
-        <form id="adminLoginForm">
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" autocomplete="email" required placeholder="admin@moueene.com">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" autocomplete="current-password" required placeholder="Enter your password">
-            </div>
-            <button type="submit" class="btn-admin-login" id="loginBtn">
-                <i class="fas fa-sign-in-alt"></i> Sign In
-            </button>
-        </form>
-
-        <div class="back-link">
-            <a href="../../index.html"><i class="fas fa-arrow-left"></i> Back to main site</a>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="current-password"
+            required
+            placeholder="Enter your password"
+          />
         </div>
+        <button type="submit" class="btn-admin-login" id="loginBtn">
+          <i class="fas fa-sign-in-alt"></i> Sign In
+        </button>
+      </form>
+
+      <div class="back-link">
+        <a href="../../index.html"
+          ><i class="fas fa-arrow-left"></i> Back to main site</a
+        >
+      </div>
     </div>
 
     <script>
-        // Check if already logged in as admin
-        const token = localStorage.getItem('admin_token');
-        if (token) {
-            window.location.href = 'dashboard.html';
-        }
+      // Check if already logged in as admin
+      const token = localStorage.getItem("admin_token");
+      if (token) {
+        window.location.href = "dashboard.html";
+      }
 
-        document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const errorDiv = document.getElementById('errorMessage');
-            const loginBtn = document.getElementById('loginBtn');
+      document
+        .getElementById("adminLoginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
 
-            loginBtn.disabled = true;
-            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
-            errorDiv.style.display = 'none';
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const errorDiv = document.getElementById("errorMessage");
+          const loginBtn = document.getElementById("loginBtn");
 
-            try {
-                const response = await fetch('/backend/api/v1/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        password: password,
-                        user_type: 'admin'
-                    })
-                });
+          loginBtn.disabled = true;
+          loginBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+          errorDiv.style.display = "none";
 
-                const result = await response.json();
+          try {
+            const response = await fetch("/backend/api/v1/auth/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email: email,
+                password: password,
+                user_type: "admin",
+              }),
+            });
 
-                if (result.success) {
-                    localStorage.setItem('admin_token', result.data.token);
-                    localStorage.setItem('admin_user', JSON.stringify(result.data));
-                    window.location.href = 'dashboard.html';
-                } else {
-                    errorDiv.textContent = result.message || 'Invalid credentials';
-                    errorDiv.style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                errorDiv.textContent = 'Connection error. Please try again.';
-                errorDiv.style.display = 'block';
-            } finally {
-                loginBtn.disabled = false;
-                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+            const result = await response.json();
+
+            if (result.success) {
+              localStorage.setItem("admin_token", result.data.token);
+              localStorage.setItem("admin_user", JSON.stringify(result.data));
+              window.location.href = "dashboard.html";
+            } else {
+              errorDiv.textContent = result.message || "Invalid credentials";
+              errorDiv.style.display = "block";
             }
+          } catch (error) {
+            console.error("Login error:", error);
+            errorDiv.textContent = "Connection error. Please try again.";
+            errorDiv.style.display = "block";
+          } finally {
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+          }
         });
     </script>
-</body>
+  </body>
 </html>
