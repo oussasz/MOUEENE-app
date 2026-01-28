@@ -8,7 +8,7 @@
  */
 
 // DEBUG MODE - Remove after testing
-if (isset($_GET['debug'])) {
+if (isset($_GET['debug']) && $_GET['debug'] === 'index') {
     header('Content-Type: application/json');
     echo json_encode([
         'REQUEST_URI' => $_SERVER['REQUEST_URI'] ?? '',
