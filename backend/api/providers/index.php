@@ -31,6 +31,23 @@ $action = $segments[0] ?? '';
 $subAction = $segments[1] ?? '';
 $method = $_SERVER['REQUEST_METHOD'];
 
+// DEBUG MODE - Remove after testing
+if (isset($_GET['debug'])) {
+    header('Content-Type: application/json');
+    echo json_encode([
+        'file' => 'providers/index.php',
+        'requestPath' => $requestPath,
+        'providersPos' => $providersPos,
+        'afterProviders' => $afterProviders,
+        'segments' => $segments,
+        'action' => $action,
+        'subAction' => $subAction,
+        'method' => $method,
+        'parts_from_parent' => $parts ?? 'not set'
+    ], JSON_PRETTY_PRINT);
+    exit;
+}
+
 // Get request body
 $input = json_decode(file_get_contents('php://input'), true) ?? [];
 
