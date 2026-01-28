@@ -51,11 +51,25 @@ $method = $_SERVER['REQUEST_METHOD'];
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = trim($path, '/');
 
-// Remove 'backend/api/' prefix if present
-$path = preg_replace('#^backend/api/#', '', $path);
+// Normalize path to start after /api/ segment if present
+if (strpos($path, 'backend/api/') === 0) {
+    $path = substr($path, strlen('backend/api/'));
+} elseif (strpos($path, 'api/') === 0) {
+    $path = substr($path, strlen('api/'));
+} else {
+    $apiPos = strpos($path, '/api/');
+    if ($apiPos !== false) {
+        $path = substr($path, $apiPos + 5);
+    }
+}
 
 // Get route parts
-$parts = explode('/', $path);
+$parts = array_values(array_filter(explode('/', $path), 'strlen'));
+
+// Remove any leading backend/api segments if still present
+while (!empty($parts) && in_array($parts[0], ['backend', 'api'])) {
+    array_shift($parts);
+}
 
 // Check if first part is a version (v1, v2, etc.) or a resource
 // If it's not a version, insert 'v1' as default

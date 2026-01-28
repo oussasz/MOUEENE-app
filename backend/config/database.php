@@ -14,9 +14,9 @@
 class Database {
     // Database credentials
     private static $host = 'localhost';
-    private static $db_name = 'moueene_db';
-    private static $username = 'root';
-    private static $password = '';
+    private static $db_name = 'ukqhmzdc_moueene';
+    private static $username = 'ukqhmzdc_admin';
+    private static $password = 'E@ITmbX,t-(OsOe4';
     private static $charset = 'utf8mb4';
     
     /**
