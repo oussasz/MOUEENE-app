@@ -34,6 +34,26 @@ $method = $_SERVER['REQUEST_METHOD'];
 // DEBUG MODE - Remove after testing
 if (isset($_GET['debug'])) {
     header('Content-Type: application/json');
+    
+    // Test database connection
+    $dbStatus = 'unknown';
+    $dbError = null;
+    try {
+        $testDb = Database::getConnection();
+        if ($testDb === null) {
+            $dbStatus = 'null returned';
+        } else {
+            $dbStatus = 'connected';
+            // Test query
+            $stmt = $testDb->query("SELECT COUNT(*) as cnt FROM providers");
+            $row = $stmt->fetch();
+            $dbStatus = 'connected - providers count: ' . ($row['cnt'] ?? 'unknown');
+        }
+    } catch (Exception $e) {
+        $dbStatus = 'error';
+        $dbError = $e->getMessage();
+    }
+    
     echo json_encode([
         'file' => 'providers/index.php',
         'requestPath' => $requestPath,
@@ -43,7 +63,9 @@ if (isset($_GET['debug'])) {
         'action' => $action,
         'subAction' => $subAction,
         'method' => $method,
-        'parts_from_parent' => $parts ?? 'not set'
+        'parts_from_parent' => $parts ?? 'not set',
+        'db_status' => $dbStatus,
+        'db_error' => $dbError
     ], JSON_PRETTY_PRINT);
     exit;
 }
@@ -133,6 +155,12 @@ switch ($action) {
 function handlePublicList() {
     try {
         $db = Database::getConnection();
+        
+        // Check if database connection failed
+        if ($db === null) {
+            Response::error('Database connection failed', 500);
+            return;
+        }
 
         $search = trim($_GET['search'] ?? '');
         $city = trim($_GET['city'] ?? '');
