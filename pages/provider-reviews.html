@@ -692,11 +692,12 @@
           document.getElementById("dropdown-user-name").textContent = fullName;
           document.getElementById("dropdown-user-email").textContent =
             user.email;
-          if (user.avatar) {
-            document.getElementById("provider-avatar").src =
-              "../" + user.avatar;
-            document.getElementById("header-avatar").src = "../" + user.avatar;
-          }
+          
+          const avatarSrc = user.profile_picture && user.profile_picture !== '' 
+            ? user.profile_picture 
+            : "../assets/images/default-avatar.jpg";
+          document.getElementById("provider-avatar").src = avatarSrc;
+          document.getElementById("header-avatar").src = avatarSrc;
         }
 
         // User menu dropdown

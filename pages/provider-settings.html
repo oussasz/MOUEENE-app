@@ -602,17 +602,18 @@
                 <div class="form-grid">
                   <div class="form-group">
                     <label>First Name</label>
-                    <input type="text" class="form-control" value="Ahmed" />
+                    <input type="text" class="form-control" autocomplete="given-name" value="Ahmed" />
                   </div>
                   <div class="form-group">
                     <label>Last Name</label>
-                    <input type="text" class="form-control" value="Provider" />
+                    <input type="text" class="form-control" autocomplete="family-name" value="Provider" />
                   </div>
                   <div class="form-group">
                     <label>Email Address</label>
                     <input
                       type="email"
                       class="form-control"
+                      autocomplete="email"
                       value="ahmed@example.com"
                       disabled
                       style="background: #f9f9f9"
@@ -623,6 +624,7 @@
                     <input
                       type="tel"
                       class="form-control"
+                      autocomplete="tel"
                       value="+213 555 123 456"
                     />
                   </div>
@@ -638,6 +640,7 @@ Experienced service provider...</textarea
                   <input
                     type="text"
                     class="form-control"
+                    autocomplete="street-address"
                     value="123 Didouche Mourad St, Algiers"
                   />
                 </div>
@@ -653,16 +656,28 @@ Experienced service provider...</textarea
               <form>
                 <div class="form-group">
                   <label>Current Password</label>
-                  <input type="password" class="form-control" />
+                  <input
+                    type="password"
+                    class="form-control"
+                    autocomplete="current-password"
+                  />
                 </div>
                 <div class="form-grid" style="margin-top: 20px">
                   <div class="form-group">
                     <label>New Password</label>
-                    <input type="password" class="form-control" />
+                    <input
+                      type="password"
+                      class="form-control"
+                      autocomplete="new-password"
+                    />
                   </div>
                   <div class="form-group">
                     <label>Confirm New Password</label>
-                    <input type="password" class="form-control" />
+                    <input
+                      type="password"
+                      class="form-control"
+                      autocomplete="new-password"
+                    />
                   </div>
                 </div>
                 <div style="margin-top: 30px">
@@ -694,13 +709,13 @@ Experienced service provider...</textarea
           document.getElementById("dropdown-user-name").textContent = fullName;
           document.getElementById("dropdown-user-email").textContent =
             user.email;
-          if (user.avatar) {
-            document.getElementById("provider-avatar").src =
-              "../" + user.avatar;
-            document.getElementById("header-avatar").src = "../" + user.avatar;
-            document.getElementById("settings-avatar").src =
-              "../" + user.avatar;
-          }
+          
+          const avatarSrc = user.profile_picture && user.profile_picture !== '' 
+            ? user.profile_picture 
+            : "../assets/images/default-avatar.jpg";
+          document.getElementById("provider-avatar").src = avatarSrc;
+          document.getElementById("header-avatar").src = avatarSrc;
+          document.getElementById("settings-avatar").src = avatarSrc;
         }
 
         // User menu dropdown

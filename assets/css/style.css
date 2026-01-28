@@ -397,12 +397,46 @@ h2 {
    CATEGORIES SECTION (Ticker - Polished)
    ============================================ */
 .categories {
-  padding: 80px 0;
-  background: var(--bg-light);
+  position: relative;
+  padding: 50px 0 120px 0;
+  background-color: var(--bg-light);
+  background-image:
+    linear-gradient(rgba(255, 69, 108, 0.39), rgba(255, 69, 108, 0.39)),
+    url("../scrollbanner.webp");
+  background-position: center;
+  background-size: cover, cover;
+  background-repeat: no-repeat, no-repeat;
+  overflow: visible;
+}
+
+/* Bottom curve for Categories - seamless wave transition */
+.categories-curve {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+.categories-curve svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 100px;
+}
+.categories-curve .shape-fill {
+  fill: #ffffff;
 }
 .categories .section-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 0;
+}
+.categories .section-header h2,
+.categories .section-header p {
+  color: #ffffff;
+  margin: 0;
 }
 
 .categories-ticker {
@@ -486,32 +520,309 @@ h2 {
 }
 
 /* ============================================
+   CATEGORIES ORBITAL LAYOUT
+   ============================================ */
+.categories-orbital {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: 520px;
+  --orbit-size: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.categories-orbital::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--orbit-size);
+  height: var(--orbit-size);
+  border-radius: 50%;
+  border: 2px solid rgba(7, 204, 174, 0.35);
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.categories-orbital .categories-image {
+  position: relative;
+  z-index: 2;
+}
+
+.orbital-item {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 120px;
+  height: 120px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  z-index: 3;
+  border: 2px solid #07ccae;
+}
+
+.orbital-item:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+}
+
+.orbital-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
+  border-radius: 50%;
+  color: white;
+  font-size: 1.3rem;
+}
+
+.orbital-item span {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Orbital Positions with floating animations */
+.orbital-1 {
+  top: 14%;
+  left: 12%;
+  animation: float1 4s ease-in-out infinite;
+}
+
+.orbital-2 {
+  top: 14%;
+  right: 12%;
+  animation: float2 5s ease-in-out infinite;
+}
+
+.orbital-3 {
+  top: 42%;
+  left: 0%;
+  animation: float3 4.5s ease-in-out infinite;
+}
+
+.orbital-4 {
+  top: 42%;
+  right: 0%;
+  animation: float4 5.5s ease-in-out infinite;
+}
+
+.orbital-5 {
+  bottom: 14%;
+  left: 10%;
+  animation: float5 4s ease-in-out infinite;
+}
+
+.orbital-6 {
+  bottom: 14%;
+  right: 10%;
+  animation: float6 5s ease-in-out infinite;
+}
+
+.orbital-7 {
+  bottom: 14%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: float7 4.5s ease-in-out infinite;
+}
+
+/* Floating Animations */
+@keyframes float1 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(10px, -15px);
+  }
+}
+
+@keyframes float2 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-10px, 12px);
+  }
+}
+
+@keyframes float3 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(15px, 10px);
+  }
+}
+
+@keyframes float4 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-12px, -10px);
+  }
+}
+
+@keyframes float5 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(8px, -12px);
+  }
+}
+
+@keyframes float6 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-10px, 8px);
+  }
+}
+
+@keyframes float7 {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -15px);
+  }
+}
+
+/* Responsive for orbital layout */
+@media (max-width: 768px) {
+  .categories-orbital {
+    min-height: 420px;
+    --orbit-size: 420px;
+  }
+
+  .orbital-item {
+    width: 100px;
+    height: 100px;
+    padding: 5px;
+  }
+
+  .orbital-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .orbital-item span {
+    font-size: 0.8rem;
+  }
+
+  .orbital-1 {
+    top: 0%;
+    left: 0%;
+  }
+  .orbital-2 {
+    top: 0%;
+    right: 0%;
+  }
+  .orbital-3 {
+    top: 28%;
+    left: -4%;
+  }
+  .orbital-4 {
+    top: 28%;
+    right: -4%;
+  }
+  .orbital-5 {
+    bottom: 12%;
+    left: 0%;
+  }
+  .orbital-6 {
+    bottom: 12%;
+    right: 0%;
+  }
+  .orbital-7 {
+    bottom: -4%;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-orbital {
+    min-height: 360px;
+    --orbit-size: 360px;
+  }
+
+  .orbital-item {
+    width: 90px;
+    height: 90px;
+    padding: 5px;
+  }
+
+  .orbital-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+
+  .orbital-item span {
+    font-size: 0.7rem;
+  }
+}
+
+/* Responsive curve adjustments */
+@media (max-width: 768px) {
+  .categories {
+    padding-bottom: 80px;
+  }
+  .categories-curve svg {
+    height: 60px;
+  }
+  .how-it-works {
+    padding-top: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories {
+    padding-bottom: 60px;
+  }
+  .categories-curve svg {
+    height: 40px;
+  }
+  .how-it-works {
+    padding-top: 20px;
+  }
+}
+
+/* ============================================
    HOW IT WORKS (Curved & Animated)
    ============================================ */
 .how-it-works {
   position: relative;
-  padding: 200px 0;
-  background: var(--bg-white);
+  padding: 40px 0 200px 0;
+  background: #ffffff;
   text-align: center;
-}
-
-/* Shape Dividers */
-.custom-shape-divider-top-1689366681 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-}
-.custom-shape-divider-top-1689366681 svg {
-  position: relative;
-  display: block;
-  width: calc(100% + 1.3px);
-  height: 150px;
-}
-.custom-shape-divider-top-1689366681 .shape-fill {
-  fill: var(--bg-light);
 }
 
 .custom-shape-divider-bottom-1689366681 {
@@ -762,11 +1073,11 @@ h2 {
   background: var(--bg-white);
 }
 .cta-content.glass-panel {
-  background: linear-gradient(
-    135deg,
-    var(--gradient-start),
-    var(--gradient-end)
-  );
+  background:
+    linear-gradient(135deg, rgba(0, 201, 167, 0.85), rgba(255, 107, 157, 0.85)),
+    url("../CTA.webp");
+  background-size: cover, cover;
+  background-position: center, center;
   padding: 80px 40px;
   border-radius: var(--radius-lg);
   text-align: center;

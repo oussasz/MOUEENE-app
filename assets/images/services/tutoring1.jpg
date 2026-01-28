@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#FFF5E5"/>
+  <circle cx="400" cy="250" r="80" fill="#FFD699" opacity="0.5"/>
+  <text x="400" y="350" font-family="Arial, sans-serif" font-size="32" fill="#FF9900" text-anchor="middle" font-weight="bold">Tutoring Service</text>
+  <text x="400" y="390" font-family="Arial, sans-serif" font-size="20" fill="#999" text-anchor="middle">Math &amp; Science tutoring</text>
+</svg>

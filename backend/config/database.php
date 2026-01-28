@@ -64,8 +64,7 @@ class Database {
     /**
      * Get database connection using singleton pattern
      * 
-     * @return PDO Database connection object
-     * @throws PDOException If connection fails
+     * @return PDO|null Database connection object or null if connection fails
      */
     public static function getConnection() {
         if (self::$connection === null) {
@@ -93,7 +92,8 @@ class Database {
             } catch (PDOException $e) {
                 // Log error (in production, log to file instead of displaying)
                 error_log("Database Connection Error: " . $e->getMessage());
-                throw new PDOException("Connection failed: " . $e->getMessage());
+                // Return null instead of throwing to allow graceful degradation
+                return null;
             }
         }
         

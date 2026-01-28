@@ -1,0 +1,938 @@
+nohup: ignoring input
+[Tue Jan 27 23:12:24 2026] PHP 8.3.6 Development Server (http://localhost:8000) started
+[Tue Jan 27 23:15:58 2026] 127.0.0.1:58912 Accepted
+[Tue Jan 27 23:15:58 2026] 127.0.0.1:58912 [200]: HEAD /pages/dashboard.html
+[Tue Jan 27 23:15:58 2026] 127.0.0.1:58912 Closing
+[Tue Jan 27 23:16:50 2026] 127.0.0.1:39734 Accepted
+[Tue Jan 27 23:16:50 2026] 127.0.0.1:39734 [200]: GET /pages/dashboard.html
+[Tue Jan 27 23:16:50 2026] 127.0.0.1:39734 Closing
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39746 Accepted
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39758 Accepted
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39772 Accepted
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39786 Accepted
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39746 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39758 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39772 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39746 Closing
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39758 Closing
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39772 Closing
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39786 [200]: GET /assets/js/dashboard.js?v=2
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39786 Closing
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39790 Accepted
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39790 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39790 Closing
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39806 Accepted
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39806 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39806 Closing
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39808 Accepted
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39808 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39808 Closing
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39814 Accepted
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39814 [200]: GET /backend/api/v1/users/bookings
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39814 Closing
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39828 Accepted
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39828 [200]: GET /backend/api/v1/users/bookings
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39828 Closing
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39832 Accepted
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39832 [200]: GET /backend/api/v1/users/bookings
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39832 Closing
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39834 Accepted
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39834 [200]: GET /backend/api/v1/users/bookings
+[Tue Jan 27 23:16:51 2026] 127.0.0.1:39834 Closing
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39844 Accepted
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39844 [200]: GET /pages/bookings.html
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39844 Closing
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39850 Accepted
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39850 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39850 Closing
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39858 Accepted
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39874 Accepted
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39888 Accepted
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39858 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39858 Closing
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39874 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39874 Closing
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39888 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:16:53 2026] 127.0.0.1:39888 Closing
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49630 Accepted
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49630 [200]: GET /pages/messages.html
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49630 Closing
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49636 Accepted
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49636 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49636 Closing
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49642 Accepted
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49642 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49642 Closing
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49658 Accepted
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49670 Accepted
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49658 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49670 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49658 Closing
+[Tue Jan 27 23:16:54 2026] 127.0.0.1:49670 Closing
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49672 Accepted
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49672 [200]: GET /pages/favorites.html
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49672 Closing
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49674 Accepted
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49674 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49674 Closing
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49678 Accepted
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49678 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49678 Closing
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49686 Accepted
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49694 Accepted
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49686 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49686 Closing
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49694 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:16:55 2026] 127.0.0.1:49694 Closing
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49706 Accepted
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49706 [200]: GET /pages/settings.html
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49706 Closing
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49716 Accepted
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49716 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49716 Closing
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49720 Accepted
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49720 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49720 Closing
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49722 Accepted
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49734 Accepted
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49722 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49722 Closing
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49734 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:16:56 2026] 127.0.0.1:49734 Closing
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49736 Accepted
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49736 [200]: POST /backend/api/v1/auth/logout
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49736 Closing
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49752 Accepted
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49752 [200]: GET /pages/login.html
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49752 Closing
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49768 Accepted
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49768 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49768 Closing
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49784 Accepted
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49784 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49784 Closing
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49788 Accepted
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49798 Accepted
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49810 Accepted
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49788 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49798 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49810 [200]: GET /assets/js/main.js
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49788 Closing
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49798 Closing
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49810 Closing
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49826 Accepted
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49826 [200]: GET /assets/bg-pattern.png
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49826 Closing
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49832 Accepted
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49832 [200]: GET /assets/pattern-white.png
+[Tue Jan 27 23:16:58 2026] 127.0.0.1:49832 Closing
+[Tue Jan 27 23:17:02 2026] 127.0.0.1:49836 Accepted
+[Tue Jan 27 23:17:03 2026] 127.0.0.1:49836 [200]: POST /backend/api/v1/auth/login
+[Tue Jan 27 23:17:03 2026] 127.0.0.1:49836 Closing
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49852 Accepted
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49852 [200]: GET /pages/provider-dashboard.html
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49852 Closing
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49860 Accepted
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49860 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49860 Closing
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49872 Accepted
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49876 Accepted
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49884 Accepted
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49890 Accepted
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49872 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49872 Closing
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49876 [200]: GET /logo.png
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49884 [200]: GET /assets/js/main.js
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49890 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49876 Closing
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49884 Closing
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49890 Closing
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49906 Accepted
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49906 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:49906 Closing
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:52012 Accepted
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:52012 [200]: GET /backend/api/v1/providers/statistics
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:52012 Closing
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:52022 Accepted
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:52022 [200]: GET /backend/api/v1/providers/bookings
+[Tue Jan 27 23:17:04 2026] 127.0.0.1:52022 Closing
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52036 Accepted
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52036 [200]: GET /pages/provider-services.html
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52036 Closing
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52046 Accepted
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52046 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52046 Closing
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52058 Accepted
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52060 Accepted
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52076 Accepted
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52080 Accepted
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52058 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52058 Closing
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52060 [200]: GET /logo.png
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52060 Closing
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52076 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52076 Closing
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52080 [200]: GET /assets/js/main.js
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52080 Closing
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52082 Accepted
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52082 [200]: GET /pages/provider-bookings.html
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52082 Closing
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52092 Accepted
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52092 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52092 Closing
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52102 Accepted
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52106 Accepted
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52102 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52102 Closing
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52106 [200]: GET /logo.png
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52106 Closing
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52110 Accepted
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52118 Accepted
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52110 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52110 Closing
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52118 [200]: GET /assets/js/main.js
+[Tue Jan 27 23:17:08 2026] 127.0.0.1:52118 Closing
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52124 Accepted
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52124 [200]: GET /pages/provider-reviews.html
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52124 Closing
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52132 Accepted
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52132 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52132 Closing
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52136 Accepted
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52146 Accepted
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52148 Accepted
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52152 Accepted
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52136 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52136 Closing
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52146 [200]: GET /logo.png
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52146 Closing
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52148 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52148 Closing
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52152 [200]: GET /assets/js/main.js
+[Tue Jan 27 23:17:09 2026] 127.0.0.1:52152 Closing
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52168 Accepted
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52168 [200]: GET /pages/provider-messages.html
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52168 Closing
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52174 Accepted
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52174 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52174 Closing
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52178 Accepted
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52178 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52178 Closing
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52190 Accepted
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52190 [200]: GET /logo.png
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52190 Closing
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52192 Accepted
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52192 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52192 Closing
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52204 Accepted
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52204 [200]: GET /assets/js/main.js
+[Tue Jan 27 23:17:10 2026] 127.0.0.1:52204 Closing
+[Tue Jan 27 23:23:38 2026] 127.0.0.1:50040 Accepted
+[Tue Jan 27 23:23:38 2026] 127.0.0.1:50040 [200]: HEAD /pages/dashboard.html
+[Tue Jan 27 23:23:38 2026] 127.0.0.1:50040 Closing
+[Tue Jan 27 23:23:54 2026] 127.0.0.1:53380 Accepted
+[Tue Jan 27 23:23:54 2026] 127.0.0.1:53380 [200]: POST /backend/api/v1/auth/logout
+[Tue Jan 27 23:23:54 2026] 127.0.0.1:53380 Closing
+[Tue Jan 27 23:23:54 2026] 127.0.0.1:46294 Accepted
+[Tue Jan 27 23:23:54 2026] 127.0.0.1:46294 [200]: GET /pages/login.html
+[Tue Jan 27 23:23:54 2026] 127.0.0.1:46294 Closing
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46308 Accepted
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46316 Accepted
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46308 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46316 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46330 Accepted
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46308 Closing
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46316 Closing
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46344 Accepted
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46346 Accepted
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46344 [200]: GET /assets/js/main.js
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46330 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46346 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46346 Closing
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46344 Closing
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46330 Closing
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46358 Accepted
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46358 [200]: GET /assets/bg-pattern.png
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46362 Accepted
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46362 [200]: GET /assets/pattern-white.png
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46358 Closing
+[Tue Jan 27 23:23:55 2026] 127.0.0.1:46362 Closing
+[Tue Jan 27 23:23:59 2026] 127.0.0.1:46364 Accepted
+[Tue Jan 27 23:23:59 2026] 127.0.0.1:46364 [200]: POST /backend/api/v1/auth/login
+[Tue Jan 27 23:23:59 2026] 127.0.0.1:46364 Closing
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46374 Accepted
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46374 [200]: GET /pages/dashboard.html
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46374 Closing
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46380 Accepted
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46380 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46380 Closing
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46388 Accepted
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46388 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46388 Closing
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46396 Accepted
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46396 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46396 Closing
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46400 Accepted
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46406 Accepted
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46408 Accepted
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46400 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46406 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46408 [200]: GET /assets/js/dashboard.js?v=20260127
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46400 Closing
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46406 Closing
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46408 Closing
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46420 Accepted
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46420 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46420 Closing
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46428 Accepted
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46428 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46428 Closing
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46444 Accepted
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46444 [200]: GET /backend/api/v1/users/bookings
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46444 Closing
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46450 Accepted
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46450 [200]: GET /backend/api/v1/users/bookings
+[Tue Jan 27 23:24:01 2026] 127.0.0.1:46450 Closing
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46464 Accepted
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46464 [200]: GET /pages/bookings.html
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46464 Closing
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46478 Accepted
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46478 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46478 Closing
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46492 Accepted
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46492 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46492 Closing
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46506 Accepted
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46508 Accepted
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46514 Accepted
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46506 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46506 Closing
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46508 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46508 Closing
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46514 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46514 Closing
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46530 Accepted
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46530 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:24:02 2026] 127.0.0.1:46530 Closing
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46536 Accepted
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46536 [200]: GET /pages/favorites.html
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46536 Closing
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46538 Accepted
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46538 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46538 Closing
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46552 Accepted
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46552 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46552 Closing
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46568 Accepted
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46568 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46568 Closing
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46582 Accepted
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46596 Accepted
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46582 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46582 Closing
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46596 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46596 Closing
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46606 Accepted
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46606 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:24:03 2026] 127.0.0.1:46606 Closing
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46608 Accepted
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46608 [200]: GET /pages/messages.html
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46608 Closing
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46622 Accepted
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46622 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46622 Closing
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46630 Accepted
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46630 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46630 Closing
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46640 Accepted
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46654 Accepted
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46640 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46640 Closing
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46654 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46654 Closing
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46668 Accepted
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46668 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46668 Closing
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46676 Accepted
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46676 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:46676 Closing
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:40990 Accepted
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:40990 [200]: GET /pages/profile-edit.html
+[Tue Jan 27 23:24:04 2026] 127.0.0.1:40990 Closing
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41006 Accepted
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41006 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41006 Closing
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41010 Accepted
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41010 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41010 Closing
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41026 Accepted
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41026 [200]: GET /logo.png
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41026 Closing
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41038 Accepted
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41042 Accepted
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41048 Accepted
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41038 [404]: GET /assets/images/testimonials/user1.jpg - No such file or directory
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41038 Closing
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41042 [200]: GET /assets/js/main.js
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41048 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41042 Closing
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41048 Closing
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41062 Accepted
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41062 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:24:05 2026] 127.0.0.1:41062 Closing
+[Tue Jan 27 23:24:44 2026] 127.0.0.1:35932 Accepted
+[Tue Jan 27 23:24:44 2026] 127.0.0.1:35932 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:44 2026] 127.0.0.1:35932 Closing
+[Tue Jan 27 23:24:44 2026] 127.0.0.1:35934 Accepted
+[Tue Jan 27 23:24:44 2026] 127.0.0.1:35934 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:44 2026] 127.0.0.1:35934 Closing
+[Tue Jan 27 23:24:44 2026] 127.0.0.1:35940 Accepted
+[Tue Jan 27 23:24:44 2026] 127.0.0.1:35940 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:24:44 2026] 127.0.0.1:35940 Closing
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44700 Accepted
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44700 [200]: GET /pages/profile-edit.html
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44700 Closing
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44704 Accepted
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44704 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44704 Closing
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44714 Accepted
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44714 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44714 Closing
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44726 Accepted
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44742 Accepted
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44726 [200]: GET /logo.png
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44742 [404]: GET /assets/images/testimonials/user1.jpg - No such file or directory
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44742 Closing
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44746 Accepted
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44726 Closing
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44752 Accepted
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44746 [200]: GET /assets/js/main.js
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44746 Closing
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44752 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44752 Closing
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44764 Accepted
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44764 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:24:45 2026] 127.0.0.1:44764 Closing
+[Tue Jan 27 23:24:47 2026] 127.0.0.1:44766 Accepted
+[Tue Jan 27 23:24:47 2026] 127.0.0.1:44766 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:47 2026] 127.0.0.1:44766 Closing
+[Tue Jan 27 23:24:47 2026] 127.0.0.1:44770 Accepted
+[Tue Jan 27 23:24:47 2026] 127.0.0.1:44770 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:47 2026] 127.0.0.1:44770 Closing
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44774 Accepted
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44774 [200]: GET /pages/dashboard.html
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44774 Closing
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44780 Accepted
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44780 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44780 Closing
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44796 Accepted
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44796 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44796 Closing
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44804 Accepted
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44804 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44804 Closing
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44814 Accepted
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44816 Accepted
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44830 Accepted
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44814 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44814 Closing
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44816 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44816 Closing
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44830 [200]: GET /assets/js/dashboard.js?v=20260127
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44830 Closing
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44838 Accepted
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44838 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44838 Closing
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44854 Accepted
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44854 [200]: GET /backend/api/v1/users/bookings
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44854 Closing
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44862 Accepted
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44862 [200]: GET /backend/api/v1/users/bookings
+[Tue Jan 27 23:24:49 2026] 127.0.0.1:44862 Closing
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44870 Accepted
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44870 [200]: GET /pages/bookings.html
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44870 Closing
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44880 Accepted
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44880 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44880 Closing
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44896 Accepted
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44904 Accepted
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44910 Accepted
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44920 Accepted
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44896 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44896 Closing
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44904 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44910 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44920 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44904 Closing
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44910 Closing
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44920 Closing
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44928 Accepted
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44928 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:24:50 2026] 127.0.0.1:44928 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44940 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44940 [200]: GET /pages/favorites.html
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44940 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44954 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44954 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44954 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44964 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44972 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44986 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44990 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44964 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44972 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44986 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44990 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44964 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44972 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44986 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44990 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44998 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44998 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:44998 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45004 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45004 [200]: GET /pages/messages.html
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45004 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45010 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45010 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45010 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45012 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45012 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45012 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45022 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45022 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45022 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45024 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45040 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45024 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45024 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45040 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45040 Closing
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45044 Accepted
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45044 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:24:51 2026] 127.0.0.1:45044 Closing
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45046 Accepted
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45046 [200]: GET /pages/settings.html
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45046 Closing
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45062 Accepted
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45062 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45062 Closing
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45070 Accepted
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45086 Accepted
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45096 Accepted
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45070 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45070 Closing
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45086 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45086 Closing
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45096 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45096 Closing
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45110 Accepted
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45110 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45110 Closing
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45122 Accepted
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45122 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:24:54 2026] 127.0.0.1:45122 Closing
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49896 Accepted
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49896 [200]: GET /pages/bookings.html
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49896 Closing
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49910 Accepted
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49910 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49910 Closing
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49912 Accepted
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49918 Accepted
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49920 Accepted
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49930 Accepted
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49912 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49912 Closing
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49918 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49918 Closing
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49920 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49920 Closing
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49930 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49930 Closing
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49934 Accepted
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49934 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:24:56 2026] 127.0.0.1:49934 Closing
+[Tue Jan 27 23:24:59 2026] 127.0.0.1:49946 Accepted
+[Tue Jan 27 23:24:59 2026] 127.0.0.1:49946 [404]: GET /pages/profile.html - No such file or directory
+[Tue Jan 27 23:24:59 2026] 127.0.0.1:49946 Closing
+[Tue Jan 27 23:24:59 2026] 127.0.0.1:49954 Accepted
+[Tue Jan 27 23:24:59 2026] 127.0.0.1:49954 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:24:59 2026] 127.0.0.1:49954 Closing
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56726 Accepted
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56726 [200]: GET /pages/profile.html
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56726 Closing
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56728 Accepted
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56728 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56728 Closing
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56730 Accepted
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56730 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56730 Closing
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56742 Accepted
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56748 Accepted
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56764 Accepted
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56742 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56748 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56764 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56742 Closing
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56748 Closing
+[Tue Jan 27 23:29:59 2026] 127.0.0.1:56764 Closing
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56766 Accepted
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56766 [200]: GET /pages/dashboard.html
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56766 Closing
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56776 Accepted
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56776 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56776 Closing
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56790 Accepted
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56790 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56790 Closing
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56794 Accepted
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56796 Accepted
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56812 Accepted
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56794 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56796 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56794 Closing
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56812 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56796 Closing
+[Tue Jan 27 23:30:03 2026] 127.0.0.1:56812 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43840 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43840 [200]: GET /pages/bookings.html
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43840 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43846 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43846 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43846 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43858 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43858 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43858 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43862 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43866 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43862 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43876 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43866 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43876 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43862 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43866 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43876 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43884 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43884 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43884 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43898 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43898 [200]: GET /pages/favorites.html
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43898 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43914 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43914 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43914 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43918 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43918 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43918 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43934 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43944 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43960 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43934 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43934 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43944 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43960 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43944 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43960 Closing
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43964 Accepted
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43964 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:30:05 2026] 127.0.0.1:43964 Closing
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:43980 Accepted
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:43980 [200]: GET /pages/messages.html
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:43980 Closing
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:43996 Accepted
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:43996 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:43996 Closing
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44010 Accepted
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44022 Accepted
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44032 Accepted
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44042 Accepted
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44010 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44010 Closing
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44022 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44022 Closing
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44032 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44032 Closing
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44042 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44042 Closing
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44048 Accepted
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44048 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:30:06 2026] 127.0.0.1:44048 Closing
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44060 Accepted
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44060 [200]: GET /pages/profile.html
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44060 Closing
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44064 Accepted
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44064 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44064 Closing
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44072 Accepted
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44072 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44072 Closing
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44088 Accepted
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44088 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44088 Closing
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44104 Accepted
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44104 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44104 Closing
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44114 Accepted
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44114 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:30:07 2026] 127.0.0.1:44114 Closing
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44118 Accepted
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44118 [200]: GET /pages/profile.html
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44118 Closing
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44122 Accepted
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44122 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44122 Closing
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44128 Accepted
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44144 Accepted
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44158 Accepted
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44168 Accepted
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44128 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44128 Closing
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44144 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44144 Closing
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44158 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44158 Closing
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44168 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:30:10 2026] 127.0.0.1:44168 Closing
+[Tue Jan 27 23:30:16 2026] 127.0.0.1:59890 Accepted
+[Tue Jan 27 23:30:16 2026] 127.0.0.1:59890 [200]: GET /pages/profile.html
+[Tue Jan 27 23:30:16 2026] 127.0.0.1:59890 Closing
+[Tue Jan 27 23:30:16 2026] 127.0.0.1:59892 Accepted
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59898 Accepted
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59910 Accepted
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59916 Accepted
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59928 Accepted
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59892 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59892 Closing
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59898 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59898 Closing
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59910 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59910 Closing
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59916 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59916 Closing
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59928 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:30:17 2026] 127.0.0.1:59928 Closing
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34486 Accepted
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34486 [200]: GET /pages/profile.html
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34486 Closing
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34488 Accepted
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34488 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34488 Closing
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34504 Accepted
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34504 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34504 Closing
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34508 Accepted
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34522 Accepted
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34508 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34522 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34508 Closing
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34522 Closing
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34526 Accepted
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34526 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34526 Closing
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34540 Accepted
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34540 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:32:48 2026] 127.0.0.1:34540 Closing
+[Tue Jan 27 23:32:49 2026] 127.0.0.1:34554 Accepted
+[Tue Jan 27 23:32:49 2026] 127.0.0.1:34560 Accepted
+[Tue Jan 27 23:32:50 2026] 127.0.0.1:34554 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:32:50 2026] 127.0.0.1:34554 Closing
+[Tue Jan 27 23:32:50 2026] 127.0.0.1:34564 Accepted
+[Tue Jan 27 23:32:50 2026] 127.0.0.1:34560 [200]: GET /backend/api/v1/users/profile
+[Tue Jan 27 23:32:50 2026] 127.0.0.1:34560 Closing
+[Tue Jan 27 23:32:50 2026] 127.0.0.1:34564 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:32:50 2026] 127.0.0.1:34564 Closing
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34576 Accepted
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34576 [200]: GET /pages/profile.html
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34576 Closing
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34586 Accepted
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34586 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34586 Closing
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34602 Accepted
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34602 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34618 Accepted
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34602 Closing
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34626 Accepted
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34630 Accepted
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34618 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34618 Closing
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34626 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34626 Closing
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34630 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:32:52 2026] 127.0.0.1:34630 Closing
+[Tue Jan 27 23:32:53 2026] 127.0.0.1:34632 Accepted
+[Tue Jan 27 23:32:53 2026] 127.0.0.1:34636 Accepted
+[Tue Jan 27 23:32:53 2026] 127.0.0.1:34632 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:32:53 2026] 127.0.0.1:34632 Closing
+[Tue Jan 27 23:32:53 2026] 127.0.0.1:34636 [200]: GET /backend/api/v1/users/profile
+[Tue Jan 27 23:32:53 2026] 127.0.0.1:34636 Closing
+[Tue Jan 27 23:34:16 2026] 127.0.0.1:36472 Accepted
+[Tue Jan 27 23:34:16 2026] 127.0.0.1:36472 [200]: GET /pages/profile.html
+[Tue Jan 27 23:34:16 2026] 127.0.0.1:36472 Closing
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36482 Accepted
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36482 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36482 Closing
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36498 Accepted
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36498 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36498 Closing
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36504 Accepted
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36504 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36504 Closing
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36520 Accepted
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36530 Accepted
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36520 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36530 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36520 Closing
+[Tue Jan 27 23:34:17 2026] 127.0.0.1:36530 Closing
+[Tue Jan 27 23:34:18 2026] 127.0.0.1:36540 Accepted
+[Tue Jan 27 23:34:19 2026] 127.0.0.1:36540 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:34:19 2026] 127.0.0.1:36540 Closing
+[Tue Jan 27 23:34:19 2026] 127.0.0.1:36552 Accepted
+[Tue Jan 27 23:34:19 2026] 127.0.0.1:36554 Accepted
+[Tue Jan 27 23:34:19 2026] 127.0.0.1:36552 [200]: GET /backend/api/v1/users/profile
+[Tue Jan 27 23:34:19 2026] 127.0.0.1:36552 Closing
+[Tue Jan 27 23:34:19 2026] 127.0.0.1:36554 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:34:19 2026] 127.0.0.1:36554 Closing
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48866 Accepted
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48866 [200]: GET /pages/profile.html
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48866 Closing
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48878 Accepted
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48884 Accepted
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48892 Accepted
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48878 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48884 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48892 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48878 Closing
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48884 Closing
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48892 Closing
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48906 Accepted
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48906 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48906 Closing
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48918 Accepted
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48918 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48918 Closing
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48932 Accepted
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48932 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48932 Closing
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48946 Accepted
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48946 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48946 Closing
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48956 Accepted
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48956 [200]: GET /backend/api/v1/users/profile
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48956 Closing
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48962 Accepted
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48962 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:34:32 2026] 127.0.0.1:48962 Closing
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:48976 Accepted
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:48976 [200]: GET /pages/settings.html
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:48976 Closing
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:50972 Accepted
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:50972 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:50972 Closing
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:50986 Accepted
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:50986 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:50986 Closing
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:51002 Accepted
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:51002 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:51002 Closing
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:51018 Accepted
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:51034 Accepted
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:51018 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:51034 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:51018 Closing
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:51034 Closing
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:51044 Accepted
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:51044 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:34:34 2026] 127.0.0.1:51044 Closing
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51054 Accepted
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51054 [200]: GET /pages/favorites.html
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51054 Closing
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51064 Accepted
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51064 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51064 Closing
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51068 Accepted
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51076 Accepted
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51088 Accepted
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51092 Accepted
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51068 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51076 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51088 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51092 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51068 Closing
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51076 Closing
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51088 Closing
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51092 Closing
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51108 Accepted
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51108 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:34:35 2026] 127.0.0.1:51108 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51118 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51118 [200]: GET /pages/profile.html
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51118 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51130 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51130 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51130 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51136 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51136 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51136 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51140 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51140 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51140 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51144 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51144 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51144 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51152 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51152 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51152 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51162 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51170 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51162 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51162 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51170 [200]: GET /backend/api/v1/users/profile
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51170 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51178 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51178 [200]: GET /pages/settings.html
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51178 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51192 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51192 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51192 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51208 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51220 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51236 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51242 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51208 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51208 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51220 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51220 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51236 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51236 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51242 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51242 Closing
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51254 Accepted
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51254 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:34:36 2026] 127.0.0.1:51254 Closing
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51264 Accepted
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51264 [200]: GET /pages/profile.html
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51264 Closing
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51266 Accepted
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51266 [404]: GET /.well-known/appspecific/com.chrome.devtools.json - No such file or directory
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51266 Closing
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51272 Accepted
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51276 Accepted
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51292 Accepted
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51306 Accepted
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51272 [200]: GET /assets/css/style.css
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51272 Closing
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51276 [200]: GET /assets/images/logo.webp
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51276 Closing
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51292 [200]: GET /assets/images/default-avatar.png
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51292 Closing
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51306 [200]: GET /assets/js/auth.js
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51306 Closing
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51312 Accepted
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51328 Accepted
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51312 [200]: GET /backend/api/v1/auth/me
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51312 Closing
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51328 [200]: GET /backend/api/v1/users/profile
+[Tue Jan 27 23:34:38 2026] 127.0.0.1:51328 Closing

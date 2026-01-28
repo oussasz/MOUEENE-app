@@ -7,7 +7,7 @@
  */
 
 const Dashboard = {
-  apiUrl: "/backend/api",
+  apiUrl: "/backend/api/v1",
 
   /**
    * Initialize dashboard
@@ -38,19 +38,37 @@ const Dashboard = {
       const user = await Auth.getCurrentUser();
 
       if (user) {
-        // Update profile display
-        document.querySelector(".dashboard-user h4").textContent =
-          `${user.first_name} ${user.last_name}`;
-
-        if (user.profile_picture) {
-          document.querySelector(".dashboard-user img").src =
-            user.profile_picture;
+        // Update username in header
+        const headerNameEl = document.getElementById("headerName");
+        if (headerNameEl) {
+          headerNameEl.textContent = user.first_name || "User";
         }
 
+        // Update sidebar and dropdown names
+        const sidebarNameEl = document.getElementById("sidebarName");
+        const dropdownNameEl = document.getElementById("dropdownName");
+        const fullName =
+          `${user.first_name || ""} ${user.last_name || ""}`.trim();
+
+        if (sidebarNameEl) sidebarNameEl.textContent = fullName;
+        if (dropdownNameEl) dropdownNameEl.textContent = fullName;
+
+        if (user.email) {
+          const emailEl = document.getElementById("dropdownEmail");
+          if (emailEl) emailEl.textContent = user.email;
+        }
+
+        // Update profile pictures (all instances)
+        const userAvatars = document.querySelectorAll(".user-avatar");
+        const avatarSrc = user.profile_picture && user.profile_picture !== '' 
+          ? user.profile_picture 
+          : "../assets/images/default-avatar.jpg";
+        userAvatars.forEach((img) => (img.src = avatarSrc));
+
         // Update welcome message
-        const welcomeMessage = document.querySelector(".dashboard-header h2");
+        const welcomeMessage = document.querySelector(".dashboard-welcome h1");
         if (welcomeMessage) {
-          welcomeMessage.textContent = `Welcome back, ${user.first_name}!`;
+          welcomeMessage.textContent = `Welcome back, ${user.first_name || "User"}!`;
         }
       }
     } catch (error) {
@@ -70,9 +88,23 @@ const Dashboard = {
         },
       });
 
-      const result = await response.json();
+      // Check if response is ok before parsing JSON
+      if (!response.ok) {
+        console.warn("Could not load bookings, using default values");
+        this.setDefaultStats();
+        return;
+      }
 
-      if (result.success) {
+      const text = await response.text();
+      if (!text) {
+        console.warn("Empty response from bookings API");
+        this.setDefaultStats();
+        return;
+      }
+
+      const result = JSON.parse(text);
+
+      if (result.success && Array.isArray(result.data)) {
         const bookings = result.data;
 
         // Calculate stats
@@ -84,15 +116,42 @@ const Dashboard = {
           (b) => b.booking_status === "completed",
         ).length;
 
-        // Update stat cards
+        // Update stat cards - new HTML structure
+        const activeBookingsEl = document.getElementById("activeBookings");
+        const completedBookingsEl =
+          document.getElementById("completedBookings");
+
+        if (activeBookingsEl) activeBookingsEl.textContent = upcoming;
+        if (completedBookingsEl) completedBookingsEl.textContent = completed;
+
+        // Legacy stat cards support
         const statCards = document.querySelectorAll(".dashboard-stat-card h3");
-        if (statCards[0]) statCards[0].textContent = totalBookings;
-        if (statCards[1]) statCards[1].textContent = upcoming;
-        if (statCards[2]) statCards[2].textContent = completed;
+        if (statCards.length >= 3) {
+          statCards[0].textContent = totalBookings;
+          statCards[1].textContent = upcoming;
+          statCards[2].textContent = completed;
+        }
+      } else {
+        this.setDefaultStats();
       }
     } catch (error) {
       console.error("Error loading stats:", error);
+      this.setDefaultStats();
     }
+  },
+
+  /**
+   * Set default stats when API fails
+   */
+  setDefaultStats() {
+    const activeBookingsEl = document.getElementById("activeBookings");
+    const completedBookingsEl = document.getElementById("completedBookings");
+
+    if (activeBookingsEl) activeBookingsEl.textContent = "0";
+    if (completedBookingsEl) completedBookingsEl.textContent = "0";
+
+    const statCards = document.querySelectorAll(".dashboard-stat-card h3");
+    statCards.forEach((card) => (card.textContent = "0"));
   },
 
   /**
@@ -107,9 +166,20 @@ const Dashboard = {
         },
       });
 
-      const result = await response.json();
+      // Check if response is ok before parsing JSON
+      if (!response.ok) {
+        console.warn("Could not load upcoming bookings");
+        return;
+      }
 
-      if (result.success) {
+      const text = await response.text();
+      if (!text) {
+        return;
+      }
+
+      const result = JSON.parse(text);
+
+      if (result.success && Array.isArray(result.data)) {
         const bookings = result.data;
         const upcomingBookings = bookings
           .filter((b) => ["pending", "confirmed"].includes(b.booking_status))
@@ -127,52 +197,61 @@ const Dashboard = {
    */
   renderBookings(bookings) {
     const container = document.querySelector(".dashboard-content");
-    const bookingsSection = container.querySelector(
-      'div[style*="margin-bottom: 30px"]',
-    );
 
-    if (!bookingsSection || bookings.length === 0) {
+    // Check if container exists
+    if (!container) {
+      console.warn("Dashboard content container not found");
       return;
     }
 
-    const bookingsList = bookingsSection.querySelector(
-      'div[style*="background: var(--bg-light)"]',
-    );
-
-    if (bookingsList) {
-      bookingsList.innerHTML = bookings
-        .map(
-          (booking) => `
-        <div style="display: flex; align-items: center; gap: 20px; padding: 20px; background: var(--bg-white); border-bottom: 1px solid var(--border-color);">
-          <img
-            src="${booking.provider_picture || "../assets/images/providers/default.jpg"}"
-            alt="${booking.provider_first_name} ${booking.provider_last_name}"
-            style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;"
-          />
-          <div style="flex: 1;">
-            <h4 style="margin: 0 0 5px 0;">${booking.service_name}</h4>
-            <p style="margin: 0; color: var(--text-light); font-size: 0.9rem;">
-              with ${booking.provider_first_name} ${booking.provider_last_name}
-            </p>
-            <p style="margin: 5px 0 0 0; color: var(--text-light); font-size: 0.85rem;">
-              <i class="far fa-calendar"></i> ${this.formatDate(booking.booking_date)} at ${booking.booking_time}
-            </p>
-          </div>
-          <div>
-            <span class="badge badge-${this.getStatusClass(booking.booking_status)}">
-              ${this.capitalizeFirst(booking.booking_status)}
-            </span>
-          </div>
-          <div>
-            <span style="font-size: 1.2rem; font-weight: 600; color: var(--primary-color);">
-              $${booking.total_price}
-            </span>
-          </div>
+    if (bookings.length === 0) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 2rem;">
+            <p style="color: var(--text-light);">No active bookings found.</p>
         </div>
-      `,
-        )
-        .join("");
+      `;
+      return;
     }
+
+    // Modern list view matching new design
+    container.innerHTML = bookings
+      .map(
+        (booking) => `
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid #f1f5f9;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <img src="${booking.provider_picture || "../assets/images/default-avatar.jpg"}" 
+                     alt="${booking.provider_first_name}" 
+                     style="width: 45px; height: 45px; border-radius: 8px; object-fit: cover;">
+                <div>
+                    <div style="font-weight: 600; color: var(--text-dark);">${booking.service_name}</div>
+                    <div style="font-size: 0.85rem; color: #64748b;">
+                        with ${booking.provider_first_name} ${booking.provider_last_name}
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <div style="font-size: 0.85rem; color: #64748b; margin-bottom: 4px;">
+                    ${this.formatDate(booking.booking_date)}
+                </div>
+                <span class="badge badge-${this.getStatusClass(booking.booking_status)}" 
+                      style="padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; background: ${this.getStatusColor(booking.booking_status)}; color: white;">
+                    ${this.capitalizeFirst(booking.booking_status)}
+                </span>
+            </div>
+        </div>
+    `,
+      )
+      .join("");
+  },
+
+  getStatusColor(status) {
+    const colors = {
+      pending: "#f59e0b",
+      confirmed: "#10b981",
+      completed: "#3b82f6",
+      cancelled: "#ef4444",
+    };
+    return colors[status] || "#94a3b8";
   },
 
   /**

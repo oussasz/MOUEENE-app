@@ -15,12 +15,23 @@ class User {
     }
     
     /**
+     * Check if database connection is available
+     * 
+     * @return bool
+     */
+    public function isConnected() {
+        return $this->db !== null;
+    }
+    
+    /**
      * Get user by ID
      * 
      * @param int $userId
      * @return array|false
      */
     public function findById($userId) {
+        if (!$this->isConnected()) return false;
+        
         $stmt = $this->db->prepare("SELECT * FROM users WHERE user_id = ?");
         $stmt->execute([$userId]);
         $user = $stmt->fetch();
@@ -213,18 +224,25 @@ class User {
      * @return array
      */
     public function getUpcomingBookings($userId, $limit = 5) {
-        $stmt = $this->db->prepare(
-            "SELECT b.*, s.service_name, p.first_name as provider_first_name, 
-                    p.last_name as provider_last_name, p.profile_picture as provider_picture
-             FROM bookings b
-             JOIN services s ON b.service_id = s.service_id
-             JOIN providers p ON b.provider_id = p.provider_id
-             WHERE b.user_id = ? AND b.booking_status IN ('pending', 'confirmed')
-             ORDER BY b.booking_date ASC, b.booking_time ASC
-             LIMIT ?"
-        );
-        $stmt->execute([$userId, $limit]);
-        return $stmt->fetchAll();
+        if (!$this->isConnected()) return [];
+        
+        try {
+            $stmt = $this->db->prepare(
+                "SELECT b.*, s.service_name, p.first_name as provider_first_name, 
+                        p.last_name as provider_last_name, p.profile_picture as provider_picture
+                 FROM bookings b
+                 JOIN services s ON b.service_id = s.service_id
+                 JOIN providers p ON b.provider_id = p.provider_id
+                 WHERE b.user_id = ? AND b.booking_status IN ('pending', 'confirmed')
+                 ORDER BY b.booking_date ASC, b.booking_time ASC
+                 LIMIT ?"
+            );
+            $stmt->execute([$userId, $limit]);
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            error_log("getUpcomingBookings error: " . $e->getMessage());
+            return [];
+        }
     }
     
     /**

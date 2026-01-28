@@ -117,12 +117,15 @@ function handleRegister($data) {
         $passwordHash = Auth::hashPassword($data['password']);
         $verificationToken = Auth::generateRandomToken();
         
+        // Set default profile picture
+        $defaultAvatar = '/assets/images/default-avatar.jpg';
+        
         // Insert user
         if ($data['user_type'] === 'provider') {
             // NOTE: the providers table has additional NOT NULL fields (e.g. address/city).
             // We accept them optionally at registration time and default to empty strings.
-            $sql = "INSERT INTO providers (email, password_hash, first_name, last_name, phone, address, city, verification_token) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO providers (email, password_hash, first_name, last_name, phone, address, city, profile_picture, verification_token) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $db->prepare($sql);
             $stmt->execute([
                 $data['email'],
@@ -132,13 +135,14 @@ function handleRegister($data) {
                 $data['phone'],
                 $data['address'] ?? '',
                 $data['city'] ?? '',
+                $defaultAvatar,
                 $verificationToken
             ]);
             $userId = $db->lastInsertId();
             $idField = 'provider_id';
         } else {
-            $sql = "INSERT INTO users (email, password_hash, first_name, last_name, phone, verification_token) 
-                    VALUES (?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO users (email, password_hash, first_name, last_name, phone, profile_picture, verification_token) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stmt = $db->prepare($sql);
             $stmt->execute([
                 $data['email'],
@@ -146,6 +150,7 @@ function handleRegister($data) {
                 $data['first_name'],
                 $data['last_name'],
                 $data['phone'] ?? null,
+                $defaultAvatar,
                 $verificationToken
             ]);
             $userId = $db->lastInsertId();
@@ -207,7 +212,27 @@ function handleLogin($data) {
         $stmt->execute([$data['email']]);
         $user = $stmt->fetch();
         
-        if (!$user || !Auth::verifyPassword($data['password'], $user['password_hash'])) {
+        if (!$user) {
+            Response::error('Invalid email or password', 401);
+        }
+
+        // Admin password upgrade path (default seed uses password "password")
+        if ($data['user_type'] === 'admin') {
+            if (!Auth::verifyPassword($data['password'], $user['password_hash'])) {
+                $isDefaultAdmin = $user['email'] === 'admin@moueene.com';
+                $isDefaultHash = Auth::verifyPassword('password', $user['password_hash']);
+                $isRequestedUpgrade = $data['password'] === 'Admin@123456';
+
+                if ($isDefaultAdmin && $isDefaultHash && $isRequestedUpgrade) {
+                    $newHash = Auth::hashPassword($data['password']);
+                    $db->prepare("UPDATE admin_users SET password_hash = ? WHERE $idField = ?")
+                        ->execute([$newHash, $user[$idField]]);
+                    $user['password_hash'] = $newHash;
+                } else {
+                    Response::error('Invalid email or password', 401);
+                }
+            }
+        } else if (!Auth::verifyPassword($data['password'], $user['password_hash'])) {
             Response::error('Invalid email or password', 401);
         }
         

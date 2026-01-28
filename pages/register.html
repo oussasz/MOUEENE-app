@@ -3,29 +3,172 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Create your Moueene account - Join as a customer or service provider"
-    />
+    <meta name="description" content="Join Moueene - Create your account" />
     <title>Sign Up - Moueene</title>
-    <link rel="icon" type="image/png" href="../logo.png" />
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <style>
+      .auth-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 120px 20px 50px;
+        background-color: var(--bg-light);
+        background-image:
+          linear-gradient(rgba(255, 69, 108, 0.05), rgba(0, 201, 167, 0.05)),
+          url("../assets/bg-pattern.png");
+        background-size: cover;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .auth-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-xl);
+        overflow: hidden;
+        width: 100%;
+        max-width: 1000px;
+        display: flex;
+        min-height: 700px;
+      }
+
+      .auth-content {
+        flex: 1.2;
+        padding: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .auth-visual {
+        flex: 0.8;
+        background: linear-gradient(
+          135deg,
+          var(--secondary-color),
+          var(--primary-color)
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .auth-visual::before {
+        content: "";
+        position: absolute;
+        width: 150%;
+        height: 150%;
+        background: url("../assets/pattern-white.png");
+        opacity: 0.1;
+        animation: rotate 60s linear infinite;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .visual-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .visual-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+      }
+
+      .user-type-selector {
+        display: flex;
+        background: var(--bg-light);
+        padding: 5px;
+        border-radius: var(--radius-md);
+        margin-bottom: 25px;
+      }
+
+      .type-btn {
+        flex: 1;
+        padding: 12px;
+        text-align: center;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 0.95rem;
+        color: var(--text-light);
+      }
+
+      .type-btn.active {
+        background: white;
+        color: var(--primary-color);
+        box-shadow: var(--shadow-sm);
+        font-weight: 600;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 15px;
+      }
+
+      .form-row .form-group {
+        flex: 1;
+      }
+
+      @media (max-width: 768px) {
+        .auth-card {
+          flex-direction: column;
+        }
+        .auth-visual {
+          display: none;
+        }
+        .auth-content {
+          padding: 30px 20px;
+        }
+        .form-row {
+          flex-direction: column;
+          gap: 0;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Header -->
-    <header class="header">
+    <header class="header glass-header" id="header">
       <div class="container">
         <nav class="navbar">
           <a href="../index.html" class="logo">
-            <img src="../logo.png" alt="Moueene Logo" />
+            <img src="../assets/images/logo.webp" alt="Moueene Logo" />
+            <span>Moueene</span>
           </a>
           <ul class="nav-menu">
             <li><a href="../index.html">Home</a></li>
@@ -36,8 +179,10 @@
             <li><a href="contact.html">Contact</a></li>
           </ul>
           <div class="nav-buttons">
-            <a href="login.html" class="btn btn-outline">Login</a>
-            <a href="register.html" class="btn btn-primary">Sign Up</a>
+            <a href="login.html" class="btn btn-glass">Login</a>
+            <a href="register.html" class="btn btn-primary pulse-btn"
+              >Sign Up</a
+            >
           </div>
           <div class="hamburger">
             <span></span>
@@ -48,377 +193,522 @@
       </div>
     </header>
 
-    <!-- Auth Section -->
-    <section class="auth-section">
-      <div class="container">
-        <div class="auth-container">
-          <div class="auth-image">
-            <h2>Join Moueene Today!</h2>
-            <p>
-              Create an account to find trusted service providers or start
-              offering your services.
-            </p>
-            <div style="margin-top: 40px">
-              <div
-                style="
-                  display: flex;
-                  align-items: center;
-                  gap: 15px;
-                  margin-bottom: 20px;
-                "
-              >
-                <i class="fas fa-check-circle" style="font-size: 1.5rem"></i>
-                <span>Free to sign up</span>
-              </div>
-              <div
-                style="
-                  display: flex;
-                  align-items: center;
-                  gap: 15px;
-                  margin-bottom: 20px;
-                "
-              >
-                <i class="fas fa-check-circle" style="font-size: 1.5rem"></i>
-                <span>Access thousands of providers</span>
-              </div>
-              <div
-                style="
-                  display: flex;
-                  align-items: center;
-                  gap: 15px;
-                  margin-bottom: 20px;
-                "
-              >
-                <i class="fas fa-check-circle" style="font-size: 1.5rem"></i>
-                <span>Secure & verified platform</span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 15px">
-                <i class="fas fa-check-circle" style="font-size: 1.5rem"></i>
-                <span>24/7 customer support</span>
-              </div>
+    <section class="auth-wrapper">
+      <div class="auth-card" data-aos="zoom-in" data-aos-duration="800">
+        <div class="auth-content">
+          <div class="text-center mb-30" style="margin-bottom: 25px">
+            <h2
+              style="
+                font-size: 2rem;
+                margin-bottom: 5px;
+                color: var(--text-dark);
+              "
+            >
+              Create Account
+            </h2>
+            <p style="color: var(--text-light)">Join our community today</p>
+          </div>
+
+          <!-- User Type Toggle -->
+          <div class="user-type-selector">
+            <div class="type-btn active" onclick="selectType('customer')">
+              <i class="fas fa-user mr-2"></i> Join as Customer
+            </div>
+            <div class="type-btn" onclick="selectType('provider')">
+              <i class="fas fa-briefcase mr-2"></i> Become a Provider
             </div>
           </div>
-          <div class="auth-form-container">
-            <div class="auth-logo">
-              <img src="../logo.png" alt="Moueene Logo" />
+
+          <form action="#" class="auth-form" id="registerForm">
+            <input
+              type="hidden"
+              id="accountType"
+              name="type"
+              value="customer"
+            />
+
+            <div class="form-row mb-20">
+              <div class="form-group mb-20" style="margin-bottom: 15px">
+                <label
+                  for="fname"
+                  style="
+                    margin-bottom: 5px;
+                    display: block;
+                    font-weight: 500;
+                    font-size: 0.9rem;
+                  "
+                  >First Name</label
+                >
+                <input
+                  type="text"
+                  id="fname"
+                  placeholder="First Name"
+                  autocomplete="given-name"
+                  required
+                  style="
+                    width: 100%;
+                    padding: 10px 15px;
+                    border: 1px solid var(--border-color);
+                    border-radius: var(--radius-sm);
+                    outline: none;
+                  "
+                />
+              </div>
+              <div class="form-group mb-20" style="margin-bottom: 15px">
+                <label
+                  for="lname"
+                  style="
+                    margin-bottom: 5px;
+                    display: block;
+                    font-weight: 500;
+                    font-size: 0.9rem;
+                  "
+                  >Last Name</label
+                >
+                <input
+                  type="text"
+                  id="lname"
+                  placeholder="Last Name"
+                  autocomplete="family-name"
+                  required
+                  style="
+                    width: 100%;
+                    padding: 10px 15px;
+                    border: 1px solid var(--border-color);
+                    border-radius: var(--radius-sm);
+                    outline: none;
+                  "
+                />
+              </div>
             </div>
-            <div class="auth-form">
-              <h2>Create Account</h2>
 
-              <!-- Account Type Selection -->
-              <div style="display: flex; gap: 15px; margin-bottom: 30px">
+            <div class="form-group mb-20" style="margin-bottom: 15px">
+              <label
+                for="email"
+                style="
+                  margin-bottom: 5px;
+                  display: block;
+                  font-weight: 500;
+                  font-size: 0.9rem;
+                "
+                >Email Address</label
+              >
+              <input
+                type="email"
+                id="email"
+                placeholder="hello@example.com"
+                autocomplete="email"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px 15px;
+                  border: 1px solid var(--border-color);
+                  border-radius: var(--radius-sm);
+                  outline: none;
+                "
+              />
+            </div>
+
+            <div class="form-group mb-20" style="margin-bottom: 15px">
+              <label
+                for="phone"
+                style="
+                  margin-bottom: 5px;
+                  display: block;
+                  font-weight: 500;
+                  font-size: 0.9rem;
+                "
+                >Phone Number</label
+              >
+              <input
+                type="tel"
+                id="phone"
+                placeholder="+1 (555) 123-4567"
+                autocomplete="tel"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px 15px;
+                  border: 1px solid var(--border-color);
+                  border-radius: var(--radius-sm);
+                  outline: none;
+                "
+              />
+            </div>
+
+            <!-- Provider-only fields (hidden by default) -->
+            <div id="providerFields" style="display: none;">
+              <div class="form-group mb-20" style="margin-bottom: 15px">
                 <label
-                  class="account-type-option"
+                  for="address"
                   style="
-                    flex: 1;
-                    padding: 15px;
-                    border: 2px solid var(--border-color);
-                    border-radius: 10px;
-                    cursor: pointer;
-                    text-align: center;
-                    transition: all 0.3s;
+                    margin-bottom: 5px;
+                    display: block;
+                    font-weight: 500;
+                    font-size: 0.9rem;
                   "
+                  >Business Address</label
                 >
-                  <input
-                    type="radio"
-                    name="account_type"
-                    value="customer"
-                    checked
-                    style="display: none"
-                  />
-                  <i
-                    class="fas fa-user"
-                    style="
-                      font-size: 1.5rem;
-                      display: block;
-                      margin-bottom: 10px;
-                      color: var(--primary-color);
-                    "
-                  ></i>
-                  <span style="font-weight: 500">Customer</span>
-                </label>
-                <label
-                  class="account-type-option"
+                <input
+                  type="text"
+                  id="address"
+                  placeholder="123 Main Street"
+                  autocomplete="street-address"
                   style="
-                    flex: 1;
-                    padding: 15px;
-                    border: 2px solid var(--border-color);
-                    border-radius: 10px;
-                    cursor: pointer;
-                    text-align: center;
-                    transition: all 0.3s;
+                    width: 100%;
+                    padding: 10px 15px;
+                    border: 1px solid var(--border-color);
+                    border-radius: var(--radius-sm);
+                    outline: none;
                   "
-                >
-                  <input
-                    type="radio"
-                    name="account_type"
-                    value="provider"
-                    style="display: none"
-                  />
-                  <i
-                    class="fas fa-user-tie"
-                    style="
-                      font-size: 1.5rem;
-                      display: block;
-                      margin-bottom: 10px;
-                      color: var(--primary-color);
-                    "
-                  ></i>
-                  <span style="font-weight: 500">Provider</span>
-                </label>
+                />
               </div>
 
-              <form action="#" method="POST" data-validate>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="first_name">First Name</label>
-                    <input
-                      type="text"
-                      id="first_name"
-                      name="first_name"
-                      required
-                      autocomplete="given-name"
-                      placeholder="John"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="last_name">Last Name</label>
-                    <input
-                      type="text"
-                      id="last_name"
-                      name="last_name"
-                      required
-                      autocomplete="family-name"
-                      placeholder="Doe"
-                    />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email Address</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    autocomplete="email"
-                    placeholder="john@example.com"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="phone">Phone Number</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    required
-                    autocomplete="tel"
-                    placeholder="+1 (555) 123-4567"
-                  />
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="password">Password</label>
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      required
-                      autocomplete="new-password"
-                      placeholder="Create a password"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="confirm_password">Confirm Password</label>
-                    <input
-                      type="password"
-                      id="confirm_password"
-                      name="confirm_password"
-                      required
-                      autocomplete="new-password"
-                      placeholder="Confirm password"
-                    />
-                  </div>
-                </div>
-                <div class="form-check" style="margin-bottom: 20px">
-                  <input type="checkbox" id="terms" name="terms" required />
-                  <label for="terms"
-                    >I agree to the
-                    <a href="terms.html" style="color: var(--primary-color)"
-                      >Terms of Service</a
-                    >
-                    and
-                    <a href="privacy.html" style="color: var(--primary-color)"
-                      >Privacy Policy</a
-                    ></label
+              <div class="form-group mb-20" style="margin-bottom: 15px">
+                <label
+                  for="city"
+                  style="
+                    margin-bottom: 5px;
+                    display: block;
+                    font-weight: 500;
+                    font-size: 0.9rem;
+                  "
+                  >City</label
+                >
+                <input
+                  type="text"
+                  id="city"
+                  placeholder="Your city"
+                  autocomplete="address-level2"
+                  style="
+                    width: 100%;
+                    padding: 10px 15px;
+                    border: 1px solid var(--border-color);
+                    border-radius: var(--radius-sm);
+                    outline: none;
+                  "
+                />
+              </div>
+            </div>
+
+            <div class="form-group mb-20" style="margin-bottom: 15px">
+              <label
+                for="password"
+                style="
+                  margin-bottom: 5px;
+                  display: block;
+                  font-weight: 500;
+                  font-size: 0.9rem;
+                "
+                >Password</label
+              >
+              <input
+                type="password"
+                id="password"
+                placeholder="Create a password"
+                autocomplete="new-password"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px 15px;
+                  border: 1px solid var(--border-color);
+                  border-radius: var(--radius-sm);
+                  outline: none;
+                "
+              />
+            </div>
+
+            <div class="form-group mb-20" style="margin-bottom: 15px">
+              <div style="display: flex; gap: 10px; align-items: flex-start">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  required
+                  style="margin-top: 4px; accent-color: var(--primary-color)"
+                />
+                <label
+                  for="terms"
+                  style="
+                    font-size: 0.85rem;
+                    color: var(--text-light);
+                    line-height: 1.4;
+                  "
+                >
+                  I agree to the
+                  <a href="terms.html" style="color: var(--primary-color)"
+                    >Terms of Service</a
                   >
-                </div>
-                <button
-                  type="submit"
-                  class="btn btn-primary btn-lg"
-                  style="width: 100%"
-                >
-                  Create Account
-                </button>
-              </form>
-
-              <div style="text-align: center; margin: 30px 0">
-                <span style="color: var(--text-light)">Or sign up with</span>
+                  and
+                  <a href="privacy.html" style="color: var(--primary-color)"
+                    >Privacy Policy</a
+                  >.
+                </label>
               </div>
+            </div>
 
-              <div style="display: flex; gap: 15px; margin-bottom: 30px">
-                <button
-                  class="btn btn-outline"
-                  style="
-                    flex: 1;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 10px;
-                  "
-                >
-                  <i class="fab fa-google"></i> Google
-                </button>
-                <button
-                  class="btn btn-outline"
-                  style="
-                    flex: 1;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 10px;
-                  "
-                >
-                  <i class="fab fa-facebook-f"></i> Facebook
-                </button>
-              </div>
+            <button
+              type="submit"
+              class="btn btn-primary btn-block w-100"
+              style="
+                width: 100%;
+                padding: 12px;
+                border: none;
+                border-radius: var(--radius-sm);
+                color: white;
+                font-weight: 600;
+                cursor: pointer;
+                margin-bottom: 20px;
+              "
+            >
+              Create Account
+            </button>
 
-              <div class="auth-links">
-                <p>Already have an account? <a href="login.html">Sign In</a></p>
-              </div>
+            <p
+              class="text-center"
+              style="color: var(--text-light); font-size: 0.9rem"
+            >
+              Already have an account?
+              <a
+                href="login.html"
+                style="color: var(--primary-color); font-weight: 600"
+                >Sign In</a
+              >
+            </p>
+          </form>
+        </div>
+
+        <div class="auth-visual">
+          <div class="visual-content">
+            <div class="visual-icon">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <div id="visual-text">
+              <h2 style="font-size: 2.2rem; margin-bottom: 15px">
+                Start Your Journey
+              </h2>
+              <p
+                style="
+                  font-size: 1.1rem;
+                  opacity: 0.9;
+                  max-width: 300px;
+                  margin: 0 auto;
+                "
+              >
+                Find the best professionals for your needs in minutes.
+              </p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer" style="margin-top: 0">
-      <div class="container">
-        <div class="footer-bottom" style="border-top: none; padding: 25px 0">
-          <p>&copy; 2026 Moueene. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-
-    <script src="../assets/js/main.js"></script>
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/main.js"></script>
     <script>
-      // Redirect if already logged in
-      if (Auth.isAuthenticated()) {
-        Auth.redirectToDashboard();
-      }
+      document.addEventListener("DOMContentLoaded", function () {
+        AOS.init({
+          duration: 800,
+          easing: "ease-out-cubic",
+          once: true,
+        });
 
-      // Account type selection styling
-      document.querySelectorAll(".account-type-option").forEach((option) => {
-        option.addEventListener("click", function () {
-          document.querySelectorAll(".account-type-option").forEach((opt) => {
-            opt.style.borderColor = "var(--border-color)";
-            opt.style.background = "transparent";
-          });
-          this.style.borderColor = "var(--primary-color)";
-          this.style.background = "rgba(0, 201, 167, 0.1)";
+        // Redirect if already authenticated
+        if (Auth.isAuthenticated()) {
+          Auth.redirectToDashboard();
+          return;
+        }
+
+        // Check URL for type
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get("type");
+        if (type === "provider") {
+          selectType("provider");
+        }
+
+        // Handle registration form submission
+        const registerForm = document.getElementById("registerForm");
+        registerForm.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const firstName = document.getElementById("fname").value.trim();
+          const lastName = document.getElementById("lname").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const phone = document.getElementById("phone").value.trim();
+          const password = document.getElementById("password").value;
+          const terms = document.getElementById("terms").checked;
+          const accountType = document.getElementById("accountType").value;
+
+          // Client-side validation
+          if (!firstName) {
+            Auth.showModal({
+              type: "error",
+              title: "Validation Error",
+              message: "Please enter your first name.",
+            });
+            return;
+          }
+
+          if (!lastName) {
+            Auth.showModal({
+              type: "error",
+              title: "Validation Error",
+              message: "Please enter your last name.",
+            });
+            return;
+          }
+
+          if (!email) {
+            Auth.showModal({
+              type: "error",
+              title: "Validation Error",
+              message: "Please enter your email address.",
+            });
+            return;
+          }
+
+          // Email format validation
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            Auth.showModal({
+              type: "error",
+              title: "Invalid Email",
+              message: "Please enter a valid email address.",
+            });
+            return;
+          }
+
+          if (!phone) {
+            Auth.showModal({
+              type: "error",
+              title: "Validation Error",
+              message: "Please enter your phone number.",
+            });
+            return;
+          }
+
+          if (!password) {
+            Auth.showModal({
+              type: "error",
+              title: "Validation Error",
+              message: "Please create a password.",
+            });
+            return;
+          }
+
+          // Password strength validation
+          if (password.length < 8) {
+            Auth.showModal({
+              type: "error",
+              title: "Weak Password",
+              message: "Password must be at least 8 characters long.",
+            });
+            return;
+          }
+
+          if (!terms) {
+            Auth.showModal({
+              type: "error",
+              title: "Terms Required",
+              message:
+                "Please accept the Terms of Service and Privacy Policy to continue.",
+            });
+            return;
+          }
+
+          // Show loading state
+          const submitBtn = registerForm.querySelector('button[type="submit"]');
+          const originalText = submitBtn.textContent;
+          submitBtn.disabled = true;
+          submitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+
+          try {
+            const userData = {
+              email: email,
+              password: password,
+              first_name: firstName,
+              last_name: lastName,
+              phone: phone,
+              user_type: accountType === "customer" ? "user" : "provider",
+            };
+
+            // Add provider-specific fields if registering as provider
+            if (accountType === "provider") {
+              userData.address = document.getElementById("address").value.trim();
+              userData.city = document.getElementById("city").value.trim();
+            }
+
+            const result = await Auth.register(userData);
+
+            if (result.success) {
+              await Auth.showModal({
+                type: "success",
+                title: "Account Created!",
+                message:
+                  result.message ||
+                  "Welcome to Moueene! Your account has been created successfully.",
+              });
+              Auth.redirectToDashboard();
+            } else {
+              let errorMessage =
+                result.message || "Registration failed. Please try again.";
+
+              // Handle specific validation errors from backend
+              if (result.errors) {
+                const errorList = Object.values(result.errors).flat();
+                if (errorList.length > 0) {
+                  errorMessage = errorList.join("\n");
+                }
+              }
+
+              await Auth.showModal({
+                type: "error",
+                title: "Registration Failed",
+                message: errorMessage,
+              });
+              // Reset button
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalText;
+            }
+          } catch (error) {
+            console.error("Registration error:", error);
+            await Auth.showModal({
+              type: "error",
+              title: "Connection Error",
+              message:
+                "Unable to connect to the server. Please check your internet connection and try again.",
+            });
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+          }
         });
       });
-      // Initialize first option as selected
-      document.querySelector(".account-type-option").click();
 
-      // Handle registration form submission
-      const registerForm = document.querySelector("form[data-validate]");
-      registerForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+      function selectType(type) {
+        document.getElementById("accountType").value = type;
+        const btns = document.querySelectorAll(".type-btn");
+        btns.forEach((btn) => btn.classList.remove("active"));
 
-        // Get form data
-        const formData = new FormData(registerForm);
-        const accountType = document.querySelector(
-          'input[name="account_type"]:checked',
-        ).value;
-        const password = formData.get("password");
-        const confirmPassword = formData.get("confirm_password");
+        const visualTitle = document.querySelector("#visual-text h2");
+        const visualDesc = document.querySelector("#visual-text p");
+        const providerFields = document.getElementById("providerFields");
 
-        // Validate passwords match
-        if (password !== confirmPassword) {
-          await Auth.showModal({
-            type: "error",
-            title: "Passwords don't match",
-            message: "Please make sure both password fields are the same.",
-          });
-          return;
-        }
-
-        // Validate password length
-        if (password.length < 8) {
-          await Auth.showModal({
-            type: "warning",
-            title: "Password too short",
-            message: "Your password must be at least 8 characters long.",
-          });
-          return;
-        }
-
-        // Validate terms checkbox
-        if (!formData.get("terms")) {
-          await Auth.showModal({
-            type: "warning",
-            title: "Please accept the terms",
-            message:
-              "You must agree to the Terms of Service and Privacy Policy to create an account.",
-          });
-          return;
-        }
-
-        // Prepare registration data
-        const userData = {
-          email: formData.get("email"),
-          password: password,
-          first_name: formData.get("first_name"),
-          last_name: formData.get("last_name"),
-          phone: formData.get("phone"),
-          user_type: accountType === "customer" ? "user" : "provider",
-        };
-
-        // Show loading state
-        const submitButton = registerForm.querySelector(
-          'button[type="submit"]',
-        );
-        const originalText = submitButton.textContent;
-        submitButton.disabled = true;
-        submitButton.innerHTML =
-          '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
-
-        // Call registration API
-        const result = await Auth.register(userData);
-
-        if (result.success) {
-          // Show success message
-          await Auth.showModal({
-            type: "success",
-            title: "Account created",
-            message: result.message || "Registration successful!",
-          });
-          // Redirect to dashboard
-          Auth.redirectToDashboard();
+        if (type === "customer") {
+          btns[0].classList.add("active");
+          visualTitle.textContent = "Start Your Journey";
+          visualDesc.textContent =
+            "Find the best professionals for your needs in minutes.";
+          providerFields.style.display = "none";
         } else {
-          // Show error message
-          await Auth.showModal({
-            type: "error",
-            title: "Registration failed",
-            message: result.message || "Registration failed. Please try again.",
-          });
-          // Reset button
-          submitButton.disabled = false;
-          submitButton.textContent = originalText;
+          btns[1].classList.add("active");
+          visualTitle.textContent = "Grow Your Business";
+          visualDesc.textContent =
+            "Join thousands of providers and reach more customers.";
+          providerFields.style.display = "block";
         }
-      });
+      }
     </script>
   </body>
 </html>

@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - Moueene</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.webp" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* --- Shared Dashboard Styles --- */
+      .dashboard-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-bottom: 1px solid #e5e7eb;
+        z-index: 100;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+      .dashboard-header .container {
+        max-width: 100%;
+        padding: 0 30px;
+      }
+      .dashboard-navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 70px;
+        gap: 30px;
+      }
+      .dashboard-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: var(--text-dark);
+      }
+      .dashboard-logo img {
+        height: 38px;
+        width: auto;
+      }
+      .dashboard-search {
+        flex: 1;
+        max-width: 500px;
+        position: relative;
+      }
+      .dashboard-search input {
+        width: 100%;
+        padding: 10px 20px 10px 45px;
+        border: 1px solid #e5e7eb;
+        border-radius: 25px;
+        background: #f9fafb;
+        outline: none;
+        transition: all 0.3s;
+        font-size: 0.95rem;
+      }
+      .dashboard-search input:focus {
+        background: white;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 201, 167, 0.1);
+      }
+      .dashboard-search i {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        font-size: 0.9rem;
+      }
+      .dashboard-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .dashboard-icon-btn {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: #f9fafb;
+        border: none;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: #6b7280;
+      }
+      .dashboard-icon-btn:hover {
+        background: #f3f4f6;
+        color: var(--primary-color);
+      }
+      .dashboard-icon-btn .badge-dot {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 8px;
+        height: 8px;
+        background: #ef4444;
+        border-radius: 50%;
+        border: 2px solid white;
+      }
+
+      .user-menu {
+        position: relative;
+      }
+      .user-menu-trigger {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 12px 6px 6px;
+        border-radius: 25px;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .user-menu-trigger:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+      }
+      .user-menu-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .user-menu-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .user-menu-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        line-height: 1.2;
+      }
+      .user-menu-role {
+        font-size: 0.75rem;
+        color: #6b7280;
+      }
+      .user-menu-chevron {
+        color: #9ca3af;
+        font-size: 0.75rem;
+      }
+      .user-dropdown {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        min-width: 220px;
+        padding: 8px 0;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s;
+        z-index: 1000;
+      }
+      .user-menu.active .user-dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      .user-dropdown-header {
+        padding: 12px 16px;
+        border-bottom: 1px solid #f3f4f6;
+        margin-bottom: 8px;
+      }
+      .user-dropdown-name {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--text-dark);
+        margin-bottom: 2px;
+      }
+      .user-dropdown-email {
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+      .user-dropdown a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 16px;
+        color: #4b5563;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .user-dropdown a:hover {
+        background: #f9fafb;
+        color: var(--primary-color);
+      }
+      .user-dropdown-divider {
+        height: 1px;
+        background: #f3f4f6;
+        margin: 8px 0;
+      }
+
+      /* Layout & Sidebar */
+      .provider-dashboard {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        padding-top: 80px;
+      }
+      .dashboard-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 30px 20px;
+      }
+      .dashboard-layout {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 30px;
+      }
+      .provider-sidebar {
+        background: white;
+        border-radius: 20px;
+        padding: 0;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        height: fit-content;
+        position: sticky;
+        top: 100px;
+      }
+      .provider-profile-card {
+        padding: 30px 20px;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .provider-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto 15px;
+        border: 4px solid var(--primary-color);
+        object-fit: cover;
+        box-shadow: 0 5px 20px rgba(0, 201, 167, 0.2);
+        background: #fff;
+      }
+      .provider-profile-card h3 {
+        margin: 0 0 5px;
+        font-size: 1.2rem;
+        color: var(--text-dark);
+      }
+      .sidebar-nav {
+        padding: 15px 0;
+      }
+      .sidebar-nav a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 25px;
+        color: var(--text-light);
+        transition: all 0.3s ease;
+        font-weight: 500;
+        border-left: 3px solid transparent;
+        text-decoration: none;
+      }
+      .sidebar-nav a:hover,
+      .sidebar-nav a.active {
+        background: rgba(0, 201, 167, 0.08);
+        color: var(--primary-color);
+        border-left-color: var(--primary-color);
+      }
+      .sidebar-nav a i {
+        width: 20px;
+        text-align: center;
+      }
+      .provider-main {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      /* Content Panels */
+      .content-panel {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      }
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      .panel-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin: 0;
+      }
+
+      @media (max-width: 992px) {
+        .dashboard-layout {
+          grid-template-columns: 1fr;
+        }
+        .provider-sidebar {
+          display: none;
+        }
+        .dashboard-search {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Header -->
+    <header class="dashboard-header">
+      <div class="container">
+        <div class="dashboard-navbar">
+          <a href="../index.html" class="dashboard-logo">
+            <img src="../assets/images/logo.webp" alt="Moueene" />
+            <span>Moueene</span>
+          </a>
+          <div class="dashboard-search">
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              placeholder="Search for services or providers..."
+            />
+          </div>
+          <div class="dashboard-actions">
+            <button class="dashboard-icon-btn">
+              <i class="far fa-bell"></i><span class="badge-dot"></span>
+            </button>
+            <button class="dashboard-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="user-menu" id="userMenu">
+              <div
+                class="user-menu-trigger"
+                onclick="
+                  document.getElementById('userMenu').classList.toggle('active')
+                "
+              >
+                <img
+                  src="../assets/images/default-avatar.jpg"
+                  alt="User"
+                  class="user-menu-avatar user-avatar"
+                />
+                <div class="user-menu-info">
+                  <span class="user-menu-name" id="headerName">User</span>
+                  <span class="user-menu-role">Customer</span>
+                </div>
+                <i class="fas fa-chevron-down user-menu-chevron"></i>
+              </div>
+              <div class="user-dropdown">
+                <div class="user-dropdown-header">
+                  <div class="user-dropdown-name" id="dropdownName">
+                    User Name
+                  </div>
+                  <div class="user-dropdown-email" id="dropdownEmail">
+                    user@example.com
+                  </div>
+                </div>
+                <a href="profile.html"
+                  ><i class="far fa-user"></i> My Profile</a
+                >
+                <a href="bookings.html"
+                  ><i class="far fa-calendar-alt"></i> My Bookings</a
+                >
+                <div class="user-dropdown-divider"></div>
+                <a href="#" class="logout" onclick="Auth.logout(); return false;"
+                  ><i class="fas fa-sign-out-alt"></i> Logout</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Layout -->
+    <section class="provider-dashboard">
+      <div class="dashboard-container">
+        <div class="dashboard-layout">
+          <!-- Sidebar -->
+          <aside class="provider-sidebar">
+            <div class="provider-profile-card">
+              <img
+                src="../assets/images/default-avatar.jpg"
+                alt="Profile"
+                class="provider-avatar user-avatar"
+              />
+              <h3 id="sidebarName">User Name</h3>
+              <span
+                class="badge badge-success"
+                style="
+                  background: #e6fffa;
+                  color: #00c9a7;
+                  padding: 4px 10px;
+                  border-radius: 20px;
+                  font-size: 0.8rem;
+                "
+                >Verified Customer</span
+              >
+            </div>
+            <nav class="sidebar-nav">
+              <a href="dashboard.html" class="">
+                <i class="fas fa-th-large"></i> Dashboard
+              </a>
+              <a href="bookings.html" class="">
+                <i class="far fa-calendar-check"></i> My Bookings
+              </a>
+              <a href="favorites.html" class="">
+                <i class="far fa-heart"></i> Saved Providers
+              </a>
+              <a href="messages.html" class="">
+                <i class="far fa-comments"></i> Messages
+              </a>
+            </nav>
+          </aside>
+
+          <!-- Main Content -->
+          <main class="provider-main">
+            <div class="content-panel" data-aos="fade-up">
+              <div class="panel-header">
+                <h2 class="panel-title">Account Settings</h2>
+              </div>
+              <p>
+                General settings including notifications and security will go
+                here. To edit your profile info, visit the Profile page.
+              </p>
+              <br />
+              <a href="profile.html" class="btn btn-primary"
+                >Edit Profile Info</a
+              >
+            </div>
+          </main>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script>
+      // Load user info for sidebar
+      document.addEventListener("DOMContentLoaded", async () => {
+        AOS.init({ duration: 800, once: true });
+
+        try {
+          const user = await Auth.getCurrentUser();
+          if (user) {
+            document
+              .querySelectorAll(".user-menu-name, #sidebarName, #dropdownName")
+              .forEach((el) => {
+                el.textContent = `${user.first_name} ${user.last_name}`;
+              });
+            if (user.email)
+              document.getElementById("dropdownEmail").textContent = user.email;
+          }
+        } catch (e) {
+          console.log(e);
+        }
+
+        // Close user dropdown when clicking outside
+        document.addEventListener("click", function (e) {
+          const userMenu = document.getElementById("userMenu");
+          if (userMenu && !userMenu.contains(e.target)) {
+            userMenu.classList.remove("active");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

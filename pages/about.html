@@ -3,29 +3,232 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="About Moueene - Your trusted platform for connecting with professional service providers"
-    />
     <title>About Us - Moueene</title>
-    <link rel="icon" type="image/png" href="../logo.png" />
-    <link rel="stylesheet" href="../assets/css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+      :root {
+        --glass-bg: rgba(255, 255, 255, 0.95);
+      }
+
+      body {
+        background: #f8f9fa;
+        padding-top: 80px;
+      }
+
+      /* Hero Section */
+      .page-hero {
+        background: linear-gradient(135deg, #00c9a7, #00d2dc);
+        padding: 100px 0 80px;
+        color: white;
+        text-align: center;
+        margin-bottom: 3rem;
+        border-radius: 0 0 50px 50px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .page-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("../assets/pattern-white.png");
+        opacity: 0.1;
+      }
+
+      /* Story Section */
+      .story-section {
+        padding: 80px 0;
+      }
+
+      .story-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .story-content h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--text);
+      }
+
+      .story-content p {
+        font-size: 1.05rem;
+        color: var(--text-light);
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+      }
+
+      .story-img-wrapper {
+        position: relative;
+      }
+
+      .story-img {
+        width: 100%;
+        border-radius: 30px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 2;
+      }
+
+      .story-blob {
+        position: absolute;
+        top: -30px;
+        right: -30px;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 201, 167, 0.1);
+        border-radius: 30px;
+        z-index: 1;
+      }
+
+      /* Value Cards */
+      .values-section {
+        padding: 80px 0;
+        background: white;
+      }
+
+      .values-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .value-card {
+        background: #f8f9fa;
+        padding: 2.5rem;
+        border-radius: 20px;
+        transition: transform 0.3s;
+      }
+
+      .value-card:hover {
+        transform: translateY(-5px);
+        background: white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      }
+
+      .value-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 16px;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      /* Stats */
+      .stats-section {
+        padding: 60px 0;
+        background: linear-gradient(135deg, var(--text) 0%, #2c3e50 100%);
+        color: white;
+        margin: 60px 0;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        font-size: 1.1rem;
+        opacity: 0.9;
+      }
+
+      /* Team */
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        margin-top: 3rem;
+        margin-bottom: 5rem;
+      }
+
+      .team-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+        text-align: center;
+        padding-bottom: 1.5rem;
+      }
+
+      .team-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .team-img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        margin-bottom: 1rem;
+      }
+
+      .team-info h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+      }
+
+      .team-role {
+        color: var(--primary);
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      @media (max-width: 992px) {
+        .story-grid {
+          grid-template-columns: 1fr;
+        }
+        .values-grid {
+          grid-template-columns: 1fr;
+        }
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 3rem;
+        }
+        .team-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Header -->
-    <header class="header">
+    <header class="header bg-white shadow-sm">
       <div class="container">
         <nav class="navbar">
           <a href="../index.html" class="logo">
-            <img src="../logo.png" alt="Moueene Logo" />
+            <img src="../logo.png" alt="Moueene" />
           </a>
           <ul class="nav-menu">
             <li><a href="../index.html">Home</a></li>
@@ -48,130 +251,69 @@
       </div>
     </header>
 
-    <!-- Page Banner -->
-    <section class="page-banner">
+    <!-- Hero Section -->
+    <section class="page-hero">
       <div class="container">
-        <h1>About Moueene</h1>
-        <p>Your trusted platform for quality home and personal services</p>
-        <div class="breadcrumb">
-          <a href="../index.html">Home</a>
-          <span>/</span>
-          <span>About Us</span>
-        </div>
+        <h1 data-aos="fade-up">About Moueene</h1>
+        <p data-aos="fade-up" data-aos-delay="100">
+          Building trust and connecting communities through quality services.
+        </p>
       </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about-section">
+    <!-- Story Section -->
+    <section class="story-section">
       <div class="container">
-        <div class="about-grid">
-          <div class="about-content">
-            <h2>Our Story</h2>
-            <p>
-              Moueene was founded with a simple mission: to make finding
-              reliable service providers as easy as possible. We believe
-              everyone deserves access to quality services for their homes and
-              families.
-            </p>
-            <p>
-              What started as a small idea in 2020 has grown into a thriving
-              community of thousands of service providers and satisfied
-              customers. Our platform bridges the gap between people who need
-              help and skilled professionals who can provide it.
-            </p>
-            <p>
-              Today, Moueene is the leading platform for home services,
-              connecting families with trusted childcare providers, tutors,
-              cleaners, gardeners, and more. We're proud to have helped over
-              25,000 customers find the perfect service provider for their
-              needs.
-            </p>
-          </div>
-          <div class="about-image">
-            <img src="../assets/images/about-story.jpg" alt="Moueene Story" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Mission & Vision -->
-    <section class="about-section" style="background: var(--bg-light)">
-      <div class="container">
-        <div class="about-grid" style="flex-direction: row-reverse">
-          <div class="about-content">
+        <div class="story-grid">
+          <div class="story-content" data-aos="fade-right">
             <h2>Our Mission</h2>
             <p>
-              To create a world where finding trustworthy service providers is
-              simple, safe, and accessible to everyone. We strive to empower
-              both customers and providers by building a platform based on
-              trust, quality, and convenience.
+              Moueene was founded with a simple yet powerful mission: to make
+              finding reliable service providers as easy and safe as possible.
+              We believe that everyone deserves access to quality help for their
+              homes and families without the hassle.
             </p>
-
-            <h3 style="margin-top: 30px">Our Vision</h3>
             <p>
-              To become the go-to platform for all home and personal service
-              needs, setting the standard for quality and reliability in the
-              service industry.
+              What started as a small idea has grown into a thriving community.
+              We bridge the gap between skilled professionals looking for work
+              and individuals seeking trusted help, creating value for everyone
+              involved.
             </p>
-
-            <div class="about-features" style="margin-top: 30px">
-              <div class="about-feature">
-                <div class="about-feature-icon">
-                  <i class="fas fa-heart"></i>
-                </div>
-                <div>
-                  <h4>Trust & Safety</h4>
-                  <p>Every provider is verified to ensure your peace of mind</p>
-                </div>
-              </div>
-              <div class="about-feature">
-                <div class="about-feature-icon">
-                  <i class="fas fa-handshake"></i>
-                </div>
-                <div>
-                  <h4>Community First</h4>
-                  <p>Building connections that benefit everyone</p>
-                </div>
-              </div>
-            </div>
           </div>
-          <div class="about-image">
-            <img src="../assets/images/about-mission.jpg" alt="Our Mission" />
+          <div class="story-img-wrapper" data-aos="fade-left">
+            <div class="story-blob"></div>
+            <img
+              src="../assets/images/about-story.jpg"
+              alt="Our Story"
+              class="story-img"
+              onerror="
+                this.src =
+                  'https://placehold.co/600x400/00c9a7/white?text=Our+Story'
+              "
+            />
           </div>
         </div>
       </div>
     </section>
 
     <!-- Stats Section -->
-    <section class="stats">
+    <section class="stats-section">
       <div class="container">
         <div class="stats-grid">
-          <div class="stat-item">
-            <div class="stat-icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <div class="stat-number">10,000+</div>
+          <div class="stat-item" data-aos="fade-up">
+            <div class="stat-number">10k+</div>
             <div class="stat-label">Happy Customers</div>
           </div>
-          <div class="stat-item">
-            <div class="stat-icon">
-              <i class="fas fa-user-tie"></i>
-            </div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
             <div class="stat-number">1,500+</div>
-            <div class="stat-label">Service Providers</div>
+            <div class="stat-label">Verified Providers</div>
           </div>
-          <div class="stat-item">
-            <div class="stat-icon">
-              <i class="fas fa-check-circle"></i>
-            </div>
-            <div class="stat-number">25,000+</div>
-            <div class="stat-label">Services Completed</div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+            <div class="stat-number">25k+</div>
+            <div class="stat-label">Jobs Completed</div>
           </div>
-          <div class="stat-item">
-            <div class="stat-icon">
-              <i class="fas fa-star"></i>
-            </div>
-            <div class="stat-number">4.8</div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+            <div class="stat-number">4.9/5</div>
             <div class="stat-label">Average Rating</div>
           </div>
         </div>
@@ -179,202 +321,123 @@
     </section>
 
     <!-- Values Section -->
-    <section class="about-section">
+    <section class="values-section">
       <div class="container">
-        <div class="section-header">
-          <h2>Our Core Values</h2>
-          <p>The principles that guide everything we do</p>
+        <div class="section-header text-center mb-5">
+          <h2 style="font-size: 2.5rem; font-weight: 700">Our Core Values</h2>
+          <p style="color: var(--text-light)">
+            The principles that guide everything we do
+          </p>
         </div>
-        <div class="providers-grid">
-          <div class="provider-card" style="text-align: center">
-            <div style="padding: 30px">
-              <div class="step-icon" style="margin: 0 auto 20px">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <h3>Trust</h3>
-              <p>
-                We build trust through transparency, verification, and
-                accountability in every interaction.
-              </p>
+        <div class="values-grid">
+          <div class="value-card" data-aos="fade-up">
+            <div class="value-icon">
+              <i class="fas fa-shield-alt"></i>
             </div>
+            <h3>Trust & Safety</h3>
+            <p style="color: var(--text-light)">
+              We prioritize the safety of our community above all else. Rigorous
+              checking is our standard.
+            </p>
           </div>
-          <div class="provider-card" style="text-align: center">
-            <div style="padding: 30px">
-              <div class="step-icon" style="margin: 0 auto 20px">
-                <i class="fas fa-gem"></i>
-              </div>
-              <h3>Quality</h3>
-              <p>
-                We set high standards for our providers and continuously work to
-                improve our platform.
-              </p>
+          <div class="value-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="value-icon">
+              <i class="fas fa-heart"></i>
             </div>
+            <h3>Community First</h3>
+            <p style="color: var(--text-light)">
+              We believe in building lasting relationships and supporting local
+              service providers.
+            </p>
           </div>
-          <div class="provider-card" style="text-align: center">
-            <div style="padding: 30px">
-              <div class="step-icon" style="margin: 0 auto 20px">
-                <i class="fas fa-users"></i>
-              </div>
-              <h3>Community</h3>
-              <p>
-                We foster a supportive community where both providers and
-                customers can thrive.
-              </p>
+          <div class="value-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="value-icon">
+              <i class="fas fa-star"></i>
             </div>
-          </div>
-          <div class="provider-card" style="text-align: center">
-            <div style="padding: 30px">
-              <div class="step-icon" style="margin: 0 auto 20px">
-                <i class="fas fa-lightbulb"></i>
-              </div>
-              <h3>Innovation</h3>
-              <p>
-                We constantly innovate to make finding and providing services
-                easier and better.
-              </p>
-            </div>
+            <h3>Quality Excellence</h3>
+            <p style="color: var(--text-light)">
+              We are committed to maintaining high standards in every service
+              provided on our platform.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Team Section -->
-    <section class="team-section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Meet Our Team</h2>
-          <p>The people behind Moueene</p>
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <h2 style="font-size: 2.5rem; font-weight: 700">Meet Our Team</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card" data-aos="fade-up">
+          <img
+            src="../assets/images/team/team1.jpg"
+            alt="Ahmed"
+            class="team-img"
+            onerror="
+              this.src = 'https://placehold.co/300x300/e0e0e0/333?text=CEO'
+            "
+          />
+          <div class="team-info">
+            <h3>Ahmed Hassan</h3>
+            <span class="team-role">CEO & Founder</span>
+          </div>
         </div>
-        <div class="team-grid">
-          <div class="team-card">
-            <div class="team-image">
-              <img src="../assets/images/team/team1.jpg" alt="Ahmed Hassan" />
-            </div>
-            <div class="team-info">
-              <h3>Ahmed Hassan</h3>
-              <span>CEO & Founder</span>
-              <div class="team-social">
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-              </div>
-            </div>
+        <div class="team-card" data-aos="fade-up" data-aos-delay="100">
+          <img
+            src="../assets/images/team/team2.jpg"
+            alt="Sara"
+            class="team-img"
+            onerror="
+              this.src = 'https://placehold.co/300x300/e0e0e0/333?text=COO'
+            "
+          />
+          <div class="team-info">
+            <h3>Sara Ahmed</h3>
+            <span class="team-role">COO</span>
           </div>
-          <div class="team-card">
-            <div class="team-image">
-              <img src="../assets/images/team/team2.jpg" alt="Sara Ahmed" />
-            </div>
-            <div class="team-info">
-              <h3>Sara Ahmed</h3>
-              <span>COO</span>
-              <div class="team-social">
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-              </div>
-            </div>
+        </div>
+        <div class="team-card" data-aos="fade-up" data-aos-delay="200">
+          <img
+            src="../assets/images/team/team3.jpg"
+            alt="Omar"
+            class="team-img"
+            onerror="
+              this.src = 'https://placehold.co/300x300/e0e0e0/333?text=CTO'
+            "
+          />
+          <div class="team-info">
+            <h3>Omar Khalil</h3>
+            <span class="team-role">CTO</span>
           </div>
-          <div class="team-card">
-            <div class="team-image">
-              <img src="../assets/images/team/team3.jpg" alt="Omar Khalil" />
-            </div>
-            <div class="team-info">
-              <h3>Omar Khalil</h3>
-              <span>CTO</span>
-              <div class="team-social">
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="team-card">
-            <div class="team-image">
-              <img src="../assets/images/team/team4.jpg" alt="Fatima Ali" />
-            </div>
-            <div class="team-info">
-              <h3>Fatima Ali</h3>
-              <span>Head of Marketing</span>
-              <div class="team-social">
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-              </div>
-            </div>
+        </div>
+        <div class="team-card" data-aos="fade-up" data-aos-delay="300">
+          <img
+            src="../assets/images/team/team4.jpg"
+            alt="Fatima"
+            class="team-img"
+            onerror="
+              this.src =
+                'https://placehold.co/300x300/e0e0e0/333?text=Marketing'
+            "
+          />
+          <div class="team-info">
+            <h3>Fatima Ali</h3>
+            <span class="team-role">Head of Marketing</span>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- CTA Section -->
-    <section class="cta">
-      <div class="container">
-        <div class="cta-content">
-          <h2>Join Our Community</h2>
-          <p>
-            Whether you need a service or want to offer one, Moueene is here for
-            you
-          </p>
-          <div class="cta-buttons">
-            <a href="register.html" class="btn btn-white">Get Started</a>
-            <a href="contact.html" class="btn btn-outline-white">Contact Us</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div class="footer-about">
-            <a href="../index.html" class="footer-logo">
-              <img src="../logo.png" alt="Moueene Logo" />
-            </a>
-            <p>
-              Moueene connects customers with trusted service providers for all
-              their home and personal needs.
-            </p>
-            <div class="social-links">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-          </div>
-          <div class="footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li><a href="../index.html">Home</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="providers.html">Find Providers</a></li>
-              <li><a href="how-it-works.html">How It Works</a></li>
-              <li><a href="about.html">About Us</a></li>
-            </ul>
-          </div>
-          <div class="footer-links">
-            <h4>Services</h4>
-            <ul>
-              <li><a href="services.html?category=childcare">Childcare</a></li>
-              <li><a href="services.html?category=tutoring">Tutoring</a></li>
-              <li><a href="services.html?category=cleaning">Cleaning</a></li>
-              <li><a href="services.html?category=gardening">Gardening</a></li>
-              <li><a href="services.html?category=petcare">Pet Care</a></li>
-            </ul>
-          </div>
-          <div class="footer-links">
-            <h4>Support</h4>
-            <ul>
-              <li><a href="contact.html">Contact Us</a></li>
-              <li><a href="faq.html">FAQ</a></li>
-              <li><a href="privacy.html">Privacy Policy</a></li>
-              <li><a href="terms.html">Terms of Service</a></li>
-              <li><a href="help.html">Help Center</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2026 Moueene. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="../assets/js/main.js"></script>
+    <script>
+      AOS.init({
+        duration: 800,
+        once: true,
+      });
+    </script>
   </body>
 </html>

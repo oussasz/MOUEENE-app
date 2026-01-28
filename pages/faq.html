@@ -3,29 +3,231 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Frequently Asked Questions about Moueene services"
-    />
-    <title>FAQ - Moueene</title>
-    <link rel="icon" type="image/png" href="../logo.png" />
-    <link rel="stylesheet" href="../assets/css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <title>Frequently Asked Questions - Moueene</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+      :root {
+        --glass-bg: rgba(255, 255, 255, 0.95);
+      }
+
+      body {
+        background: #f8f9fa;
+        padding-top: 80px;
+      }
+
+      /* Hero Section */
+      .page-hero {
+        background: linear-gradient(135deg, #00c9a7, #00d2dc);
+        padding: 100px 0 80px;
+        color: white;
+        text-align: center;
+        margin-bottom: 3rem;
+        border-radius: 0 0 50px 50px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .page-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("../assets/pattern-white.png");
+        opacity: 0.1;
+      }
+
+      /* FAQ Layout */
+      .faq-wrapper {
+        max-width: 1200px;
+        margin: 0 auto 5rem;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 4rem;
+      }
+
+      /* Sidebar Navigation */
+      .faq-nav {
+        position: sticky;
+        top: 100px;
+        background: white;
+        padding: 1.5rem;
+        border-radius: 20px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        height: fit-content;
+      }
+
+      .faq-nav h3 {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .faq-nav ul {
+        list-style: none;
+      }
+
+      .faq-nav li {
+        margin-bottom: 0.5rem;
+      }
+
+      .faq-nav a {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        color: var(--text-light);
+        text-decoration: none;
+        border-radius: 12px;
+        transition: all 0.3s;
+      }
+
+      .faq-nav a i {
+        margin-right: 12px;
+        width: 20px;
+        text-align: center;
+      }
+
+      .faq-nav a:hover,
+      .faq-nav a.active {
+        background: rgba(0, 201, 167, 0.1);
+        color: var(--primary);
+        font-weight: 500;
+      }
+
+      /* Content Area */
+      .faq-content h2 {
+        margin: 3rem 0 1.5rem;
+        font-size: 1.8rem;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .faq-content h2:first-child {
+        margin-top: 0;
+      }
+
+      .faq-card {
+        background: white;
+        border-radius: 15px;
+        margin-bottom: 1rem;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.02);
+        overflow: hidden;
+        transition: all 0.3s;
+      }
+
+      .faq-card:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .faq-header {
+        padding: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .faq-header i {
+        color: var(--primary);
+        transition: transform 0.3s;
+      }
+
+      .faq-body {
+        padding: 0 1.5rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.3s ease-out;
+        color: var(--text-light);
+        line-height: 1.6;
+      }
+
+      .faq-card.active .faq-header {
+        color: var(--primary);
+        background: rgba(0, 201, 167, 0.03);
+      }
+
+      .faq-card.active .faq-header i {
+        transform: rotate(180deg);
+      }
+
+      .faq-card.active .faq-body {
+        padding-bottom: 1.5rem;
+        max-height: 500px;
+      }
+
+      /* Search Box */
+      .search-box {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        margin: -120px auto 3rem;
+        max-width: 800px;
+        position: relative;
+        z-index: 10;
+        display: flex;
+        gap: 1rem;
+      }
+
+      .search-box input {
+        flex: 1;
+        border: 2px solid #eee;
+        padding: 15px 20px;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .search-box input:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .search-box button {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0 30px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      @media (max-width: 992px) {
+        .faq-wrapper {
+          grid-template-columns: 1fr;
+        }
+        .faq-nav {
+          display: none;
+        }
+        .search-box {
+          margin: -50px 20px 3rem;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Header -->
-    <header class="header">
+    <header class="header bg-white shadow-sm">
       <div class="container">
         <nav class="navbar">
           <a href="../index.html" class="logo">
-            <img src="../logo.png" alt="Moueene Logo" />
+            <img src="../logo.png" alt="Moueene" />
           </a>
           <ul class="nav-menu">
             <li><a href="../index.html">Home</a></li>
@@ -48,363 +250,237 @@
       </div>
     </header>
 
-    <!-- Page Banner -->
-    <section class="page-banner">
+    <!-- Page Hero -->
+    <section class="page-hero">
       <div class="container">
-        <h1>Frequently Asked Questions</h1>
-        <p>Find answers to common questions about Moueene</p>
-        <div class="breadcrumb">
-          <a href="../index.html">Home</a>
-          <span>/</span>
-          <span>FAQ</span>
-        </div>
+        <h1 data-aos="fade-up">How can we help you?</h1>
+        <p data-aos="fade-up" data-aos-delay="100">
+          Find answers to common questions about Moueene services
+        </p>
       </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="faq-section">
-      <div class="container">
-        <!-- General Questions -->
-        <div style="margin-bottom: 50px">
-          <h3 style="margin-bottom: 25px; color: var(--primary-color)">
+    <!-- Search Section -->
+    <div class="container">
+      <div class="search-box" data-aos="fade-up" data-aos-delay="200">
+        <input type="text" placeholder="Search for answers..." />
+        <button>Search</button>
+      </div>
+    </div>
+
+    <!-- FAQ Content -->
+    <div class="faq-wrapper">
+      <!-- Navigation -->
+      <aside class="faq-nav">
+        <h3>Categories</h3>
+        <ul>
+          <li>
+            <a href="#general" class="active"
+              ><i class="fas fa-info-circle"></i> General</a
+            >
+          </li>
+          <li>
+            <a href="#booking"
+              ><i class="fas fa-calendar-check"></i> Booking & Services</a
+            >
+          </li>
+          <li>
+            <a href="#payments"><i class="fas fa-credit-card"></i> Payments</a>
+          </li>
+          <li>
+            <a href="#providers"
+              ><i class="fas fa-user-tie"></i> For Providers</a
+            >
+          </li>
+          <li>
+            <a href="#trust"
+              ><i class="fas fa-shield-alt"></i> Trust & Safety</a
+            >
+          </li>
+        </ul>
+      </aside>
+
+      <!-- Questions -->
+      <div class="faq-content">
+        <!-- General -->
+        <section id="general" data-aos="fade-up">
+          <h2>
+            <i class="fas fa-info-circle" style="color: var(--primary)"></i>
             General Questions
-          </h3>
-          <div class="faq-container">
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>What is Moueene?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  Moueene is a trusted platform that connects customers with
-                  professional service providers. We offer a wide range of
-                  services including childcare, tutoring, cleaning, gardening,
-                  pet care, and elderly care. Our platform makes it easy to
-                  find, book, and pay for quality services.
-                </p>
-              </div>
+          </h2>
+
+          <div class="faq-card active">
+            <div class="faq-header">
+              What is Moueene?
+              <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>How do I create an account?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  Creating an account is easy! Click on the "Sign Up" button,
-                  choose whether you want to register as a customer or service
-                  provider, fill in your details, and verify your email address.
-                  You can also sign up using your Google or Facebook account for
-                  faster registration.
-                </p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>Is Moueene free to use?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  Yes! Creating an account and browsing services is completely
-                  free for customers. You only pay for the services you book.
-                  Service providers pay a small commission fee on completed
-                  bookings.
-                </p>
-              </div>
+            <div class="faq-body">
+              Moueene is a trusted platform that connects customers with
+              professional service providers. We offer a wide range of services
+              including childcare, tutoring, cleaning, gardening, pet care, and
+              elderly care. Our platform makes it easy to find, book, and pay
+              for quality services.
             </div>
           </div>
-        </div>
 
-        <!-- Booking Questions -->
-        <div style="margin-bottom: 50px">
-          <h3 style="margin-bottom: 25px; color: var(--primary-color)">
+          <div class="faq-card">
+            <div class="faq-header">
+              Is Moueene free to use?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-body">
+              Yes! Creating an account and browsing services is completely free
+              for customers. You only pay for the services you book. Service
+              providers pay a small commission fee on completed bookings.
+            </div>
+          </div>
+
+          <div class="faq-card">
+            <div class="faq-header">
+              How do I create an account?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-body">
+              Creating an account is easy! Click on the "Sign Up" button, choose
+              whether you want to register as a customer or service provider,
+              fill in your details, and verify your email address. You can also
+              sign up using your Google or Facebook account.
+            </div>
+          </div>
+        </section>
+
+        <!-- Booking -->
+        <section id="booking" data-aos="fade-up">
+          <h2>
+            <i class="fas fa-calendar-check" style="color: var(--primary)"></i>
             Booking & Services
-          </h3>
-          <div class="faq-container">
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>How do I book a service?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  To book a service: 1) Browse or search for the service you
-                  need, 2) Select a provider and review their profile, 3) Choose
-                  your preferred date and time, 4) Confirm your booking and
-                  complete the payment. You'll receive a confirmation email with
-                  all the details.
-                </p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>Can I cancel or reschedule a booking?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  Yes, you can cancel or reschedule through your dashboard.
-                  Cancellation policies vary by provider. Generally,
-                  cancellations made 24+ hours in advance receive a full refund.
-                  Cancellations within 24 hours may be subject to a cancellation
-                  fee. Always check the provider's specific policy before
-                  booking.
-                </p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>What if the provider doesn't show up?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  If a provider fails to show up for a confirmed booking, please
-                  contact our support team immediately. We'll help you find an
-                  alternative provider and issue a full refund. We take
-                  reliability seriously and repeated no-shows may result in the
-                  provider being removed from our platform.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+          </h2>
 
-        <!-- Payment Questions -->
-        <div style="margin-bottom: 50px">
-          <h3 style="margin-bottom: 25px; color: var(--primary-color)">
-            Payment & Security
-          </h3>
-          <div class="faq-container">
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>How does payment work?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  All payments are processed securely through our platform. We
-                  accept credit cards, debit cards, and PayPal. Payment is held
-                  securely until the service is completed, then released to the
-                  provider. This protects both customers and providers.
-                </p>
-              </div>
+          <div class="faq-card">
+            <div class="faq-header">
+              How do I book a service?
+              <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>Is my payment information secure?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  Absolutely! We use industry-standard SSL encryption and never
-                  store your full credit card details. Our payment processing is
-                  handled by trusted third-party providers (Stripe/PayPal) that
-                  are PCI DSS compliant. Your financial information is always
-                  protected.
-                </p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>How do I get a refund?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  Refunds are processed according to our cancellation policy and
-                  the specific provider's terms. If you're eligible for a
-                  refund, it will be processed within 5-7 business days to your
-                  original payment method. For disputes, contact our support
-                  team.
-                </p>
-              </div>
+            <div class="faq-body">
+              To book a service: 1) Browse or search for the service you need,
+              2) Select a provider and review their profile, 3) Choose your
+              preferred date and time, 4) Confirm your booking and complete the
+              payment. You'll receive a confirmation email with all the details.
             </div>
           </div>
-        </div>
 
-        <!-- Provider Questions -->
-        <div style="margin-bottom: 50px">
-          <h3 style="margin-bottom: 25px; color: var(--primary-color)">
-            For Service Providers
-          </h3>
-          <div class="faq-container">
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>How do I become a service provider?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  To become a provider: 1) Sign up and select "Provider" account
-                  type, 2) Complete your profile with your services, experience,
-                  and rates, 3) Submit required documents for verification, 4)
-                  Once approved, you can start receiving booking requests. The
-                  process typically takes 2-3 business days.
-                </p>
-              </div>
+          <div class="faq-card">
+            <div class="faq-header">
+              Can I cancel or reschedule a booking?
+              <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>What fees does Moueene charge providers?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  Moueene charges a small service fee of 15% on completed
-                  bookings. This covers payment processing, platform
-                  maintenance, customer support, and marketing. There are no
-                  monthly fees or hidden charges - you only pay when you earn.
-                </p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>How do I get paid?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  Payments are released to your account within 24-48 hours after
-                  a service is completed and confirmed by the customer. You can
-                  withdraw funds to your bank account or PayPal. We process
-                  payouts weekly on Mondays.
-                </p>
-              </div>
+            <div class="faq-body">
+              Yes, you can cancel or reschedule through your dashboard.
+              Cancellation policies vary by provider. Generally, cancellations
+              made 24+ hours in advance receive a full refund. Cancellations
+              within 24 hours may be subject to a cancellation fee.
             </div>
           </div>
-        </div>
+        </section>
 
-        <!-- Trust & Safety -->
-        <div>
-          <h3 style="margin-bottom: 25px; color: var(--primary-color)">
-            Trust & Safety
-          </h3>
-          <div class="faq-container">
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>Are service providers verified?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  Yes! All service providers undergo a verification process that
-                  includes identity verification, background checks, and
-                  credential verification (where applicable). Look for the
-                  "Verified" badge on provider profiles to identify fully
-                  verified providers.
-                </p>
-              </div>
+        <!-- Payments -->
+        <section id="payments" data-aos="fade-up">
+          <h2>
+            <i class="fas fa-credit-card" style="color: var(--primary)"></i>
+            Payments & Security
+          </h2>
+
+          <div class="faq-card">
+            <div class="faq-header">
+              How does payment work?
+              <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>What if I have a problem with a service?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  If you experience any issues, first try to resolve it directly
-                  with the provider through our messaging system. If that
-                  doesn't work, contact our customer support team. We have a
-                  dispute resolution process and will work to find a fair
-                  solution for all parties.
-                </p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                <h4>How can I report a problem or safety concern?</h4>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <p>
-                  You can report issues through your booking page, the
-                  provider's profile, or by contacting our support team
-                  directly. For urgent safety concerns, please call our
-                  emergency hotline. We take all reports seriously and
-                  investigate thoroughly.
-                </p>
-              </div>
+            <div class="faq-body">
+              All payments are processed securely through our platform. We
+              accept credit cards, debit cards, and PayPal. Payment is held
+              securely until the service is completed, then released to the
+              provider. This protects both customers and providers.
             </div>
           </div>
-        </div>
+
+          <div class="faq-card">
+            <div class="faq-header">
+              Is my payment information secure?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-body">
+              Absolutely! We use industry-standard SSL encryption and never
+              store your full credit card details. Our payment processing is
+              handled by trusted third-party providers that are PCI DSS
+              compliant.
+            </div>
+          </div>
+        </section>
+
+        <!-- Providers -->
+        <section id="providers" data-aos="fade-up">
+          <h2>
+            <i class="fas fa-user-tie" style="color: var(--primary)"></i> For
+            Service Providers
+          </h2>
+
+          <div class="faq-card">
+            <div class="faq-header">
+              How do I become a service provider?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-body">
+              To become a provider: 1) Sign up and select "Provider" account
+              type, 2) Complete your profile with your services, experience, and
+              rates, 3) Submit required documents for verification, 4) Once
+              approved, you can start receiving booking requests.
+            </div>
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
 
-    <!-- Still Have Questions -->
-    <section class="cta">
-      <div class="container">
-        <div class="cta-content">
-          <h2>Still Have Questions?</h2>
-          <p>
-            Our support team is here to help you with any questions or concerns
-          </p>
-          <div class="cta-buttons">
-            <a href="contact.html" class="btn btn-white">Contact Us</a>
-            <a href="help.html" class="btn btn-outline-white">Help Center</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div class="footer-about">
-            <a href="../index.html" class="footer-logo">
-              <img src="../logo.png" alt="Moueene Logo" />
-            </a>
-            <p>
-              Moueene connects customers with trusted service providers for all
-              their home and personal needs.
-            </p>
-            <div class="social-links">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-          </div>
-          <div class="footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li><a href="../index.html">Home</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="providers.html">Find Providers</a></li>
-              <li><a href="how-it-works.html">How It Works</a></li>
-              <li><a href="about.html">About Us</a></li>
-            </ul>
-          </div>
-          <div class="footer-links">
-            <h4>Services</h4>
-            <ul>
-              <li><a href="services.html?category=childcare">Childcare</a></li>
-              <li><a href="services.html?category=tutoring">Tutoring</a></li>
-              <li><a href="services.html?category=cleaning">Cleaning</a></li>
-              <li><a href="services.html?category=gardening">Gardening</a></li>
-              <li><a href="services.html?category=petcare">Pet Care</a></li>
-            </ul>
-          </div>
-          <div class="footer-links">
-            <h4>Support</h4>
-            <ul>
-              <li><a href="contact.html">Contact Us</a></li>
-              <li><a href="faq.html">FAQ</a></li>
-              <li><a href="privacy.html">Privacy Policy</a></li>
-              <li><a href="terms.html">Terms of Service</a></li>
-              <li><a href="help.html">Help Center</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2026 Moueene. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="../assets/js/main.js"></script>
+    <script>
+      AOS.init({
+        duration: 800,
+        once: true,
+      });
+
+      // FAQ Interaction
+      const faqHeaders = document.querySelectorAll(".faq-header");
+
+      faqHeaders.forEach((header) => {
+        header.addEventListener("click", () => {
+          const card = header.parentElement;
+
+          // Toggle current item
+          card.classList.toggle("active");
+        });
+      });
+
+      // Sticky Nav Active State
+      const sections = document.querySelectorAll("section[id]");
+      const navLinks = document.querySelectorAll(".faq-nav a");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          if (scrollY >= sectionTop - 200) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href").includes(current)) {
+            link.classList.add("active");
+          }
+        });
+      });
+    </script>
   </body>
 </html>

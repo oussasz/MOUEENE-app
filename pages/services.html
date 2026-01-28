@@ -3,29 +3,306 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Browse all services available on Moueene - Find the perfect service provider for your needs"
-    />
     <title>Services - Moueene</title>
-    <link rel="icon" type="image/png" href="../logo.png" />
-    <link rel="stylesheet" href="../assets/css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+      :root {
+        --glass-bg: rgba(255, 255, 255, 0.95);
+      }
+
+      body {
+        background: #f8f9fa;
+        padding-top: 80px;
+      }
+
+      /* Hero Section */
+      .page-hero {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        padding: 80px 0;
+        color: white;
+        text-align: center;
+        margin-bottom: 3rem;
+        border-radius: 0 0 50px 50px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .page-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("../assets/pattern-white.png");
+        opacity: 0.1;
+      }
+
+      .page-hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+      .page-hero p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Layout */
+      .services-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 2rem;
+      }
+
+      /* Filters Sidebar */
+      .filters-sidebar {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Slight shadow for depth */
+        height: fit-content;
+        position: sticky;
+        top: 100px;
+      }
+
+      .filter-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .filter-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .filter-option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        color: var(--text-light);
+        transition: color 0.3s;
+      }
+
+      .filter-option:hover {
+        color: var(--primary);
+      }
+
+      .filter-checkbox {
+        margin-right: 0.8rem;
+        accent-color: var(--primary);
+        width: 18px;
+        height: 18px;
+      }
+
+      .price-range-inputs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 1rem;
+      }
+
+      .price-input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        outline: none;
+      }
+
+      .price-input:focus {
+        border-color: var(--primary);
+      }
+
+      /* Services Grid */
+      .services-grid-layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      .service-card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .service-img-wrapper {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+      }
+
+      .service-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .service-card:hover .service-img {
+        transform: scale(1.1);
+      }
+
+      .category-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--primary);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .service-body {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .service-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+      }
+
+      .service-description {
+        font-size: 0.9rem;
+        color: var(--text-light);
+        margin-bottom: 1rem;
+        line-height: 1.5;
+        display: -webkit-box;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .provider-info {
+        display: flex;
+        align-items: center;
+        margin-top: auto;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .provider-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 0.8rem;
+      }
+
+      .provider-details h4 {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .service-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0.5rem;
+      }
+
+      .rating {
+        color: #ffc107;
+        font-size: 0.85rem;
+      }
+
+      .price {
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      /* Mobile Filter Toggle */
+      .filter-toggle {
+        display: none;
+        width: 100%;
+        padding: 1rem;
+        background: white;
+        border: none;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        color: var(--text);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      @media (max-width: 992px) {
+        .services-container {
+          grid-template-columns: 1fr;
+        }
+
+        .filters-sidebar {
+          display: none;
+        }
+
+        .filters-sidebar.active {
+          display: block;
+          animation: slideDown 0.3s ease;
+        }
+
+        .filter-toggle {
+          display: block;
+        }
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Header -->
-    <header class="header">
+    <header class="header bg-white shadow-sm">
       <div class="container">
         <nav class="navbar">
           <a href="../index.html" class="logo">
-            <img src="../logo.png" alt="Moueene Logo" />
+            <img src="../logo.png" alt="Moueene" />
           </a>
           <ul class="nav-menu">
             <li><a href="../index.html">Home</a></li>
@@ -48,451 +325,327 @@
       </div>
     </header>
 
-    <!-- Page Banner -->
-    <section class="page-banner">
+    <!-- Hero Section -->
+    <section class="page-hero">
       <div class="container">
-        <h1>Our Services</h1>
-        <p>Find the perfect service provider for all your needs</p>
-        <div class="breadcrumb">
-          <a href="../index.html">Home</a>
-          <span>/</span>
-          <span>Services</span>
-        </div>
+        <h1 data-aos="fade-up">Find the Perfect Service</h1>
+        <p data-aos="fade-up" data-aos-delay="100">
+          From home cleaning to tutoring, connect with trusted professionals in
+          your area.
+        </p>
       </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="services-section">
-      <div class="container">
-        <!-- Filters -->
-        <div class="services-filters">
-          <div class="filter-group">
-            <label for="category-filter">Category:</label>
-            <select id="category-filter">
-              <option value="">All Categories</option>
-              <option value="childcare">Childcare</option>
-              <option value="tutoring">Tutoring</option>
-              <option value="cleaning">Cleaning</option>
-              <option value="gardening">Gardening</option>
-              <option value="petcare">Pet Care</option>
-              <option value="elderly">Elderly Care</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label for="price-filter">Price Range:</label>
-            <select id="price-filter">
-              <option value="">Any Price</option>
-              <option value="0-25">$0 - $25/hr</option>
-              <option value="25-50">$25 - $50/hr</option>
-              <option value="50-100">$50 - $100/hr</option>
-              <option value="100+">$100+/hr</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label for="rating-filter">Rating:</label>
-            <select id="rating-filter">
-              <option value="">Any Rating</option>
-              <option value="4.5">4.5+ Stars</option>
-              <option value="4">4+ Stars</option>
-              <option value="3">3+ Stars</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label for="sort-filter">Sort By:</label>
-            <select id="sort-filter">
-              <option value="recommended">Recommended</option>
-              <option value="rating">Highest Rated</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="newest">Newest</option>
-            </select>
-          </div>
-          <button class="btn btn-primary" onclick="filterServices()">
-            Apply Filters
-          </button>
+    <!-- Main Content -->
+    <div class="services-container">
+      <!-- Filters Sidebar -->
+      <button class="filter-toggle">
+        <i class="fas fa-filter"></i> Show Filters
+      </button>
+
+      <aside class="filters-sidebar">
+        <div class="filter-group">
+          <div class="filter-title">Categories</div>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" checked /> All
+            Categories
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" /> Home Cleaning
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" /> Childcare
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" /> Tutoring
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" /> Gardening
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" /> Pet Care
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" /> Elderly Care
+          </label>
         </div>
 
-        <!-- Services Grid -->
-        <div class="services-grid">
+        <div class="filter-group">
+          <div class="filter-title">Price Range ($/hr)</div>
+          <div class="price-range-inputs">
+            <input
+              type="number"
+              class="price-input"
+              placeholder="Min"
+              min="0"
+            />
+            <input
+              type="number"
+              class="price-input"
+              placeholder="Max"
+              min="0"
+            />
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-title">Rating</div>
+          <label class="filter-option">
+            <input type="radio" name="rating" class="filter-checkbox" /> 4.5 &
+            up
+          </label>
+          <label class="filter-option">
+            <input type="radio" name="rating" class="filter-checkbox" /> 4.0 &
+            up
+          </label>
+          <label class="filter-option">
+            <input type="radio" name="rating" class="filter-checkbox" /> 3.0 &
+            up
+          </label>
+        </div>
+
+        <button class="btn btn-primary w-100">Apply Filters</button>
+      </aside>
+
+      <!-- Services List -->
+      <div class="services-content">
+        <div class="services-grid-layout">
           <!-- Service Card 1 -->
-          <div class="service-card">
-            <div class="service-image">
+          <div class="service-card" data-aos="fade-up">
+            <div class="service-img-wrapper">
+              <span class="category-badge">Childcare</span>
               <img
                 src="../assets/images/services/childcare1.jpg"
-                alt="Childcare Service"
+                alt="Service"
+                class="service-img"
+                onerror="this.src = '../assets/images/categories/category1.jpg'"
               />
             </div>
-            <div class="service-content">
-              <span class="service-category">Childcare</span>
-              <h3>Professional Babysitting</h3>
-              <p>
-                Experienced childcare provider offering personalized attention
-                for your children.
+            <div class="service-body">
+              <h3 class="service-title">Professional Babysitting</h3>
+              <p class="service-description">
+                Experienced childcare provider available for weekends and
+                evenings. CPR certified.
               </p>
-              <div class="service-provider">
+              <div class="provider-info">
                 <img
                   src="../assets/images/providers/provider1.jpg"
-                  alt="Sarah J."
+                  alt="Provider"
+                  class="provider-avatar"
+                  onerror="this.src = '../assets/images/default-avatar.jpg'"
                 />
-                <span>Sarah Johnson</span>
-              </div>
-              <div class="service-meta">
-                <div class="service-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.9 (127)</span>
+                <div class="provider-details">
+                  <h4>Sarah Johnson</h4>
+                  <div class="service-meta">
+                    <span class="rating"
+                      ><i class="fas fa-star"></i> 4.9 (127)</span
+                    >
+                    <span class="price">$25/hr</span>
+                  </div>
                 </div>
-                <div class="service-price">$25/hr</div>
               </div>
-              <a href="service-detail.html" class="btn btn-outline btn-sm mt-20"
-                >View Details</a
-              >
             </div>
           </div>
 
           <!-- Service Card 2 -->
-          <div class="service-card">
-            <div class="service-image">
+          <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-img-wrapper">
+              <span class="category-badge">Tutoring</span>
               <img
                 src="../assets/images/services/tutoring1.jpg"
-                alt="Tutoring Service"
+                alt="Service"
+                class="service-img"
+                onerror="this.src = '../assets/images/categories/category2.jpg'"
               />
             </div>
-            <div class="service-content">
-              <span class="service-category">Tutoring</span>
-              <h3>Math & Science Tutoring</h3>
-              <p>
-                Expert tutoring for all levels - from elementary to advanced
-                college prep.
+            <div class="service-body">
+              <h3 class="service-title">Math & Science Tutoring</h3>
+              <p class="service-description">
+                Expert tutoring for high school students in Algebra, Calculus,
+                and Physics.
               </p>
-              <div class="service-provider">
+              <div class="provider-info">
                 <img
                   src="../assets/images/providers/provider2.jpg"
-                  alt="Michael C."
+                  alt="Provider"
+                  class="provider-avatar"
+                  onerror="this.src = '../assets/images/default-avatar.jpg'"
                 />
-                <span>Michael Chen</span>
-              </div>
-              <div class="service-meta">
-                <div class="service-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.8 (95)</span>
+                <div class="provider-details">
+                  <h4>David Chen</h4>
+                  <div class="service-meta">
+                    <span class="rating"
+                      ><i class="fas fa-star"></i> 5.0 (84)</span
+                    >
+                    <span class="price">$40/hr</span>
+                  </div>
                 </div>
-                <div class="service-price">$35/hr</div>
               </div>
-              <a href="service-detail.html" class="btn btn-outline btn-sm mt-20"
-                >View Details</a
-              >
             </div>
           </div>
 
           <!-- Service Card 3 -->
-          <div class="service-card">
-            <div class="service-image">
+          <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-img-wrapper">
+              <span class="category-badge">Cleaning</span>
               <img
                 src="../assets/images/services/cleaning1.jpg"
-                alt="Cleaning Service"
+                alt="Service"
+                class="service-img"
+                onerror="this.src = '../assets/images/categories/category3.jpg'"
               />
             </div>
-            <div class="service-content">
-              <span class="service-category">Cleaning</span>
-              <h3>Deep House Cleaning</h3>
-              <p>
-                Thorough cleaning service using eco-friendly products for a
-                spotless home.
+            <div class="service-body">
+              <h3 class="service-title">Deep Home Cleaning</h3>
+              <p class="service-description">
+                Thorough deep cleaning service for your entire home.
+                Eco-friendly products.
               </p>
-              <div class="service-provider">
+              <div class="provider-info">
                 <img
                   src="../assets/images/providers/provider3.jpg"
-                  alt="Emily D."
+                  alt="Provider"
+                  class="provider-avatar"
+                  onerror="this.src = '../assets/images/default-avatar.jpg'"
                 />
-                <span>Emily Davis</span>
-              </div>
-              <div class="service-meta">
-                <div class="service-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.9 (203)</span>
+                <div class="provider-details">
+                  <h4>Maria Garcia</h4>
+                  <div class="service-meta">
+                    <span class="rating"
+                      ><i class="fas fa-star"></i> 4.8 (210)</span
+                    >
+                    <span class="price">$30/hr</span>
+                  </div>
                 </div>
-                <div class="service-price">$30/hr</div>
               </div>
-              <a href="service-detail.html" class="btn btn-outline btn-sm mt-20"
-                >View Details</a
-              >
             </div>
           </div>
 
           <!-- Service Card 4 -->
-          <div class="service-card">
-            <div class="service-image">
+          <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-img-wrapper">
+              <span class="category-badge">Gardening</span>
               <img
                 src="../assets/images/services/gardening1.jpg"
-                alt="Gardening Service"
+                alt="Service"
+                class="service-img"
+                onerror="this.src = '../assets/images/categories/category4.jpg'"
               />
             </div>
-            <div class="service-content">
-              <span class="service-category">Gardening</span>
-              <h3>Landscape Design & Maintenance</h3>
-              <p>
-                Transform your outdoor space with professional landscaping
-                services.
+            <div class="service-body">
+              <h3 class="service-title">Garden Maintenance</h3>
+              <p class="service-description">
+                Regular lawn mowing, hedge trimming, and general garden care.
               </p>
-              <div class="service-provider">
+              <div class="provider-info">
                 <img
                   src="../assets/images/providers/provider4.jpg"
-                  alt="Robert G."
+                  alt="Provider"
+                  class="provider-avatar"
+                  onerror="this.src = '../assets/images/default-avatar.jpg'"
                 />
-                <span>Robert Garcia</span>
-              </div>
-              <div class="service-meta">
-                <div class="service-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.7 (78)</span>
+                <div class="provider-details">
+                  <h4>James Wilson</h4>
+                  <div class="service-meta">
+                    <span class="rating"
+                      ><i class="fas fa-star"></i> 4.7 (56)</span
+                    >
+                    <span class="price">$35/hr</span>
+                  </div>
                 </div>
-                <div class="service-price">$40/hr</div>
               </div>
-              <a href="service-detail.html" class="btn btn-outline btn-sm mt-20"
-                >View Details</a
-              >
             </div>
           </div>
 
           <!-- Service Card 5 -->
-          <div class="service-card">
-            <div class="service-image">
+          <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-img-wrapper">
+              <span class="category-badge">Pet Care</span>
               <img
                 src="../assets/images/services/petcare1.jpg"
-                alt="Pet Care Service"
+                alt="Service"
+                class="service-img"
+                onerror="this.src = '../assets/images/categories/category5.jpg'"
               />
             </div>
-            <div class="service-content">
-              <span class="service-category">Pet Care</span>
-              <h3>Pet Sitting & Walking</h3>
-              <p>
-                Loving care for your furry friends while you're away or at work.
+            <div class="service-body">
+              <h3 class="service-title">Dog Walking & Sitting</h3>
+              <p class="service-description">
+                Reliable dog walking and overnight pet sitting services.
               </p>
-              <div class="service-provider">
+              <div class="provider-info">
                 <img
                   src="../assets/images/providers/provider5.jpg"
-                  alt="Lisa M."
+                  alt="Provider"
+                  class="provider-avatar"
+                  onerror="this.src = '../assets/images/default-avatar.jpg'"
                 />
-                <span>Lisa Martinez</span>
-              </div>
-              <div class="service-meta">
-                <div class="service-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.8 (156)</span>
+                <div class="provider-details">
+                  <h4>Emma Thompson</h4>
+                  <div class="service-meta">
+                    <span class="rating"
+                      ><i class="fas fa-star"></i> 4.9 (145)</span
+                    >
+                    <span class="price">$20/hr</span>
+                  </div>
                 </div>
-                <div class="service-price">$20/hr</div>
               </div>
-              <a href="service-detail.html" class="btn btn-outline btn-sm mt-20"
-                >View Details</a
-              >
             </div>
           </div>
 
           <!-- Service Card 6 -->
-          <div class="service-card">
-            <div class="service-image">
+          <div class="service-card" data-aos="fade-up" data-aos-delay="500">
+            <div class="service-img-wrapper">
+              <span class="category-badge">Elderly Care</span>
               <img
                 src="../assets/images/services/elderly1.jpg"
-                alt="Elderly Care Service"
+                alt="Service"
+                class="service-img"
+                onerror="this.src = '../assets/images/categories/category6.jpg'"
               />
             </div>
-            <div class="service-content">
-              <span class="service-category">Elderly Care</span>
-              <h3>Senior Companion Care</h3>
-              <p>
-                Compassionate companionship and assistance for elderly loved
-                ones.
+            <div class="service-body">
+              <h3 class="service-title">Compassionate Care</h3>
+              <p class="service-description">
+                Assistance with daily activities, companionship, and medication
+                reminders.
               </p>
-              <div class="service-provider">
+              <div class="provider-info">
                 <img
                   src="../assets/images/providers/provider6.jpg"
-                  alt="James W."
+                  alt="Provider"
+                  class="provider-avatar"
+                  onerror="this.src = '../assets/images/default-avatar.jpg'"
                 />
-                <span>James Wilson</span>
-              </div>
-              <div class="service-meta">
-                <div class="service-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.9 (89)</span>
+                <div class="provider-details">
+                  <h4>Robert Miller</h4>
+                  <div class="service-meta">
+                    <span class="rating"
+                      ><i class="fas fa-star"></i> 5.0 (32)</span
+                    >
+                    <span class="price">$28/hr</span>
+                  </div>
                 </div>
-                <div class="service-price">$28/hr</div>
               </div>
-              <a href="service-detail.html" class="btn btn-outline btn-sm mt-20"
-                >View Details</a
-              >
             </div>
           </div>
-
-          <!-- Service Card 7 -->
-          <div class="service-card">
-            <div class="service-image">
-              <img
-                src="../assets/images/services/tutoring2.jpg"
-                alt="Language Tutoring"
-              />
-            </div>
-            <div class="service-content">
-              <span class="service-category">Tutoring</span>
-              <h3>Language Learning</h3>
-              <p>
-                Learn Spanish, French, German, or Mandarin with native speakers.
-              </p>
-              <div class="service-provider">
-                <img
-                  src="../assets/images/providers/provider7.jpg"
-                  alt="Maria L."
-                />
-                <span>Maria Lopez</span>
-              </div>
-              <div class="service-meta">
-                <div class="service-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.9 (112)</span>
-                </div>
-                <div class="service-price">$40/hr</div>
-              </div>
-              <a href="service-detail.html" class="btn btn-outline btn-sm mt-20"
-                >View Details</a
-              >
-            </div>
-          </div>
-
-          <!-- Service Card 8 -->
-          <div class="service-card">
-            <div class="service-image">
-              <img
-                src="../assets/images/services/cleaning2.jpg"
-                alt="Office Cleaning"
-              />
-            </div>
-            <div class="service-content">
-              <span class="service-category">Cleaning</span>
-              <h3>Office & Commercial Cleaning</h3>
-              <p>
-                Professional cleaning services for businesses and office spaces.
-              </p>
-              <div class="service-provider">
-                <img
-                  src="../assets/images/providers/provider8.jpg"
-                  alt="Clean Pro"
-                />
-                <span>Clean Pro Services</span>
-              </div>
-              <div class="service-meta">
-                <div class="service-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.7 (64)</span>
-                </div>
-                <div class="service-price">$45/hr</div>
-              </div>
-              <a href="service-detail.html" class="btn btn-outline btn-sm mt-20"
-                >View Details</a
-              >
-            </div>
-          </div>
-
-          <!-- Service Card 9 -->
-          <div class="service-card">
-            <div class="service-image">
-              <img
-                src="../assets/images/services/childcare2.jpg"
-                alt="After School Care"
-              />
-            </div>
-            <div class="service-content">
-              <span class="service-category">Childcare</span>
-              <h3>After School Care</h3>
-              <p>Safe and fun environment for children after school hours.</p>
-              <div class="service-provider">
-                <img
-                  src="../assets/images/providers/provider9.jpg"
-                  alt="Amanda K."
-                />
-                <span>Amanda King</span>
-              </div>
-              <div class="service-meta">
-                <div class="service-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.8 (91)</span>
-                </div>
-                <div class="service-price">$22/hr</div>
-              </div>
-              <a href="service-detail.html" class="btn btn-outline btn-sm mt-20"
-                >View Details</a
-              >
-            </div>
-          </div>
-        </div>
-
-        <!-- Pagination -->
-        <div class="pagination">
-          <a href="#"><i class="fas fa-chevron-left"></i></a>
-          <a href="#" class="active">1</a>
-          <a href="#">2</a>
-          <a href="#">3</a>
-          <span>...</span>
-          <a href="#">10</a>
-          <a href="#"><i class="fas fa-chevron-right"></i></a>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div class="footer-about">
-            <a href="../index.html" class="footer-logo">
-              <img src="../logo.png" alt="Moueene Logo" />
-            </a>
-            <p>
-              Moueene connects customers with trusted service providers for all
-              their home and personal needs.
-            </p>
-            <div class="social-links">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-          </div>
-          <div class="footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li><a href="../index.html">Home</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="providers.html">Find Providers</a></li>
-              <li><a href="how-it-works.html">How It Works</a></li>
-              <li><a href="about.html">About Us</a></li>
-            </ul>
-          </div>
-          <div class="footer-links">
-            <h4>Services</h4>
-            <ul>
-              <li><a href="services.html?category=childcare">Childcare</a></li>
-              <li><a href="services.html?category=tutoring">Tutoring</a></li>
-              <li><a href="services.html?category=cleaning">Cleaning</a></li>
-              <li><a href="services.html?category=gardening">Gardening</a></li>
-              <li><a href="services.html?category=petcare">Pet Care</a></li>
-            </ul>
-          </div>
-          <div class="footer-links">
-            <h4>Support</h4>
-            <ul>
-              <li><a href="contact.html">Contact Us</a></li>
-              <li><a href="faq.html">FAQ</a></li>
-              <li><a href="privacy.html">Privacy Policy</a></li>
-              <li><a href="terms.html">Terms of Service</a></li>
-              <li><a href="help.html">Help Center</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2026 Moueene. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="../assets/js/main.js"></script>
+    <script>
+      AOS.init({
+        duration: 800,
+        once: true,
+      });
+
+      // Toggle filters on mobile
+      document.querySelector(".filter-toggle").addEventListener("click", () => {
+        document.querySelector(".filters-sidebar").classList.toggle("active");
+      });
+    </script>
   </body>
 </html>

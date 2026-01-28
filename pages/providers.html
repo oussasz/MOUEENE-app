@@ -3,29 +3,281 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Browse verified service providers on Moueene - Find trusted professionals for your needs"
-    />
     <title>Providers - Moueene</title>
-    <link rel="icon" type="image/png" href="../logo.png" />
-    <link rel="stylesheet" href="../assets/css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+      :root {
+        --glass-bg: rgba(255, 255, 255, 0.95);
+      }
+
+      body {
+        background: #f8f9fa;
+        padding-top: 80px;
+      }
+
+      /* Hero Section */
+      .page-hero {
+        background: linear-gradient(135deg, var(--secondary), #ff758c);
+        padding: 80px 0;
+        color: white;
+        text-align: center;
+        margin-bottom: 3rem;
+        border-radius: 0 0 50px 50px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .page-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("../assets/pattern-white.png");
+        opacity: 0.1;
+      }
+
+      .page-hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+      .page-hero p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Layout */
+      .services-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 2rem;
+      }
+
+      /* Filters Sidebar */
+      .filters-sidebar {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        height: fit-content;
+        position: sticky;
+        top: 100px;
+      }
+
+      .filter-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .filter-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .filter-option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        color: var(--text-light);
+        transition: color 0.3s;
+      }
+
+      .filter-option:hover {
+        color: var(--primary);
+      }
+
+      .filter-checkbox {
+        margin-right: 0.8rem;
+        accent-color: var(--primary);
+        width: 18px;
+        height: 18px;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+
+      .search-input:focus {
+        border-color: var(--primary);
+      }
+
+      /* Providers Grid */
+      .providers-grid-layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      .provider-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem 1.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .provider-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .badge-verified {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(0, 201, 167, 0.1);
+        color: var(--primary);
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .provider-avatar-lg {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1rem;
+      }
+
+      .provider-name {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 0.2rem;
+      }
+
+      .provider-specialty {
+        color: var(--primary);
+        font-weight: 500;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .provider-stats {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+        background: #f8f9fa;
+        padding: 0.8rem;
+        border-radius: 12px;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-value {
+        font-weight: 700;
+        color: var(--text);
+        display: block;
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-light);
+      }
+
+      .provider-bio {
+        font-size: 0.9rem;
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .btn-profile {
+        width: 100%;
+        padding: 0.8rem;
+        border-radius: 12px;
+        border: 1px solid var(--primary);
+        background: transparent;
+        color: var(--primary);
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+
+      .btn-profile:hover {
+        background: var(--primary);
+        color: white;
+      }
+
+      /* Mobile Filter Toggle */
+      .filter-toggle {
+        display: none;
+        width: 100%;
+        padding: 1rem;
+        background: white;
+        border: none;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        color: var(--text);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      @media (max-width: 992px) {
+        .services-container {
+          grid-template-columns: 1fr;
+        }
+
+        .filters-sidebar {
+          display: none;
+        }
+
+        .filters-sidebar.active {
+          display: block;
+          animation: slideDown 0.3s ease;
+        }
+
+        .filter-toggle {
+          display: block;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Header -->
-    <header class="header">
+    <header class="header bg-white shadow-sm">
       <div class="container">
         <nav class="navbar">
           <a href="../index.html" class="logo">
-            <img src="../logo.png" alt="Moueene Logo" />
+            <img src="../logo.png" alt="Moueene" />
           </a>
           <ul class="nav-menu">
             <li><a href="../index.html">Home</a></li>
@@ -48,363 +300,334 @@
       </div>
     </header>
 
-    <!-- Page Banner -->
-    <section class="page-banner">
+    <!-- Hero Section -->
+    <section class="page-hero">
       <div class="container">
-        <h1>Service Providers</h1>
-        <p>Meet our trusted and verified service professionals</p>
-        <div class="breadcrumb">
-          <a href="../index.html">Home</a>
-          <span>/</span>
-          <span>Providers</span>
-        </div>
+        <h1 data-aos="fade-up">Trusted Providers</h1>
+        <p data-aos="fade-up" data-aos-delay="100">
+          Connect with background-checked and highly rated professionals.
+        </p>
       </div>
     </section>
 
-    <!-- Providers Section -->
-    <section class="services-section">
-      <div class="container">
-        <!-- Filters -->
-        <div class="services-filters">
-          <div class="filter-group">
-            <label for="service-filter">Service Type:</label>
-            <select id="service-filter">
-              <option value="">All Services</option>
-              <option value="childcare">Childcare</option>
-              <option value="tutoring">Tutoring</option>
-              <option value="cleaning">Cleaning</option>
-              <option value="gardening">Gardening</option>
-              <option value="petcare">Pet Care</option>
-              <option value="elderly">Elderly Care</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label for="location-filter">Location:</label>
-            <input
-              type="text"
-              id="location-filter"
-              placeholder="Enter city or zip code"
-            />
-          </div>
-          <div class="filter-group">
-            <label for="rating-filter">Minimum Rating:</label>
-            <select id="rating-filter">
-              <option value="">Any Rating</option>
-              <option value="4.5">4.5+ Stars</option>
-              <option value="4">4+ Stars</option>
-              <option value="3">3+ Stars</option>
-            </select>
-          </div>
-          <button class="btn btn-primary">Search</button>
+    <!-- Main Content -->
+    <div class="services-container">
+      <!-- Filters Sidebar -->
+      <button class="filter-toggle">
+        <i class="fas fa-filter"></i> Show Filters
+      </button>
+
+      <aside class="filters-sidebar">
+        <div class="filter-group">
+          <div class="filter-title">Location</div>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Enter zip or city"
+          />
         </div>
 
-        <!-- Providers Grid -->
-        <div class="providers-grid">
-          <!-- Provider Card 1 -->
-          <div class="provider-card">
-            <div class="provider-image">
-              <img
-                src="../assets/images/providers/provider1.jpg"
-                alt="Sarah Johnson"
-              />
-              <span class="provider-badge">Top Rated</span>
-            </div>
-            <div class="provider-info">
-              <h3>Sarah Johnson</h3>
-              <p class="provider-service">Childcare Specialist</p>
-              <div class="provider-rating">
-                <i class="fas fa-star"></i>
-                <span>4.9 (127 reviews)</span>
-              </div>
-              <p>
-                10+ years of experience in childcare with certifications in
-                early childhood development.
-              </p>
-              <p class="provider-price">From $25/hour</p>
-              <a href="provider-profile.html" class="btn btn-outline btn-sm"
-                >View Profile</a
-              >
-            </div>
-          </div>
-
-          <!-- Provider Card 2 -->
-          <div class="provider-card">
-            <div class="provider-image">
-              <img
-                src="../assets/images/providers/provider2.jpg"
-                alt="Michael Chen"
-              />
-              <span class="provider-badge">Verified</span>
-            </div>
-            <div class="provider-info">
-              <h3>Michael Chen</h3>
-              <p class="provider-service">Math & Science Tutor</p>
-              <div class="provider-rating">
-                <i class="fas fa-star"></i>
-                <span>4.8 (95 reviews)</span>
-              </div>
-              <p>
-                PhD in Physics, passionate about making complex subjects easy to
-                understand.
-              </p>
-              <p class="provider-price">From $35/hour</p>
-              <a href="provider-profile.html" class="btn btn-outline btn-sm"
-                >View Profile</a
-              >
-            </div>
-          </div>
-
-          <!-- Provider Card 3 -->
-          <div class="provider-card">
-            <div class="provider-image">
-              <img
-                src="../assets/images/providers/provider3.jpg"
-                alt="Emily Davis"
-              />
-              <span class="provider-badge">Top Rated</span>
-            </div>
-            <div class="provider-info">
-              <h3>Emily Davis</h3>
-              <p class="provider-service">Home Cleaning Expert</p>
-              <div class="provider-rating">
-                <i class="fas fa-star"></i>
-                <span>4.9 (203 reviews)</span>
-              </div>
-              <p>
-                Eco-friendly cleaning specialist with attention to detail and
-                reliability.
-              </p>
-              <p class="provider-price">From $30/hour</p>
-              <a href="provider-profile.html" class="btn btn-outline btn-sm"
-                >View Profile</a
-              >
-            </div>
-          </div>
-
-          <!-- Provider Card 4 -->
-          <div class="provider-card">
-            <div class="provider-image">
-              <img
-                src="../assets/images/providers/provider4.jpg"
-                alt="Robert Garcia"
-              />
-              <span class="provider-badge">Verified</span>
-            </div>
-            <div class="provider-info">
-              <h3>Robert Garcia</h3>
-              <p class="provider-service">Garden & Landscape</p>
-              <div class="provider-rating">
-                <i class="fas fa-star"></i>
-                <span>4.7 (78 reviews)</span>
-              </div>
-              <p>
-                Licensed landscaper specializing in sustainable garden design.
-              </p>
-              <p class="provider-price">From $40/hour</p>
-              <a href="provider-profile.html" class="btn btn-outline btn-sm"
-                >View Profile</a
-              >
-            </div>
-          </div>
-
-          <!-- Provider Card 5 -->
-          <div class="provider-card">
-            <div class="provider-image">
-              <img
-                src="../assets/images/providers/provider5.jpg"
-                alt="Lisa Martinez"
-              />
-              <span class="provider-badge">Top Rated</span>
-            </div>
-            <div class="provider-info">
-              <h3>Lisa Martinez</h3>
-              <p class="provider-service">Pet Care Specialist</p>
-              <div class="provider-rating">
-                <i class="fas fa-star"></i>
-                <span>4.8 (156 reviews)</span>
-              </div>
-              <p>
-                Animal lover with veterinary assistant background and pet first
-                aid certified.
-              </p>
-              <p class="provider-price">From $20/hour</p>
-              <a href="provider-profile.html" class="btn btn-outline btn-sm"
-                >View Profile</a
-              >
-            </div>
-          </div>
-
-          <!-- Provider Card 6 -->
-          <div class="provider-card">
-            <div class="provider-image">
-              <img
-                src="../assets/images/providers/provider6.jpg"
-                alt="James Wilson"
-              />
-              <span class="provider-badge">Verified</span>
-            </div>
-            <div class="provider-info">
-              <h3>James Wilson</h3>
-              <p class="provider-service">Senior Care Provider</p>
-              <div class="provider-rating">
-                <i class="fas fa-star"></i>
-                <span>4.9 (89 reviews)</span>
-              </div>
-              <p>
-                Certified nursing assistant with compassionate approach to
-                elderly care.
-              </p>
-              <p class="provider-price">From $28/hour</p>
-              <a href="provider-profile.html" class="btn btn-outline btn-sm"
-                >View Profile</a
-              >
-            </div>
-          </div>
-
-          <!-- Provider Card 7 -->
-          <div class="provider-card">
-            <div class="provider-image">
-              <img
-                src="../assets/images/providers/provider7.jpg"
-                alt="Maria Lopez"
-              />
-              <span class="provider-badge">Top Rated</span>
-            </div>
-            <div class="provider-info">
-              <h3>Maria Lopez</h3>
-              <p class="provider-service">Language Tutor</p>
-              <div class="provider-rating">
-                <i class="fas fa-star"></i>
-                <span>4.9 (112 reviews)</span>
-              </div>
-              <p>
-                Native Spanish speaker teaching Spanish, French, and Italian for
-                all levels.
-              </p>
-              <p class="provider-price">From $40/hour</p>
-              <a href="provider-profile.html" class="btn btn-outline btn-sm"
-                >View Profile</a
-              >
-            </div>
-          </div>
-
-          <!-- Provider Card 8 -->
-          <div class="provider-card">
-            <div class="provider-image">
-              <img
-                src="../assets/images/providers/provider8.jpg"
-                alt="David Brown"
-              />
-              <span class="provider-badge">Verified</span>
-            </div>
-            <div class="provider-info">
-              <h3>David Brown</h3>
-              <p class="provider-service">Home Organizer</p>
-              <div class="provider-rating">
-                <i class="fas fa-star"></i>
-                <span>4.7 (64 reviews)</span>
-              </div>
-              <p>
-                Professional organizer helping families declutter and create
-                functional spaces.
-              </p>
-              <p class="provider-price">From $45/hour</p>
-              <a href="provider-profile.html" class="btn btn-outline btn-sm"
-                >View Profile</a
-              >
-            </div>
-          </div>
+        <div class="filter-group">
+          <div class="filter-title">Availability</div>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" /> Available Now
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" /> Weekends
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" /> Evenings
+          </label>
         </div>
 
-        <!-- Pagination -->
-        <div class="pagination">
-          <a href="#"><i class="fas fa-chevron-left"></i></a>
-          <a href="#" class="active">1</a>
-          <a href="#">2</a>
-          <a href="#">3</a>
-          <span>...</span>
-          <a href="#">15</a>
-          <a href="#"><i class="fas fa-chevron-right"></i></a>
+        <div class="filter-group">
+          <div class="filter-title">Specialty</div>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" checked /> All
+            Services
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" /> Childcare
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" /> Tutoring
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" /> Cleaning
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-checkbox" /> Pet Care
+          </label>
         </div>
-      </div>
-    </section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-      <div class="container">
-        <div class="cta-content">
-          <h2>Are You a Service Provider?</h2>
-          <p>
-            Join our platform and connect with customers looking for your skills
+        <div class="filter-group">
+          <div class="filter-title">Rating</div>
+          <label class="filter-option">
+            <input type="radio" name="rating" class="filter-checkbox" /> 4.5 &
+            up
+          </label>
+          <label class="filter-option">
+            <input type="radio" name="rating" class="filter-checkbox" /> 4.0 &
+            up
+          </label>
+        </div>
+
+        <button class="btn btn-primary w-100">Apply Filters</button>
+      </aside>
+
+      <!-- Providers List -->
+      <div class="providers-grid-layout">
+        <!-- Provider Card 1 -->
+        <div class="provider-card" data-aos="fade-up">
+          <span class="badge-verified"
+            ><i class="fas fa-check-circle"></i> Verified</span
+          >
+          <img
+            src="../assets/images/providers/provider1.jpg"
+            alt="Provider"
+            class="provider-avatar-lg"
+            onerror="this.src = '../assets/images/default-avatar.jpg'"
+          />
+          <h3 class="provider-name">Sarah Johnson</h3>
+          <span class="provider-specialty">Childcare Specialist</span>
+
+          <div class="provider-stats">
+            <div class="stat-item">
+              <span class="stat-value">4.9</span>
+              <span class="stat-label"
+                ><i class="fas fa-star text-warning"></i
+              ></span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">127</span>
+              <span class="stat-label">Reviews</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">$25</span>
+              <span class="stat-label">/hr</span>
+            </div>
+          </div>
+
+          <p class="provider-bio">
+            Certified childcare professional with 5 years of experience. CPR and
+            First Aid certified.
           </p>
-          <div class="cta-buttons">
-            <a href="register.html?type=provider" class="btn btn-white"
-              >Become a Provider</a
-            >
-            <a href="how-it-works.html" class="btn btn-outline-white"
-              >Learn More</a
-            >
-          </div>
+          <a href="provider-profile.html" class="btn btn-profile"
+            >View Profile</a
+          >
         </div>
-      </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div class="footer-about">
-            <a href="../index.html" class="footer-logo">
-              <img src="../logo.png" alt="Moueene Logo" />
-            </a>
-            <p>
-              Moueene connects customers with trusted service providers for all
-              their home and personal needs.
-            </p>
-            <div class="social-links">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <!-- Provider Card 2 -->
+        <div class="provider-card" data-aos="fade-up" data-aos-delay="100">
+          <span class="badge-verified"
+            ><i class="fas fa-check-circle"></i> Verified</span
+          >
+          <img
+            src="../assets/images/providers/provider2.jpg"
+            alt="Provider"
+            class="provider-avatar-lg"
+            onerror="this.src = '../assets/images/default-avatar.jpg'"
+          />
+          <h3 class="provider-name">David Chen</h3>
+          <span class="provider-specialty">Math Tutor</span>
+
+          <div class="provider-stats">
+            <div class="stat-item">
+              <span class="stat-value">5.0</span>
+              <span class="stat-label"
+                ><i class="fas fa-star text-warning"></i
+              ></span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">84</span>
+              <span class="stat-label">Reviews</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">$40</span>
+              <span class="stat-label">/hr</span>
             </div>
           </div>
-          <div class="footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li><a href="../index.html">Home</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="providers.html">Find Providers</a></li>
-              <li><a href="how-it-works.html">How It Works</a></li>
-              <li><a href="about.html">About Us</a></li>
-            </ul>
-          </div>
-          <div class="footer-links">
-            <h4>Services</h4>
-            <ul>
-              <li><a href="services.html?category=childcare">Childcare</a></li>
-              <li><a href="services.html?category=tutoring">Tutoring</a></li>
-              <li><a href="services.html?category=cleaning">Cleaning</a></li>
-              <li><a href="services.html?category=gardening">Gardening</a></li>
-              <li><a href="services.html?category=petcare">Pet Care</a></li>
-            </ul>
-          </div>
-          <div class="footer-links">
-            <h4>Support</h4>
-            <ul>
-              <li><a href="contact.html">Contact Us</a></li>
-              <li><a href="faq.html">FAQ</a></li>
-              <li><a href="privacy.html">Privacy Policy</a></li>
-              <li><a href="terms.html">Terms of Service</a></li>
-              <li><a href="help.html">Help Center</a></li>
-            </ul>
-          </div>
+
+          <p class="provider-bio">
+            PhD student offering comprehensive math tutoring from algebra to
+            calculus.
+          </p>
+          <a href="provider-profile.html" class="btn btn-profile"
+            >View Profile</a
+          >
         </div>
-        <div class="footer-bottom">
-          <p>&copy; 2026 Moueene. All rights reserved.</p>
+
+        <!-- Provider Card 3 -->
+        <div class="provider-card" data-aos="fade-up" data-aos-delay="200">
+          <span class="badge-verified"
+            ><i class="fas fa-check-circle"></i> Verified</span
+          >
+          <img
+            src="../assets/images/providers/provider3.jpg"
+            alt="Provider"
+            class="provider-avatar-lg"
+            onerror="this.src = '../assets/images/default-avatar.jpg'"
+          />
+          <h3 class="provider-name">Maria Garcia</h3>
+          <span class="provider-specialty">Home Cleaner</span>
+
+          <div class="provider-stats">
+            <div class="stat-item">
+              <span class="stat-value">4.8</span>
+              <span class="stat-label"
+                ><i class="fas fa-star text-warning"></i
+              ></span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">210</span>
+              <span class="stat-label">Reviews</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">$30</span>
+              <span class="stat-label">/hr</span>
+            </div>
+          </div>
+
+          <p class="provider-bio">
+            Detailed-oriented cleaner using only eco-friendly and safe products
+            for your home.
+          </p>
+          <a href="provider-profile.html" class="btn btn-profile"
+            >View Profile</a
+          >
+        </div>
+
+        <!-- Provider Card 4 -->
+        <div class="provider-card" data-aos="fade-up" data-aos-delay="300">
+          <img
+            src="../assets/images/providers/provider4.jpg"
+            alt="Provider"
+            class="provider-avatar-lg"
+            onerror="this.src = '../assets/images/default-avatar.jpg'"
+          />
+          <h3 class="provider-name">James Wilson</h3>
+          <span class="provider-specialty">Landscaper</span>
+
+          <div class="provider-stats">
+            <div class="stat-item">
+              <span class="stat-value">4.7</span>
+              <span class="stat-label"
+                ><i class="fas fa-star text-warning"></i
+              ></span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">56</span>
+              <span class="stat-label">Reviews</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">$35</span>
+              <span class="stat-label">/hr</span>
+            </div>
+          </div>
+
+          <p class="provider-bio">
+            Professional gardening services including lawn care, pruning, and
+            design.
+          </p>
+          <a href="provider-profile.html" class="btn btn-profile"
+            >View Profile</a
+          >
+        </div>
+
+        <!-- Provider Card 5 -->
+        <div class="provider-card" data-aos="fade-up" data-aos-delay="400">
+          <span class="badge-verified"
+            ><i class="fas fa-check-circle"></i> Verified</span
+          >
+          <img
+            src="../assets/images/providers/provider5.jpg"
+            alt="Provider"
+            class="provider-avatar-lg"
+            onerror="this.src = '../assets/images/default-avatar.jpg'"
+          />
+          <h3 class="provider-name">Emma Thompson</h3>
+          <span class="provider-specialty">Pet Sitter</span>
+
+          <div class="provider-stats">
+            <div class="stat-item">
+              <span class="stat-value">4.9</span>
+              <span class="stat-label"
+                ><i class="fas fa-star text-warning"></i
+              ></span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">145</span>
+              <span class="stat-label">Reviews</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">$20</span>
+              <span class="stat-label">/hr</span>
+            </div>
+          </div>
+
+          <p class="provider-bio">
+            Passionate animal lover providing reliable walking and sitting
+            services.
+          </p>
+          <a href="provider-profile.html" class="btn btn-profile"
+            >View Profile</a
+          >
+        </div>
+
+        <!-- Provider Card 6 -->
+        <div class="provider-card" data-aos="fade-up" data-aos-delay="500">
+          <span class="badge-verified"
+            ><i class="fas fa-check-circle"></i> Verified</span
+          >
+          <img
+            src="../assets/images/providers/provider6.jpg"
+            alt="Provider"
+            class="provider-avatar-lg"
+            onerror="this.src = '../assets/images/default-avatar.jpg'"
+          />
+          <h3 class="provider-name">Robert Miller</h3>
+          <span class="provider-specialty">Elderly Care</span>
+
+          <div class="provider-stats">
+            <div class="stat-item">
+              <span class="stat-value">5.0</span>
+              <span class="stat-label"
+                ><i class="fas fa-star text-warning"></i
+              ></span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">32</span>
+              <span class="stat-label">Reviews</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">$28</span>
+              <span class="stat-label">/hr</span>
+            </div>
+          </div>
+
+          <p class="provider-bio">
+            Certified caregiver providing compassionate assistance for seniors.
+          </p>
+          <a href="provider-profile.html" class="btn btn-profile"
+            >View Profile</a
+          >
         </div>
       </div>
-    </footer>
+    </div>
 
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="../assets/js/main.js"></script>
+    <script>
+      AOS.init({
+        duration: 800,
+        once: true,
+      });
+
+      // Toggle filters on mobile
+      document.querySelector(".filter-toggle").addEventListener("click", () => {
+        document.querySelector(".filters-sidebar").classList.toggle("active");
+      });
+    </script>
   </body>
 </html>

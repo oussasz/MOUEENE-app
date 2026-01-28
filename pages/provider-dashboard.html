@@ -1027,12 +1027,11 @@
                 user.email;
 
               // Update avatar
-              if (user.profile_picture) {
-                document.getElementById("provider-avatar").src =
-                  user.profile_picture;
-                document.getElementById("header-avatar").src =
-                  user.profile_picture;
-              }
+              const avatarSrc = user.profile_picture && user.profile_picture !== '' 
+                ? user.profile_picture 
+                : "../assets/images/default-avatar.jpg";
+              document.getElementById("provider-avatar").src = avatarSrc;
+              document.getElementById("header-avatar").src = avatarSrc;
 
               // Update verification badge
               const badge = document.getElementById("verification-badge");

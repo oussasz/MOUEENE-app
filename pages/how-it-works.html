@@ -3,29 +3,278 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Learn how Moueene works - Simple steps to find or become a service provider"
-    />
     <title>How It Works - Moueene</title>
-    <link rel="icon" type="image/png" href="../logo.png" />
-    <link rel="stylesheet" href="../assets/css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+      :root {
+        --glass-bg: rgba(255, 255, 255, 0.95);
+      }
+
+      body {
+        background: #f8f9fa;
+        padding-top: 80px;
+      }
+
+      /* Hero Section */
+      .page-hero {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        padding: 80px 0;
+        color: white;
+        text-align: center;
+        margin-bottom: 3rem;
+        border-radius: 0 0 50px 50px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .page-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("../assets/pattern-white.png");
+        opacity: 0.1;
+      }
+
+      .page-hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+      .page-hero p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .role-switch {
+        display: inline-flex;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 30px;
+        padding: 5px;
+        margin-top: 2rem;
+        backdrop-filter: blur(5px);
+      }
+
+      .role-btn {
+        padding: 10px 30px;
+        border-radius: 25px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        background: transparent;
+        border: none;
+      }
+
+      .role-btn.active {
+        background: white;
+        color: var(--primary);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Content Sections */
+      .content-section {
+        display: none;
+      }
+
+      .content-section.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      /* Steps */
+      .steps-container {
+        position: relative;
+        margin-bottom: 4rem;
+      }
+
+      .steps-line {
+        position: absolute;
+        top: 50px;
+        left: 10%;
+        right: 10%;
+        height: 4px;
+        background: #e9ecef;
+        z-index: 0;
+      }
+
+      .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .step-item {
+        text-align: center;
+      }
+
+      .step-icon {
+        width: 100px;
+        height: 100px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin: 0 auto 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 4px solid #fff;
+        transition: transform 0.3s;
+      }
+
+      .step-item:hover .step-icon {
+        transform: translateY(-5px);
+        color: var(--secondary);
+      }
+
+      .step-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+      }
+
+      .step-desc {
+        color: var(--text-light);
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+
+      /* Features */
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-top: 4rem;
+      }
+
+      .feature-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        display: flex;
+        gap: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .feature-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+
+      /* FAQ */
+      .faq-section {
+        padding: 4rem 0;
+      }
+
+      .faq-item {
+        background: white;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        overflow: hidden;
+      }
+
+      .faq-question {
+        padding: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: var(--text);
+        transition: background 0.2s;
+      }
+
+      .faq-question:hover {
+        background: #f8f9fa;
+      }
+
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding: 0 1.5rem;
+        color: var(--text-light);
+        line-height: 1.6;
+      }
+
+      .faq-item.active .faq-answer {
+        padding: 0 1.5rem 1.5rem;
+        max-height: 200px;
+      }
+
+      .faq-item.active .faq-question i {
+        transform: rotate(180deg);
+      }
+
+      @media (max-width: 992px) {
+        .steps-grid {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+        .steps-line {
+          width: 4px;
+          height: 80%;
+          left: 50%;
+          transform: translateX(-50%);
+          top: 0;
+        }
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Header -->
-    <header class="header">
+    <header class="header bg-white shadow-sm">
       <div class="container">
         <nav class="navbar">
           <a href="../index.html" class="logo">
-            <img src="../logo.png" alt="Moueene Logo" />
+            <img src="../logo.png" alt="Moueene" />
           </a>
           <ul class="nav-menu">
             <li><a href="../index.html">Home</a></li>
@@ -48,385 +297,264 @@
       </div>
     </header>
 
-    <!-- Page Banner -->
-    <section class="page-banner">
+    <!-- Hero Section -->
+    <section class="page-hero">
       <div class="container">
-        <h1>How It Works</h1>
-        <p>Simple steps to connect with the right service provider</p>
-        <div class="breadcrumb">
-          <a href="../index.html">Home</a>
-          <span>/</span>
-          <span>How It Works</span>
+        <h1 data-aos="fade-up">How Moueene Works</h1>
+        <p data-aos="fade-up" data-aos-delay="100">
+          Simple, secure, and reliable. Find help or find work.
+        </p>
+
+        <div class="role-switch" data-aos="zoom-in" data-aos-delay="200">
+          <button class="role-btn active" onclick="switchRole('customer')">
+            For Customers
+          </button>
+          <button class="role-btn" onclick="switchRole('provider')">
+            For Providers
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- For Customers Section -->
-    <section class="about-section">
+    <!-- Customer Section -->
+    <div id="customer-section" class="content-section active">
       <div class="container">
-        <div class="section-header">
-          <h2>For Customers</h2>
-          <p>Finding the perfect service provider has never been easier</p>
-        </div>
-
-        <div class="steps-container" style="margin-bottom: 60px">
-          <div class="step">
-            <div class="step-number">1</div>
-            <div class="step-icon">
-              <i class="fas fa-search"></i>
+        <div class="steps-container">
+          <div class="steps-line d-none d-lg-block"></div>
+          <div class="steps-grid">
+            <div class="step-item" data-aos="fade-up">
+              <div class="step-icon">
+                <i class="fas fa-search"></i>
+              </div>
+              <h3 class="step-title">1. Search</h3>
+              <p class="step-desc">
+                Browse our service categories or search for specific needs in
+                your area.
+              </p>
             </div>
-            <h3>Search Services</h3>
-            <p>
-              Browse through our categories or use the search to find the
-              service you need
-            </p>
-          </div>
-          <div class="step-connector"></div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <div class="step-icon">
-              <i class="fas fa-user-check"></i>
+            <div class="step-item" data-aos="fade-up" data-aos-delay="100">
+              <div class="step-icon">
+                <i class="fas fa-user-check"></i>
+              </div>
+              <h3 class="step-title">2. Choose</h3>
+              <p class="step-desc">
+                View profiles, ratings, and reviews to pick the perfect
+                provider.
+              </p>
             </div>
-            <h3>Compare Providers</h3>
-            <p>
-              Review profiles, ratings, and prices to find your perfect match
-            </p>
-          </div>
-          <div class="step-connector"></div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <div class="step-icon">
-              <i class="fas fa-calendar-check"></i>
+            <div class="step-item" data-aos="fade-up" data-aos-delay="200">
+              <div class="step-icon">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+              <h3 class="step-title">3. Book</h3>
+              <p class="step-desc">
+                Schedule a time that works for you and pay securely online.
+              </p>
             </div>
-            <h3>Book Appointment</h3>
-            <p>
-              Schedule your service at a convenient time through our platform
-            </p>
-          </div>
-          <div class="step-connector"></div>
-          <div class="step">
-            <div class="step-number">4</div>
-            <div class="step-icon">
-              <i class="fas fa-star"></i>
+            <div class="step-item" data-aos="fade-up" data-aos-delay="300">
+              <div class="step-icon">
+                <i class="fas fa-star"></i>
+              </div>
+              <h3 class="step-title">4. Review</h3>
+              <p class="step-desc">
+                Get the job done and leave a review to help the community.
+              </p>
             </div>
-            <h3>Rate & Review</h3>
-            <p>
-              Share your experience to help others find great service providers
-            </p>
           </div>
         </div>
 
-        <div class="about-grid">
-          <div class="about-content">
-            <h3>Why Use Moueene?</h3>
-            <div class="about-features">
-              <div class="about-feature">
-                <div class="about-feature-icon">
-                  <i class="fas fa-shield-alt"></i>
-                </div>
-                <div>
-                  <h4>Verified Providers</h4>
-                  <p>
-                    All service providers undergo background checks and
-                    verification processes
-                  </p>
-                </div>
-              </div>
-              <div class="about-feature">
-                <div class="about-feature-icon">
-                  <i class="fas fa-lock"></i>
-                </div>
-                <div>
-                  <h4>Secure Payments</h4>
-                  <p>Pay securely through our platform with buyer protection</p>
-                </div>
-              </div>
-              <div class="about-feature">
-                <div class="about-feature-icon">
-                  <i class="fas fa-comments"></i>
-                </div>
-                <div>
-                  <h4>Direct Communication</h4>
-                  <p>
-                    Message providers directly to discuss your specific needs
-                  </p>
-                </div>
-              </div>
-              <div class="about-feature">
-                <div class="about-feature-icon">
-                  <i class="fas fa-undo"></i>
-                </div>
-                <div>
-                  <h4>Satisfaction Guarantee</h4>
-                  <p>Not satisfied? We'll work with you to make it right</p>
-                </div>
-              </div>
+        <div class="features-grid">
+          <div class="feature-card" data-aos="fade-up">
+            <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+            <div>
+              <h3>Verified Providers</h3>
+              <p>
+                All our providers undergo strict background checks and
+                verification processes.
+              </p>
             </div>
           </div>
-          <div class="about-image">
-            <img
-              src="../assets/images/how-it-works-customer.jpg"
-              alt="Customer using Moueene"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- For Providers Section -->
-    <section class="about-section" style="background: var(--bg-light)">
-      <div class="container">
-        <div class="section-header">
-          <h2>For Service Providers</h2>
-          <p>Grow your business and reach more customers</p>
-        </div>
-
-        <div class="steps-container" style="margin-bottom: 60px">
-          <div class="step">
-            <div class="step-number">1</div>
-            <div class="step-icon">
-              <i class="fas fa-user-plus"></i>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="feature-icon"><i class="fas fa-lock"></i></div>
+            <div>
+              <h3>Secure Payments</h3>
+              <p>
+                Your payment is held securely and only released when the job is
+                done.
+              </p>
             </div>
-            <h3>Create Profile</h3>
-            <p>
-              Sign up and create a detailed profile showcasing your skills and
-              experience
-            </p>
           </div>
-          <div class="step-connector"></div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <div class="step-icon">
-              <i class="fas fa-check-circle"></i>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="feature-icon"><i class="fas fa-headset"></i></div>
+            <div>
+              <h3>24/7 Support</h3>
+              <p>
+                Our dedicated support team is always here to help with any
+                issues.
+              </p>
             </div>
-            <h3>Get Verified</h3>
-            <p>
-              Complete our verification process to build trust with customers
-            </p>
           </div>
-          <div class="step-connector"></div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <div class="step-icon">
-              <i class="fas fa-briefcase"></i>
-            </div>
-            <h3>Receive Bookings</h3>
-            <p>Accept booking requests and manage your schedule easily</p>
-          </div>
-          <div class="step-connector"></div>
-          <div class="step">
-            <div class="step-number">4</div>
-            <div class="step-icon">
-              <i class="fas fa-money-bill-wave"></i>
-            </div>
-            <h3>Get Paid</h3>
-            <p>Receive secure payments directly to your account</p>
-          </div>
-        </div>
-
-        <div class="about-grid">
-          <div class="about-image">
-            <img
-              src="../assets/images/how-it-works-provider.jpg"
-              alt="Provider using Moueene"
-            />
-          </div>
-          <div class="about-content">
-            <h3>Benefits for Providers</h3>
-            <div class="about-features">
-              <div class="about-feature">
-                <div class="about-feature-icon">
-                  <i class="fas fa-users"></i>
-                </div>
-                <div>
-                  <h4>Expand Your Reach</h4>
-                  <p>
-                    Connect with thousands of customers looking for your
-                    services
-                  </p>
-                </div>
-              </div>
-              <div class="about-feature">
-                <div class="about-feature-icon">
-                  <i class="fas fa-calendar-alt"></i>
-                </div>
-                <div>
-                  <h4>Flexible Schedule</h4>
-                  <p>Set your own availability and work when it suits you</p>
-                </div>
-              </div>
-              <div class="about-feature">
-                <div class="about-feature-icon">
-                  <i class="fas fa-chart-line"></i>
-                </div>
-                <div>
-                  <h4>Grow Your Business</h4>
-                  <p>
-                    Build your reputation with reviews and expand your client
-                    base
-                  </p>
-                </div>
-              </div>
-              <div class="about-feature">
-                <div class="about-feature-icon">
-                  <i class="fas fa-headset"></i>
-                </div>
-                <div>
-                  <h4>Dedicated Support</h4>
-                  <p>Our team is here to help you succeed on the platform</p>
-                </div>
-              </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="feature-icon"><i class="fas fa-undo"></i></div>
+            <div>
+              <h3>Money Back Guarantee</h3>
+              <p>
+                Not satisfied? We will work with you to make it right or refund
+                you.
+              </p>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- FAQ Preview Section -->
+    <!-- Provider Section -->
+    <div id="provider-section" class="content-section">
+      <div class="container">
+        <div class="steps-container">
+          <div class="steps-line d-none d-lg-block"></div>
+          <div class="steps-grid">
+            <div class="step-item">
+              <div class="step-icon">
+                <i class="fas fa-user-plus"></i>
+              </div>
+              <h3 class="step-title">1. Sign Up</h3>
+              <p class="step-desc">
+                Create your profile, list your skills, and set your rates.
+              </p>
+            </div>
+            <div class="step-item">
+              <div class="step-icon">
+                <i class="fas fa-id-card"></i>
+              </div>
+              <h3 class="step-title">2. Verify</h3>
+              <p class="step-desc">
+                Complete our verification process to earn the "Verified" badge.
+              </p>
+            </div>
+            <div class="step-item">
+              <div class="step-icon">
+                <i class="fas fa-briefcase"></i>
+              </div>
+              <h3 class="step-title">3. Work</h3>
+              <p class="step-desc">
+                Accept booking requests and complete jobs on your schedule.
+              </p>
+            </div>
+            <div class="step-item">
+              <div class="step-icon">
+                <i class="fas fa-wallet"></i>
+              </div>
+              <h3 class="step-title">4. Earn</h3>
+              <p class="step-desc">
+                Get paid directly to your bank account with low service fees.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-globe"></i></div>
+            <div>
+              <h3>Reach More Clients</h3>
+              <p>
+                Expand your customer base by accessing thousands of local users.
+              </p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-clock"></i></div>
+            <div>
+              <h3>Flexible Schedule</h3>
+              <p>Be your own boss. Work when you want and where you want.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
     <section class="faq-section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Frequently Asked Questions</h2>
-          <p>Quick answers to common questions</p>
+      <div class="container" style="max-width: 800px">
+        <div class="text-center mb-5">
+          <h2 class="font-weight-bold">Frequently Asked Questions</h2>
         </div>
+
         <div class="faq-container">
           <div class="faq-item">
             <div class="faq-question">
-              <h4>How do I book a service?</h4>
+              <span>Is it free to join?</span>
               <i class="fas fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
               <p>
-                Simply browse our services or providers, select the one that
-                meets your needs, choose an available time slot, and confirm
-                your booking. You'll receive a confirmation email with all the
-                details.
+                Yes, signing up for Moueene is completely free for both
+                customers and providers. We only charge a small service fee on
+                completed bookings.
               </p>
             </div>
           </div>
           <div class="faq-item">
             <div class="faq-question">
-              <h4>Are the service providers verified?</h4>
+              <span>How are providers verified?</span>
               <i class="fas fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
               <p>
-                Yes! All providers on Moueene go through a verification process
-                including identity verification and background checks. Look for
-                the "Verified" badge on provider profiles.
+                We perform identity checks, review certifications, and conduct
+                background screenings for all our verified providers to ensure
+                your safety.
               </p>
             </div>
           </div>
           <div class="faq-item">
             <div class="faq-question">
-              <h4>How does payment work?</h4>
+              <span>What if I'm not satisfied?</span>
               <i class="fas fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
               <p>
-                Payments are processed securely through our platform. You can
-                pay with credit card, debit card, or PayPal. Payment is only
-                released to the provider after the service is completed.
+                We offer a satisfaction guarantee. If you're not happy with the
+                service, contact our support team within 24 hours, and we'll
+                help resolve the issue.
               </p>
             </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question">
-              <h4>What if I need to cancel a booking?</h4>
-              <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="faq-answer">
-              <p>
-                You can cancel your booking through your dashboard. Cancellation
-                policies vary by provider, but generally, cancellations made 24+
-                hours in advance receive a full refund.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="text-center mt-40">
-          <a href="faq.html" class="btn btn-outline">View All FAQs</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-      <div class="container">
-        <div class="cta-content">
-          <h2>Ready to Get Started?</h2>
-          <p>
-            Join Moueene today and experience the easiest way to find or offer
-            services
-          </p>
-          <div class="cta-buttons">
-            <a href="register.html" class="btn btn-white"
-              >Sign Up as Customer</a
-            >
-            <a href="register.html?type=provider" class="btn btn-outline-white"
-              >Become a Provider</a
-            >
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div class="footer-about">
-            <a href="../index.html" class="footer-logo">
-              <img src="../logo.png" alt="Moueene Logo" />
-            </a>
-            <p>
-              Moueene connects customers with trusted service providers for all
-              their home and personal needs.
-            </p>
-            <div class="social-links">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-          </div>
-          <div class="footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li><a href="../index.html">Home</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="providers.html">Find Providers</a></li>
-              <li><a href="how-it-works.html">How It Works</a></li>
-              <li><a href="about.html">About Us</a></li>
-            </ul>
-          </div>
-          <div class="footer-links">
-            <h4>Services</h4>
-            <ul>
-              <li><a href="services.html?category=childcare">Childcare</a></li>
-              <li><a href="services.html?category=tutoring">Tutoring</a></li>
-              <li><a href="services.html?category=cleaning">Cleaning</a></li>
-              <li><a href="services.html?category=gardening">Gardening</a></li>
-              <li><a href="services.html?category=petcare">Pet Care</a></li>
-            </ul>
-          </div>
-          <div class="footer-links">
-            <h4>Support</h4>
-            <ul>
-              <li><a href="contact.html">Contact Us</a></li>
-              <li><a href="faq.html">FAQ</a></li>
-              <li><a href="privacy.html">Privacy Policy</a></li>
-              <li><a href="terms.html">Terms of Service</a></li>
-              <li><a href="help.html">Help Center</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2026 Moueene. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="../assets/js/main.js"></script>
+    <script>
+      AOS.init({
+        duration: 800,
+        once: true,
+      });
+
+      function switchRole(role) {
+        // Update buttons
+        document
+          .querySelectorAll(".role-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        event.target.classList.add("active");
+
+        // Update content
+        document
+          .querySelectorAll(".content-section")
+          .forEach((section) => section.classList.remove("active"));
+        document.getElementById(`${role}-section`).classList.add("active");
+      }
+
+      // FAQ Toggle
+      document.querySelectorAll(".faq-question").forEach((question) => {
+        question.addEventListener("click", () => {
+          const item = question.parentElement;
+          item.classList.toggle("active");
+        });
+      });
+    </script>
   </body>
 </html>
