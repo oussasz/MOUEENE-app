@@ -10,9 +10,25 @@
 // Load required classes
 require_once CLASSES_PATH . '/Provider.php';
 
-// Get action from URL (normalize index in case of extra segments)
-$resourceIndex = array_search('providers', $parts, true);
-$action = $resourceIndex !== false ? ($parts[$resourceIndex + 1] ?? '') : ($parts[2] ?? '');
+// Get action from URL by parsing the request path directly
+$requestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$requestPath = trim($requestPath ?? '', '/');
+
+$afterProviders = '';
+$providersPos = strpos($requestPath, '/providers');
+if ($providersPos !== false) {
+    $afterProviders = substr($requestPath, $providersPos + strlen('/providers'));
+} else {
+    if (preg_match('#providers/?(.*)$#', $requestPath, $matches)) {
+        $afterProviders = $matches[1] ?? '';
+    }
+}
+
+$afterProviders = trim($afterProviders, '/');
+$segments = $afterProviders === '' ? [] : explode('/', $afterProviders);
+
+$action = $segments[0] ?? '';
+$subAction = $segments[1] ?? '';
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Get request body
@@ -54,7 +70,7 @@ switch ($action) {
         break;
         
     case 'services':
-        $providerServiceId = $resourceIndex !== false ? ($parts[$resourceIndex + 2] ?? null) : ($parts[3] ?? null);
+        $providerServiceId = $segments[1] ?? null;
         if ($method === 'GET') {
             handleGetServices();
         } elseif ($method === 'POST') {
@@ -79,8 +95,6 @@ switch ($action) {
     default:
         // Numeric ID - public provider details (non-sensitive) or sub-resources
         if (is_numeric($action)) {
-            $subAction = $resourceIndex !== false ? ($parts[$resourceIndex + 2] ?? '') : ($parts[3] ?? '');
-            
             if ($subAction === 'services' && $method === 'GET') {
                 handlePublicGetProviderServices((int)$action);
             } elseif ($subAction === 'reviews' && $method === 'GET') {
