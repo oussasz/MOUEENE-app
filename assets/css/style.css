@@ -822,6 +822,108 @@ h2 {
   }
 }
 
+/* Mobile app-shell: place orbital items top/bottom (not around) */
+@media (max-width: 768px) {
+  body.app-mobile .categories-orbital {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: auto auto auto;
+    align-items: center;
+    justify-items: center;
+    gap: 8px;
+    min-height: auto;
+    padding: 6px 10px 0;
+    overflow: visible;
+  }
+
+  body.app-mobile .categories-orbital::before {
+    display: none;
+  }
+
+  body.app-mobile .categories-orbital .categories-image {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    max-width: 100%;
+  }
+
+  body.app-mobile .orbital-item {
+    position: relative;
+    width: 82px;
+    height: 82px;
+    padding: 6px;
+    gap: 4px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.10);
+    transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--rot, 0deg));
+    animation: app-orbit-float var(--dur, 5.2s) ease-in-out infinite;
+    will-change: transform;
+  }
+
+  @keyframes app-orbit-float {
+    0%,
+    100% {
+      transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--rot, 0deg));
+    }
+    50% {
+      transform: translate(var(--tx, 0px), calc(var(--ty, 0px) + var(--lift, -8px))) rotate(var(--rot, 0deg));
+    }
+  }
+
+  body.app-mobile .orbital-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.92rem;
+  }
+
+  body.app-mobile .orbital-item span {
+    font-size: 0.66rem;
+    line-height: 1.1;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Top: near image top edge (slightly random) */
+  body.app-mobile .orbital-1 { grid-row: 1; grid-column: 1; --tx: 10px; --ty: 18px; --rot: -2deg; --dur: 5.0s; --lift: -7px; }
+  body.app-mobile .orbital-2 { grid-row: 1; grid-column: 2; --tx: -6px; --ty: 24px; --rot: 1deg; --dur: 5.8s; --lift: -9px; }
+  body.app-mobile .orbital-3 { grid-row: 1; grid-column: 5; --tx: 4px; --ty: 20px; --rot: -1deg; --dur: 5.3s; --lift: -8px; }
+  body.app-mobile .orbital-4 { grid-row: 1; grid-column: 6; --tx: -10px; --ty: 26px; --rot: 2deg; --dur: 6.1s; --lift: -10px; }
+
+  /* Bottom: near image bottom edge (slightly random) */
+  body.app-mobile .orbital-5 { grid-row: 3; grid-column: 2; --tx: -8px; --ty: -22px; --rot: 2deg; --dur: 5.4s; --lift: -7px; }
+  body.app-mobile .orbital-6 { grid-row: 3; grid-column: 4; --tx: 6px; --ty: -28px; --rot: -1deg; --dur: 6.0s; --lift: -9px; }
+  body.app-mobile .orbital-7 { grid-row: 3; grid-column: 5; --tx: 2px; --ty: -24px; --rot: 1deg; --dur: 5.6s; --lift: -8px; }
+}
+
+@media (max-width: 480px) {
+  body.app-mobile .categories-orbital {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    padding: 6px 8px 0;
+    gap: 6px;
+  }
+  body.app-mobile .orbital-item {
+    width: 74px;
+    height: 74px;
+  }
+  body.app-mobile .orbital-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.88rem;
+  }
+  body.app-mobile .orbital-item span {
+    font-size: 0.62rem;
+  }
+
+  /* Slightly tighter distribution on very small phones */
+  body.app-mobile .orbital-1 { grid-column: 1; --ty: 16px; }
+  body.app-mobile .orbital-2 { grid-column: 2; --ty: 20px; }
+  body.app-mobile .orbital-3 { grid-column: 4; --ty: 16px; }
+  body.app-mobile .orbital-4 { grid-column: 5; --ty: 20px; }
+  body.app-mobile .orbital-5 { grid-column: 2; --ty: -20px; }
+  body.app-mobile .orbital-6 { grid-column: 3; --ty: -24px; }
+  body.app-mobile .orbital-7 { grid-column: 4; --ty: -20px; }
+}
+
 /* Responsive curve adjustments */
 @media (max-width: 768px) {
   .categories {
@@ -1380,6 +1482,191 @@ h2 {
   }
   .social-links {
     justify-content: center;
+  }
+}
+
+/* ============================================
+   MOBILE APP SHELL (Mobile-only redesign)
+   - App-like header
+   - Bottom tab bar
+   - Larger touch targets, card surfaces
+   Desktop remains unchanged.
+   ============================================ */
+
+@media (max-width: 768px) {
+  body.app-mobile {
+    background: #f6f7fb;
+    color: var(--text-dark);
+    padding-top: calc(64px + env(safe-area-inset-top));
+    padding-bottom: calc(74px + env(safe-area-inset-bottom));
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overscroll-behavior-y: none;
+  }
+
+  /* App-style header (keeps desktop untouched) */
+  body.app-mobile .header {
+    padding: 10px 0;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+  }
+  body.app-mobile .header.scrolled {
+    padding: 10px 0;
+  }
+  body.app-mobile .navbar {
+    gap: 10px;
+    align-items: center;
+  }
+  body.app-mobile .logo img {
+    height: 30px;
+  }
+  body.app-mobile .container {
+    padding: 0 16px;
+  }
+
+  /* Turn hamburger dropdown into a full-screen sheet */
+  body.app-mobile .nav-menu.active {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: calc(64px + env(safe-area-inset-top));
+    bottom: 0;
+    border-radius: 18px 18px 0 0;
+    overflow-y: auto;
+    padding: 18px 18px calc(110px + env(safe-area-inset-bottom));
+    box-shadow: 0 30px 80px rgba(15, 23, 42, 0.25);
+    z-index: 1200;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(14px);
+  }
+  body.app-mobile .nav-menu.active a {
+    padding: 14px 0;
+    font-size: 0.95rem;
+  }
+
+  /* Backdrop overlay for menu */
+  body.app-mobile .app-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+    z-index: 1100;
+  }
+  body.app-mobile.app-menu-open .app-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* App-like surfaces */
+  body.app-mobile section {
+    scroll-margin-top: 90px;
+  }
+  body.app-mobile .card,
+  body.app-mobile .service-card,
+  body.app-mobile .provider-card,
+  body.app-mobile .section-card,
+  body.app-mobile .auth-card,
+  body.app-mobile .dashboard-card {
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+  }
+
+  /* Typography scaling */
+  body.app-mobile h1 {
+    font-size: 2rem;
+    letter-spacing: -0.6px;
+  }
+  body.app-mobile h2 {
+    font-size: 1.6rem;
+  }
+  body.app-mobile h3 {
+    font-size: 1.25rem;
+  }
+
+  /* Touch-friendly controls */
+  body.app-mobile .btn {
+    min-height: 48px;
+    border-radius: 16px;
+    padding: 12px 18px;
+  }
+  body.app-mobile input,
+  body.app-mobile select,
+  body.app-mobile textarea {
+    min-height: 48px;
+    border-radius: 14px;
+  }
+
+  /* Bottom tab bar */
+  body.app-mobile .app-tabbar {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    height: auto;
+    min-height: 66px;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+    padding: 8px 8px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 22px;
+    box-shadow: 0 18px 60px rgba(15, 23, 42, 0.18);
+    z-index: 1300;
+  }
+  body.app-mobile .app-tabbar__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 16px;
+    padding: 8px 6px;
+    color: var(--text-light);
+    transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+    min-width: 0;
+    text-align: center;
+  }
+  body.app-mobile .app-tabbar__icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.05);
+    color: var(--text-dark);
+  }
+  body.app-mobile .app-tabbar__label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    line-height: 1;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  body.app-mobile .app-tabbar__item.active {
+    color: var(--primary-color);
+    background: rgba(0, 201, 167, 0.10);
+  }
+  body.app-mobile .app-tabbar__item.active .app-tabbar__icon {
+    background: rgba(0, 201, 167, 0.16);
+    color: var(--primary-color);
+  }
+  body.app-mobile .app-tabbar__item:active {
+    transform: scale(0.98);
+  }
+
+  /* Avoid content being hidden behind fixed UI */
+  body.app-mobile .footer {
+    padding-bottom: calc(110px + env(safe-area-inset-bottom));
   }
 }
 
@@ -2262,4 +2549,285 @@ html[dir="rtl"] .dashboard-navbar {
 
 html[dir="rtl"] .nav-menu {
   direction: rtl;
+}
+
+/* ============================================
+   MOBILE OPTIMIZATIONS (Compact Interface)
+   ============================================ */
+@media (max-width: 768px) {
+  body.app-mobile .container {
+    padding: 0 14px;
+  }
+
+  /* Typography Scaling */
+  body.app-mobile { font-size: 14px; }
+  body.app-mobile h1 { font-size: 1.6rem !important; margin-bottom: 0.4rem; }
+  body.app-mobile h2 { font-size: 1.35rem !important; margin-bottom: 0.4rem; }
+  body.app-mobile h3 { font-size: 1.0rem !important; margin-bottom: 0.35rem; }
+  body.app-mobile p { font-size: 0.82rem !important; line-height: 1.35; color: #718096; }
+
+  /* Keep hero text readable (white) */
+  body.app-mobile .hero-content p,
+  body.app-mobile .hero-banner p,
+  body.app-mobile .page-hero p {
+    color: rgba(255, 255, 255, 0.92) !important;
+  }
+
+  /* Remove overly-long blocks of text on mobile */
+  body.app-mobile .review-text {
+    font-size: 0.82rem !important;
+    line-height: 1.35 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  body.app-mobile .btn { 
+    min-height: 38px !important;
+    padding: 7px 14px !important; 
+    font-size: 0.82rem !important; 
+    border-radius: 10px !important;
+  }
+
+  body.app-mobile input,
+  body.app-mobile select,
+  body.app-mobile textarea {
+    min-height: 40px !important;
+    border-radius: 10px !important;
+    font-size: 0.9rem !important;
+  }
+  
+  /* Hero Sections */
+  body.app-mobile .page-hero {
+    padding: 40px 0 30px !important;
+    min-height: auto !important;
+    border-radius: 0 0 20px 20px !important;
+    margin-bottom: 20px !important;
+  }
+  body.app-mobile .page-hero h1 { font-size: 1.45rem !important; }
+  body.app-mobile .page-hero p {
+    max-width: 100%;
+    font-size: 0.85rem !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* 2-Column Grid Adjustments */
+  body.app-mobile .services-grid,
+  body.app-mobile .services-grid-layout,
+  body.app-mobile .providers-grid-layout {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  /* Compact Service Card */
+  body.app-mobile .service-card {
+    border-radius: 12px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
+  }
+  body.app-mobile .service-card .service-img-wrapper,
+  body.app-mobile .service-card .service-image-container {
+    height: 92px !important;
+  }
+  body.app-mobile .service-card .service-content {
+    padding: 9px !important;
+  }
+  body.app-mobile .service-card .service-content h3 {
+    font-size: 0.88rem !important;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  body.app-mobile .service-card .service-content p {
+    display: none !important; /* Remove description */
+  }
+  body.app-mobile .service-category {
+    font-size: 0.65rem !important;
+    margin-bottom: 2px !important;
+  }
+  body.app-mobile .service-meta {
+    margin-top: 5px !important;
+    padding-top: 5px !important;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  body.app-mobile .service-price {
+    font-size: 0.88rem !important;
+  }
+  body.app-mobile .service-rating {
+    font-size: 0.75rem !important;
+  }
+  body.app-mobile .service-provider {
+    display: none !important; /* Hide provider info in grid to save space */
+  }
+
+  /* Compact Provider Card */
+  body.app-mobile .provider-card {
+    border-radius: 12px !important;
+    /* ensure height is auto */
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+  }
+  body.app-mobile .provider-card .card-header-bg {
+    height: 44px !important;
+    border-radius: 12px 12px 0 0;
+  }
+  body.app-mobile .provider-card .provider-avatar-wrapper {
+    width: 56px !important;
+    height: 56px !important;
+    margin: -28px auto 5px !important;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  body.app-mobile .provider-card h3 {
+    font-size: 0.88rem !important;
+    margin-bottom: 2px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 5px;
+  }
+  body.app-mobile .provider-card .provider-category {
+    font-size: 0.68rem !important;
+    text-align: center;
+    margin-bottom: 5px !important;
+  }
+  body.app-mobile .provider-card .provider-stats {
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.7rem !important;
+    margin-bottom: 0 !important;
+  }
+  body.app-mobile .provider-card .provider-bio, 
+  body.app-mobile .provider-card .provider-skills {
+    display: none !important; 
+  }
+  body.app-mobile .provider-card .card-footer {
+    padding: 5px 10px !important;
+    margin-top: auto;
+  }
+  body.app-mobile .provider-card .btn {
+    width: 100%;
+    padding: 6px 0 !important;
+    font-size: 0.74rem !important;
+    height: 30px !important;
+  }
+
+  /* Layout Resets for Sidebar Pages */
+  body.app-mobile .services-container,
+  body.app-mobile .providers-container {
+    display: block !important;
+    grid-template-columns: 1fr !important;
+  }
+  body.app-mobile .filters-sidebar {
+    display: none !important; /* Hide filters to simplify */
+  }
+
+  /* General Element Reductions */
+  body.app-mobile .section-title h2 { font-size: 1.5rem !important; }
+  body.app-mobile .section-header { margin-bottom: 20px !important; text-align: center; }
+
+  /* App Tab Bar Adjustments */
+  body.app-mobile .app-tabbar {
+    height: auto;
+    min-height: 62px;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 2px);
+  }
+  body.app-mobile .app-tabbar__icon { width: 30px; height: 30px; border-radius: 10px; }
+  body.app-mobile .app-tabbar__label { font-size: 0.62rem; }
+
+  /* Ultra-small screens: icon-only labels to avoid overflow */
+  @media (max-width: 360px) {
+    body.app-mobile .app-tabbar__label { display: none; }
+    body.app-mobile .app-tabbar__item { gap: 0; }
+  }
+}
+
+/* ============================================
+   ADDITIONAL MOBILE OPTIMIZATIONS
+   ============================================ */
+@media (max-width: 768px) {
+  /* Index Hero Section */
+  body.app-mobile .hero-section {
+    padding: 60px 0 40px !important;
+    min-height: auto !important;
+    text-align: center;
+  }
+  body.app-mobile .hero-content h1 {
+    font-size: 1.8rem !important;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  body.app-mobile .hero-content p {
+    font-size: 0.9rem !important;
+    margin-bottom: 20px;
+    padding: 0 10px;
+  }
+  body.app-mobile .hero-search-wrapper {
+    margin-bottom: 20px;
+  }
+  body.app-mobile .hero-cta-buttons {
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 20px;
+  }
+  body.app-mobile .hero-cta-buttons .btn {
+    width: 100%;
+  }
+
+  /* How It Works - 2x2 Grid */
+  body.app-mobile .steps-container {
+    flex-direction: row !important; /* Force row to allow wrap */
+    flex-wrap: wrap !important;
+    gap: 10px;
+    margin-top: 20px !important;
+    justify-content: center;
+  }
+  body.app-mobile .step {
+    flex: 0 0 calc(50% - 15px) !important; /* 2 per row */
+    padding: 15px 10px !important;
+    margin: 0 !important; /* Remove custom margins */
+    max-width: none !important;
+  }
+  body.app-mobile .step-down, 
+  body.app-mobile .step-up {
+    margin-top: 0 !important;
+  }
+  body.app-mobile .step-connector-curve {
+    display: none !important;
+  }
+  body.app-mobile .step-icon {
+    width: 50px !important;
+    height: 50px !important;
+    margin: 10px auto !important;
+  }
+  body.app-mobile .step-icon i {
+    font-size: 1.2rem !important;
+  }
+  body.app-mobile .step h3 {
+    font-size: 0.85rem !important;
+    margin: 5px 0 !important;
+  }
+  body.app-mobile .step p {
+    display: none !important; /* Remove text as requested */
+  }
+  body.app-mobile .step-number {
+    width: 24px;
+    height: 24px;
+    font-size: 0.8rem;
+    top: -10px;
+  }
+
+  /* Footer Adjustments */
+  body.app-mobile footer {
+    padding-bottom: 80px; /* Safe space for tabbar */
+  }
 }

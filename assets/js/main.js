@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initScrollEffects();
   initFAQ();
   initMobileMenu();
+  initMobileAppShell();
   initFormValidation();
   initImagePlaceholders();
 });
@@ -95,6 +96,156 @@ function initMobileMenu() {
       hamburger.classList.remove("active");
     });
   });
+}
+
+/**
+ * Mobile App Shell (bottom tab bar + app-style menu overlay)
+ * - Runs only on small screens
+ * - Does not change desktop UI
+ */
+function initMobileAppShell() {
+  const isMobile = window.matchMedia && window.matchMedia("(max-width: 768px)").matches;
+  if (!isMobile) return;
+
+  document.body.classList.add("app-mobile", "app-has-tabbar");
+
+  // Backdrop overlay used for hamburger menu on mobile
+  const hamburger = document.querySelector(".hamburger");
+  const navMenu = document.querySelector(".nav-menu");
+  if (hamburger && navMenu) {
+    const overlay = document.createElement("div");
+    overlay.className = "app-overlay";
+    overlay.addEventListener("click", () => {
+      navMenu.classList.remove("active");
+      hamburger.classList.remove("active");
+      document.body.classList.remove("app-menu-open");
+    });
+    document.body.appendChild(overlay);
+
+    const syncOverlay = () => {
+      const open = navMenu.classList.contains("active") || hamburger.classList.contains("active");
+      document.body.classList.toggle("app-menu-open", open);
+    };
+
+    hamburger.addEventListener("click", syncOverlay);
+    navMenu.querySelectorAll("a").forEach((a) => a.addEventListener("click", syncOverlay));
+  }
+
+  // Inject bottom tab bar
+  if (document.querySelector(".app-tabbar")) return;
+
+  const current = (window.location.pathname || "").toLowerCase();
+  const isOnPages = current.includes("/pages/");
+
+  const t = (s) => (window.I18N && window.I18N.t ? window.I18N.t(s) : s);
+  const token = (() => {
+    try {
+      return localStorage.getItem("auth_token");
+    } catch {
+      return null;
+    }
+  })();
+  const userType = (() => {
+    try {
+      return localStorage.getItem("user_type");
+    } catch {
+      return null;
+    }
+  })();
+  const isAuthed = !!token;
+
+  const hrefHome = isOnPages ? "../index.html" : "index.html";
+  const hrefServices = isOnPages ? "services.html" : "pages/services.html";
+  const hrefProviders = isOnPages ? "providers.html" : "pages/providers.html";
+
+  // Auth-aware destinations
+  const hrefDashboard = isOnPages
+    ? userType === "provider"
+      ? "provider-dashboard.html"
+      : "dashboard.html"
+    : userType === "provider"
+      ? "pages/provider-dashboard.html"
+      : "pages/dashboard.html";
+
+  const hrefAccount = isOnPages
+    ? isAuthed
+      ? "profile.html"
+      : "login.html"
+    : isAuthed
+      ? "pages/profile.html"
+      : "pages/login.html";
+
+  const tabs = [
+    {
+      href: hrefHome,
+      icon: "fa-house",
+      label: t("Home"),
+      aria: t("Home"),
+      match: ["/", "/index.html"],
+    },
+    {
+      href: hrefServices,
+      icon: "fa-bolt",
+      label: t("Services"),
+      aria: t("Services"),
+      match: ["/pages/services.html"],
+    },
+    {
+      href: hrefProviders,
+      icon: "fa-users",
+      label: t("Providers"),
+      aria: t("Providers"),
+      match: ["/pages/providers.html", "/pages/provider-profile.html"],
+    },
+  ];
+
+  if (isAuthed) {
+    tabs.push({
+      href: hrefDashboard,
+      icon: "fa-table-columns",
+      label: t("Dashboard"),
+      aria: t("Dashboard"),
+      match: ["/pages/dashboard.html", "/pages/provider-dashboard.html"],
+    });
+  }
+
+  tabs.push({
+    href: hrefAccount,
+    icon: isAuthed ? "fa-circle-user" : "fa-right-to-bracket",
+    label: isAuthed ? t("Account") : t("Login"),
+    aria: isAuthed ? t("Account") : t("Login"),
+    match: [
+      "/pages/profile.html",
+      "/pages/settings.html",
+      "/pages/profile-edit.html",
+      "/pages/login.html",
+      "/pages/register.html",
+    ],
+  });
+
+  const tabbar = document.createElement("nav");
+  tabbar.className = "app-tabbar";
+  tabbar.setAttribute("aria-label", "Primary");
+  tabbar.style.gridTemplateColumns = `repeat(${tabs.length}, minmax(0, 1fr))`;
+
+  tabs.forEach((t) => {
+    const a = document.createElement("a");
+    a.className = "app-tabbar__item";
+    a.href = t.href;
+    a.setAttribute("aria-label", t.aria || t.label);
+    a.innerHTML = `
+      <span class="app-tabbar__icon"><i class="fa-solid ${t.icon}"></i></span>
+      <span class="app-tabbar__label">${t.label}</span>
+    `;
+    const active = t.match.some((m) => (m === "/" ? current === "/" : current.endsWith(m)));
+    if (active) {
+      a.classList.add("active");
+      a.setAttribute("aria-current", "page");
+    }
+    tabbar.appendChild(a);
+  });
+
+  document.body.appendChild(tabbar);
 }
 
 /**
