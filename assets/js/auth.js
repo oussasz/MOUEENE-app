@@ -103,6 +103,11 @@ const Auth = {
    */
   async register(userData) {
     try {
+      console.log(
+        "[Auth.register] Sending userData:",
+        JSON.stringify(userData),
+      );
+
       const response = await fetch(`${this.apiUrl}/auth/register`, {
         method: "POST",
         headers: {
@@ -112,13 +117,21 @@ const Auth = {
       });
 
       const result = await response.json();
+      console.log("[Auth.register] Received result:", JSON.stringify(result));
 
       if (result.success) {
         // Auto-login after registration
         this.setToken(result.data.token);
         const resolvedType =
-          result.data.user_type || result.data.user?.user_type || userData.user_type;
+          result.data.user_type ||
+          result.data.user?.user_type ||
+          userData.user_type;
+        console.log("[Auth.register] Resolved user_type:", resolvedType);
         this.setUser(result.data, resolvedType);
+        console.log(
+          "[Auth.register] Stored in localStorage - user_type:",
+          localStorage.getItem("user_type"),
+        );
         return { success: true, data: result.data, message: result.message };
       } else {
         return {
@@ -154,7 +167,9 @@ const Auth = {
       if (result.success) {
         this.setToken(result.data.token);
         const resolvedType =
-          result.data.user_type || result.data.user?.user_type || credentials.user_type;
+          result.data.user_type ||
+          result.data.user?.user_type ||
+          credentials.user_type;
         this.setUser(result.data.user, resolvedType);
 
         // Handle remember me

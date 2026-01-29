@@ -625,24 +625,33 @@
             '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
 
           try {
+            // Build user_type based on selection
+            const userType = accountType === "customer" ? "user" : "provider";
+
+            console.log("[Register] accountType selected:", accountType);
+            console.log("[Register] user_type being sent:", userType);
+
             const userData = {
               email: email,
               password: password,
               first_name: firstName,
               last_name: lastName,
               phone: phone,
-              user_type: accountType === "customer" ? "user" : "provider",
+              user_type: userType,
             };
 
             // Add provider-specific fields if registering as provider
-            if (accountType === "provider") {
+            if (userType === "provider") {
               userData.address = document
                 .getElementById("address")
                 .value.trim();
               userData.city = document.getElementById("city").value.trim();
             }
 
+            console.log("[Register] Full userData:", JSON.stringify(userData));
+
             const result = await Auth.register(userData);
+            console.log("[Register] API result:", JSON.stringify(result));
 
             if (result.success) {
               await Auth.showModal({
@@ -689,7 +698,12 @@
       });
 
       function selectType(type) {
+        console.log("[selectType] Setting accountType to:", type);
         document.getElementById("accountType").value = type;
+        console.log(
+          "[selectType] accountType value is now:",
+          document.getElementById("accountType").value,
+        );
         const btns = document.querySelectorAll(".type-btn");
         btns.forEach((btn) => btn.classList.remove("active"));
 

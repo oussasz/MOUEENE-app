@@ -104,12 +104,16 @@ function handleRegister($data) {
     try {
         $db = Database::getConnection();
         
-        // Check if email exists
-        $table = $data['user_type'] === 'provider' ? 'providers' : 'users';
-        $stmt = $db->prepare("SELECT email FROM $table WHERE email = ?");
-        $stmt->execute([$data['email']]);
+        // Log incoming user_type for debugging
+        error_log("[Register] Received user_type: " . ($data['user_type'] ?? 'NULL'));
         
-        if ($stmt->fetch()) {
+        // Check if email exists in BOTH tables to prevent cross-table duplicates
+        $stmt = $db->prepare("SELECT 'users' as tbl FROM users WHERE email = ? UNION SELECT 'providers' as tbl FROM providers WHERE email = ?");
+        $stmt->execute([$data['email'], $data['email']]);
+        $existing = $stmt->fetch();
+        
+        if ($existing) {
+            error_log("[Register] Email already exists in table: " . $existing['tbl']);
             Response::error('Email already exists', 409);
         }
         
