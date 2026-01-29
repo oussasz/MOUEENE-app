@@ -104,7 +104,8 @@ function initMobileMenu() {
  * - Does not change desktop UI
  */
 function initMobileAppShell() {
-  const isMobile = window.matchMedia && window.matchMedia("(max-width: 768px)").matches;
+  const isMobile =
+    window.matchMedia && window.matchMedia("(max-width: 768px)").matches;
   if (!isMobile) return;
 
   document.body.classList.add("app-mobile", "app-has-tabbar");
@@ -123,12 +124,16 @@ function initMobileAppShell() {
     document.body.appendChild(overlay);
 
     const syncOverlay = () => {
-      const open = navMenu.classList.contains("active") || hamburger.classList.contains("active");
+      const open =
+        navMenu.classList.contains("active") ||
+        hamburger.classList.contains("active");
       document.body.classList.toggle("app-menu-open", open);
     };
 
     hamburger.addEventListener("click", syncOverlay);
-    navMenu.querySelectorAll("a").forEach((a) => a.addEventListener("click", syncOverlay));
+    navMenu
+      .querySelectorAll("a")
+      .forEach((a) => a.addEventListener("click", syncOverlay));
   }
 
   // Inject bottom tab bar
@@ -237,7 +242,9 @@ function initMobileAppShell() {
       <span class="app-tabbar__icon"><i class="fa-solid ${t.icon}"></i></span>
       <span class="app-tabbar__label">${t.label}</span>
     `;
-    const active = t.match.some((m) => (m === "/" ? current === "/" : current.endsWith(m)));
+    const active = t.match.some((m) =>
+      m === "/" ? current === "/" : current.endsWith(m),
+    );
     if (active) {
       a.classList.add("active");
       a.setAttribute("aria-current", "page");

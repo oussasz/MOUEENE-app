@@ -852,8 +852,9 @@ h2 {
     height: 82px;
     padding: 6px;
     gap: 4px;
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.10);
-    transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--rot, 0deg));
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+    transform: translate(var(--tx, 0px), var(--ty, 0px))
+      rotate(var(--rot, 0deg));
     animation: app-orbit-float var(--dur, 5.2s) ease-in-out infinite;
     will-change: transform;
   }
@@ -861,10 +862,15 @@ h2 {
   @keyframes app-orbit-float {
     0%,
     100% {
-      transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--rot, 0deg));
+      transform: translate(var(--tx, 0px), var(--ty, 0px))
+        rotate(var(--rot, 0deg));
     }
     50% {
-      transform: translate(var(--tx, 0px), calc(var(--ty, 0px) + var(--lift, -8px))) rotate(var(--rot, 0deg));
+      transform: translate(
+          var(--tx, 0px),
+          calc(var(--ty, 0px) + var(--lift, -8px))
+        )
+        rotate(var(--rot, 0deg));
     }
   }
 
@@ -884,15 +890,71 @@ h2 {
   }
 
   /* Top: near image top edge (slightly random) */
-  body.app-mobile .orbital-1 { grid-row: 1; grid-column: 1; --tx: 10px; --ty: 18px; --rot: -2deg; --dur: 5.0s; --lift: -7px; }
-  body.app-mobile .orbital-2 { grid-row: 1; grid-column: 2; --tx: -6px; --ty: 24px; --rot: 1deg; --dur: 5.8s; --lift: -9px; }
-  body.app-mobile .orbital-3 { grid-row: 1; grid-column: 5; --tx: 4px; --ty: 20px; --rot: -1deg; --dur: 5.3s; --lift: -8px; }
-  body.app-mobile .orbital-4 { grid-row: 1; grid-column: 6; --tx: -10px; --ty: 26px; --rot: 2deg; --dur: 6.1s; --lift: -10px; }
+  body.app-mobile .orbital-1 {
+    grid-row: 1;
+    grid-column: 1;
+    --tx: 10px;
+    --ty: 18px;
+    --rot: -2deg;
+    --dur: 5s;
+    --lift: -7px;
+  }
+  body.app-mobile .orbital-2 {
+    grid-row: 1;
+    grid-column: 2;
+    --tx: -6px;
+    --ty: 24px;
+    --rot: 1deg;
+    --dur: 5.8s;
+    --lift: -9px;
+  }
+  body.app-mobile .orbital-3 {
+    grid-row: 1;
+    grid-column: 5;
+    --tx: 4px;
+    --ty: 20px;
+    --rot: -1deg;
+    --dur: 5.3s;
+    --lift: -8px;
+  }
+  body.app-mobile .orbital-4 {
+    grid-row: 1;
+    grid-column: 6;
+    --tx: -10px;
+    --ty: 26px;
+    --rot: 2deg;
+    --dur: 6.1s;
+    --lift: -10px;
+  }
 
   /* Bottom: near image bottom edge (slightly random) */
-  body.app-mobile .orbital-5 { grid-row: 3; grid-column: 2; --tx: -8px; --ty: -22px; --rot: 2deg; --dur: 5.4s; --lift: -7px; }
-  body.app-mobile .orbital-6 { grid-row: 3; grid-column: 4; --tx: 6px; --ty: -28px; --rot: -1deg; --dur: 6.0s; --lift: -9px; }
-  body.app-mobile .orbital-7 { grid-row: 3; grid-column: 5; --tx: 2px; --ty: -24px; --rot: 1deg; --dur: 5.6s; --lift: -8px; }
+  body.app-mobile .orbital-5 {
+    grid-row: 3;
+    grid-column: 2;
+    --tx: -8px;
+    --ty: -22px;
+    --rot: 2deg;
+    --dur: 5.4s;
+    --lift: -7px;
+  }
+  body.app-mobile .orbital-6 {
+    grid-row: 3;
+    grid-column: 4;
+    --tx: 6px;
+    --ty: -28px;
+    --rot: -1deg;
+    --dur: 6s;
+    --lift: -9px;
+  }
+  body.app-mobile .orbital-7 {
+    grid-row: 3;
+    grid-column: 5;
+    --tx: 2px;
+    --ty: -24px;
+    --rot: 1deg;
+    --dur: 5.6s;
+    --lift: -8px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -915,13 +977,34 @@ h2 {
   }
 
   /* Slightly tighter distribution on very small phones */
-  body.app-mobile .orbital-1 { grid-column: 1; --ty: 16px; }
-  body.app-mobile .orbital-2 { grid-column: 2; --ty: 20px; }
-  body.app-mobile .orbital-3 { grid-column: 4; --ty: 16px; }
-  body.app-mobile .orbital-4 { grid-column: 5; --ty: 20px; }
-  body.app-mobile .orbital-5 { grid-column: 2; --ty: -20px; }
-  body.app-mobile .orbital-6 { grid-column: 3; --ty: -24px; }
-  body.app-mobile .orbital-7 { grid-column: 4; --ty: -20px; }
+  body.app-mobile .orbital-1 {
+    grid-column: 1;
+    --ty: 16px;
+  }
+  body.app-mobile .orbital-2 {
+    grid-column: 2;
+    --ty: 20px;
+  }
+  body.app-mobile .orbital-3 {
+    grid-column: 4;
+    --ty: 16px;
+  }
+  body.app-mobile .orbital-4 {
+    grid-column: 5;
+    --ty: 20px;
+  }
+  body.app-mobile .orbital-5 {
+    grid-column: 2;
+    --ty: -20px;
+  }
+  body.app-mobile .orbital-6 {
+    grid-column: 3;
+    --ty: -24px;
+  }
+  body.app-mobile .orbital-7 {
+    grid-column: 4;
+    --ty: -20px;
+  }
 }
 
 /* Responsive curve adjustments */
@@ -1629,7 +1712,10 @@ h2 {
     border-radius: 16px;
     padding: 8px 6px;
     color: var(--text-light);
-    transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+    transition:
+      transform 180ms ease,
+      background 180ms ease,
+      color 180ms ease;
     min-width: 0;
     text-align: center;
   }
@@ -1654,7 +1740,7 @@ h2 {
   }
   body.app-mobile .app-tabbar__item.active {
     color: var(--primary-color);
-    background: rgba(0, 201, 167, 0.10);
+    background: rgba(0, 201, 167, 0.1);
   }
   body.app-mobile .app-tabbar__item.active .app-tabbar__icon {
     background: rgba(0, 201, 167, 0.16);
@@ -2560,11 +2646,26 @@ html[dir="rtl"] .nav-menu {
   }
 
   /* Typography Scaling */
-  body.app-mobile { font-size: 14px; }
-  body.app-mobile h1 { font-size: 1.6rem !important; margin-bottom: 0.4rem; }
-  body.app-mobile h2 { font-size: 1.35rem !important; margin-bottom: 0.4rem; }
-  body.app-mobile h3 { font-size: 1.0rem !important; margin-bottom: 0.35rem; }
-  body.app-mobile p { font-size: 0.82rem !important; line-height: 1.35; color: #718096; }
+  body.app-mobile {
+    font-size: 14px;
+  }
+  body.app-mobile h1 {
+    font-size: 1.6rem !important;
+    margin-bottom: 0.4rem;
+  }
+  body.app-mobile h2 {
+    font-size: 1.35rem !important;
+    margin-bottom: 0.4rem;
+  }
+  body.app-mobile h3 {
+    font-size: 1rem !important;
+    margin-bottom: 0.35rem;
+  }
+  body.app-mobile p {
+    font-size: 0.82rem !important;
+    line-height: 1.35;
+    color: #718096;
+  }
 
   /* Keep hero text readable (white) */
   body.app-mobile .hero-content p,
@@ -2582,10 +2683,10 @@ html[dir="rtl"] .nav-menu {
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  body.app-mobile .btn { 
+  body.app-mobile .btn {
     min-height: 38px !important;
-    padding: 7px 14px !important; 
-    font-size: 0.82rem !important; 
+    padding: 7px 14px !important;
+    font-size: 0.82rem !important;
     border-radius: 10px !important;
   }
 
@@ -2596,7 +2697,7 @@ html[dir="rtl"] .nav-menu {
     border-radius: 10px !important;
     font-size: 0.9rem !important;
   }
-  
+
   /* Hero Sections */
   body.app-mobile .page-hero {
     padding: 40px 0 30px !important;
@@ -2604,7 +2705,9 @@ html[dir="rtl"] .nav-menu {
     border-radius: 0 0 20px 20px !important;
     margin-bottom: 20px !important;
   }
-  body.app-mobile .page-hero h1 { font-size: 1.45rem !important; }
+  body.app-mobile .page-hero h1 {
+    font-size: 1.45rem !important;
+  }
   body.app-mobile .page-hero p {
     max-width: 100%;
     font-size: 0.85rem !important;
@@ -2626,7 +2729,7 @@ html[dir="rtl"] .nav-menu {
   /* Compact Service Card */
   body.app-mobile .service-card {
     border-radius: 12px !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
   }
   body.app-mobile .service-card .service-img-wrapper,
   body.app-mobile .service-card .service-image-container {
@@ -2684,7 +2787,7 @@ html[dir="rtl"] .nav-menu {
     height: 56px !important;
     margin: -28px auto 5px !important;
     border: 2px solid white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
   body.app-mobile .provider-card h3 {
     font-size: 0.88rem !important;
@@ -2706,9 +2809,9 @@ html[dir="rtl"] .nav-menu {
     font-size: 0.7rem !important;
     margin-bottom: 0 !important;
   }
-  body.app-mobile .provider-card .provider-bio, 
+  body.app-mobile .provider-card .provider-bio,
   body.app-mobile .provider-card .provider-skills {
-    display: none !important; 
+    display: none !important;
   }
   body.app-mobile .provider-card .card-footer {
     padding: 5px 10px !important;
@@ -2732,8 +2835,13 @@ html[dir="rtl"] .nav-menu {
   }
 
   /* General Element Reductions */
-  body.app-mobile .section-title h2 { font-size: 1.5rem !important; }
-  body.app-mobile .section-header { margin-bottom: 20px !important; text-align: center; }
+  body.app-mobile .section-title h2 {
+    font-size: 1.5rem !important;
+  }
+  body.app-mobile .section-header {
+    margin-bottom: 20px !important;
+    text-align: center;
+  }
 
   /* App Tab Bar Adjustments */
   body.app-mobile .app-tabbar {
@@ -2741,13 +2849,23 @@ html[dir="rtl"] .nav-menu {
     min-height: 62px;
     padding-bottom: calc(env(safe-area-inset-bottom) + 2px);
   }
-  body.app-mobile .app-tabbar__icon { width: 30px; height: 30px; border-radius: 10px; }
-  body.app-mobile .app-tabbar__label { font-size: 0.62rem; }
+  body.app-mobile .app-tabbar__icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+  }
+  body.app-mobile .app-tabbar__label {
+    font-size: 0.62rem;
+  }
 
   /* Ultra-small screens: icon-only labels to avoid overflow */
   @media (max-width: 360px) {
-    body.app-mobile .app-tabbar__label { display: none; }
-    body.app-mobile .app-tabbar__item { gap: 0; }
+    body.app-mobile .app-tabbar__label {
+      display: none;
+    }
+    body.app-mobile .app-tabbar__item {
+      gap: 0;
+    }
   }
 }
 
@@ -2797,7 +2915,7 @@ html[dir="rtl"] .nav-menu {
     margin: 0 !important; /* Remove custom margins */
     max-width: none !important;
   }
-  body.app-mobile .step-down, 
+  body.app-mobile .step-down,
   body.app-mobile .step-up {
     margin-top: 0 !important;
   }
