@@ -116,7 +116,9 @@ const Auth = {
       if (result.success) {
         // Auto-login after registration
         this.setToken(result.data.token);
-        this.setUser(result.data, userData.user_type);
+        const resolvedType =
+          result.data.user_type || result.data.user?.user_type || userData.user_type;
+        this.setUser(result.data, resolvedType);
         return { success: true, data: result.data, message: result.message };
       } else {
         return {
@@ -151,7 +153,9 @@ const Auth = {
 
       if (result.success) {
         this.setToken(result.data.token);
-        this.setUser(result.data.user, credentials.user_type);
+        const resolvedType =
+          result.data.user_type || result.data.user?.user_type || credentials.user_type;
+        this.setUser(result.data.user, resolvedType);
 
         // Handle remember me
         if (credentials.remember_me) {

@@ -185,9 +185,14 @@ function handleLogin($data) {
     $validator = new Validator($data);
     $validator
         ->required('email')->email('email')
-        ->required('password')
-        ->required('user_type')->in('user_type', ['user', 'provider', 'admin']);
-    
+        ->required('password');
+
+    // user_type is optional for user/provider (we infer it from DB).
+    // It's still allowed for admin login.
+    if (isset($data['user_type']) && $data['user_type'] !== '') {
+        $validator->in('user_type', ['user', 'provider', 'admin']);
+    }
+
     if ($validator->fails()) {
         Response::validationError($validator->getErrors());
     }
@@ -195,29 +200,26 @@ function handleLogin($data) {
     try {
         $db = Database::getConnection();
         
-        // Determine table and ID field
-        if ($data['user_type'] === 'admin') {
-            $table = 'admin_users';
-            $idField = 'admin_id';
-        } else if ($data['user_type'] === 'provider') {
-            $table = 'providers';
-            $idField = 'provider_id';
-        } else {
-            $table = 'users';
-            $idField = 'user_id';
-        }
-        
-        // Get user
-        $stmt = $db->prepare("SELECT * FROM $table WHERE email = ?");
-        $stmt->execute([$data['email']]);
-        $user = $stmt->fetch();
-        
-        if (!$user) {
-            Response::error('Invalid email or password', 401);
+        $requestedType = $data['user_type'] ?? null;
+        if ($requestedType === '') {
+            $requestedType = null;
         }
 
-        // Admin password upgrade path (default seed uses password "password")
-        if ($data['user_type'] === 'admin') {
+        // Admin login remains explicit
+        if ($requestedType === 'admin') {
+            $table = 'admin_users';
+            $idField = 'admin_id';
+            $userType = 'admin';
+
+            $stmt = $db->prepare("SELECT * FROM $table WHERE email = ?");
+            $stmt->execute([$data['email']]);
+            $user = $stmt->fetch();
+
+            if (!$user) {
+                Response::error('Invalid email or password', 401);
+            }
+
+            // Admin password upgrade path (default seed uses password "password")
             if (!Auth::verifyPassword($data['password'], $user['password_hash'])) {
                 $isDefaultAdmin = $user['email'] === 'admin@moueene.com';
                 $isDefaultHash = Auth::verifyPassword('password', $user['password_hash']);
@@ -232,8 +234,42 @@ function handleLogin($data) {
                     Response::error('Invalid email or password', 401);
                 }
             }
-        } else if (!Auth::verifyPassword($data['password'], $user['password_hash'])) {
-            Response::error('Invalid email or password', 401);
+        } else {
+            // User/provider login: ignore the requested user_type and infer the real account type
+            // from the database. This prevents logging in as the wrong type when the UI toggle
+            // doesn't match the provided credentials.
+            $user = null;
+            $table = null;
+            $idField = null;
+            $userType = null;
+
+            // Try provider first
+            $stmt = $db->prepare("SELECT * FROM providers WHERE email = ?");
+            $stmt->execute([$data['email']]);
+            $provider = $stmt->fetch();
+            if ($provider && Auth::verifyPassword($data['password'], $provider['password_hash'])) {
+                $user = $provider;
+                $table = 'providers';
+                $idField = 'provider_id';
+                $userType = 'provider';
+            }
+
+            // Then try user
+            if (!$user) {
+                $stmt = $db->prepare("SELECT * FROM users WHERE email = ?");
+                $stmt->execute([$data['email']]);
+                $normalUser = $stmt->fetch();
+                if ($normalUser && Auth::verifyPassword($data['password'], $normalUser['password_hash'])) {
+                    $user = $normalUser;
+                    $table = 'users';
+                    $idField = 'user_id';
+                    $userType = 'user';
+                }
+            }
+
+            if (!$user) {
+                Response::error('Invalid email or password', 401);
+            }
         }
         
         // Check account status
@@ -248,14 +284,15 @@ function handleLogin($data) {
         $db->prepare("UPDATE $table SET last_login = NOW() WHERE $idField = ?")
             ->execute([$user[$idField]]);
         
-        // Generate JWT token
-        $token = Auth::generateToken($user[$idField], $data['user_type']);
+        // Generate JWT token (use inferred user type)
+        $token = Auth::generateToken($user[$idField], $userType);
         
         // Remove sensitive data
         unset($user['password_hash'], $user['reset_token'], $user['verification_token']);
         
         Response::success([
             'token' => $token,
+            'user_type' => $userType,
             'user' => $user
         ], 'Login successful');
         
