@@ -1,691 +1,625 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Create your Moueene account - Join as a customer or service provider">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Create a Moueene account" />
     <title>Sign Up - Moueene</title>
-    <!-- Self-contained styles - no external CSS dependencies -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0 !important; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Poppins', sans-serif !important;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-            min-height: 100vh !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            padding: 20px !important;
-            margin: 0 !important;
-        }
-        
-        .register-container {
-            background: #fff;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            width: 100%;
-            max-width: 900px;
-            display: flex;
-            overflow: hidden;
-            min-height: 650px;
-        }
-        
-        /* Left Panel - Account Type Selection */
-        .type-panel {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 40px;
-            width: 350px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .type-panel::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            animation: pulse 15s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.3; }
-        }
-        
-        .type-panel-content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .type-panel h2 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .type-panel p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-        
-        .account-type-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .type-card {
-            background: rgba(255, 255, 255, 0.15);
-            border: 2px solid transparent;
-            border-radius: 16px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-        
-        .type-card:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
-        }
-        
-        .type-card.selected {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: #667eea;
-        }
-        
-        .type-card.selected .type-card-icon,
-        .type-card.selected .type-card-title,
-        .type-card.selected .type-card-desc {
-            color: #333;
-        }
-        
-        .type-card-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: white;
-        }
-        
-        .type-card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: white;
-        }
-        
-        .type-card-desc {
-            font-size: 0.8rem;
-            opacity: 0.9;
-            color: rgba(255,255,255,0.9);
-        }
-        
-        .type-card.selected .type-card-desc {
-            opacity: 0.7;
-        }
-        
-        /* Right Panel - Form */
-        .form-panel {
-            flex: 1;
-            padding: 40px 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .form-header {
-            margin-bottom: 30px;
-        }
-        
-        .form-header .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            text-decoration: none;
-            color: #333;
-        }
-        
-        .form-header .logo img {
-            height: 40px;
-        }
-        
-        .form-header .logo span {
-            font-size: 1.4rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .form-header h1 {
-            font-size: 1.8rem;
-            color: #333;
-            margin-bottom: 5px;
-        }
-        
-        .form-header p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-        
-        .register-form {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-        
-        .form-row {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .form-group {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .form-group label {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #444;
-            margin-bottom: 6px;
-        }
-        
-        .form-group label .required {
-            color: #e74c3c;
-        }
-        
-        .form-group input {
-            padding: 12px 16px;
-            border: 2px solid #e8e8e8;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-family: inherit;
-            transition: all 0.3s ease;
-            outline: none;
-        }
-        
-        .form-group input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        .form-group input.error {
-            border-color: #e74c3c;
-        }
-        
-        .provider-fields {
-            display: none;
-            flex-direction: column;
-            gap: 18px;
-            padding-top: 5px;
-            border-top: 1px dashed #e8e8e8;
-            margin-top: 5px;
-        }
-        
-        .provider-fields.show {
-            display: flex;
-        }
-        
-        .provider-fields-label {
-            font-size: 0.8rem;
-            color: #667eea;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .terms-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-        
-        .terms-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin-top: 2px;
-            accent-color: #667eea;
-        }
-        
-        .terms-group label {
-            font-size: 0.85rem;
-            color: #666;
-            line-height: 1.5;
-        }
-        
-        .terms-group a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .submit-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 14px 30px;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            margin-top: 10px;
-        }
-        
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-        
-        .submit-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .login-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #666;
-        }
-        
-        .login-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        /* Error/Success Messages */
-        .alert {
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            display: none;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .alert.show {
-            display: flex;
-        }
-        
-        .alert-error {
-            background: #fef2f2;
-            color: #dc2626;
-            border: 1px solid #fecaca;
-        }
-        
-        .alert-success {
-            background: #f0fdf4;
-            color: #16a34a;
-            border: 1px solid #bbf7d0;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .register-container {
-                flex-direction: column;
-                max-width: 500px;
-            }
-            
-            .type-panel {
-                width: 100%;
-                padding: 30px;
-            }
-            
-            .account-type-cards {
-                flex-direction: row;
-            }
-            
-            .type-card {
-                flex: 1;
-                text-align: center;
-            }
-            
-            .form-panel {
-                padding: 30px;
-            }
-            
-            .form-row {
-                flex-direction: column;
-                gap: 18px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="register-container">
-        <!-- Left Panel - Account Type Selection -->
-        <div class="type-panel">
-            <div class="type-panel-content">
-                <h2>Join Moueene</h2>
-                <p>Choose how you want to use our platform. You can always change this later.</p>
-                
-                <div class="account-type-cards">
-                    <div class="type-card selected" data-type="customer" onclick="selectAccountType('customer')">
-                        <div class="type-card-icon"><i class="fas fa-user"></i></div>
-                        <div class="type-card-title">Customer</div>
-                        <div class="type-card-desc">Book services from trusted professionals</div>
-                    </div>
-                    
-                    <div class="type-card" data-type="provider" onclick="selectAccountType('provider')">
-                        <div class="type-card-icon"><i class="fas fa-briefcase"></i></div>
-                        <div class="type-card-title">Service Provider</div>
-                        <div class="type-card-desc">Offer your services and grow your business</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Right Panel - Registration Form -->
-        <div class="form-panel">
-            <div class="form-header">
-                <a href="../index.html" class="logo">
-                    <img src="../assets/images/logo.webp" alt="Moueene">
-                    <span>Moueene</span>
-                </a>
-                <h1 id="formTitle">Create Customer Account</h1>
-                <p id="formSubtitle">Fill in your details to get started</p>
-            </div>
-            
-            <div class="alert alert-error" id="errorAlert">
-                <i class="fas fa-exclamation-circle"></i>
-                <span id="errorMessage"></span>
-            </div>
-            
-            <div class="alert alert-success" id="successAlert">
-                <i class="fas fa-check-circle"></i>
-                <span id="successMessage"></span>
-            </div>
-            
-            <form class="register-form" id="registerForm" novalidate>
-                <!-- Hidden field for account type -->
-                <input type="hidden" id="accountType" name="accountType" value="customer">
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="firstName">First Name <span class="required">*</span></label>
-                        <input type="text" id="firstName" name="firstName" placeholder="John" required autocomplete="given-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name <span class="required">*</span></label>
-                        <input type="text" id="lastName" name="lastName" placeholder="Doe" required autocomplete="family-name">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email Address <span class="required">*</span></label>
-                    <input type="email" id="email" name="email" placeholder="john@example.com" required autocomplete="email">
-                </div>
-                
-                <div class="form-group">
-                    <label for="phone">Phone Number <span class="required">*</span></label>
-                    <input type="tel" id="phone" name="phone" placeholder="+213 555 123 456" required autocomplete="tel">
-                </div>
-                
-                <!-- Provider-specific fields -->
-                <div class="provider-fields" id="providerFields">
-                    <div class="provider-fields-label">Provider Information</div>
-                    
-                    <div class="form-group">
-                        <label for="address">Business Address <span class="required">*</span></label>
-                        <input type="text" id="address" name="address" placeholder="123 Main Street" autocomplete="street-address">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="city">City <span class="required">*</span></label>
-                        <input type="text" id="city" name="city" placeholder="Algiers" autocomplete="address-level2">
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="password">Password <span class="required">*</span></label>
-                        <input type="password" id="password" name="password" placeholder="Min. 8 characters" required autocomplete="new-password">
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
-                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required autocomplete="new-password">
-                    </div>
-                </div>
-                
-                <div class="terms-group">
-                    <input type="checkbox" id="terms" name="terms" required>
-                    <label for="terms">I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a></label>
-                </div>
-                
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    <span id="submitText">Create Account</span>
-                </button>
-            </form>
-            
-            <div class="login-link">
-                Already have an account? <a href="login.html">Sign in</a>
-            </div>
-        </div>
-    </div>
 
-    <script src="../assets/js/auth.js?v=2.0.0"></script>
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/style.css?v=2.1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: var(--bg-light);
+        padding-top: 90px;
+      }
+
+      .auth-wrapper {
+        min-height: calc(100vh - 90px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px 60px;
+        background-image:
+          linear-gradient(rgba(0, 201, 167, 0.06), rgba(255, 107, 157, 0.06)),
+          url("../assets/bg-pattern.png");
+        background-size: cover;
+      }
+
+      .auth-card {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        width: 100%;
+        max-width: 1100px;
+        display: grid;
+        grid-template-columns: 1fr 0.9fr;
+        overflow: hidden;
+      }
+
+      .auth-content {
+        padding: 46px 46px;
+      }
+
+      .auth-visual {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+      }
+
+      .auth-visual::before {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background: url("../assets/pattern-white.png");
+        opacity: 0.12;
+        transform: rotate(8deg);
+      }
+
+      .visual-inner {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        max-width: 360px;
+      }
+
+      .visual-badge {
+        width: 92px;
+        height: 92px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 18px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      }
+      .visual-badge i {
+        font-size: 2.4rem;
+      }
+
+      .visual-inner h3 {
+        color: white;
+        margin-bottom: 10px;
+        font-size: 1.6rem;
+      }
+      .visual-inner p {
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 0;
+      }
+
+      .type-toggle {
+        display: flex;
+        background: rgba(0, 0, 0, 0.03);
+        padding: 6px;
+        border-radius: var(--radius-md);
+        gap: 6px;
+        margin: 18px 0 16px;
+      }
+
+      .type-btn {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 12px 10px;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        font-weight: 700;
+        color: var(--text-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .type-btn.active {
+        background: white;
+        color: var(--text-dark);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .auth-alert {
+        display: none;
+        padding: 12px 14px;
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        margin: 0 0 14px;
+      }
+      .auth-alert.show {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      .auth-alert.error {
+        background: rgba(255, 107, 157, 0.08);
+        border-color: rgba(255, 107, 157, 0.25);
+        color: #a10034;
+      }
+      .auth-alert.success {
+        background: rgba(0, 201, 167, 0.1);
+        border-color: rgba(0, 201, 167, 0.25);
+        color: #006b5a;
+      }
+
+      .auth-form .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .auth-form .form-group {
+        margin-bottom: 14px;
+      }
+
+      .auth-form label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--text-dark);
+      }
+
+      .auth-form input,
+      .auth-form select {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        outline: none;
+        background: rgba(255, 255, 255, 0.9);
+        transition: var(--transition-smooth);
+      }
+
+      .auth-form input:focus,
+      .auth-form select:focus {
+        border-color: rgba(0, 201, 167, 0.6);
+        box-shadow: 0 0 0 3px rgba(0, 201, 167, 0.15);
+      }
+
+      .help {
+        color: var(--text-light);
+        font-size: 0.92rem;
+        margin-top: 6px;
+      }
+
+      .btn-wide {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: var(--radius-md);
+      }
+
+      .below-link {
+        margin-top: 16px;
+        text-align: center;
+        color: var(--text-light);
+      }
+      .below-link a {
+        color: var(--primary-color);
+        font-weight: 700;
+      }
+
+      .provider-only {
+        display: none;
+      }
+      .provider-only.show {
+        display: block;
+      }
+
+      @media (max-width: 980px) {
+        .auth-card {
+          grid-template-columns: 1fr;
+        }
+        .auth-visual {
+          display: none;
+        }
+        .auth-content {
+          padding: 34px 20px;
+        }
+        .auth-form .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="smooth-scroll">
+    <!-- Header (matches site) -->
+    <header class="header glass-header" id="header">
+      <div class="container">
+        <nav class="navbar">
+          <a href="../index.html" class="logo">
+            <img src="../assets/images/logo.webp" alt="Moueene Logo" />
+            <span>Moueene</span>
+          </a>
+          <ul class="nav-menu">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="providers.html">Providers</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+          <div class="nav-buttons">
+            <a href="login.html" class="btn btn-glass">Login</a>
+            <a href="register.html" class="btn btn-primary pulse-btn">Sign Up</a>
+          </div>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section class="auth-wrapper">
+      <div class="auth-card" data-aos="zoom-in" data-aos-duration="800">
+        <div class="auth-content">
+          <div class="text-center" style="margin-bottom: 8px">
+            <h2 style="font-size: 2rem; margin-bottom: 6px">
+              Create Your Account
+            </h2>
+            <p style="color: var(--text-light)">
+              Join Moueene as a customer or service provider
+            </p>
+          </div>
+
+          <div class="type-toggle" role="tablist" aria-label="Account type">
+            <button
+              type="button"
+              class="type-btn active"
+              id="btnUser"
+              onclick="selectRegisterType('user')"
+            >
+              <i class="fas fa-user"></i>
+              Customer
+            </button>
+            <button
+              type="button"
+              class="type-btn"
+              id="btnProvider"
+              onclick="selectRegisterType('provider')"
+            >
+              <i class="fas fa-briefcase"></i>
+              Provider
+            </button>
+          </div>
+
+          <div class="auth-alert error" id="errorAlert">
+            <i class="fas fa-exclamation-circle" style="margin-top: 2px"></i>
+            <div id="errorMessage"></div>
+          </div>
+          <div class="auth-alert success" id="successAlert">
+            <i class="fas fa-check-circle" style="margin-top: 2px"></i>
+            <div id="successMessage"></div>
+          </div>
+
+          <form class="auth-form" id="registerForm" novalidate>
+            <input type="hidden" id="registerType" value="user" />
+
+            <div class="grid">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input
+                  type="text"
+                  id="firstName"
+                  autocomplete="given-name"
+                  placeholder="Your first name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input
+                  type="text"
+                  id="lastName"
+                  autocomplete="family-name"
+                  placeholder="Your last name"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="grid">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  autocomplete="email"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  autocomplete="tel"
+                  placeholder="+213 ..."
+                />
+              </div>
+            </div>
+
+            <div class="grid">
+              <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country" autocomplete="country" required>
+                  <option value="Algeria" selected>Algeria</option>
+                  <option value="Morocco">Morocco</option>
+                  <option value="Tunisia">Tunisia</option>
+                  <option value="France">France</option>
+                  <option value="Other">Other</option>
+                </select>
+                <div class="help">Default is Algeria.</div>
+              </div>
+              <div class="form-group">
+                <label for="city">City</label>
+                <input
+                  type="text"
+                  id="city"
+                  autocomplete="address-level2"
+                  placeholder="e.g. Algiers"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input
+                type="text"
+                id="address"
+                autocomplete="street-address"
+                placeholder="Street, building, ..."
+                required
+              />
+            </div>
+
+            <div class="grid">
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  autocomplete="new-password"
+                  placeholder="Create a password"
+                  required
+                  minlength="6"
+                />
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  autocomplete="new-password"
+                  placeholder="Repeat your password"
+                  required
+                  minlength="6"
+                />
+              </div>
+            </div>
+
+            <div class="provider-only" id="providerFields">
+              <div class="form-group">
+                <label for="businessName">Business / Display Name</label>
+                <input
+                  type="text"
+                  id="businessName"
+                  placeholder="e.g. Sara Cleaning Services"
+                />
+                <div class="help">
+                  Optional: shown to customers on your provider profile.
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-wide" id="submitBtn">
+              <span id="submitText">Create Account</span>
+            </button>
+
+            <div class="below-link">
+              Already have an account? <a href="login.html">Login</a>
+            </div>
+          </form>
+        </div>
+
+        <aside class="auth-visual" aria-hidden="true">
+          <div class="visual-inner">
+            <div class="visual-badge" id="visualBadge">
+              <i class="fas fa-user"></i>
+            </div>
+            <h3 id="visualTitle">Customer account</h3>
+            <p id="visualDesc">
+              Book trusted services, manage favorites, and chat with providers.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Current selected account type
-        let currentAccountType = 'customer';
-        
-        /**
-         * Select account type (customer or provider)
-         */
-        function selectAccountType(type) {
-            currentAccountType = type;
-            
-            // Update hidden field
-            document.getElementById('accountType').value = type;
-            
-            // Update card selection
-            document.querySelectorAll('.type-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            document.querySelector(`.type-card[data-type="${type}"]`).classList.add('selected');
-            
-            // Update form title
-            const formTitle = document.getElementById('formTitle');
-            const formSubtitle = document.getElementById('formSubtitle');
-            const providerFields = document.getElementById('providerFields');
-            
-            if (type === 'provider') {
-                formTitle.textContent = 'Create Provider Account';
-                formSubtitle.textContent = 'Join our network of trusted service professionals';
-                providerFields.classList.add('show');
-                
-                // Make provider fields required
-                document.getElementById('address').required = true;
-                document.getElementById('city').required = true;
-            } else {
-                formTitle.textContent = 'Create Customer Account';
-                formSubtitle.textContent = 'Fill in your details to get started';
-                providerFields.classList.remove('show');
-                
-                // Remove required from provider fields
-                document.getElementById('address').required = false;
-                document.getElementById('city').required = false;
-            }
-            
-            // Clear any errors
-            hideError();
-        }
-        
-        /**
-         * Show error message
-         */
-        function showError(message) {
-            const errorAlert = document.getElementById('errorAlert');
-            const errorMessage = document.getElementById('errorMessage');
-            errorMessage.textContent = message;
-            errorAlert.classList.add('show');
-            document.getElementById('successAlert').classList.remove('show');
-        }
-        
-        /**
-         * Hide error message
-         */
-        function hideError() {
-            document.getElementById('errorAlert').classList.remove('show');
-        }
-        
-        /**
-         * Show success message
-         */
-        function showSuccess(message) {
-            const successAlert = document.getElementById('successAlert');
-            const successMessage = document.getElementById('successMessage');
-            successMessage.textContent = message;
-            successAlert.classList.add('show');
-            document.getElementById('errorAlert').classList.remove('show');
-        }
-        
-        /**
-         * Validate email format
-         */
-        function isValidEmail(email) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        }
-        
-        /**
-         * Handle form submission
-         */
-        document.getElementById('registerForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            hideError();
-            
-            // Get form values
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const terms = document.getElementById('terms').checked;
-            const accountType = document.getElementById('accountType').value;
-            
-            // Provider fields
-            const address = document.getElementById('address').value.trim();
-            const city = document.getElementById('city').value.trim();
-            
-            // Validation
-            if (!firstName || firstName.length < 2) {
-                showError('Please enter a valid first name (at least 2 characters)');
-                return;
-            }
-            
-            if (!lastName || lastName.length < 2) {
-                showError('Please enter a valid last name (at least 2 characters)');
-                return;
-            }
-            
-            if (!isValidEmail(email)) {
-                showError('Please enter a valid email address');
-                return;
-            }
-            
-            if (!phone || phone.length < 6) {
-                showError('Please enter a valid phone number');
-                return;
-            }
-            
-            // Provider-specific validation
-            if (accountType === 'provider') {
-                if (!address || address.length < 2) {
-                    showError('Please enter your business address');
-                    return;
-                }
-                if (!city || city.length < 2) {
-                    showError('Please enter your city');
-                    return;
-                }
-            }
-            
-            if (password.length < 8) {
-                showError('Password must be at least 8 characters long');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                showError('Passwords do not match');
-                return;
-            }
-            
-            if (!terms) {
-                showError('Please accept the Terms of Service and Privacy Policy');
-                return;
-            }
-            
-            // Prepare data for API
-            // CRITICAL: Backend expects 'user' for customers, 'provider' for providers
-            const userData = {
-                first_name: firstName,
-                last_name: lastName,
-                email: email,
-                phone: phone,
-                password: password,
-                user_type: accountType === 'customer' ? 'user' : 'provider'
-            };
-            
-            // Add provider fields if provider
-            if (accountType === 'provider') {
-                userData.address = address;
-                userData.city = city;
-            }
-            
-            // Disable submit button
-            const submitBtn = document.getElementById('submitBtn');
-            const submitText = document.getElementById('submitText');
-            submitBtn.disabled = true;
-            submitText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
-            
-            try {
-                const response = await Auth.register(userData);
-                
-                if (response.success) {
-                    showSuccess('Account created successfully! Redirecting...');
-                    
-                    // Redirect based on account type
-                    setTimeout(() => {
-                        if (accountType === 'provider') {
-                            window.location.href = 'provider-dashboard.html';
-                        } else {
-                            window.location.href = 'dashboard.html';
-                        }
-                    }, 1500);
-                } else {
-                    showError(response.message || 'Registration failed. Please try again.');
-                    submitBtn.disabled = false;
-                    submitText.textContent = 'Create Account';
-                }
-            } catch (error) {
-                console.error('Registration error:', error);
-                showError('An unexpected error occurred. Please try again.');
-                submitBtn.disabled = false;
-                submitText.textContent = 'Create Account';
-            }
-        });
-        
-        // Initialize - ensure customer is selected by default
-        selectAccountType('customer');
+      AOS.init({ once: true });
     </script>
-</body>
+
+    <script src="../assets/js/auth.js?v=2.1.0"></script>
+    <script>
+      function showError(message) {
+        document.getElementById("errorMessage").textContent = message;
+        document.getElementById("errorAlert").classList.add("show");
+        document.getElementById("successAlert").classList.remove("show");
+      }
+
+      function showSuccess(message) {
+        document.getElementById("successMessage").textContent = message;
+        document.getElementById("successAlert").classList.add("show");
+        document.getElementById("errorAlert").classList.remove("show");
+      }
+
+      function hideAlerts() {
+        document.getElementById("errorAlert").classList.remove("show");
+        document.getElementById("successAlert").classList.remove("show");
+      }
+
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      function selectRegisterType(type) {
+        hideAlerts();
+        document.getElementById("registerType").value = type;
+
+        const btnUser = document.getElementById("btnUser");
+        const btnProvider = document.getElementById("btnProvider");
+        btnUser.classList.toggle("active", type === "user");
+        btnProvider.classList.toggle("active", type === "provider");
+
+        const providerFields = document.getElementById("providerFields");
+        providerFields.classList.toggle("show", type === "provider");
+
+        const badge = document.getElementById("visualBadge");
+        const title = document.getElementById("visualTitle");
+        const desc = document.getElementById("visualDesc");
+
+        if (type === "provider") {
+          badge.innerHTML = '<i class="fas fa-briefcase"></i>';
+          title.textContent = "Provider account";
+          desc.textContent =
+            "Publish services, receive bookings, and manage your provider profile.";
+        } else {
+          badge.innerHTML = '<i class="fas fa-user"></i>';
+          title.textContent = "Customer account";
+          desc.textContent =
+            "Book trusted services, manage favorites, and chat with providers.";
+        }
+      }
+
+      // Initialize from URL ?type=provider
+      (function initTypeFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        const t = params.get("type");
+        if (t === "provider") selectRegisterType("provider");
+        else selectRegisterType("user");
+      })();
+
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          hideAlerts();
+
+          const registerType = document.getElementById("registerType").value;
+
+          const firstName = document.getElementById("firstName").value.trim();
+          const lastName = document.getElementById("lastName").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const phone = document.getElementById("phone").value.trim();
+          const country = document.getElementById("country").value;
+          const city = document.getElementById("city").value.trim();
+          const address = document.getElementById("address").value.trim();
+          const password = document.getElementById("password").value;
+          const confirmPassword = document.getElementById("confirmPassword").value;
+          const businessName = document.getElementById("businessName").value.trim();
+
+          if (!firstName || !lastName) {
+            showError("Please enter your name.");
+            return;
+          }
+          if (!isValidEmail(email)) {
+            showError("Please enter a valid email address.");
+            return;
+          }
+          if (!city) {
+            showError("Please enter your city.");
+            return;
+          }
+          if (!address) {
+            showError("Please enter your address.");
+            return;
+          }
+          if (!password || password.length < 6) {
+            showError("Password must be at least 6 characters.");
+            return;
+          }
+          if (password !== confirmPassword) {
+            showError("Passwords do not match.");
+            return;
+          }
+
+          const submitBtn = document.getElementById("submitBtn");
+          const submitText = document.getElementById("submitText");
+          const original = submitText.textContent;
+          submitBtn.disabled = true;
+          submitText.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Creating account...';
+
+          try {
+            const payload = {
+              user_type: registerType,
+              first_name: firstName,
+              last_name: lastName,
+              email,
+              phone,
+              country,
+              city,
+              address,
+              password,
+            };
+
+            if (registerType === "provider" && businessName) {
+              payload.business_name = businessName;
+            }
+
+            const result = await Auth.register(payload);
+
+            if (!result.success) {
+              showError(result.message || "Registration failed.");
+              return;
+            }
+
+            showSuccess(
+              "Account created successfully. Redirecting to login..."
+            );
+
+            setTimeout(() => {
+              const typeParam = registerType === "provider" ? "provider" : "user";
+              window.location.href = `login.html?type=${typeParam}`;
+            }, 900);
+          } catch (err) {
+            console.error(err);
+            showError("Registration failed. Please try again.");
+          } finally {
+            submitBtn.disabled = false;
+            submitText.textContent = original;
+          }
+        });
+    </script>
+
+    <script src="../assets/js/main.js"></script>
+  </body>
 </html>

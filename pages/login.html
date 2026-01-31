@@ -1,585 +1,507 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Login to your Moueene account">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Login to your Moueene account" />
     <title>Login - Moueene</title>
-    <!-- Self-contained styles - no external CSS dependencies -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0 !important; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Poppins', sans-serif !important;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-            min-height: 100vh !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            padding: 20px !important;
-            margin: 0 !important;
-        }
-        
-        .login-container {
-            background: #fff;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            width: 100%;
-            max-width: 450px;
-            padding: 50px 40px;
-        }
-        
-        .login-header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-        
-        .login-header .logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 25px;
-            text-decoration: none;
-            color: #333;
-        }
-        
-        .login-header .logo img {
-            height: 45px;
-        }
-        
-        .login-header .logo span {
-            font-size: 1.6rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .login-header h1 {
-            font-size: 1.8rem;
-            color: #333;
-            margin-bottom: 8px;
-        }
-        
-        .login-header p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-        
-        /* Account Type Tabs */
-        .account-tabs {
-            display: flex;
-            background: #f5f5f5;
-            border-radius: 12px;
-            padding: 5px;
-            margin-bottom: 30px;
-        }
-        
-        .account-tab {
-            flex: 1;
-            padding: 12px 20px;
-            text-align: center;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: #666;
-            border: none;
-            background: none;
-        }
-        
-        .account-tab:hover {
-            color: #333;
-        }
-        
-        .account-tab.active {
-            background: white;
-            color: #667eea;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            font-weight: 600;
-        }
-        
-        .account-tab i {
-            margin-right: 8px;
-        }
-        
-        /* Form Styles */
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .form-group label {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #444;
-            margin-bottom: 8px;
-        }
-        
-        .form-group input {
-            padding: 14px 16px;
-            border: 2px solid #e8e8e8;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: all 0.3s ease;
-            outline: none;
-        }
-        
-        .form-group input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        .form-group input.error {
-            border-color: #e74c3c;
-        }
-        
-        .form-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-        }
-        
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .remember-me input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #667eea;
-        }
-        
-        .remember-me label {
-            color: #666;
-            cursor: pointer;
-        }
-        
-        .forgot-link {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .forgot-link:hover {
-            text-decoration: underline;
-        }
-        
-        .submit-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 14px 30px;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            margin-top: 10px;
-        }
-        
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-        
-        .submit-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        /* Divider */
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 25px 0;
-            color: #999;
-            font-size: 0.85rem;
-        }
-        
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #e8e8e8;
-        }
-        
-        .divider span {
-            padding: 0 15px;
-        }
-        
-        /* Social Login */
-        .social-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .social-btn {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 12px;
-            border: 2px solid #e8e8e8;
-            border-radius: 10px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #444;
-        }
-        
-        .social-btn:hover {
-            border-color: #667eea;
-            background: #f8f9ff;
-        }
-        
-        .social-btn.google i { color: #ea4335; }
-        .social-btn.facebook i { color: #1877f2; }
-        
-        /* Register Link */
-        .register-link {
-            text-align: center;
-            margin-top: 25px;
-            font-size: 0.95rem;
-            color: #666;
-        }
-        
-        .register-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Alert Messages */
-        .alert {
-            padding: 14px 16px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            display: none;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .alert.show {
-            display: flex;
-        }
-        
-        .alert-error {
-            background: #fef2f2;
-            color: #dc2626;
-            border: 1px solid #fecaca;
-        }
-        
-        .alert-success {
-            background: #f0fdf4;
-            color: #16a34a;
-            border: 1px solid #bbf7d0;
-        }
-        
-        .alert-info {
-            background: #eff6ff;
-            color: #2563eb;
-            border: 1px solid #bfdbfe;
-        }
-        
-        /* Responsive */
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 40px 25px;
-            }
-            
-            .form-options {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
-            }
-            
-            .social-buttons {
-                flex-direction: column;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <div class="login-header">
-            <a href="../index.html" class="logo">
-                <img src="../assets/images/logo.webp" alt="Moueene">
-                <span>Moueene</span>
-            </a>
-            <h1>Welcome Back</h1>
-            <p id="loginSubtitle">Sign in to your customer account</p>
-        </div>
-        
-        <!-- Account Type Tabs -->
-        <div class="account-tabs">
-            <button class="account-tab active" data-type="user" onclick="selectLoginType('user')">
-                <i class="fas fa-user"></i> Customer
-            </button>
-            <button class="account-tab" data-type="provider" onclick="selectLoginType('provider')">
-                <i class="fas fa-briefcase"></i> Provider
-            </button>
-        </div>
-        
-        <div class="alert alert-error" id="errorAlert">
-            <i class="fas fa-exclamation-circle"></i>
-            <span id="errorMessage"></span>
-        </div>
-        
-        <div class="alert alert-success" id="successAlert">
-            <i class="fas fa-check-circle"></i>
-            <span id="successMessage"></span>
-        </div>
-        
-        <div class="alert alert-info" id="infoAlert">
-            <i class="fas fa-info-circle"></i>
-            <span id="infoMessage"></span>
-        </div>
-        
-        <form class="login-form" id="loginForm" novalidate>
-            <!-- Hidden field for login type -->
-            <input type="hidden" id="loginType" name="loginType" value="user">
-            
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required autocomplete="email">
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
-            </div>
-            
-            <div class="form-options">
-                <div class="remember-me">
-                    <input type="checkbox" id="remember" name="remember">
-                    <label for="remember">Remember me</label>
-                </div>
-                <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
-            </div>
-            
-            <button type="submit" class="submit-btn" id="submitBtn">
-                <span id="submitText">Sign In</span>
-            </button>
-        </form>
-        
-        <div class="divider">
-            <span>or continue with</span>
-        </div>
-        
-        <div class="social-buttons">
-            <button class="social-btn google">
-                <i class="fab fa-google"></i> Google
-            </button>
-            <button class="social-btn facebook">
-                <i class="fab fa-facebook-f"></i> Facebook
-            </button>
-        </div>
-        
-        <div class="register-link">
-            Don't have an account? <a href="register.html">Create one</a>
-        </div>
-    </div>
 
-    <script src="../assets/js/auth.js?v=2.0.0"></script>
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/style.css?v=2.1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: var(--bg-light);
+        padding-top: 90px;
+      }
+
+      .auth-wrapper {
+        min-height: calc(100vh - 90px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px 60px;
+        background-image:
+          linear-gradient(rgba(0, 201, 167, 0.06), rgba(255, 107, 157, 0.06)),
+          url("../assets/bg-pattern.png");
+        background-size: cover;
+      }
+
+      .auth-card {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        width: 100%;
+        max-width: 980px;
+        display: grid;
+        grid-template-columns: 1fr 0.9fr;
+        overflow: hidden;
+        min-height: 620px;
+      }
+
+      .auth-content {
+        padding: 48px 46px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .auth-visual {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-color),
+          var(--primary-color)
+        );
+        color: white;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+      }
+
+      .auth-visual::before {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background: url("../assets/pattern-white.png");
+        opacity: 0.12;
+        transform: rotate(-8deg);
+      }
+
+      .visual-inner {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        max-width: 340px;
+      }
+
+      .visual-badge {
+        width: 92px;
+        height: 92px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 18px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      }
+      .visual-badge i {
+        font-size: 2.4rem;
+      }
+
+      .visual-inner h3 {
+        color: white;
+        margin-bottom: 10px;
+        font-size: 1.6rem;
+      }
+      .visual-inner p {
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 0;
+      }
+
+      .type-toggle {
+        display: flex;
+        background: rgba(0, 0, 0, 0.03);
+        padding: 6px;
+        border-radius: var(--radius-md);
+        gap: 6px;
+        margin: 18px 0 16px;
+      }
+
+      .type-btn {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 12px 10px;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        font-weight: 700;
+        color: var(--text-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .type-btn.active {
+        background: white;
+        color: var(--text-dark);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .auth-alert {
+        display: none;
+        padding: 12px 14px;
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        margin: 0 0 14px;
+      }
+      .auth-alert.show {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      .auth-alert.error {
+        background: rgba(255, 107, 157, 0.08);
+        border-color: rgba(255, 107, 157, 0.25);
+        color: #a10034;
+      }
+      .auth-alert.info {
+        background: rgba(0, 201, 167, 0.1);
+        border-color: rgba(0, 201, 167, 0.25);
+        color: #006b5a;
+      }
+
+      .auth-form .form-group {
+        margin-bottom: 14px;
+      }
+
+      .auth-form label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--text-dark);
+      }
+
+      .auth-form input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        outline: none;
+        background: rgba(255, 255, 255, 0.9);
+        transition: var(--transition-smooth);
+      }
+
+      .auth-form input:focus {
+        border-color: rgba(0, 201, 167, 0.6);
+        box-shadow: 0 0 0 3px rgba(0, 201, 167, 0.15);
+      }
+
+      .form-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin: 8px 0 16px;
+        color: var(--text-light);
+        font-size: 0.95rem;
+      }
+
+      .remember {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .remember input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary-color);
+      }
+
+      .form-options a {
+        color: var(--primary-color);
+        font-weight: 700;
+      }
+
+      .btn-wide {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: var(--radius-md);
+      }
+
+      .below-link {
+        margin-top: 16px;
+        text-align: center;
+        color: var(--text-light);
+      }
+      .below-link a {
+        color: var(--primary-color);
+        font-weight: 700;
+      }
+
+      @media (max-width: 900px) {
+        .auth-card {
+          grid-template-columns: 1fr;
+          min-height: unset;
+        }
+        .auth-visual {
+          display: none;
+        }
+        .auth-content {
+          padding: 34px 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="smooth-scroll">
+    <!-- Header (matches site) -->
+    <header class="header glass-header" id="header">
+      <div class="container">
+        <nav class="navbar">
+          <a href="../index.html" class="logo">
+            <img src="../assets/images/logo.webp" alt="Moueene Logo" />
+            <span>Moueene</span>
+          </a>
+          <ul class="nav-menu">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="providers.html">Providers</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+          <div class="nav-buttons">
+            <a href="login.html" class="btn btn-primary pulse-btn">Login</a>
+            <a href="register.html" class="btn btn-glass">Sign Up</a>
+          </div>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section class="auth-wrapper">
+      <div class="auth-card" data-aos="zoom-in" data-aos-duration="800">
+        <div class="auth-content">
+          <div class="text-center" style="margin-bottom: 8px">
+            <h2 style="font-size: 2rem; margin-bottom: 6px">Welcome Back</h2>
+            <p style="color: var(--text-light)">Login to manage your account</p>
+          </div>
+
+          <div class="type-toggle" role="tablist" aria-label="Login type">
+            <button
+              type="button"
+              class="type-btn active"
+              id="btnUser"
+              onclick="selectLoginType('user')"
+            >
+              <i class="fas fa-user"></i>
+              Customer
+            </button>
+            <button
+              type="button"
+              class="type-btn"
+              id="btnProvider"
+              onclick="selectLoginType('provider')"
+            >
+              <i class="fas fa-briefcase"></i>
+              Provider
+            </button>
+          </div>
+
+          <div class="auth-alert error" id="errorAlert">
+            <i class="fas fa-exclamation-circle" style="margin-top: 2px"></i>
+            <div id="errorMessage"></div>
+          </div>
+          <div class="auth-alert info" id="infoAlert">
+            <i class="fas fa-info-circle" style="margin-top: 2px"></i>
+            <div id="infoMessage"></div>
+          </div>
+
+          <form class="auth-form" id="loginForm" novalidate>
+            <input type="hidden" id="loginType" value="user" />
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                autocomplete="email"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                autocomplete="current-password"
+                placeholder="Your password"
+                required
+              />
+            </div>
+
+            <div class="form-options">
+              <div class="remember">
+                <input type="checkbox" id="remember" />
+                <label for="remember" style="margin: 0; font-weight: 600"
+                  >Remember me</label
+                >
+              </div>
+              <a href="forgot-password.html">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-wide" id="submitBtn">
+              <span id="submitText">Sign In</span>
+            </button>
+
+            <div class="below-link">
+              Don’t have an account? <a href="register.html">Sign Up</a>
+            </div>
+          </form>
+        </div>
+
+        <aside class="auth-visual" aria-hidden="true">
+          <div class="visual-inner">
+            <div class="visual-badge" id="visualBadge">
+              <i class="fas fa-user"></i>
+            </div>
+            <h3 id="visualTitle">Customer login</h3>
+            <p id="visualDesc">
+              Access bookings, favorites, messages, and your profile.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Current selected login type
-        let currentLoginType = 'user';
-        
-        /**
-         * Select login type (user or provider)
-         */
-        function selectLoginType(type) {
-            currentLoginType = type;
-            
-            // Update hidden field
-            document.getElementById('loginType').value = type;
-            
-            // Update tab selection
-            document.querySelectorAll('.account-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelector(`.account-tab[data-type="${type}"]`).classList.add('active');
-            
-            // Update subtitle
-            const subtitle = document.getElementById('loginSubtitle');
-            if (type === 'provider') {
-                subtitle.textContent = 'Sign in to your provider account';
-            } else {
-                subtitle.textContent = 'Sign in to your customer account';
-            }
-            
-            // Clear any errors
-            hideError();
-            hideInfo();
-        }
-        
-        /**
-         * Show error message
-         */
-        function showError(message) {
-            const errorAlert = document.getElementById('errorAlert');
-            const errorMessage = document.getElementById('errorMessage');
-            errorMessage.textContent = message;
-            errorAlert.classList.add('show');
-            document.getElementById('successAlert').classList.remove('show');
-            document.getElementById('infoAlert').classList.remove('show');
-        }
-        
-        /**
-         * Hide error message
-         */
-        function hideError() {
-            document.getElementById('errorAlert').classList.remove('show');
-        }
-        
-        /**
-         * Show info message
-         */
-        function showInfo(message) {
-            const infoAlert = document.getElementById('infoAlert');
-            const infoMessage = document.getElementById('infoMessage');
-            infoMessage.textContent = message;
-            infoAlert.classList.add('show');
-            document.getElementById('errorAlert').classList.remove('show');
-        }
-        
-        /**
-         * Hide info message
-         */
-        function hideInfo() {
-            document.getElementById('infoAlert').classList.remove('show');
-        }
-        
-        /**
-         * Show success message
-         */
-        function showSuccess(message) {
-            const successAlert = document.getElementById('successAlert');
-            const successMessage = document.getElementById('successMessage');
-            successMessage.textContent = message;
-            successAlert.classList.add('show');
-            document.getElementById('errorAlert').classList.remove('show');
-            document.getElementById('infoAlert').classList.remove('show');
-        }
-        
-        /**
-         * Validate email format
-         */
-        function isValidEmail(email) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        }
-        
-        /**
-         * Handle form submission
-         */
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            hideError();
-            hideInfo();
-            
-            // Get form values
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const remember = document.getElementById('remember').checked;
-            const loginType = document.getElementById('loginType').value;
-            
-            // Validation
-            if (!isValidEmail(email)) {
-                showError('Please enter a valid email address');
-                return;
-            }
-            
-            if (!password) {
-                showError('Please enter your password');
-                return;
-            }
-            
-            // Prepare credentials for API
-            const credentials = {
-                email: email,
-                password: password,
-                user_type: loginType, // 'user' for customer, 'provider' for provider
-                remember_me: remember
-            };
-            
-            // Disable submit button
-            const submitBtn = document.getElementById('submitBtn');
-            const submitText = document.getElementById('submitText');
-            submitBtn.disabled = true;
-            submitText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
-            
-            try {
-                const response = await Auth.login(credentials);
-                
-                if (response.success) {
-                    showSuccess('Login successful! Redirecting...');
-                    
-                    // Redirect based on account type
-                    setTimeout(() => {
-                        if (loginType === 'provider') {
-                            window.location.href = 'provider-dashboard.html';
-                        } else {
-                            window.location.href = 'dashboard.html';
-                        }
-                    }, 1000);
-                } else {
-                    // Check for specific error messages that suggest switching account type
-                    const errorMsg = response.message || 'Login failed. Please try again.';
-                    
-                    if (errorMsg.includes('registered as a provider') || errorMsg.includes('provider account')) {
-                        showInfo('This email is registered as a Provider. Please click the Provider tab above.');
-                    } else if (errorMsg.includes('registered as a customer') || errorMsg.includes('customer account')) {
-                        showInfo('This email is registered as a Customer. Please click the Customer tab above.');
-                    } else {
-                        showError(errorMsg);
-                    }
-                    
-                    submitBtn.disabled = false;
-                    submitText.textContent = 'Sign In';
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                showError('An unexpected error occurred. Please try again.');
-                submitBtn.disabled = false;
-                submitText.textContent = 'Sign In';
-            }
-        });
-        
-        // Initialize - ensure customer is selected by default
-        selectLoginType('user');
-        
-        // Check for redirect messages in URL
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('registered') === 'true') {
-            showSuccess('Account created successfully! Please log in.');
-        }
+      AOS.init({ once: true });
     </script>
-</body>
+
+    <script src="../assets/js/auth.js?v=2.1.0"></script>
+    <script>
+      function showError(message) {
+        document.getElementById("errorMessage").textContent = message;
+        document.getElementById("errorAlert").classList.add("show");
+        document.getElementById("infoAlert").classList.remove("show");
+      }
+
+      function showInfo(message) {
+        document.getElementById("infoMessage").textContent = message;
+        document.getElementById("infoAlert").classList.add("show");
+        document.getElementById("errorAlert").classList.remove("show");
+      }
+
+      function hideAlerts() {
+        document.getElementById("errorAlert").classList.remove("show");
+        document.getElementById("infoAlert").classList.remove("show");
+      }
+
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      function selectLoginType(type) {
+        hideAlerts();
+        document.getElementById("loginType").value = type;
+
+        const btnUser = document.getElementById("btnUser");
+        const btnProvider = document.getElementById("btnProvider");
+        btnUser.classList.toggle("active", type === "user");
+        btnProvider.classList.toggle("active", type === "provider");
+
+        const badge = document.getElementById("visualBadge");
+        const title = document.getElementById("visualTitle");
+        const desc = document.getElementById("visualDesc");
+
+        if (type === "provider") {
+          badge.innerHTML = '<i class="fas fa-briefcase"></i>';
+          title.textContent = "Provider login";
+          desc.textContent =
+            "Manage services, bookings, earnings, reviews, and messages.";
+        } else {
+          badge.innerHTML = '<i class="fas fa-user"></i>';
+          title.textContent = "Customer login";
+          desc.textContent = "Access bookings, favorites, messages, and your profile.";
+        }
+      }
+
+      // Initialize from URL ?type=provider
+      (function initTypeFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        const t = params.get("type");
+        if (t === "provider") selectLoginType("provider");
+        else selectLoginType("user");
+      })();
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          hideAlerts();
+
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
+          const rememberMe = document.getElementById("remember").checked;
+          const loginType = document.getElementById("loginType").value;
+
+          if (!isValidEmail(email)) {
+            showError("Please enter a valid email address.");
+            return;
+          }
+          if (!password) {
+            showError("Please enter your password.");
+            return;
+          }
+
+          const submitBtn = document.getElementById("submitBtn");
+          const submitText = document.getElementById("submitText");
+          const original = submitText.textContent;
+          submitBtn.disabled = true;
+          submitText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+
+          try {
+            const result = await Auth.login({
+              email,
+              password,
+              user_type: loginType,
+              remember_me: rememberMe,
+            });
+
+            if (result.success) {
+              setTimeout(() => {
+                window.location.href =
+                  loginType === "provider"
+                    ? "provider-dashboard.html"
+                    : "dashboard.html";
+              }, 250);
+              return;
+            }
+
+            const msg = result.message || "Login failed.";
+            if (
+              msg.toLowerCase().includes("switch") ||
+              msg.toLowerCase().includes("registered as")
+            ) {
+              showInfo(msg);
+            } else {
+              showError(msg);
+            }
+          } catch (err) {
+            console.error(err);
+            showError("Login failed. Please try again.");
+          } finally {
+            submitBtn.disabled = false;
+            submitText.textContent = original;
+          }
+        });
+    </script>
+
+    <script src="../assets/js/main.js"></script>
+  </body>
 </html>
