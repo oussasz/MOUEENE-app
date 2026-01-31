@@ -472,12 +472,18 @@
             '<i class="fas fa-spinner fa-spin"></i> Signing in...';
 
           try {
-            const result = await Auth.login({
-              email,
-              password,
-              user_type: loginType,
-              remember_me: rememberMe,
-            });
+            const result =
+              loginType === "provider"
+                ? await Auth.loginProvider({
+                    email,
+                    password,
+                    remember_me: rememberMe,
+                  })
+                : await Auth.loginUser({
+                    email,
+                    password,
+                    remember_me: rememberMe,
+                  });
 
             if (result.success) {
               setTimeout(() => {

@@ -30,10 +30,42 @@ switch ($action) {
             Response::error('Method not allowed', 405);
         }
         break;
+
+    case 'register-user':
+        if ($method === 'POST') {
+            handleRegister($input, 'user');
+        } else {
+            Response::error('Method not allowed', 405);
+        }
+        break;
+
+    case 'register-provider':
+        if ($method === 'POST') {
+            handleRegister($input, 'provider');
+        } else {
+            Response::error('Method not allowed', 405);
+        }
+        break;
         
     case 'login':
         if ($method === 'POST') {
             handleLogin($input);
+        } else {
+            Response::error('Method not allowed', 405);
+        }
+        break;
+
+    case 'login-user':
+        if ($method === 'POST') {
+            handleLogin($input, 'user');
+        } else {
+            Response::error('Method not allowed', 405);
+        }
+        break;
+
+    case 'login-provider':
+        if ($method === 'POST') {
+            handleLogin($input, 'provider');
         } else {
             Response::error('Method not allowed', 405);
         }
@@ -94,9 +126,13 @@ switch ($action) {
  * - email, password, first_name, last_name, user_type
  * - For providers: phone, address, city are also required
  */
-function handleRegister($data) {
+function handleRegister($data, $forcedType = null) {
+    $rawType = $data['user_type'] ?? $data['account_type'] ?? $data['type'] ?? $data['role'] ?? ($data['is_provider'] ?? null);
+    $normalizedType = $forcedType ?? normalizeUserType($data);
+    $data['user_type'] = $normalizedType;
+
     // Log for debugging (can be removed in production)
-    error_log('[MOUEENE-AUTH] Registration attempt - user_type: ' . ($data['user_type'] ?? 'NOT_PROVIDED'));
+    error_log('[MOUEENE-AUTH] Registration attempt - raw_type: ' . json_encode($rawType) . ' forced: ' . json_encode($forcedType) . ' normalized: ' . ($normalizedType ?? 'INVALID'));
     
     // Basic validation
     $validator = new Validator($data);
@@ -104,8 +140,16 @@ function handleRegister($data) {
         ->required('email')->email('email')
         ->required('password')->minLength('password', 8)
         ->required('first_name')->minLength('first_name', 2)
-        ->required('last_name')->minLength('last_name', 2)
-        ->required('user_type')->in('user_type', ['user', 'provider']);
+        ->required('last_name')->minLength('last_name', 2);
+
+    if ($forcedType === null) {
+        $validator->required('user_type')->in('user_type', ['user', 'provider']);
+    } else {
+        if (!in_array($forcedType, ['user', 'provider'], true)) {
+            Response::error('Invalid account type.', 400);
+            return;
+        }
+    }
     
     // Provider-specific validation
     $userType = $data['user_type'] ?? null;
@@ -277,13 +321,24 @@ function handleRegister($data) {
  * - If user selects "Customer" but email is in providers table: show helpful error
  * - If user selects "Provider" but email is in users table: show helpful error
  */
-function handleLogin($data) {
+function handleLogin($data, $forcedType = null) {
+    $normalizedType = $forcedType ?? normalizeUserType($data, true);
+    $data['user_type'] = $normalizedType;
+
     // Validate input
     $validator = new Validator($data);
     $validator
         ->required('email')->email('email')
-        ->required('password')
-        ->required('user_type')->in('user_type', ['user', 'provider', 'admin']);
+        ->required('password');
+
+    if ($forcedType === null) {
+        $validator->required('user_type')->in('user_type', ['user', 'provider', 'admin']);
+    } else {
+        if (!in_array($forcedType, ['user', 'provider'], true)) {
+            Response::error('Invalid account type.', 400);
+            return;
+        }
+    }
     
     if ($validator->fails()) {
         Response::validationError($validator->getErrors());
@@ -612,4 +667,49 @@ function handleGetCurrentUser() {
         error_log('[MOUEENE-AUTH] Get user error: ' . $e->getMessage());
         Response::serverError('Failed to get user data.');
     }
+}
+
+/**
+ * Normalize user_type value from various client payloads.
+ * Accepts legacy fields like account_type/type/role/is_provider
+ * and maps common labels (customer/client) to 'user'.
+ */
+function normalizeUserType(array $data, bool $allowAdmin = false): ?string {
+    $raw = $data['user_type'] ?? $data['account_type'] ?? $data['type'] ?? $data['role'] ?? null;
+
+    if ($raw === null && array_key_exists('is_provider', $data)) {
+        $isProvider = $data['is_provider'];
+        if ($isProvider === true || $isProvider === 1 || $isProvider === '1' || $isProvider === 'true') {
+            $raw = 'provider';
+        }
+    }
+
+    if (is_string($raw)) {
+        $raw = strtolower(trim($raw));
+    }
+
+    if ($allowAdmin && $raw === 'admin') {
+        return 'admin';
+    }
+
+    $map = [
+        'user' => 'user',
+        'users' => 'user',
+        'customer' => 'user',
+        'client' => 'user',
+        'customer_account' => 'user',
+        'provider' => 'provider',
+        'providers' => 'provider',
+        'service_provider' => 'provider',
+        'service-provider' => 'provider',
+        'vendor' => 'provider',
+        'professional' => 'provider',
+        'freelancer' => 'provider',
+    ];
+
+    if (is_string($raw) && isset($map[$raw])) {
+        return $map[$raw];
+    }
+
+    return null;
 }

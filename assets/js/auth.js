@@ -45,6 +45,18 @@ const Auth = {
   // API base URL
   apiUrl: "/backend/api/v1",
 
+  async _post(path, body) {
+    const response = await fetch(`${this.apiUrl}/auth/${path}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    return response.json();
+  },
+
   /**
    * Get auth token from localStorage
    */
@@ -103,15 +115,7 @@ const Auth = {
    */
   async register(userData) {
     try {
-      const response = await fetch(`${this.apiUrl}/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-
-      const result = await response.json();
+      const result = await this._post("register", userData);
 
       if (result.success) {
         // Auto-login after registration
@@ -138,20 +142,64 @@ const Auth = {
     }
   },
 
+  async registerUser(userData) {
+    try {
+      const result = await this._post("register-user", userData);
+
+      if (result.success) {
+        this.setToken(result.data.token);
+        const resolvedType =
+          result.data.user_type || result.data.user?.user_type || "user";
+        this.setUser(result.data, resolvedType);
+        return { success: true, data: result.data, message: result.message };
+      }
+
+      return {
+        success: false,
+        message: result.message,
+        errors: result.errors,
+      };
+    } catch (error) {
+      console.error("Registration error:", error);
+      return {
+        success: false,
+        message: __t("Registration failed. Please try again."),
+      };
+    }
+  },
+
+  async registerProvider(userData) {
+    try {
+      const result = await this._post("register-provider", userData);
+
+      if (result.success) {
+        this.setToken(result.data.token);
+        const resolvedType =
+          result.data.user_type || result.data.user?.user_type || "provider";
+        this.setUser(result.data, resolvedType);
+        return { success: true, data: result.data, message: result.message };
+      }
+
+      return {
+        success: false,
+        message: result.message,
+        errors: result.errors,
+      };
+    } catch (error) {
+      console.error("Registration error:", error);
+      return {
+        success: false,
+        message: __t("Registration failed. Please try again."),
+      };
+    }
+  },
+
   /**
    * Login user
    */
   async login(credentials) {
     try {
-      const response = await fetch(`${this.apiUrl}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials),
-      });
-
-      const result = await response.json();
+      const result = await this._post("login", credentials);
 
       if (result.success) {
         this.setToken(result.data.token);
@@ -170,6 +218,60 @@ const Auth = {
       } else {
         return { success: false, message: result.message };
       }
+    } catch (error) {
+      console.error("Login error:", error);
+      return {
+        success: false,
+        message: __t("Login failed. Please try again."),
+      };
+    }
+  },
+
+  async loginUser(credentials) {
+    try {
+      const result = await this._post("login-user", credentials);
+
+      if (result.success) {
+        this.setToken(result.data.token);
+        const resolvedType =
+          result.data.user_type || result.data.user?.user_type || "user";
+        this.setUser(result.data.user, resolvedType);
+
+        if (credentials.remember_me) {
+          localStorage.setItem("remember_me", "true");
+        }
+
+        return { success: true, data: result.data, message: result.message };
+      }
+
+      return { success: false, message: result.message };
+    } catch (error) {
+      console.error("Login error:", error);
+      return {
+        success: false,
+        message: __t("Login failed. Please try again."),
+      };
+    }
+  },
+
+  async loginProvider(credentials) {
+    try {
+      const result = await this._post("login-provider", credentials);
+
+      if (result.success) {
+        this.setToken(result.data.token);
+        const resolvedType =
+          result.data.user_type || result.data.user?.user_type || "provider";
+        this.setUser(result.data.user, resolvedType);
+
+        if (credentials.remember_me) {
+          localStorage.setItem("remember_me", "true");
+        }
+
+        return { success: true, data: result.data, message: result.message };
+      }
+
+      return { success: false, message: result.message };
     } catch (error) {
       console.error("Login error:", error);
       return {

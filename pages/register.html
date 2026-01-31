@@ -589,7 +589,6 @@
 
           try {
             const payload = {
-              user_type: registerType,
               first_name: firstName,
               last_name: lastName,
               email,
@@ -604,7 +603,10 @@
               payload.business_name = businessName;
             }
 
-            const result = await Auth.register(payload);
+            const result =
+              registerType === "provider"
+                ? await Auth.registerProvider(payload)
+                : await Auth.registerUser(payload);
 
             if (!result.success) {
               showError(result.message || "Registration failed.");
