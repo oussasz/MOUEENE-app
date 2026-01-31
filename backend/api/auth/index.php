@@ -143,6 +143,10 @@ function handleRegister($data, $forcedType = null) {
         ->required('last_name')->minLength('last_name', 2);
 
     if ($forcedType === null) {
+        if ($normalizedType === null) {
+            Response::error('Account type is required. Please use the correct registration endpoint.', 400);
+            return;
+        }
         $validator->required('user_type')->in('user_type', ['user', 'provider']);
     } else {
         if (!in_array($forcedType, ['user', 'provider'], true)) {
