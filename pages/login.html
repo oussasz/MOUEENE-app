@@ -1,511 +1,584 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Login to your Moueene account" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login to your Moueene account">
     <title>Login - Moueene</title>
-    <!-- AOS Animation Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../assets/css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-      .auth-wrapper {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 120px 20px 50px;
-        background-color: var(--bg-light);
-        background-image:
-          linear-gradient(rgba(255, 69, 108, 0.05), rgba(0, 201, 167, 0.05)),
-          url("../assets/bg-pattern.png");
-        background-size: cover;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .auth-card {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-xl);
-        overflow: hidden;
-        width: 100%;
-        max-width: 1000px;
-        display: flex;
-        min-height: 600px;
-      }
-
-      .auth-content {
-        flex: 1;
-        padding: 50px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .auth-visual {
-        flex: 1;
-        background: linear-gradient(
-          135deg,
-          var(--primary-color),
-          var(--secondary-color)
-        );
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 40px;
-        color: white;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .auth-visual::before {
-        content: "";
-        position: absolute;
-        width: 150%;
-        height: 150%;
-        background: url("../assets/pattern-white.png");
-        opacity: 0.1;
-        animation: rotate 60s linear infinite;
-      }
-
-      @keyframes rotate {
-        from {
-          transform: rotate(0deg);
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-        to {
-          transform: rotate(360deg);
+        
+        .login-container {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 450px;
+            padding: 50px 40px;
         }
-      }
-
-      .visual-content {
-        position: relative;
-        z-index: 2;
-      }
-
-      .visual-icon {
-        font-size: 4rem;
-        margin-bottom: 20px;
-        background: rgba(255, 255, 255, 0.2);
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 20px;
-      }
-
-      .user-type-selector {
-        display: flex;
-        background: var(--bg-light);
-        padding: 5px;
-        border-radius: var(--radius-md);
-        margin-bottom: 25px;
-      }
-
-      .type-btn {
-        flex: 1;
-        padding: 10px;
-        text-align: center;
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        font-size: 0.9rem;
-        color: var(--text-light);
-      }
-
-      .type-btn.active {
-        background: white;
-        color: var(--primary-color);
-        box-shadow: var(--shadow-sm);
-        font-weight: 600;
-      }
-
-      @media (max-width: 768px) {
-        .auth-card {
-          flex-direction: column;
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 35px;
         }
-        .auth-visual {
-          display: none;
+        
+        .login-header .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            text-decoration: none;
+            color: #333;
         }
-        .auth-content {
-          padding: 30px 20px;
+        
+        .login-header .logo img {
+            height: 45px;
         }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Header -->
-    <header class="header glass-header" id="header">
-      <div class="container">
-        <nav class="navbar">
-          <a href="../index.html" class="logo">
-            <img src="../assets/images/logo.webp" alt="Moueene Logo" />
-            <span>Moueene</span>
-          </a>
-          <ul class="nav-menu">
-            <li><a href="../index.html">Home</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="providers.html">Providers</a></li>
-            <li><a href="how-it-works.html">How It Works</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-          <div class="nav-buttons">
-            <a href="login.html" class="btn btn-primary pulse-btn">Login</a>
-            <a href="register.html" class="btn btn-glass">Sign Up</a>
-          </div>
-          <div class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </nav>
-      </div>
-    </header>
-
-    <section class="auth-wrapper">
-      <div class="auth-card" data-aos="zoom-in" data-aos-duration="800">
-        <div class="auth-content">
-          <div class="text-center mb-30" style="margin-bottom: 30px">
-            <h2
-              style="
-                font-size: 2rem;
-                margin-bottom: 10px;
-                color: var(--text-dark);
-              "
-            >
-              Welcome Back
-            </h2>
-            <p style="color: var(--text-light)">Login to manage your account</p>
-          </div>
-
-          <!-- User Type Toggle -->
-          <div class="user-type-selector">
-            <div class="type-btn active" onclick="selectType('user')">
-              <i class="fas fa-user mr-2"></i> Customer
-            </div>
-            <div class="type-btn" onclick="selectType('provider')">
-              <i class="fas fa-user-tie mr-2"></i> Provider
-            </div>
-          </div>
-
-          <form action="#" class="auth-form" id="loginForm">
-            <input type="hidden" id="userType" name="type" value="user" />
-
-            <div class="form-group mb-20" style="margin-bottom: 20px">
-              <label
-                for="email"
-                style="margin-bottom: 8px; display: block; font-weight: 500"
-                >Email Address</label
-              >
-              <div class="input-with-icon relative">
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="hello@example.com"
-                  autocomplete="email"
-                  required
-                  style="
-                    width: 100%;
-                    padding: 12px 15px;
-                    border: 1px solid var(--border-color);
-                    border-radius: var(--radius-sm);
-                    outline: none;
-                  "
-                />
-              </div>
-            </div>
-
-            <div class="form-group mb-20" style="margin-bottom: 20px">
-              <label
-                for="password"
-                style="margin-bottom: 8px; display: block; font-weight: 500"
-                >Password</label
-              >
-              <input
-                type="password"
-                id="password"
-                placeholder="Enter your password"
-                autocomplete="current-password"
-                required
-                style="
-                  width: 100%;
-                  padding: 12px 15px;
-                  border: 1px solid var(--border-color);
-                  border-radius: var(--radius-sm);
-                  outline: none;
-                "
-              />
-            </div>
-
-            <div
-              class="form-options"
-              style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 30px;
-                font-size: 0.9rem;
-              "
-            >
-              <div
-                class="remember-me"
-                style="display: flex; align-items: center; gap: 8px"
-              >
-                <input
-                  type="checkbox"
-                  id="remember"
-                  style="accent-color: var(--primary-color)"
-                />
-                <label for="remember" style="color: var(--text-light)"
-                  >Remember me</label
-                >
-              </div>
-              <a
-                href="forgot-password.html"
-                style="color: var(--primary-color); font-weight: 500"
-                >Forgot Password?</a
-              >
-            </div>
-
-            <button
-              type="submit"
-              class="btn btn-primary btn-block w-100"
-              style="
-                width: 100%;
-                padding: 12px;
-                border: none;
-                border-radius: var(--radius-sm);
-                color: white;
-                font-weight: 600;
-                cursor: pointer;
-              "
-            >
-              Sign In
-            </button>
-          </form>
-
-          <div
-            class="auth-divider"
-            style="
-              text-align: center;
-              margin: 30px 0;
-              position: relative;
-              color: var(--text-light);
-              font-size: 0.9rem;
-            "
-          >
-            <span>Or continue with</span>
-          </div>
-
-          <div
-            class="social-login"
-            style="display: flex; justify-content: center; gap: 15px"
-          >
-            <button
-              class="btn"
-              style="
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                border: 1px solid var(--border-color);
-                background: white;
-                color: #db4437;
-              "
-            >
-              <i class="fab fa-google"></i>
-            </button>
-            <button
-              class="btn"
-              style="
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                border: 1px solid var(--border-color);
-                background: white;
-                color: #4267b2;
-              "
-            >
-              <i class="fab fa-facebook-f"></i>
-            </button>
-          </div>
-
-          <p
-            class="text-center mt-30"
-            style="margin-top: 30px; color: var(--text-light)"
-          >
-            Don't have an account?
-            <a
-              href="register.html"
-              style="color: var(--primary-color); font-weight: 600"
-              >Sign Up</a
-            >
-          </p>
-        </div>
-
-        <div class="auth-visual">
-          <div class="visual-content">
-            <div class="visual-icon">
-              <i class="fas fa-home"></i>
-            </div>
-            <h2 style="font-size: 2.5rem; margin-bottom: 15px">Moueene</h2>
-            <p
-              style="
-                font-size: 1.1rem;
-                opacity: 0.9;
-                max-width: 300px;
-                margin: 0 auto;
-              "
-            >
-              Connecting you with trusted professionals for all your home
-              service needs.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="../assets/js/auth.js"></script>
-    <script src="../assets/js/main.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        AOS.init({
-          duration: 800,
-          easing: "ease-out-cubic",
-          once: true,
-        });
-
-        // Redirect if already authenticated
-        if (Auth.isAuthenticated()) {
-          Auth.redirectToDashboard();
-          return;
+        
+        .login-header .logo span {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        // Initialize Type Selection based on URL params
-        const urlParams = new URLSearchParams(window.location.search);
-        const type = urlParams.get("type");
-        if (type === "provider") {
-          selectType("provider");
+        
+        .login-header h1 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 8px;
         }
-
-        // Handle login form submission
-        const loginForm = document.getElementById("loginForm");
-        loginForm.addEventListener("submit", async function (e) {
-          e.preventDefault();
-
-          const email = document.getElementById("email").value.trim();
-          const password = document.getElementById("password").value;
-          const userType = document.getElementById("userType").value;
-          const remember = document.getElementById("remember").checked;
-
-          // Client-side validation
-          if (!email) {
-            Auth.showModal({
-              type: "error",
-              title: "Validation Error",
-              message: "Please enter your email address.",
-            });
-            return;
-          }
-
-          if (!password) {
-            Auth.showModal({
-              type: "error",
-              title: "Validation Error",
-              message: "Please enter your password.",
-            });
-            return;
-          }
-
-          // Email format validation
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(email)) {
-            Auth.showModal({
-              type: "error",
-              title: "Invalid Email",
-              message: "Please enter a valid email address.",
-            });
-            return;
-          }
-
-          // Show loading state
-          const submitBtn = loginForm.querySelector('button[type="submit"]');
-          const originalText = submitBtn.textContent;
-          submitBtn.disabled = true;
-          submitBtn.innerHTML =
-            '<i class="fas fa-spinner fa-spin"></i> Signing In...';
-
-          try {
-            const credentials = {
-              email: email,
-              password: password,
-              user_type: userType,
-              remember_me: remember,
-            };
-
-            const result = await Auth.login(credentials);
-
-            if (result.success) {
-              await Auth.showModal({
-                type: "success",
-                title: "Welcome Back!",
-                message: result.message || "Login successful!",
-              });
-              Auth.redirectToDashboard();
-            } else {
-              await Auth.showModal({
-                type: "error",
-                title: "Login Failed",
-                message:
-                  result.message ||
-                  "Invalid email or password. Please try again.",
-              });
-              // Reset button
-              submitBtn.disabled = false;
-              submitBtn.textContent = originalText;
+        
+        .login-header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* Account Type Tabs */
+        .account-tabs {
+            display: flex;
+            background: #f5f5f5;
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .account-tab {
+            flex: 1;
+            padding: 12px 20px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #666;
+            border: none;
+            background: none;
+        }
+        
+        .account-tab:hover {
+            color: #333;
+        }
+        
+        .account-tab.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            font-weight: 600;
+        }
+        
+        .account-tab i {
+            margin-right: 8px;
+        }
+        
+        /* Form Styles */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #444;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input {
+            padding: 14px 16px;
+            border: 2px solid #e8e8e8;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .form-group input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-group input.error {
+            border-color: #e74c3c;
+        }
+        
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+        }
+        
+        .remember-me label {
+            color: #666;
+            cursor: pointer;
+        }
+        
+        .forgot-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #999;
+            font-size: 0.85rem;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e8e8e8;
+        }
+        
+        .divider span {
+            padding: 0 15px;
+        }
+        
+        /* Social Login */
+        .social-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            border: 2px solid #e8e8e8;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #444;
+        }
+        
+        .social-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .social-btn.google i { color: #ea4335; }
+        .social-btn.facebook i { color: #1877f2; }
+        
+        /* Register Link */
+        .register-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.95rem;
+            color: #666;
+        }
+        
+        .register-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Alert Messages */
+        .alert {
+            padding: 14px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .alert.show {
+            display: flex;
+        }
+        
+        .alert-error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .alert-success {
+            background: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .alert-info {
+            background: #eff6ff;
+            color: #2563eb;
+            border: 1px solid #bfdbfe;
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 40px 25px;
             }
-          } catch (error) {
-            console.error("Login error:", error);
-            await Auth.showModal({
-              type: "error",
-              title: "Connection Error",
-              message:
-                "Unable to connect to the server. Please check your internet connection and try again.",
-            });
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalText;
-          }
-        });
-      });
-
-      function selectType(type) {
-        document.getElementById("userType").value = type;
-        const btns = document.querySelectorAll(".type-btn");
-        btns.forEach((btn) => btn.classList.remove("active"));
-
-        if (type === "user") {
-          btns[0].classList.add("active");
-        } else {
-          btns[1].classList.add("active");
+            
+            .form-options {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .social-buttons {
+                flex-direction: column;
+            }
         }
-      }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/logo.webp" alt="Moueene">
+                <span>Moueene</span>
+            </a>
+            <h1>Welcome Back</h1>
+            <p id="loginSubtitle">Sign in to your customer account</p>
+        </div>
+        
+        <!-- Account Type Tabs -->
+        <div class="account-tabs">
+            <button class="account-tab active" data-type="user" onclick="selectLoginType('user')">
+                <i class="fas fa-user"></i> Customer
+            </button>
+            <button class="account-tab" data-type="provider" onclick="selectLoginType('provider')">
+                <i class="fas fa-briefcase"></i> Provider
+            </button>
+        </div>
+        
+        <div class="alert alert-error" id="errorAlert">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorMessage"></span>
+        </div>
+        
+        <div class="alert alert-success" id="successAlert">
+            <i class="fas fa-check-circle"></i>
+            <span id="successMessage"></span>
+        </div>
+        
+        <div class="alert alert-info" id="infoAlert">
+            <i class="fas fa-info-circle"></i>
+            <span id="infoMessage"></span>
+        </div>
+        
+        <form class="login-form" id="loginForm" novalidate>
+            <!-- Hidden field for login type -->
+            <input type="hidden" id="loginType" name="loginType" value="user">
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required autocomplete="email">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+            </div>
+            
+            <div class="form-options">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <span id="submitText">Sign In</span>
+            </button>
+        </form>
+        
+        <div class="divider">
+            <span>or continue with</span>
+        </div>
+        
+        <div class="social-buttons">
+            <button class="social-btn google">
+                <i class="fab fa-google"></i> Google
+            </button>
+            <button class="social-btn facebook">
+                <i class="fab fa-facebook-f"></i> Facebook
+            </button>
+        </div>
+        
+        <div class="register-link">
+            Don't have an account? <a href="register.html">Create one</a>
+        </div>
+    </div>
+
+    <script src="../assets/js/auth.js"></script>
+    <script>
+        // Current selected login type
+        let currentLoginType = 'user';
+        
+        /**
+         * Select login type (user or provider)
+         */
+        function selectLoginType(type) {
+            currentLoginType = type;
+            
+            // Update hidden field
+            document.getElementById('loginType').value = type;
+            
+            // Update tab selection
+            document.querySelectorAll('.account-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.account-tab[data-type="${type}"]`).classList.add('active');
+            
+            // Update subtitle
+            const subtitle = document.getElementById('loginSubtitle');
+            if (type === 'provider') {
+                subtitle.textContent = 'Sign in to your provider account';
+            } else {
+                subtitle.textContent = 'Sign in to your customer account';
+            }
+            
+            // Clear any errors
+            hideError();
+            hideInfo();
+        }
+        
+        /**
+         * Show error message
+         */
+        function showError(message) {
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorAlert.classList.add('show');
+            document.getElementById('successAlert').classList.remove('show');
+            document.getElementById('infoAlert').classList.remove('show');
+        }
+        
+        /**
+         * Hide error message
+         */
+        function hideError() {
+            document.getElementById('errorAlert').classList.remove('show');
+        }
+        
+        /**
+         * Show info message
+         */
+        function showInfo(message) {
+            const infoAlert = document.getElementById('infoAlert');
+            const infoMessage = document.getElementById('infoMessage');
+            infoMessage.textContent = message;
+            infoAlert.classList.add('show');
+            document.getElementById('errorAlert').classList.remove('show');
+        }
+        
+        /**
+         * Hide info message
+         */
+        function hideInfo() {
+            document.getElementById('infoAlert').classList.remove('show');
+        }
+        
+        /**
+         * Show success message
+         */
+        function showSuccess(message) {
+            const successAlert = document.getElementById('successAlert');
+            const successMessage = document.getElementById('successMessage');
+            successMessage.textContent = message;
+            successAlert.classList.add('show');
+            document.getElementById('errorAlert').classList.remove('show');
+            document.getElementById('infoAlert').classList.remove('show');
+        }
+        
+        /**
+         * Validate email format
+         */
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+        
+        /**
+         * Handle form submission
+         */
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            hideError();
+            hideInfo();
+            
+            // Get form values
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+            const loginType = document.getElementById('loginType').value;
+            
+            // Validation
+            if (!isValidEmail(email)) {
+                showError('Please enter a valid email address');
+                return;
+            }
+            
+            if (!password) {
+                showError('Please enter your password');
+                return;
+            }
+            
+            // Prepare credentials for API
+            const credentials = {
+                email: email,
+                password: password,
+                user_type: loginType, // 'user' for customer, 'provider' for provider
+                remember_me: remember
+            };
+            
+            // Disable submit button
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            submitBtn.disabled = true;
+            submitText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+            
+            try {
+                const response = await Auth.login(credentials);
+                
+                if (response.success) {
+                    showSuccess('Login successful! Redirecting...');
+                    
+                    // Redirect based on account type
+                    setTimeout(() => {
+                        if (loginType === 'provider') {
+                            window.location.href = 'provider-dashboard.html';
+                        } else {
+                            window.location.href = 'dashboard.html';
+                        }
+                    }, 1000);
+                } else {
+                    // Check for specific error messages that suggest switching account type
+                    const errorMsg = response.message || 'Login failed. Please try again.';
+                    
+                    if (errorMsg.includes('registered as a provider') || errorMsg.includes('provider account')) {
+                        showInfo('This email is registered as a Provider. Please click the Provider tab above.');
+                    } else if (errorMsg.includes('registered as a customer') || errorMsg.includes('customer account')) {
+                        showInfo('This email is registered as a Customer. Please click the Customer tab above.');
+                    } else {
+                        showError(errorMsg);
+                    }
+                    
+                    submitBtn.disabled = false;
+                    submitText.textContent = 'Sign In';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('An unexpected error occurred. Please try again.');
+                submitBtn.disabled = false;
+                submitText.textContent = 'Sign In';
+            }
+        });
+        
+        // Initialize - ensure customer is selected by default
+        selectLoginType('user');
+        
+        // Check for redirect messages in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('registered') === 'true') {
+            showSuccess('Account created successfully! Please log in.');
+        }
     </script>
-  </body>
+</body>
 </html>
