@@ -60,123 +60,105 @@ CORS::handle();
 // Set timezone
 date_default_timezone_set('Africa/Casablanca');
 
-// Get request method and path
-$method = $_SERVER['REQUEST_METHOD'];
-$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$path = trim($path, '/');
+// New router layout (with legacy fallback for non-migrated resources)
+require_once __DIR__ . '/core/Request.php';
+require_once __DIR__ . '/core/Router.php';
+require_once __DIR__ . '/controllers/AuthController.php';
+require_once __DIR__ . '/controllers/MetaController.php';
 
-// Normalize path to start after /api/ segment if present
-if (strpos($path, 'backend/api/') === 0) {
-    $path = substr($path, strlen('backend/api/'));
-} elseif (strpos($path, 'api/') === 0) {
-    $path = substr($path, strlen('api/'));
-} else {
-    $apiPos = strpos($path, '/api/');
-    if ($apiPos !== false) {
-        $path = substr($path, $apiPos + 5);
-    }
-}
+function legacyDispatch(Request $req): void {
+    // Build $parts array for legacy endpoint files
+    $parts = $req->segments;
+    $resource = $req->resource();
 
-// Get route parts
-$parts = array_values(array_filter(explode('/', $path), 'strlen'));
+    try {
+        switch ($resource) {
+            case 'auth':
+                require_once API_PATH . '/auth/index.php';
+                return;
+            case 'users':
+                require_once API_PATH . '/users/index.php';
+                return;
+            case 'providers':
+                require_once API_PATH . '/providers/index.php';
+                return;
+            case 'services':
+                require_once API_PATH . '/services/index.php';
+                return;
+            case 'categories':
+                require_once API_PATH . '/categories/index.php';
+                return;
+            case 'bookings':
+                require_once API_PATH . '/bookings/index.php';
+                return;
+            case 'payments':
+                require_once API_PATH . '/payments/index.php';
+                return;
+            case 'reviews':
+                require_once API_PATH . '/reviews/index.php';
+                return;
+            case 'messages':
+                require_once API_PATH . '/messages/index.php';
+                return;
+            case 'notifications':
+                require_once API_PATH . '/notifications/index.php';
+                return;
+            case 'content':
+                require_once API_PATH . '/content/index.php';
+                return;
+            case 'admin':
+                require_once API_PATH . '/admin/index.php';
+                return;
+            default:
+                if ($resource === '') {
+                    Response::success([
+                        'name' => 'Moueene API',
+                        'version' => 'v1',
+                        'status' => 'active',
+                        'endpoints' => [
+                            'auth' => '/api/v1/auth',
+                            'users' => '/api/v1/users',
+                            'providers' => '/api/v1/providers',
+                            'services' => '/api/v1/services',
+                            'categories' => '/api/v1/categories',
+                            'bookings' => '/api/v1/bookings',
+                            'payments' => '/api/v1/payments',
+                            'reviews' => '/api/v1/reviews',
+                            'messages' => '/api/v1/messages',
+                            'notifications' => '/api/v1/notifications',
+                            'content' => '/api/v1/content',
+                            'meta' => '/api/v1/meta/version'
+                        ]
+                    ], 'API is running');
+                }
 
-// Remove any leading backend/api segments if still present
-while (!empty($parts) && in_array($parts[0], ['backend', 'api'])) {
-    array_shift($parts);
-}
-
-// Check if first part is a version (v1, v2, etc.) or a resource
-// If it's not a version, insert 'v1' as default
-if (!empty($parts[0]) && !preg_match('/^v\d+$/', $parts[0])) {
-    // First part is not a version, treat it as resource
-    array_unshift($parts, 'v1');
-}
-
-$version = $parts[0] ?? 'v1';
-$resource = $parts[1] ?? '';
-
-// Route to appropriate endpoint
-try {
-    switch ($resource) {
-        case 'auth':
-            require_once API_PATH . '/auth/index.php';
-            break;
-            
-        case 'users':
-            require_once API_PATH . '/users/index.php';
-            break;
-            
-        case 'providers':
-            require_once API_PATH . '/providers/index.php';
-            break;
-            
-        case 'services':
-            require_once API_PATH . '/services/index.php';
-            break;
-            
-        case 'categories':
-            require_once API_PATH . '/categories/index.php';
-            break;
-            
-        case 'bookings':
-            require_once API_PATH . '/bookings/index.php';
-            break;
-            
-        case 'payments':
-            require_once API_PATH . '/payments/index.php';
-            break;
-            
-        case 'reviews':
-            require_once API_PATH . '/reviews/index.php';
-            break;
-            
-        case 'messages':
-            require_once API_PATH . '/messages/index.php';
-            break;
-            
-        case 'notifications':
-            require_once API_PATH . '/notifications/index.php';
-            break;
-            
-        case 'content':
-            require_once API_PATH . '/content/index.php';
-            break;
-            
-        case 'admin':
-            require_once API_PATH . '/admin/index.php';
-            break;
-            
-        default:
-            if (empty($resource)) {
-                Response::success([
-                    'name' => 'Moueene API',
-                    'version' => 'v1.0.0',
-                    'status' => 'active',
-                    'endpoints' => [
-                        'auth' => '/api/v1/auth',
-                        'users' => '/api/v1/users',
-                        'providers' => '/api/v1/providers',
-                        'services' => '/api/v1/services',
-                        'categories' => '/api/v1/categories',
-                        'bookings' => '/api/v1/bookings',
-                        'payments' => '/api/v1/payments',
-                        'reviews' => '/api/v1/reviews',
-                        'messages' => '/api/v1/messages',
-                        'notifications' => '/api/v1/notifications',
-                        'content' => '/api/v1/content'
-                    ]
-                ], 'API is running');
-            } else {
                 Response::notFound('Endpoint');
-            }
+        }
+    } catch (Exception $e) {
+        error_log($e->getMessage());
+        $debug = (require CONFIG_PATH . '/app.php')['app']['debug'];
+        $message = $debug ? $e->getMessage() : 'An error occurred';
+        Response::serverError($message);
     }
+}
+
+$req = Request::fromGlobals();
+$router = new Router();
+$auth = new AuthController();
+$meta = new MetaController();
+
+// Meta
+$router->add('GET', '/v1/meta/version', function(Request $r) use ($meta) { $meta->version($r); });
+
+// Auth (new controller)
+$router->add('POST', '/v1/auth/register-user', function(Request $r) use ($auth) { $auth->registerUser($r); });
+$router->add('POST', '/v1/auth/register-provider', function(Request $r) use ($auth) { $auth->registerProvider($r); });
+$router->add('POST', '/v1/auth/login-user', function(Request $r) use ($auth) { $auth->loginUser($r); });
+$router->add('POST', '/v1/auth/login-provider', function(Request $r) use ($auth) { $auth->loginProvider($r); });
+
+try {
+    $router->dispatch($req);
 } catch (Exception $e) {
-    // Log error
-    error_log($e->getMessage());
-    
-    // Send error response
-    $debug = (require CONFIG_PATH . '/app.php')['app']['debug'];
-    $message = $debug ? $e->getMessage() : 'An error occurred';
-    
-    Response::serverError($message);
+    // Fallback to legacy routing for non-migrated resources/routes
+    legacyDispatch($req);
 }

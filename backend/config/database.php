@@ -12,11 +12,13 @@
  */
 
 class Database {
-    // Database credentials - PRODUCTION (cPanel)
+    // Database credentials
+    // IMPORTANT: Do not hardcode secrets in git.
+    // Values are loaded from environment variables (preferred) and/or backend/config/.env (local dev).
     private static $host = 'localhost';
-    private static $db_name = 'ukqhmzdc_moueene';
-    private static $username = 'ukqhmzdc_admin';
-    private static $password = 'E@ITmbX,t-(OsOe4';
+    private static $db_name = 'moueene_db';
+    private static $username = 'root';
+    private static $password = '';
     private static $charset = 'utf8mb4';
     
     /**
@@ -24,39 +26,63 @@ class Database {
      * Only loads on localhost for development
      */
     private static function loadEnv() {
-        // Skip .env loading on production - use hardcoded credentials above
-        $serverName = $_SERVER['SERVER_NAME'] ?? '';
-        if (strpos($serverName, 'localhost') === false && strpos($serverName, '127.0.0.1') === false) {
-            return; // Production - don't load .env
+        // 1) Load from process environment first (best for production)
+        $envHost = getenv('DB_HOST');
+        $envName = getenv('DB_NAME');
+        $envUser = getenv('DB_USER');
+        $envPass = getenv('DB_PASSWORD');
+        if (!is_string($envPass) || $envPass === '') {
+            // Backwards compatible with existing .env.example key
+            $envPass = getenv('DB_PASS');
         }
-        
+        $envCharset = getenv('DB_CHARSET');
+
+        if (is_string($envHost) && $envHost !== '') self::$host = $envHost;
+        if (is_string($envName) && $envName !== '') self::$db_name = $envName;
+        if (is_string($envUser) && $envUser !== '') self::$username = $envUser;
+        if (is_string($envPass) && $envPass !== '') self::$password = $envPass;
+        if (is_string($envCharset) && $envCharset !== '') self::$charset = $envCharset;
+
+        // 2) Fallback to backend/config/.env (local dev convenience)
+        // This file must NOT be committed.
         $envFile = __DIR__ . '/.env';
-        if (file_exists($envFile)) {
-            $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            foreach ($lines as $line) {
-                if (strpos(trim($line), '#') === 0) continue;
-                $parts = explode('=', $line, 2);
-                if (count($parts) !== 2) continue;
-                $key = trim($parts[0]);
-                $value = trim($parts[1]);
-                
-                switch ($key) {
-                    case 'DB_HOST':
-                        self::$host = $value;
-                        break;
-                    case 'DB_NAME':
-                        self::$db_name = $value;
-                        break;
-                    case 'DB_USER':
-                        self::$username = $value;
-                        break;
-                    case 'DB_PASSWORD':
+        if (!file_exists($envFile)) {
+            return;
+        }
+
+        $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if ($line === '' || strpos($line, '#') === 0) continue;
+            $parts = explode('=', $line, 2);
+            if (count($parts) !== 2) continue;
+
+            $key = trim($parts[0]);
+            $value = trim($parts[1]);
+
+            // Don't override values that are already present via getenv()
+            switch ($key) {
+                case 'DB_HOST':
+                    if (!is_string(getenv('DB_HOST')) || getenv('DB_HOST') === '') self::$host = $value;
+                    break;
+                case 'DB_NAME':
+                    if (!is_string(getenv('DB_NAME')) || getenv('DB_NAME') === '') self::$db_name = $value;
+                    break;
+                case 'DB_USER':
+                    if (!is_string(getenv('DB_USER')) || getenv('DB_USER') === '') self::$username = $value;
+                    break;
+                case 'DB_PASSWORD':
+                case 'DB_PASS':
+                    if (
+                        (!is_string(getenv('DB_PASSWORD')) || getenv('DB_PASSWORD') === '') &&
+                        (!is_string(getenv('DB_PASS')) || getenv('DB_PASS') === '')
+                    ) {
                         self::$password = $value;
-                        break;
-                    case 'DB_CHARSET':
-                        self::$charset = $value;
-                        break;
-                }
+                    }
+                    break;
+                case 'DB_CHARSET':
+                    if (!is_string(getenv('DB_CHARSET')) || getenv('DB_CHARSET') === '') self::$charset = $value;
+                    break;
             }
         }
     }

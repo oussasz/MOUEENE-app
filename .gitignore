@@ -1,0 +1,17 @@
+# Secrets / local environment
+.env
+*.env
+backend/config/.env
+backend/config/.env.*
+
+# Logs
+*.log
+logs/
+php_server.log
+
+# OS / editor
+.DS_Store
+.vscode/
+
+# Dependencies / builds
+node_modules/
