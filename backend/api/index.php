@@ -151,6 +151,8 @@ $meta = new MetaController();
 $router->add('GET', '/v1/meta/version', function(Request $r) use ($meta) { $meta->version($r); });
 
 // Auth (new controller)
+$router->add('POST', '/v1/auth/register', function(Request $r) use ($auth) { $auth->registerLegacy($r); });
+$router->add('POST', '/v1/auth/login', function(Request $r) use ($auth) { $auth->loginLegacy($r); });
 $router->add('POST', '/v1/auth/register-user', function(Request $r) use ($auth) { $auth->registerUser($r); });
 $router->add('POST', '/v1/auth/register-provider', function(Request $r) use ($auth) { $auth->registerProvider($r); });
 $router->add('POST', '/v1/auth/login-user', function(Request $r) use ($auth) { $auth->loginUser($r); });

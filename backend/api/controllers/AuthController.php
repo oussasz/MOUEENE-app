@@ -4,6 +4,26 @@ require_once CLASSES_PATH . '/User.php';
 require_once CLASSES_PATH . '/Provider.php';
 
 class AuthController {
+    public function registerLegacy(Request $req): void {
+        $type = $this->inferAccountType($req->json);
+        if ($type === null) {
+            Response::error('Account type is required. Please use /v1/auth/register-user or /v1/auth/register-provider.', 400);
+            return;
+        }
+
+        $this->register($req, $type);
+    }
+
+    public function loginLegacy(Request $req): void {
+        $type = $this->inferAccountType($req->json);
+        if ($type === null) {
+            Response::error('Account type is required. Please use /v1/auth/login-user or /v1/auth/login-provider.', 400);
+            return;
+        }
+
+        $this->login($req, $type);
+    }
+
     public function registerUser(Request $req): void {
         $this->register($req, 'user');
     }
@@ -18,6 +38,41 @@ class AuthController {
 
     public function loginProvider(Request $req): void {
         $this->login($req, 'provider');
+    }
+
+    private function inferAccountType(array $data): ?string {
+        $candidates = [
+            $data['user_type'] ?? null,
+            $data['account_type'] ?? null,
+            $data['type'] ?? null,
+            $data['role'] ?? null,
+        ];
+
+        foreach ($candidates as $candidate) {
+            if (!is_string($candidate)) {
+                continue;
+            }
+            $t = strtolower(trim($candidate));
+            if ($t === 'provider' || $t === 'pro') {
+                return 'provider';
+            }
+            if ($t === 'user' || $t === 'customer' || $t === 'client') {
+                return 'user';
+            }
+        }
+
+        // Support boolean-ish field used by some older clients
+        if (array_key_exists('is_provider', $data)) {
+            $v = $data['is_provider'];
+            if ($v === true || $v === 1 || $v === '1' || $v === 'true') {
+                return 'provider';
+            }
+            if ($v === false || $v === 0 || $v === '0' || $v === 'false') {
+                return 'user';
+            }
+        }
+
+        return null;
     }
 
     private function register(Request $req, string $forcedType): void {
