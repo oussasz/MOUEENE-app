@@ -354,7 +354,11 @@
               <a href="forgot-password.html">Forgot Password?</a>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-wide" id="submitBtn">
+            <button
+              type="submit"
+              class="btn btn-primary btn-wide"
+              id="submitBtn"
+            >
               <span id="submitText">Sign In</span>
             </button>
 
@@ -427,7 +431,8 @@
         } else {
           badge.innerHTML = '<i class="fas fa-user"></i>';
           title.textContent = "Customer login";
-          desc.textContent = "Access bookings, favorites, messages, and your profile.";
+          desc.textContent =
+            "Access bookings, favorites, messages, and your profile.";
         }
       }
 
@@ -463,7 +468,8 @@
           const submitText = document.getElementById("submitText");
           const original = submitText.textContent;
           submitBtn.disabled = true;
-          submitText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+          submitText.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Signing in...';
 
           try {
             const result = await Auth.login({

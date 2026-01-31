@@ -263,7 +263,9 @@
           </ul>
           <div class="nav-buttons">
             <a href="login.html" class="btn btn-glass">Login</a>
-            <a href="register.html" class="btn btn-primary pulse-btn">Sign Up</a>
+            <a href="register.html" class="btn btn-primary pulse-btn"
+              >Sign Up</a
+            >
           </div>
           <div class="hamburger">
             <span></span>
@@ -438,7 +440,11 @@
               </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-wide" id="submitBtn">
+            <button
+              type="submit"
+              class="btn btn-primary btn-wide"
+              id="submitBtn"
+            >
               <span id="submitText">Create Account</span>
             </button>
 
@@ -543,8 +549,11 @@
           const city = document.getElementById("city").value.trim();
           const address = document.getElementById("address").value.trim();
           const password = document.getElementById("password").value;
-          const confirmPassword = document.getElementById("confirmPassword").value;
-          const businessName = document.getElementById("businessName").value.trim();
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+          const businessName = document
+            .getElementById("businessName")
+            .value.trim();
 
           if (!firstName || !lastName) {
             showError("Please enter your name.");
@@ -603,11 +612,12 @@
             }
 
             showSuccess(
-              "Account created successfully. Redirecting to login..."
+              "Account created successfully. Redirecting to login...",
             );
 
             setTimeout(() => {
-              const typeParam = registerType === "provider" ? "provider" : "user";
+              const typeParam =
+                registerType === "provider" ? "provider" : "user";
               window.location.href = `login.html?type=${typeParam}`;
             }, 900);
           } catch (err) {
