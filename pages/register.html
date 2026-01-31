@@ -473,7 +473,7 @@
       AOS.init({ once: true });
     </script>
 
-    <script src="../assets/js/auth.js?v=2.1.0"></script>
+    <script src="../assets/js/auth.js?v=2.1.1"></script>
     <script>
       function showAlertError(message) {
         document.getElementById("errorMessage").textContent = message;
@@ -607,20 +607,17 @@
               throw new Error("Auth module not loaded");
             }
 
-            const registerFn =
-              registerType === "provider"
-                ? Auth.registerProvider || Auth.register
-                : Auth.registerUser || Auth.register;
-
-            if (typeof registerFn !== "function") {
+            if (
+              typeof Auth.registerProvider !== "function" ||
+              typeof Auth.registerUser !== "function"
+            ) {
               throw new Error("Registration function not available");
             }
 
-            if (registerFn === Auth.register) {
-              payload.user_type = registerType;
-            }
-
-            const result = await registerFn(payload);
+            const result =
+              registerType === "provider"
+                ? await Auth.registerProvider(payload)
+                : await Auth.registerUser(payload);
 
             if (!result.success) {
               showAlertError(result.message || "Registration failed.");
