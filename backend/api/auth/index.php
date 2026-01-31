@@ -156,8 +156,7 @@ function handleRegister($data, $forcedType = null) {
     }
     
     // Provider-specific validation
-    $userType = $data['user_type'] ?? null;
-    if ($userType === 'provider') {
+    if ($normalizedType === 'provider') {
         $validator
             ->required('phone')->minLength('phone', 6)
             ->required('address')->minLength('address', 2)
@@ -169,6 +168,11 @@ function handleRegister($data, $forcedType = null) {
         Response::validationError($validator->getErrors());
         return;
     }
+    
+    // IMPORTANT: Use normalizedType (which equals forcedType when endpoint forces it)
+    // This is the definitive account type for insertion
+    $userType = $normalizedType;
+    error_log('[MOUEENE-AUTH] Final userType for insertion: ' . $userType);
     
     try {
         $db = Database::getConnection();
