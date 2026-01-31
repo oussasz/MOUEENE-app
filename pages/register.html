@@ -475,29 +475,29 @@
 
     <script src="../assets/js/auth.js?v=2.1.0"></script>
     <script>
-      function showError(message) {
+      function showAlertError(message) {
         document.getElementById("errorMessage").textContent = message;
         document.getElementById("errorAlert").classList.add("show");
         document.getElementById("successAlert").classList.remove("show");
       }
 
-      function showSuccess(message) {
+      function showAlertSuccess(message) {
         document.getElementById("successMessage").textContent = message;
         document.getElementById("successAlert").classList.add("show");
         document.getElementById("errorAlert").classList.remove("show");
       }
 
-      function hideAlerts() {
+      function hideAuthAlerts() {
         document.getElementById("errorAlert").classList.remove("show");
         document.getElementById("successAlert").classList.remove("show");
       }
 
-      function isValidEmail(email) {
+      function isRegisterEmailValid(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
       }
 
       function selectRegisterType(type) {
-        hideAlerts();
+        hideAuthAlerts();
         document.getElementById("registerType").value = type;
 
         const btnUser = document.getElementById("btnUser");
@@ -537,7 +537,7 @@
         .getElementById("registerForm")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
-          hideAlerts();
+          hideAuthAlerts();
 
           const registerType = document.getElementById("registerType").value;
 
@@ -556,27 +556,27 @@
             .value.trim();
 
           if (!firstName || !lastName) {
-            showError("Please enter your name.");
+            showAlertError("Please enter your name.");
             return;
           }
-          if (!isValidEmail(email)) {
-            showError("Please enter a valid email address.");
+          if (!isRegisterEmailValid(email)) {
+            showAlertError("Please enter a valid email address.");
             return;
           }
           if (!city) {
-            showError("Please enter your city.");
+            showAlertError("Please enter your city.");
             return;
           }
           if (!address) {
-            showError("Please enter your address.");
+            showAlertError("Please enter your address.");
             return;
           }
           if (!password || password.length < 6) {
-            showError("Password must be at least 6 characters.");
+            showAlertError("Password must be at least 6 characters.");
             return;
           }
           if (password !== confirmPassword) {
-            showError("Passwords do not match.");
+            showAlertError("Passwords do not match.");
             return;
           }
 
@@ -603,17 +603,31 @@
               payload.business_name = businessName;
             }
 
-            const result =
+            if (typeof Auth === "undefined") {
+              throw new Error("Auth module not loaded");
+            }
+
+            const registerFn =
               registerType === "provider"
-                ? await Auth.registerProvider(payload)
-                : await Auth.registerUser(payload);
+                ? Auth.registerProvider || Auth.register
+                : Auth.registerUser || Auth.register;
+
+            if (typeof registerFn !== "function") {
+              throw new Error("Registration function not available");
+            }
+
+            if (registerFn === Auth.register) {
+              payload.user_type = registerType;
+            }
+
+            const result = await registerFn(payload);
 
             if (!result.success) {
-              showError(result.message || "Registration failed.");
+              showAlertError(result.message || "Registration failed.");
               return;
             }
 
-            showSuccess(
+            showAlertSuccess(
               "Account created successfully. Redirecting to login...",
             );
 
@@ -624,7 +638,7 @@
             }, 900);
           } catch (err) {
             console.error(err);
-            showError("Registration failed. Please try again.");
+            showAlertError("Registration failed. Please try again.");
           } finally {
             submitBtn.disabled = false;
             submitText.textContent = original;
