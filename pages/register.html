@@ -211,7 +211,7 @@
 
           <!-- User Type Toggle -->
           <div class="user-type-selector">
-            <div class="type-btn active" onclick="selectType('user')">
+            <div class="type-btn active" onclick="selectType('customer')">
               <i class="fas fa-user mr-2"></i> Join as Customer
             </div>
             <div class="type-btn" onclick="selectType('provider')">
@@ -223,8 +223,8 @@
             <input
               type="hidden"
               id="accountType"
-              name="user_type"
-              value="user"
+              name="type"
+              value="customer"
             />
 
             <div class="form-row mb-20">
@@ -525,8 +525,6 @@
         const type = urlParams.get("type");
         if (type === "provider") {
           selectType("provider");
-        } else if (type === "user" || type === "customer") {
-          selectType("user");
         }
 
         // Handle registration form submission
@@ -627,13 +625,16 @@
             '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
 
           try {
+            // Build user_type from selection
+            const userType = accountType === "customer" ? "user" : "provider";
+
             const userData = {
               email: email,
               password: password,
               first_name: firstName,
               last_name: lastName,
               phone: phone,
-              user_type: accountType,
+              user_type: userType,
             };
 
             // Always capture address/city; backend will require them for providers
@@ -688,6 +689,7 @@
 
       function selectType(type) {
         document.getElementById("accountType").value = type;
+        
         const btns = document.querySelectorAll(".type-btn");
         btns.forEach((btn) => btn.classList.remove("active"));
 
@@ -697,7 +699,7 @@
         const addressInput = document.getElementById("address");
         const cityInput = document.getElementById("city");
 
-        if (type === "user") {
+        if (type === "customer") {
           btns[0].classList.add("active");
           visualTitle.textContent = "Start Your Journey";
           visualDesc.textContent =

@@ -83,18 +83,10 @@ switch ($action) {
  * Handle user registration
  */
 function handleRegister($data) {
-    // Normalize user_type from common/legacy fields to prevent misclassification
-    $rawType = $data['user_type'] ?? $data['type'] ?? $data['account_type'] ?? $data['accountType'] ?? null;
-    if (is_string($rawType)) {
-        $rawType = strtolower(trim($rawType));
-    }
-    if ($rawType === 'customer') {
-        $rawType = 'user';
-    }
-    if ($rawType === 'provider' || $rawType === 'user') {
-        $data['user_type'] = $rawType;
-    }
-
+    // DEBUG: Log received user_type for troubleshooting production issues
+    error_log('[Moueene Register] Received user_type: ' . json_encode($data['user_type'] ?? 'NOT SET'));
+    error_log('[Moueene Register] Full payload keys: ' . json_encode(array_keys($data)));
+    
     // Validate input
     $validator = new Validator($data);
     $validator
@@ -104,7 +96,7 @@ function handleRegister($data) {
         ->required('last_name')->minLength('last_name', 2)
         ->required('user_type')->in('user_type', ['user', 'provider']);
 
-    // Provider accounts require a phone number at registration time
+    // Provider accounts require phone, address, city at registration time
     if (($data['user_type'] ?? null) === 'provider') {
         $validator->required('phone')->minLength('phone', 6);
         $validator->required('address')->minLength('address', 2);
@@ -112,6 +104,7 @@ function handleRegister($data) {
     }
 
     if ($validator->fails()) {
+        error_log('[Moueene Register] Validation failed: ' . json_encode($validator->getErrors()));
         Response::validationError($validator->getErrors());
     }
     
@@ -148,6 +141,7 @@ function handleRegister($data) {
         
         // Insert user
         if ($data['user_type'] === 'provider') {
+            error_log('[Moueene Register] Inserting into PROVIDERS table for: ' . $data['email']);
             // NOTE: the providers table has additional NOT NULL fields (e.g. address/city).
             // Collect them at registration time.
             $sql = "INSERT INTO providers (email, password_hash, first_name, last_name, phone, address, city, country, profile_picture, verification_token) 
@@ -167,7 +161,9 @@ function handleRegister($data) {
             ]);
             $userId = $db->lastInsertId();
             $idField = 'provider_id';
+            error_log('[Moueene Register] SUCCESS: Created provider_id=' . $userId);
         } else {
+            error_log('[Moueene Register] Inserting into USERS table for: ' . $data['email']);
             $sql = "INSERT INTO users (email, password_hash, first_name, last_name, phone, address, city, country, profile_picture, verification_token) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $db->prepare($sql);
@@ -185,6 +181,7 @@ function handleRegister($data) {
             ]);
             $userId = $db->lastInsertId();
             $idField = 'user_id';
+            error_log('[Moueene Register] SUCCESS: Created user_id=' . $userId);
         }
         
         // Generate JWT token
