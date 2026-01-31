@@ -1,4 +1,6 @@
 ---
 deployment:
   tasks:
-    - /bin/echo "Deployment skipped: repository is already in public_html."
+    - export DEPLOYPATH="$HOME/public_html/"
+    - /bin/echo "Deploying to $DEPLOYPATH"
+    - /usr/bin/rsync -a --delete --exclude '.git' --exclude '.cpanel.yml' ./ "$DEPLOYPATH"
