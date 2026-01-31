@@ -83,6 +83,18 @@ switch ($action) {
  * Handle user registration
  */
 function handleRegister($data) {
+    // Normalize user_type from common/legacy fields to prevent misclassification
+    $rawType = $data['user_type'] ?? $data['type'] ?? $data['account_type'] ?? $data['accountType'] ?? null;
+    if (is_string($rawType)) {
+        $rawType = strtolower(trim($rawType));
+    }
+    if ($rawType === 'customer') {
+        $rawType = 'user';
+    }
+    if ($rawType === 'provider' || $rawType === 'user') {
+        $data['user_type'] = $rawType;
+    }
+
     // Validate input
     $validator = new Validator($data);
     $validator

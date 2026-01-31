@@ -211,7 +211,7 @@
 
           <!-- User Type Toggle -->
           <div class="user-type-selector">
-            <div class="type-btn active" onclick="selectType('customer')">
+            <div class="type-btn active" onclick="selectType('user')">
               <i class="fas fa-user mr-2"></i> Join as Customer
             </div>
             <div class="type-btn" onclick="selectType('provider')">
@@ -223,8 +223,8 @@
             <input
               type="hidden"
               id="accountType"
-              name="type"
-              value="customer"
+              name="user_type"
+              value="user"
             />
 
             <div class="form-row mb-20">
@@ -525,6 +525,8 @@
         const type = urlParams.get("type");
         if (type === "provider") {
           selectType("provider");
+        } else if (type === "user" || type === "customer") {
+          selectType("user");
         }
 
         // Handle registration form submission
@@ -631,7 +633,7 @@
               first_name: firstName,
               last_name: lastName,
               phone: phone,
-              user_type: accountType === "customer" ? "user" : "provider",
+              user_type: accountType,
             };
 
             // Always capture address/city; backend will require them for providers
@@ -695,7 +697,7 @@
         const addressInput = document.getElementById("address");
         const cityInput = document.getElementById("city");
 
-        if (type === "customer") {
+        if (type === "user") {
           btns[0].classList.add("active");
           visualTitle.textContent = "Start Your Journey";
           visualDesc.textContent =
