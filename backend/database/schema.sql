@@ -73,7 +73,7 @@ CREATE TABLE users (
     city VARCHAR(100),
     state VARCHAR(100),
     zip_code VARCHAR(20),
-    country VARCHAR(100) DEFAULT 'Morocco',
+    country VARCHAR(100) DEFAULT 'Algeria',
     date_of_birth DATE,
     gender ENUM('male', 'female', 'other', 'prefer_not_to_say'),
     email_verified BOOLEAN DEFAULT FALSE,
@@ -118,7 +118,7 @@ CREATE TABLE providers (
     city VARCHAR(100) NOT NULL,
     state VARCHAR(100),
     zip_code VARCHAR(20),
-    country VARCHAR(100) DEFAULT 'Morocco',
+    country VARCHAR(100) DEFAULT 'Algeria',
     date_of_birth DATE,
     gender ENUM('male', 'female', 'other', 'prefer_not_to_say'),
     

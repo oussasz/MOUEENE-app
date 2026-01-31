@@ -95,25 +95,35 @@ function handleRegister($data) {
     // Provider accounts require a phone number at registration time
     if (($data['user_type'] ?? null) === 'provider') {
         $validator->required('phone')->minLength('phone', 6);
+        $validator->required('address')->minLength('address', 2);
+        $validator->required('city')->minLength('city', 2);
     }
-    
+
     if ($validator->fails()) {
         Response::validationError($validator->getErrors());
     }
     
     try {
         $db = Database::getConnection();
-        
-        // Log incoming user_type for debugging
-        error_log("[Register] Received user_type: " . ($data['user_type'] ?? 'NULL'));
-        
-        // Check if email exists in BOTH tables to prevent cross-table duplicates
-        $stmt = $db->prepare("SELECT 'users' as tbl FROM users WHERE email = ? UNION SELECT 'providers' as tbl FROM providers WHERE email = ?");
+
+        $address = isset($data['address']) && trim((string) $data['address']) !== ''
+            ? trim((string) $data['address'])
+            : null;
+        $city = isset($data['city']) && trim((string) $data['city']) !== ''
+            ? trim((string) $data['city'])
+            : null;
+        $country = isset($data['country']) && trim((string) $data['country']) !== ''
+            ? trim((string) $data['country'])
+            : 'Algeria';
+
+        // Check if email exists in BOTH tables (avoid duplicates across users/providers)
+        $stmt = $db->prepare(
+            "SELECT 'users' AS tbl FROM users WHERE email = ?\n" .
+            "UNION\n" .
+            "SELECT 'providers' AS tbl FROM providers WHERE email = ?"
+        );
         $stmt->execute([$data['email'], $data['email']]);
-        $existing = $stmt->fetch();
-        
-        if ($existing) {
-            error_log("[Register] Email already exists in table: " . $existing['tbl']);
+        if ($stmt->fetch()) {
             Response::error('Email already exists', 409);
         }
         
@@ -127,9 +137,9 @@ function handleRegister($data) {
         // Insert user
         if ($data['user_type'] === 'provider') {
             // NOTE: the providers table has additional NOT NULL fields (e.g. address/city).
-            // We accept them optionally at registration time and default to empty strings.
-            $sql = "INSERT INTO providers (email, password_hash, first_name, last_name, phone, address, city, profile_picture, verification_token) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            // Collect them at registration time.
+            $sql = "INSERT INTO providers (email, password_hash, first_name, last_name, phone, address, city, country, profile_picture, verification_token) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $db->prepare($sql);
             $stmt->execute([
                 $data['email'],
@@ -137,16 +147,17 @@ function handleRegister($data) {
                 $data['first_name'],
                 $data['last_name'],
                 $data['phone'],
-                $data['address'] ?? '',
-                $data['city'] ?? '',
+                $address,
+                $city,
+                $country,
                 $defaultAvatar,
                 $verificationToken
             ]);
             $userId = $db->lastInsertId();
             $idField = 'provider_id';
         } else {
-            $sql = "INSERT INTO users (email, password_hash, first_name, last_name, phone, profile_picture, verification_token) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO users (email, password_hash, first_name, last_name, phone, address, city, country, profile_picture, verification_token) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $db->prepare($sql);
             $stmt->execute([
                 $data['email'],
@@ -154,6 +165,9 @@ function handleRegister($data) {
                 $data['first_name'],
                 $data['last_name'],
                 $data['phone'] ?? null,
+                $address,
+                $city,
+                $country,
                 $defaultAvatar,
                 $verificationToken
             ]);
@@ -189,13 +203,8 @@ function handleLogin($data) {
     $validator = new Validator($data);
     $validator
         ->required('email')->email('email')
-        ->required('password');
-
-    // user_type is optional for user/provider (we infer it from DB).
-    // It's still allowed for admin login.
-    if (isset($data['user_type']) && $data['user_type'] !== '') {
-        $validator->in('user_type', ['user', 'provider', 'admin']);
-    }
+        ->required('password')
+        ->required('user_type')->in('user_type', ['user', 'provider', 'admin']);
 
     if ($validator->fails()) {
         Response::validationError($validator->getErrors());
@@ -204,10 +213,7 @@ function handleLogin($data) {
     try {
         $db = Database::getConnection();
         
-        $requestedType = $data['user_type'] ?? null;
-        if ($requestedType === '') {
-            $requestedType = null;
-        }
+        $requestedType = $data['user_type'];
 
         // Admin login remains explicit
         if ($requestedType === 'admin') {
@@ -239,40 +245,46 @@ function handleLogin($data) {
                 }
             }
         } else {
-            // User/provider login: ignore the requested user_type and infer the real account type
-            // from the database. This prevents logging in as the wrong type when the UI toggle
-            // doesn't match the provided credentials.
+            // Enforce the selected account type (provider vs customer).
             $user = null;
-            $table = null;
-            $idField = null;
-            $userType = null;
-
-            // Try provider first
-            $stmt = $db->prepare("SELECT * FROM providers WHERE email = ?");
-            $stmt->execute([$data['email']]);
-            $provider = $stmt->fetch();
-            if ($provider && Auth::verifyPassword($data['password'], $provider['password_hash'])) {
-                $user = $provider;
+            if ($requestedType === 'provider') {
                 $table = 'providers';
                 $idField = 'provider_id';
                 $userType = 'provider';
+            } else {
+                $table = 'users';
+                $idField = 'user_id';
+                $userType = 'user';
             }
 
-            // Then try user
+            $stmt = $db->prepare("SELECT * FROM $table WHERE email = ?");
+            $stmt->execute([$data['email']]);
+            $user = $stmt->fetch();
+
             if (!$user) {
-                $stmt = $db->prepare("SELECT * FROM users WHERE email = ?");
-                $stmt->execute([$data['email']]);
-                $normalUser = $stmt->fetch();
-                if ($normalUser && Auth::verifyPassword($data['password'], $normalUser['password_hash'])) {
-                    $user = $normalUser;
-                    $table = 'users';
-                    $idField = 'user_id';
-                    $userType = 'user';
+                // If the email exists under the other account type, return a professional hint.
+                if ($requestedType === 'provider') {
+                    $stmt = $db->prepare("SELECT user_id FROM users WHERE email = ?");
+                    $stmt->execute([$data['email']]);
+                    if ($stmt->fetch()) {
+                        Response::error('This email is registered as a customer account. Please switch to Customer login.', 404);
+                    }
+                    Response::error('No provider account exists with this email.', 404);
+                } else {
+                    $stmt = $db->prepare("SELECT provider_id FROM providers WHERE email = ?");
+                    $stmt->execute([$data['email']]);
+                    if ($stmt->fetch()) {
+                        Response::error('This email is registered as a provider account. Please switch to Provider login.', 404);
+                    }
+                    Response::error('No customer account exists with this email.', 404);
                 }
             }
 
-            if (!$user) {
-                Response::error('Invalid email or password', 401);
+            if (!Auth::verifyPassword($data['password'], $user['password_hash'])) {
+                if ($requestedType === 'provider') {
+                    Response::error('Invalid provider email or password.', 401);
+                }
+                Response::error('Invalid customer email or password.', 401);
             }
         }
         

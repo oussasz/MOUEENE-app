@@ -336,8 +336,8 @@
               />
             </div>
 
-            <!-- Provider-only fields (hidden by default) -->
-            <div id="providerFields" style="display: none">
+            <!-- Address details (captured for both customers and providers) -->
+            <div id="providerFields">
               <div class="form-group mb-20" style="margin-bottom: 15px">
                 <label
                   for="address"
@@ -347,7 +347,7 @@
                     font-weight: 500;
                     font-size: 0.9rem;
                   "
-                  >Business Address</label
+                  >Address</label
                 >
                 <input
                   type="text"
@@ -625,33 +625,20 @@
             '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
 
           try {
-            // Build user_type based on selection
-            const userType = accountType === "customer" ? "user" : "provider";
-
-            console.log("[Register] accountType selected:", accountType);
-            console.log("[Register] user_type being sent:", userType);
-
             const userData = {
               email: email,
               password: password,
               first_name: firstName,
               last_name: lastName,
               phone: phone,
-              user_type: userType,
+              user_type: accountType === "customer" ? "user" : "provider",
             };
 
-            // Add provider-specific fields if registering as provider
-            if (userType === "provider") {
-              userData.address = document
-                .getElementById("address")
-                .value.trim();
-              userData.city = document.getElementById("city").value.trim();
-            }
-
-            console.log("[Register] Full userData:", JSON.stringify(userData));
+            // Always capture address/city; backend will require them for providers
+            userData.address = document.getElementById("address").value.trim();
+            userData.city = document.getElementById("city").value.trim();
 
             const result = await Auth.register(userData);
-            console.log("[Register] API result:", JSON.stringify(result));
 
             if (result.success) {
               await Auth.showModal({
@@ -698,31 +685,32 @@
       });
 
       function selectType(type) {
-        console.log("[selectType] Setting accountType to:", type);
         document.getElementById("accountType").value = type;
-        console.log(
-          "[selectType] accountType value is now:",
-          document.getElementById("accountType").value,
-        );
         const btns = document.querySelectorAll(".type-btn");
         btns.forEach((btn) => btn.classList.remove("active"));
 
         const visualTitle = document.querySelector("#visual-text h2");
         const visualDesc = document.querySelector("#visual-text p");
-        const providerFields = document.getElementById("providerFields");
+        const addressLabel = document.querySelector('label[for="address"]');
+        const addressInput = document.getElementById("address");
+        const cityInput = document.getElementById("city");
 
         if (type === "customer") {
           btns[0].classList.add("active");
           visualTitle.textContent = "Start Your Journey";
           visualDesc.textContent =
             "Find the best professionals for your needs in minutes.";
-          providerFields.style.display = "none";
+          if (addressLabel) addressLabel.textContent = "Address";
+          addressInput.required = false;
+          cityInput.required = false;
         } else {
           btns[1].classList.add("active");
           visualTitle.textContent = "Grow Your Business";
           visualDesc.textContent =
             "Join thousands of providers and reach more customers.";
-          providerFields.style.display = "block";
+          if (addressLabel) addressLabel.textContent = "Business Address";
+          addressInput.required = true;
+          cityInput.required = true;
         }
       }
     </script>
