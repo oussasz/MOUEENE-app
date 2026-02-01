@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Services - Provider Dashboard</title>
-    <link rel="icon" type="image/png" href="../logo.png" />
+    <link rel="icon" type="image/webp" href="/assets/images/logo.webp" />
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link
       rel="stylesheet"
@@ -756,6 +756,38 @@
                   <small>Make this service visible to customers.</small>
                 </span>
               </label>
+
+              <div style="margin-top: 14px">
+                <label class="field-label" for="add-images"
+                  >Service Images (optional)</label
+                >
+                <input
+                  id="add-images"
+                  class="field-input"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                />
+                <small
+                  style="
+                    display: block;
+                    color: var(--text-light);
+                    margin-top: 6px;
+                  "
+                >
+                  Upload up to 5 images (JPG/PNG/WebP). These will be shown to
+                  customers.
+                </small>
+                <div
+                  id="add-images-preview"
+                  style="
+                    display: flex;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                    margin-top: 10px;
+                  "
+                ></div>
+              </div>
             </div>
           </div>
         </div>
@@ -862,6 +894,27 @@
                   <small>Make this service visible to customers.</small>
                 </span>
               </label>
+
+              <div style="margin-top: 14px">
+                <label class="field-label" for="edit-images"
+                  >Images (optional)</label
+                >
+                <input
+                  id="edit-images"
+                  class="field-input"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                />
+                <div
+                  id="edit-images-preview"
+                  style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px"
+                ></div>
+                <small style="display:block; margin-top:8px; color: var(--text-light)"
+                  >Upload up to 10 images. Remove images to delete them from your
+                  offering.</small
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -1078,6 +1131,19 @@
       let _editProviderServiceId = null;
       let _deleteProviderServiceId = null;
 
+      function getApiLang() {
+        try {
+          if (window.I18n && typeof window.I18n.getLanguage === "function") {
+            return String(window.I18n.getLanguage() || "en").toLowerCase();
+          }
+        } catch (e) {
+          // ignore
+        }
+        return String(
+          document.documentElement.getAttribute("lang") || "en",
+        ).toLowerCase();
+      }
+
       function initAddServiceModalUX() {
         const overlay = document.getElementById("add-service-modal");
         const card = overlay.querySelector(".modal-card");
@@ -1118,6 +1184,7 @@
         document.getElementById("add-price").value = "";
         document.getElementById("add-description").value = "";
         document.getElementById("add-is-active").checked = true;
+        resetAddServiceImages();
         hideFieldError("add-service-error");
         hideFieldError("add-price-error");
         const preview = document.getElementById("service-preview");
@@ -1180,17 +1247,229 @@
 
           document.getElementById("add-service-select").onchange =
             onSelectCatalogService;
+
+          // Images
+          const imgInput = document.getElementById("add-images");
+          imgInput.onchange = onAddServiceImagesSelected;
         } catch (e) {
           console.error(e);
           showToast("Failed to load service catalog", "error");
         }
       }
 
+      let _addServiceImages = [];
+
+      let _editExistingImages = [];
+      let _editNewImages = [];
+
+      function resetAddServiceImages() {
+        _addServiceImages = [];
+        const input = document.getElementById("add-images");
+        if (input) input.value = "";
+        renderAddServiceImagesPreview();
+      }
+
+      function resetEditServiceImages() {
+        // Revoke object URLs for new images
+        for (const item of _editNewImages) {
+          if (item && item.previewUrl) {
+            try {
+              URL.revokeObjectURL(item.previewUrl);
+            } catch (e) {
+              // ignore
+            }
+          }
+        }
+        _editExistingImages = [];
+        _editNewImages = [];
+        const input = document.getElementById("edit-images");
+        if (input) input.value = "";
+        renderEditServiceImagesPreview();
+      }
+
+      function onAddServiceImagesSelected(e) {
+        const files = Array.from(e.target.files || []);
+        const max = 5;
+        _addServiceImages = files.slice(0, max).map((file) => ({
+          file,
+          previewUrl: URL.createObjectURL(file),
+          uploaded: null,
+        }));
+        renderAddServiceImagesPreview();
+      }
+
+      function removeAddServiceImage(index) {
+        const item = _addServiceImages[index];
+        if (item && item.previewUrl) {
+          try {
+            URL.revokeObjectURL(item.previewUrl);
+          } catch (e) {
+            // ignore
+          }
+        }
+        _addServiceImages.splice(index, 1);
+        renderAddServiceImagesPreview();
+      }
+
+      function renderAddServiceImagesPreview() {
+        const el = document.getElementById("add-images-preview");
+        if (!el) return;
+        if (!_addServiceImages.length) {
+          el.innerHTML = "";
+          return;
+        }
+
+        el.innerHTML = _addServiceImages
+          .map((img, idx) => {
+            const status = img.uploaded
+              ? "Uploaded"
+              : img.uploading
+                ? "Uploading..."
+                : "Ready";
+            return `
+              <div style="position:relative; width:92px; height:92px; border-radius:12px; overflow:hidden; border:1px solid rgba(15,23,42,.12); background:#fff;">
+                <img src="${img.previewUrl}" alt="Image" style="width:100%; height:100%; object-fit:cover; display:block;" />
+                <button type="button" onclick="removeAddServiceImage(${idx})" aria-label="Remove" style="position:absolute; top:6px; right:6px; width:26px; height:26px; border:none; border-radius:8px; background:rgba(15,23,42,.65); color:#fff; cursor:pointer;">&times;</button>
+                <div style="position:absolute; left:0; right:0; bottom:0; padding:4px 6px; font-size:11px; color:#fff; background:rgba(15,23,42,.55); text-align:center;">${status}</div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function onEditServiceImagesSelected(e) {
+        const files = Array.from(e.target.files || []);
+
+        const existingCount = Array.isArray(_editExistingImages)
+          ? _editExistingImages.filter((x) => x && x.keep).length
+          : 0;
+        const maxTotal = 10;
+        const remaining = Math.max(0, maxTotal - existingCount);
+
+        _editNewImages = files.slice(0, remaining).map((file) => ({
+          file,
+          previewUrl: URL.createObjectURL(file),
+          uploaded: null,
+          uploading: false,
+        }));
+        renderEditServiceImagesPreview();
+      }
+
+      function removeEditExistingImage(index) {
+        const item = _editExistingImages[index];
+        if (!item) return;
+        item.keep = false;
+        renderEditServiceImagesPreview();
+      }
+
+      function removeEditNewImage(index) {
+        const item = _editNewImages[index];
+        if (item && item.previewUrl) {
+          try {
+            URL.revokeObjectURL(item.previewUrl);
+          } catch (e) {
+            // ignore
+          }
+        }
+        _editNewImages.splice(index, 1);
+        renderEditServiceImagesPreview();
+      }
+
+      function renderEditServiceImagesPreview() {
+        const el = document.getElementById("edit-images-preview");
+        if (!el) return;
+
+        const existing = Array.isArray(_editExistingImages)
+          ? _editExistingImages
+              .map((img, idx) => ({ img, idx }))
+              .filter(({ img }) => img && img.keep)
+          : [];
+        const adding = Array.isArray(_editNewImages) ? _editNewImages : [];
+
+        if (!existing.length && !adding.length) {
+          el.innerHTML = "";
+          return;
+        }
+
+        const existingHtml = existing
+          .map(({ img, idx }) => {
+            const url = img.url;
+            return `
+              <div style="position:relative; width:92px; height:92px; border-radius:12px; overflow:hidden; border:1px solid rgba(15,23,42,.12); background:#fff;">
+                <img src="${escapeHtml(url)}" alt="Image" style="width:100%; height:100%; object-fit:cover; display:block;" />
+                <button type="button" onclick="removeEditExistingImage(${idx})" aria-label="Remove" style="position:absolute; top:6px; right:6px; width:26px; height:26px; border:none; border-radius:8px; background:rgba(15,23,42,.65); color:#fff; cursor:pointer;">&times;</button>
+                <div style="position:absolute; left:0; right:0; bottom:0; padding:4px 6px; font-size:11px; color:#fff; background:rgba(15,23,42,.55); text-align:center;">Existing</div>
+              </div>
+            `;
+          })
+          .join("");
+
+        const newHtml = adding
+          .map((img, idx) => {
+            const status = img.uploaded
+              ? "Uploaded"
+              : img.uploading
+                ? "Uploading..."
+                : "Ready";
+            return `
+              <div style="position:relative; width:92px; height:92px; border-radius:12px; overflow:hidden; border:1px solid rgba(15,23,42,.12); background:#fff;">
+                <img src="${img.previewUrl}" alt="Image" style="width:100%; height:100%; object-fit:cover; display:block;" />
+                <button type="button" onclick="removeEditNewImage(${idx})" aria-label="Remove" style="position:absolute; top:6px; right:6px; width:26px; height:26px; border:none; border-radius:8px; background:rgba(15,23,42,.65); color:#fff; cursor:pointer;">&times;</button>
+                <div style="position:absolute; left:0; right:0; bottom:0; padding:4px 6px; font-size:11px; color:#fff; background:rgba(15,23,42,.55); text-align:center;">${status}</div>
+              </div>
+            `;
+          })
+          .join("");
+
+        el.innerHTML = existingHtml + newHtml;
+      }
+
+      async function getCloudinarySignature(folder) {
+        const token = Auth.getToken();
+        const url = new URL(
+          `${Auth.apiUrl}/uploads/cloudinary-signature`,
+          window.location.origin,
+        );
+        if (folder) url.searchParams.set("folder", folder);
+        const res = await fetch(url.toString(), {
+          headers: { Authorization: `Bearer ${token}` },
+          cache: "no-store",
+        });
+        const json = await res.json();
+        if (!res.ok || !json.success) {
+          throw new Error(json?.message || "Failed to get upload signature");
+        }
+        return json.data;
+      }
+
+      async function uploadToCloudinary(file, signatureData) {
+        const cloudName = signatureData.cloud_name;
+        const form = new FormData();
+        form.append("file", file);
+        form.append("api_key", signatureData.api_key);
+        form.append("timestamp", String(signatureData.timestamp));
+        form.append("signature", signatureData.signature);
+        if (signatureData.folder) form.append("folder", signatureData.folder);
+
+        const uploadUrl = `https://api.cloudinary.com/v1_1/${encodeURIComponent(cloudName)}/image/upload`;
+        const res = await fetch(uploadUrl, { method: "POST", body: form });
+        const json = await res.json().catch(() => null);
+        if (!res.ok || !json) {
+          throw new Error("Image upload failed");
+        }
+        return {
+          url: json.secure_url || json.url,
+          public_id: json.public_id,
+        };
+      }
+
       async function loadCategoriesForAddModal() {
         const select = document.getElementById("add-category");
         select.innerHTML = `<option value="">All categories</option>`;
 
-        const res = await fetch(`${Auth.apiUrl}/categories`);
+        const res = await fetch(
+          `${Auth.apiUrl}/categories?lang=${encodeURIComponent(getApiLang())}`,
+        );
         const json = await res.json();
         if (!res.ok || !json.success) return;
 
@@ -1208,6 +1487,7 @@
 
         const params = new URLSearchParams();
         params.set("limit", "100");
+        params.set("lang", getApiLang());
         if (categoryId) params.set("category_id", categoryId);
         if (search) params.set("search", search);
 
@@ -1314,6 +1594,25 @@
 
         setSubmitting(true);
         try {
+          // Upload images first (if any)
+          const uploadedImages = [];
+          if (_addServiceImages.length > 0) {
+            const sig = await getCloudinarySignature(
+              "moueene/provider-services",
+            );
+            for (const item of _addServiceImages) {
+              item.uploading = true;
+              renderAddServiceImagesPreview();
+              const uploaded = await uploadToCloudinary(item.file, sig);
+              item.uploading = false;
+              item.uploaded = uploaded;
+              renderAddServiceImagesPreview();
+              if (uploaded && uploaded.url) {
+                uploadedImages.push(uploaded);
+              }
+            }
+          }
+
           const token = Auth.getToken();
           const res = await fetch(`${Auth.apiUrl}/providers/services`, {
             method: "POST",
@@ -1327,6 +1626,7 @@
               price_type: priceType,
               description: description || null,
               is_active: isActive,
+              images: uploadedImages,
             }),
           });
 
@@ -1381,7 +1681,11 @@
             const active = svc.is_active === 1 || svc.is_active === true;
             const statusClass = active ? "status-active" : "";
             const statusText = active ? "Active" : "Inactive";
-            const image = normalizeImageUrl(svc.service_image);
+            const providerImage =
+              Array.isArray(svc.images) && svc.images.length > 0
+                ? svc.images[0]?.url
+                : null;
+            const image = normalizeImageUrl(providerImage || svc.service_image);
             const priceLabel = formatPrice(svc.price, svc.price_type);
             const providerServiceId = Number(svc.provider_service_id);
 
@@ -1438,8 +1742,25 @@
         document.getElementById("edit-is-active").checked =
           svc.is_active === 1 || svc.is_active === true;
 
+        // Images
+        resetEditServiceImages();
+        const existing = Array.isArray(svc.images) ? svc.images : [];
+        _editExistingImages = existing
+          .filter((x) => x && x.url)
+          .slice(0, 10)
+          .map((x) => ({
+            url: x.url,
+            public_id: x.public_id || null,
+            keep: true,
+          }));
+        renderEditServiceImagesPreview();
+
         const preview = document.getElementById("edit-service-preview");
-        const img = normalizeImageUrl(svc.service_image);
+        const providerImage =
+          Array.isArray(svc.images) && svc.images.length > 0
+            ? svc.images[0]?.url
+            : null;
+        const img = normalizeImageUrl(providerImage || svc.service_image);
         const cat = escapeHtml(svc.category_name || "Service");
         const name = escapeHtml(svc.service_name || "Service");
         const desc = escapeHtml(svc.description || "");
@@ -1470,6 +1791,7 @@
         modal.style.display = "none";
         document.body.style.overflow = "";
         _editProviderServiceId = null;
+        resetEditServiceImages();
       }
 
       async function submitEditService() {
@@ -1495,6 +1817,30 @@
 
         setSubmittingFor("edit-service-submit", true);
         try {
+          // Upload any newly selected images first
+          const uploadedImages = [];
+          if (Array.isArray(_editNewImages) && _editNewImages.length > 0) {
+            const sig = await getCloudinarySignature("moueene/provider-services");
+            for (const item of _editNewImages) {
+              item.uploading = true;
+              renderEditServiceImagesPreview();
+              const uploaded = await uploadToCloudinary(item.file, sig);
+              item.uploading = false;
+              item.uploaded = uploaded;
+              renderEditServiceImagesPreview();
+              if (uploaded && uploaded.url) {
+                uploadedImages.push(uploaded);
+              }
+            }
+          }
+
+          const keptExisting = Array.isArray(_editExistingImages)
+            ? _editExistingImages
+                .filter((x) => x && x.keep && x.url)
+                .map((x) => ({ url: x.url, public_id: x.public_id || null }))
+            : [];
+          const finalImages = [...keptExisting, ...uploadedImages].slice(0, 10);
+
           const token = Auth.getToken();
           const res = await fetch(
             `${Auth.apiUrl}/providers/services/${providerServiceId}`,
@@ -1509,6 +1855,7 @@
                 price_type: priceType,
                 description: description || null,
                 is_active: isActive,
+                images: finalImages,
               }),
             },
           );
@@ -1679,6 +2026,10 @@
         initAddServiceModalUX();
         initGenericModalUX("edit-service-modal", "closeEditServiceModal");
         initGenericModalUX("delete-service-modal", "closeDeleteServiceModal");
+
+        // Edit images input
+        const editImgInput = document.getElementById("edit-images");
+        if (editImgInput) editImgInput.onchange = onEditServiceImagesSelected;
 
         if (window.ProviderUI) {
           await ProviderUI.loadAndApply();

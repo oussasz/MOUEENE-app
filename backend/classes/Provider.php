@@ -55,8 +55,8 @@ class Provider {
             email, password_hash, business_name, first_name, last_name, phone, 
             address, city, state, zip_code, country, bio,
             date_of_birth, gender, verification_token, preferred_language,
-            experience_years, specialization, languages_spoken
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            experience_years, specialization, languages_spoken, provider_type
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute([
@@ -78,7 +78,8 @@ class Provider {
             $data['preferred_language'] ?? 'en',
             $data['experience_years'] ?? 0,
             $data['specialization'] ?? null,
-            $data['languages_spoken'] ?? null
+            $data['languages_spoken'] ?? null,
+            $data['provider_type'] ?? 'freelancer'
         ]);
         
         return $result ? $this->db->lastInsertId() : false;
@@ -97,7 +98,9 @@ class Provider {
             'bio', 'address', 'city', 'state', 'zip_code', 'country',
             'date_of_birth', 'gender', 'preferred_language', 'experience_years',
             'certification', 'specialization', 'languages_spoken', 'service_radius',
-            'hourly_rate', 'availability_status'
+            'commercial_registry_number', 'nif', 'nis',
+            'provider_type',
+            'availability_status'
         ];
         
         $fields = [];
@@ -246,7 +249,50 @@ class Provider {
              ORDER BY ps.created_at DESC"
         );
         $stmt->execute([$providerId]);
-        return $stmt->fetchAll();
+        $rows = $stmt->fetchAll();
+
+        if (!$rows) {
+            return [];
+        }
+
+        $ids = array_values(array_filter(array_map(function ($r) {
+            return isset($r['provider_service_id']) ? (int)$r['provider_service_id'] : 0;
+        }, $rows)));
+
+        if (!$ids) {
+            return $rows;
+        }
+
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $imgStmt = $this->db->prepare(
+            "SELECT provider_service_id, image_url, public_id, sort_order
+             FROM provider_service_images
+             WHERE provider_service_id IN ($placeholders)
+             ORDER BY sort_order ASC, image_id ASC"
+        );
+        $imgStmt->execute($ids);
+        $images = $imgStmt->fetchAll();
+
+        $byPs = [];
+        foreach ($images as $img) {
+            $psid = (int)($img['provider_service_id'] ?? 0);
+            if (!isset($byPs[$psid])) {
+                $byPs[$psid] = [];
+            }
+            $byPs[$psid][] = [
+                'url' => $img['image_url'] ?? null,
+                'public_id' => $img['public_id'] ?? null,
+                'sort_order' => isset($img['sort_order']) ? (int)$img['sort_order'] : 0,
+            ];
+        }
+
+        foreach ($rows as &$row) {
+            $psid = (int)($row['provider_service_id'] ?? 0);
+            $row['images'] = $byPs[$psid] ?? [];
+        }
+        unset($row);
+
+        return $rows;
     }
 
     /**
@@ -280,6 +326,7 @@ class Provider {
         $priceType = $data['price_type'] ?? 'fixed';
         $description = $data['description'] ?? null;
         $isActive = isset($data['is_active']) ? (bool)$data['is_active'] : true;
+        $images = $data['images'] ?? [];
 
         try {
             $this->db->beginTransaction();
@@ -304,6 +351,24 @@ class Provider {
             $stmt->execute([$serviceId]);
 
             $providerServiceId = (int)$this->db->lastInsertId();
+
+            if (is_array($images) && count($images) > 0) {
+                $max = min(10, count($images));
+                $imgStmt = $this->db->prepare(
+                    "INSERT INTO provider_service_images (provider_service_id, image_url, public_id, sort_order)
+                     VALUES (?, ?, ?, ?)"
+                );
+
+                for ($i = 0; $i < $max; $i++) {
+                    $img = $images[$i];
+                    if (!is_array($img)) continue;
+                    $url = trim((string)($img['url'] ?? ''));
+                    $publicId = isset($img['public_id']) ? trim((string)$img['public_id']) : null;
+                    if ($url === '') continue;
+                    $imgStmt->execute([$providerServiceId, $url, $publicId ?: null, $i]);
+                }
+            }
+
             $this->db->commit();
 
             $stmt = $this->db->prepare(
@@ -328,7 +393,26 @@ class Provider {
                  WHERE ps.provider_service_id = ?"
             );
             $stmt->execute([$providerServiceId]);
-            return $stmt->fetch() ?: [];
+            $row = $stmt->fetch() ?: [];
+
+            // Attach images
+            $imgStmt = $this->db->prepare(
+                "SELECT image_url, public_id, sort_order
+                 FROM provider_service_images
+                 WHERE provider_service_id = ?
+                 ORDER BY sort_order ASC, image_id ASC"
+            );
+            $imgStmt->execute([$providerServiceId]);
+            $imgs = $imgStmt->fetchAll();
+            $row['images'] = array_map(function ($img) {
+                return [
+                    'url' => $img['image_url'] ?? null,
+                    'public_id' => $img['public_id'] ?? null,
+                    'sort_order' => isset($img['sort_order']) ? (int)$img['sort_order'] : 0,
+                ];
+            }, $imgs ?: []);
+
+            return $row;
 
         } catch (PDOException $e) {
             if ($this->db->inTransaction()) {
@@ -376,7 +460,28 @@ class Provider {
              WHERE ps.provider_service_id = ?"
         );
         $stmt->execute([(int)$providerServiceId]);
-        return $stmt->fetch();
+        $row = $stmt->fetch();
+        if (!$row) {
+            return $row;
+        }
+
+        $imgStmt = $this->db->prepare(
+            "SELECT image_url, public_id, sort_order
+             FROM provider_service_images
+             WHERE provider_service_id = ?
+             ORDER BY sort_order ASC, image_id ASC"
+        );
+        $imgStmt->execute([(int)$providerServiceId]);
+        $imgs = $imgStmt->fetchAll();
+        $row['images'] = array_map(function ($img) {
+            return [
+                'url' => $img['image_url'] ?? null,
+                'public_id' => $img['public_id'] ?? null,
+                'sort_order' => isset($img['sort_order']) ? (int)$img['sort_order'] : 0,
+            ];
+        }, $imgs ?: []);
+
+        return $row;
     }
 
     /**
@@ -400,6 +505,9 @@ class Provider {
         $fields = [];
         $values = [];
 
+        $hasImages = array_key_exists('images', $data);
+        $images = $hasImages && is_array($data['images']) ? $data['images'] : [];
+
         foreach ($allowed as $field) {
             if (array_key_exists($field, $data)) {
                 $fields[] = "$field = ?";
@@ -411,16 +519,54 @@ class Provider {
             }
         }
 
-        if (empty($fields)) {
+        if (empty($fields) && !$hasImages) {
             throw new Exception('No changes provided');
         }
 
-        $values[] = $providerServiceId;
-        $values[] = $providerId;
+        try {
+            $this->db->beginTransaction();
 
-        $sql = "UPDATE provider_services SET " . implode(', ', $fields) . " WHERE provider_service_id = ? AND provider_id = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute($values);
+            if (!empty($fields)) {
+                $values[] = $providerServiceId;
+                $values[] = $providerId;
+
+                $sql = "UPDATE provider_services SET " . implode(', ', $fields) . " WHERE provider_service_id = ? AND provider_id = ?";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute($values);
+            }
+
+            if ($hasImages) {
+                // Replace images (max 10)
+                $del = $this->db->prepare(
+                    "DELETE FROM provider_service_images WHERE provider_service_id = ?"
+                );
+                $del->execute([$providerServiceId]);
+
+                if (is_array($images) && count($images) > 0) {
+                    $max = min(10, count($images));
+                    $imgStmt = $this->db->prepare(
+                        "INSERT INTO provider_service_images (provider_service_id, image_url, public_id, sort_order)
+                         VALUES (?, ?, ?, ?)"
+                    );
+
+                    for ($i = 0; $i < $max; $i++) {
+                        $img = $images[$i];
+                        if (!is_array($img)) continue;
+                        $url = trim((string)($img['url'] ?? ''));
+                        $publicId = isset($img['public_id']) ? trim((string)$img['public_id']) : null;
+                        if ($url === '') continue;
+                        $imgStmt->execute([$providerServiceId, $url, $publicId ?: null, $i]);
+                    }
+                }
+            }
+
+            $this->db->commit();
+        } catch (Exception $e) {
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+            throw $e;
+        }
 
         $updated = $this->getServiceOfferingById($providerServiceId);
         if (!$updated) {

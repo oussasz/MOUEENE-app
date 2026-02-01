@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manage Services - Admin - Moueene</title>
-    <link rel="icon" type="image/png" href="../../assets/images/logo.webp" />
+    <link rel="icon" type="image/webp" href="/assets/images/logo.webp" />
     <link rel="stylesheet" href="../../assets/css/style.css" />
     <link
       rel="stylesheet"
@@ -398,6 +398,16 @@
         </div>
 
         <div class="filter-bar">
+          <select
+            id="scopeFilter"
+            onchange="
+              loadStats();
+              loadServices();
+            "
+          >
+            <option value="offered" selected>Offered by Providers</option>
+            <option value="catalog">Full Catalog</option>
+          </select>
           <select id="categoryFilter" onchange="loadServices()">
             <option value="">All Categories</option>
           </select>
@@ -440,6 +450,32 @@
       let allServices = [];
       let categories = [];
 
+      function getScope() {
+        return document.getElementById("scopeFilter")?.value || "offered";
+      }
+
+      function getApiLang() {
+        const fromI18n =
+          window.I18n && typeof window.I18n.getLanguage === "function"
+            ? window.I18n.getLanguage()
+            : null;
+        const raw = (
+          fromI18n ||
+          document.documentElement.getAttribute("lang") ||
+          "en"
+        ).toLowerCase();
+        return ["en", "fr", "ar"].includes(raw) ? raw : "en";
+      }
+
+      function buildUrl(path, params = {}) {
+        const url = new URL(API_URL + path, window.location.origin);
+        Object.entries(params).forEach(([key, value]) => {
+          if (value === null || value === undefined || value === "") return;
+          url.searchParams.set(key, value);
+        });
+        return url.toString();
+      }
+
       function checkAuth() {
         const token = localStorage.getItem("admin_token");
         if (!token) {
@@ -469,6 +505,7 @@
         if (!token) return null;
 
         const response = await fetch(url, {
+          cache: "no-store",
           ...options,
           headers: {
             ...options.headers,
@@ -480,7 +517,9 @@
 
       async function loadCategories() {
         try {
-          const result = await fetchWithAuth(`${API_URL}/categories`);
+          const result = await fetchWithAuth(
+            buildUrl("/categories", { lang: getApiLang() }),
+          );
           if (result && result.success) {
             categories = result.data;
             const select = document.getElementById("categoryFilter");
@@ -492,6 +531,11 @@
             });
             document.getElementById("totalCategories").textContent =
               categories.length;
+
+            // Re-render services if already loaded (so categories show up)
+            if (Array.isArray(allServices) && allServices.length > 0) {
+              filterAndRenderServices();
+            }
           }
         } catch (error) {
           console.error("Error loading categories:", error);
@@ -500,12 +544,18 @@
 
       async function loadStats() {
         try {
-          const result = await fetchWithAuth(`${API_URL}/services`);
+          const result = await fetchWithAuth(
+            buildUrl("/admin/services", {
+              lang: getApiLang(),
+              limit: 200,
+              scope: getScope(),
+            }),
+          );
           if (result && result.success) {
-            const services = result.data;
+            const services = Array.isArray(result.data) ? result.data : [];
+            const total = Number(result.meta?.total || services.length || 0);
 
-            document.getElementById("totalServices").textContent =
-              services.length;
+            document.getElementById("totalServices").textContent = total;
             document.getElementById("activeServices").textContent =
               services.filter((s) => s.is_active).length;
             document.getElementById("popularServices").textContent =
@@ -520,6 +570,7 @@
         const container = document.getElementById("servicesTable");
         const categoryId = document.getElementById("categoryFilter").value;
         const status = document.getElementById("statusFilter").value;
+        const scope = getScope();
 
         container.innerHTML = `
                 <div class="loading">
@@ -529,20 +580,18 @@
             `;
 
         try {
-          let url = `${API_URL}/services`;
-          if (categoryId) url += `?category=${categoryId}`;
+          const url = buildUrl("/admin/services", {
+            lang: getApiLang(),
+            limit: 200,
+            category_id: categoryId || "",
+            status: status || "",
+            scope,
+          });
 
           const result = await fetchWithAuth(url);
 
           if (result && result.success) {
-            allServices = result.data;
-
-            // Apply status filter
-            if (status === "active") {
-              allServices = allServices.filter((s) => s.is_active);
-            } else if (status === "inactive") {
-              allServices = allServices.filter((s) => !s.is_active);
-            }
+            allServices = Array.isArray(result.data) ? result.data : [];
 
             filterAndRenderServices();
           } else {
@@ -574,13 +623,18 @@
           .getElementById("searchInput")
           .value.toLowerCase();
         const container = document.getElementById("servicesTable");
+        const scope = getScope();
 
         let filtered = allServices;
         if (search) {
           filtered = allServices.filter(
             (s) =>
-              s.service_name.toLowerCase().includes(search) ||
-              (s.description && s.description.toLowerCase().includes(search)),
+              String(s.service_name || "")
+                .toLowerCase()
+                .includes(search) ||
+              String(s.description || "")
+                .toLowerCase()
+                .includes(search),
           );
         }
 
@@ -603,9 +657,10 @@
                         <tr>
                             <th>Service</th>
                             <th>Category</th>
-                            <th>Base Price</th>
+                            <th>${scope === "offered" ? "Offer Price" : "Base Price"}</th>
                             <th>Duration</th>
                             <th>Price Type</th>
+                            ${scope === "offered" ? "<th>Providers</th>" : ""}
                             <th>Status</th>
                             <th>Popular</th>
                         </tr>
@@ -616,6 +671,30 @@
                             const category = categories.find(
                               (c) => c.category_id === service.category_id,
                             );
+
+                            const minPrice =
+                              service.min_price !== undefined &&
+                              service.min_price !== null &&
+                              service.min_price !== ""
+                                ? Number(service.min_price)
+                                : null;
+                            const maxPrice =
+                              service.max_price !== undefined &&
+                              service.max_price !== null &&
+                              service.max_price !== ""
+                                ? Number(service.max_price)
+                                : null;
+                            const offerPriceText =
+                              minPrice !== null && maxPrice !== null
+                                ? minPrice === maxPrice
+                                  ? `$${minPrice.toFixed(2)}`
+                                  : `$${minPrice.toFixed(2)} - $${maxPrice.toFixed(2)}`
+                                : `$${parseFloat(service.base_price || 0).toFixed(2)}`;
+                            const providersOffered =
+                              service.providers_offering !== undefined &&
+                              service.providers_offering !== null
+                                ? Number(service.providers_offering)
+                                : 0;
                             return `
                             <tr>
                                 <td>
@@ -623,9 +702,10 @@
                                     <small style="color: #6b7280;">${service.description ? service.description.substring(0, 60) + "..." : "No description"}</small>
                                 </td>
                                 <td>${category ? category.category_name : "N/A"}</td>
-                                <td>$${parseFloat(service.base_price || 0).toFixed(2)}</td>
+                                <td>${scope === "offered" ? offerPriceText : `$${parseFloat(service.base_price || 0).toFixed(2)}`}</td>
                                 <td>${service.duration_minutes ? service.duration_minutes + " min" : "N/A"}</td>
                                 <td><span class="badge ${service.price_type === "hourly" ? "badge-popular" : "badge-active"}">${service.price_type || "fixed"}</span></td>
+                                ${scope === "offered" ? `<td>${providersOffered}</td>` : ""}
                                 <td><span class="badge badge-${service.is_active ? "active" : "inactive"}">${service.is_active ? "Active" : "Inactive"}</span></td>
                                 <td>${service.is_popular ? '<i class="fas fa-star" style="color: #f59e0b;"></i>' : "-"}</td>
                             </tr>
@@ -639,6 +719,7 @@
 
       document.addEventListener("DOMContentLoaded", () => {
         if (!checkAuth()) return;
+        console.log("Admin services page loaded (API)", API_URL);
         loadAdminInfo();
         loadCategories();
         loadStats();

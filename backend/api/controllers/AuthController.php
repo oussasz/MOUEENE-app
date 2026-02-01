@@ -21,6 +21,11 @@ class AuthController {
             return;
         }
 
+        if ($type === 'admin') {
+            $this->loginAdmin($req);
+            return;
+        }
+
         $this->login($req, $type);
     }
 
@@ -59,6 +64,9 @@ class AuthController {
             if ($t === 'user' || $t === 'customer' || $t === 'client') {
                 return 'user';
             }
+            if ($t === 'admin' || $t === 'administrator') {
+                return 'admin';
+            }
         }
 
         // Support boolean-ish field used by some older clients
@@ -75,6 +83,59 @@ class AuthController {
         return null;
     }
 
+    private function loginAdmin(Request $req): void {
+        $data = $req->json;
+
+        $validator = new Validator($data);
+        $validator
+            ->required('email')->email('email')
+            ->required('password');
+
+        if ($validator->fails()) {
+            Response::validationError($validator->getErrors());
+            return;
+        }
+
+        $db = Database::getConnection();
+        if ($db === null) {
+            Response::serverError('Database connection failed');
+            return;
+        }
+
+        if (!$this->assertExpectedTable($db, 'admin_users', ['admin_id', 'email', 'password_hash'])) {
+            return;
+        }
+
+        $email = strtolower(trim($data['email']));
+        $password = $data['password'];
+
+        $stmt = $db->prepare('SELECT * FROM admin_users WHERE email = ?');
+        $stmt->execute([$email]);
+        $admin = $stmt->fetch();
+
+        if (!$admin) {
+            Response::error('Invalid credentials.', 401);
+            return;
+        }
+
+        if (!Auth::verifyPassword($password, $admin['password_hash'])) {
+            Response::error('Invalid credentials.', 401);
+            return;
+        }
+
+        $db->prepare('UPDATE admin_users SET last_login = NOW() WHERE admin_id = ?')
+           ->execute([$admin['admin_id']]);
+
+        $token = Auth::generateToken($admin['admin_id'], 'admin');
+        unset($admin['password_hash']);
+
+        Response::success([
+            'token' => $token,
+            'user_type' => 'admin',
+            'user' => $admin
+        ], 'Login successful');
+    }
+
     private function register(Request $req, string $forcedType): void {
         $data = $req->json;
 
@@ -89,7 +150,8 @@ class AuthController {
             $validator
                 ->required('phone')->minLength('phone', 6)
                 ->required('address')->minLength('address', 2)
-                ->required('city')->minLength('city', 2);
+                ->required('city')->minLength('city', 2)
+                ->required('provider_type')->in('provider_type', ['freelancer', 'self_employed', 'company']);
         }
 
         if ($validator->fails()) {
@@ -133,35 +195,81 @@ class AuthController {
         $city = isset($data['city']) ? trim($data['city']) : null;
         $country = isset($data['country']) && trim($data['country']) !== '' ? trim($data['country']) : 'Algeria';
 
+        $businessName = isset($data['business_name']) ? trim($data['business_name']) : null;
+        $bio = isset($data['bio']) ? trim($data['bio']) : null;
+        $state = isset($data['state']) ? trim($data['state']) : null;
+        $zipCode = isset($data['zip_code']) ? trim($data['zip_code']) : null;
+        $dateOfBirth = isset($data['date_of_birth']) ? trim($data['date_of_birth']) : null;
+        $gender = isset($data['gender']) ? trim($data['gender']) : null;
+        $providerType = isset($data['provider_type']) ? trim($data['provider_type']) : 'freelancer';
+        $experienceYears = isset($data['experience_years']) ? (int)$data['experience_years'] : null;
+        $certification = isset($data['certification']) ? trim($data['certification']) : null;
+        $specialization = isset($data['specialization']) ? trim($data['specialization']) : null;
+        $languagesSpoken = isset($data['languages_spoken']) ? trim($data['languages_spoken']) : null;
+        $serviceRadius = isset($data['service_radius']) ? (int)$data['service_radius'] : null;
+        $commercialRegistryNumber = isset($data['commercial_registry_number']) ? trim($data['commercial_registry_number']) : null;
+        $nif = isset($data['nif']) ? trim($data['nif']) : null;
+        $nis = isset($data['nis']) ? trim($data['nis']) : null;
+
         if ($forcedType === 'provider') {
             $db->beginTransaction();
             try {
             $sql = "INSERT INTO providers (
                         email,
                         password_hash,
+                        business_name,
                         first_name,
                         last_name,
                         phone,
+                        profile_picture,
+                        bio,
                         address,
                         city,
+                        state,
+                        zip_code,
                         country,
-                        profile_picture,
+                        date_of_birth,
+                        gender,
+                        experience_years,
+                        certification,
+                        specialization,
+                        languages_spoken,
+                        service_radius,
+                        commercial_registry_number,
+                        nif,
+                        nis,
+                        provider_type,
                         verification_token,
                         account_status,
                         verification_status
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', 'pending')";
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', 'pending')";
 
             $stmt = $db->prepare($sql);
             $stmt->execute([
                 $email,
                 $passwordHash,
+                $businessName,
                 trim($data['first_name']),
                 trim($data['last_name']),
                 $phone,
+                $defaultAvatar,
+                $bio,
                 $address,
                 $city,
+                $state,
+                $zipCode,
                 $country,
-                $defaultAvatar,
+                $dateOfBirth,
+                $gender,
+                $experienceYears,
+                $certification,
+                $specialization,
+                $languagesSpoken,
+                $serviceRadius,
+                $commercialRegistryNumber,
+                $nif,
+                $nis,
+                $providerType,
                 $verificationToken
             ]);
 
@@ -220,11 +328,15 @@ class AuthController {
                     phone,
                     address,
                     city,
+                    state,
+                    zip_code,
                     country,
+                    date_of_birth,
+                    gender,
                     profile_picture,
                     verification_token,
                     account_status
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')";
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')";
 
         $stmt = $db->prepare($sql);
         $stmt->execute([
@@ -235,7 +347,11 @@ class AuthController {
             $phone,
             $address,
             $city,
+            $state,
+            $zipCode,
             $country,
+            $dateOfBirth,
+            $gender,
             $defaultAvatar,
             $verificationToken
         ]);

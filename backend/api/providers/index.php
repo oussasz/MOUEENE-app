@@ -225,7 +225,6 @@ function handlePublicList() {
                     city,
                     specialization,
                     experience_years,
-                    hourly_rate,
                     verification_status,
                     account_status,
                     average_rating,
@@ -272,7 +271,6 @@ function handlePublicGetProvider($providerId) {
                     country,
                     specialization,
                     experience_years,
-                    hourly_rate,
                     verification_status,
                     account_status,
                     average_rating,
@@ -480,12 +478,31 @@ function handleAddService($data) {
 
     try {
         $provider = new Provider();
+
+        // Optional images array: [{url, public_id}] (already uploaded to Cloudinary)
+        $images = [];
+        if (isset($data['images']) && is_array($data['images'])) {
+            $max = min(10, count($data['images']));
+            for ($i = 0; $i < $max; $i++) {
+                $img = $data['images'][$i];
+                if (!is_array($img)) continue;
+                $url = trim((string)($img['url'] ?? ''));
+                $publicId = isset($img['public_id']) ? trim((string)$img['public_id']) : null;
+                if ($url === '') continue;
+                $images[] = [
+                    'url' => $url,
+                    'public_id' => $publicId ?: null,
+                ];
+            }
+        }
+
         $created = $provider->addService($authUser['user_id'], [
             'service_id' => (int)$data['service_id'],
             'price' => $data['price'],
             'price_type' => $data['price_type'] ?? 'fixed',
             'description' => $data['description'] ?? null,
-            'is_active' => isset($data['is_active']) ? (bool)$data['is_active'] : true
+            'is_active' => isset($data['is_active']) ? (bool)$data['is_active'] : true,
+            'images' => $images
         ]);
 
         Response::success($created, 'Service added successfully', 201);
@@ -541,6 +558,26 @@ function handleUpdateServiceOffering($providerServiceId, $data) {
         }
         if (array_key_exists('is_active', $data)) {
             $payload['is_active'] = (bool)$data['is_active'];
+        }
+
+        // Optional images array: [{url, public_id}] (already uploaded to Cloudinary)
+        if (array_key_exists('images', $data)) {
+            $images = [];
+            if (isset($data['images']) && is_array($data['images'])) {
+                $max = min(10, count($data['images']));
+                for ($i = 0; $i < $max; $i++) {
+                    $img = $data['images'][$i];
+                    if (!is_array($img)) continue;
+                    $url = trim((string)($img['url'] ?? ''));
+                    $publicId = isset($img['public_id']) ? trim((string)$img['public_id']) : null;
+                    if ($url === '') continue;
+                    $images[] = [
+                        'url' => $url,
+                        'public_id' => $publicId ?: null,
+                    ];
+                }
+            }
+            $payload['images'] = $images;
         }
 
         $updated = $provider->updateServiceOffering($authUser['user_id'], $providerServiceId, $payload);

@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/webp" href="/assets/images/logo.webp" />
     <meta name="description" content="Login to your Moueene account" />
     <title>Login - Moueene</title>
 
@@ -264,7 +265,6 @@
             <li><a href="../index.html">Home</a></li>
             <li><a href="services.html">Services</a></li>
             <li><a href="providers.html">Providers</a></li>
-            <li><a href="how-it-works.html">How It Works</a></li>
             <li><a href="about.html">About Us</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
@@ -290,24 +290,22 @@
           </div>
 
           <div class="type-toggle" role="tablist" aria-label="Login type">
-            <button
-              type="button"
+            <a
+              href="login.html?type=user"
               class="type-btn active"
               id="btnUser"
-              onclick="selectLoginType('user')"
             >
               <i class="fas fa-user"></i>
               Customer
-            </button>
-            <button
-              type="button"
+            </a>
+            <a
+              href="login.html?type=provider"
               class="type-btn"
               id="btnProvider"
-              onclick="selectLoginType('provider')"
             >
               <i class="fas fa-briefcase"></i>
               Provider
-            </button>
+            </a>
           </div>
 
           <div class="auth-alert error" id="errorAlert">
@@ -450,10 +448,17 @@
           e.preventDefault();
           hideAlerts();
 
+          let loginType = document.getElementById("loginType").value;
+          const providerBtnActive = document
+            .getElementById("btnProvider")
+            .classList.contains("active");
+          if (providerBtnActive && loginType !== "provider") {
+            loginType = "provider";
+          }
+
           const email = document.getElementById("email").value.trim();
           const password = document.getElementById("password").value;
           const rememberMe = document.getElementById("remember").checked;
-          const loginType = document.getElementById("loginType").value;
 
           if (!isValidEmail(email)) {
             showError("Please enter a valid email address.");

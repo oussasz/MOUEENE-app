@@ -603,9 +603,9 @@ CREATE TABLE `providers` (
   `specialization` text COLLATE utf8mb4_unicode_ci,
   `languages_spoken` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `service_radius` int DEFAULT '10',
-  `business_license` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tax_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `insurance_details` text COLLATE utf8mb4_unicode_ci,
+  `commercial_registry_number` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nif` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nis` text COLLATE utf8mb4_unicode_ci,
   `email_verified` tinyint(1) DEFAULT '0',
   `phone_verified` tinyint(1) DEFAULT '0',
   `identity_verified` tinyint(1) DEFAULT '0',
@@ -620,7 +620,6 @@ CREATE TABLE `providers` (
   `cancelled_bookings` int DEFAULT '0',
   `response_rate` decimal(5,2) DEFAULT '0.00',
   `acceptance_rate` decimal(5,2) DEFAULT '0.00',
-  `hourly_rate` decimal(10,2) DEFAULT NULL,
   `service_fee_percentage` decimal(5,2) DEFAULT '15.00',
   `availability_status` enum('available','busy','offline') COLLATE utf8mb4_unicode_ci DEFAULT 'offline',
   `registration_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -651,7 +650,7 @@ CREATE TABLE `providers` (
 
 LOCK TABLES `providers` WRITE;
 /*!40000 ALTER TABLE `providers` DISABLE KEYS */;
-INSERT INTO `providers` VALUES (2,'brahimi.oussamaa@gmaol.com','$2y$10$ojlcxnrYYcwciUKcmu/vle3rGZKGEO0mBLyK7MFE.P7.E9qBiOi3a',NULL,'Brahimi','Oussama','+213540537886',NULL,NULL,'','',NULL,NULL,'Morocco',NULL,NULL,0,NULL,NULL,NULL,10,NULL,NULL,NULL,0,0,0,0,'rejected','2026-01-28 10:02:35','deactivated',0.00,0,0,0,0,0.00,0.00,NULL,15.00,'offline','2026-01-26 15:18:40','2026-01-27 22:17:03',NULL,NULL,'a01b701234841238d2d61675fe1e47b0','en','2026-01-26 15:18:40','2026-01-28 10:11:13'),(3,'rabahkhadoussi70@gmail.com','$2y$10$zFCDCev1aUoNEeGoWgLJk.uQiRYiAjgYRp425lWPus8vZijZvR9cG',NULL,'Rabah','Khadoussi','0549462250','/assets/images/default-avatar.jpg',NULL,'Beni Maouche, Bejaia','Bejaia',NULL,NULL,'Morocco',NULL,NULL,0,NULL,NULL,NULL,10,NULL,NULL,NULL,0,0,0,0,'verified','2026-01-28 10:02:37','active',0.00,0,0,0,0,0.00,0.00,NULL,15.00,'offline','2026-01-27 23:51:53','2026-01-28 14:03:41',NULL,NULL,'59626e3cd1136821302a6d26123c7d28','en','2026-01-27 23:51:53','2026-01-28 14:03:41');
+INSERT INTO `providers` VALUES (2,'brahimi.oussamaa@gmaol.com','$2y$10$ojlcxnrYYcwciUKcmu/vle3rGZKGEO0mBLyK7MFE.P7.E9qBiOi3a',NULL,'Brahimi','Oussama','+213540537886',NULL,NULL,'','',NULL,NULL,'Morocco',NULL,NULL,0,NULL,NULL,NULL,10,NULL,NULL,NULL,0,0,0,0,'rejected','2026-01-28 10:02:35','deactivated',0.00,0,0,0,0,0.00,0.00,15.00,'offline','2026-01-26 15:18:40','2026-01-27 22:17:03',NULL,NULL,'a01b701234841238d2d61675fe1e47b0','en','2026-01-26 15:18:40','2026-01-28 10:11:13'),(3,'rabahkhadoussi70@gmail.com','$2y$10$zFCDCev1aUoNEeGoWgLJk.uQiRYiAjgYRp425lWPus8vZijZvR9cG',NULL,'Rabah','Khadoussi','0549462250','/assets/images/default-avatar.jpg',NULL,'Beni Maouche, Bejaia','Bejaia',NULL,NULL,'Morocco',NULL,NULL,0,NULL,NULL,NULL,10,NULL,NULL,NULL,0,0,0,0,'verified','2026-01-28 10:02:37','active',0.00,0,0,0,0,0.00,0.00,15.00,'offline','2026-01-27 23:51:53','2026-01-28 14:03:41',NULL,NULL,'59626e3cd1136821302a6d26123c7d28','en','2026-01-27 23:51:53','2026-01-28 14:03:41');
 /*!40000 ALTER TABLE `providers` ENABLE KEYS */;
 UNLOCK TABLES;
 

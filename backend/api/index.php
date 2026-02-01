@@ -106,6 +106,9 @@ function legacyDispatch(Request $req): void {
             case 'content':
                 require_once API_PATH . '/content/index.php';
                 return;
+            case 'uploads':
+                require_once API_PATH . '/uploads/index.php';
+                return;
             case 'admin':
                 require_once API_PATH . '/admin/index.php';
                 return;

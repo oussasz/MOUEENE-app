@@ -130,9 +130,9 @@ CREATE TABLE providers (
     service_radius INT DEFAULT 10, -- in kilometers
     
     -- Business Information
-    business_license VARCHAR(100),
-    tax_id VARCHAR(100),
-    insurance_details TEXT,
+    commercial_registry_number VARCHAR(100),
+    nif VARCHAR(100),
+    nis TEXT,
     
     -- Verification & Status
     email_verified BOOLEAN DEFAULT FALSE,
@@ -153,7 +153,7 @@ CREATE TABLE providers (
     acceptance_rate DECIMAL(5,2) DEFAULT 0.00,
     
     -- Financial
-    hourly_rate DECIMAL(10,2),
+    provider_type ENUM('freelancer', 'self_employed', 'company') DEFAULT 'freelancer',
     service_fee_percentage DECIMAL(5,2) DEFAULT 15.00,
     
     -- Availability
@@ -353,6 +353,23 @@ CREATE TABLE provider_services (
     INDEX idx_provider (provider_id),
     INDEX idx_service (service_id),
     INDEX idx_active (is_active)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================================
+-- PROVIDER SERVICE IMAGES TABLE
+-- Stores provider-uploaded images for a specific service offering
+-- ============================================================================
+CREATE TABLE provider_service_images (
+    image_id INT AUTO_INCREMENT PRIMARY KEY,
+    provider_service_id INT NOT NULL,
+    image_url VARCHAR(500) NOT NULL,
+    public_id VARCHAR(255) NULL,
+    sort_order INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (provider_service_id) REFERENCES provider_services(provider_service_id) ON DELETE CASCADE,
+    INDEX idx_provider_service (provider_service_id),
+    INDEX idx_sort (sort_order)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================================

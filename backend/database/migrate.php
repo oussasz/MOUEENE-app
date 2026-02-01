@@ -69,11 +69,15 @@ foreach ($files as $file) {
     echo "Applying {$name}...\n";
 
     try {
+        // MySQL implicitly commits around many DDL statements (CREATE/ALTER/DROP),
+        // so we can only commit/rollback if a transaction is still active.
         $db->beginTransaction();
         $db->exec($sql);
         $ins = $db->prepare("INSERT INTO schema_migrations (migration) VALUES (?)");
         $ins->execute([$name]);
-        $db->commit();
+        if ($db->inTransaction()) {
+            $db->commit();
+        }
         $appliedCount++;
     } catch (Throwable $e) {
         if ($db->inTransaction()) {

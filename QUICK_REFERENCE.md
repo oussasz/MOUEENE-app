@@ -154,6 +154,29 @@ http://localhost/Mouin/backend/database/test_connection.php
 - Email: `admin@moueene.com`
 - Password: `Admin@123456`
 
+## ☁️ Cloudinary (Image Uploads)
+
+Provider "Add Service" image uploads use Cloudinary via a server-side signed upload.
+
+Set these environment variables before starting the PHP server:
+
+- `CLOUDINARY_CLOUD_NAME`
+- `CLOUDINARY_API_KEY`
+- `CLOUDINARY_API_SECRET`
+
+Example (Linux/macOS):
+
+```bash
+export CLOUDINARY_CLOUD_NAME="<your_cloud_name>"
+export CLOUDINARY_API_KEY="<your_api_key>"
+export CLOUDINARY_API_SECRET="<your_api_secret>"
+php -S localhost:8000 router.php
+```
+
+Signature endpoint (requires auth):
+
+`GET /backend/api/v1/uploads/cloudinary-signature?folder=moueene/provider-services`
+
 ## 📁 Key Files
 
 | Path                           | Purpose       |

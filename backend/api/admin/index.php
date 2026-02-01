@@ -34,6 +34,14 @@ switch ($action) {
             Response::error('Method not allowed', 405);
         }
         break;
+
+    case 'services':
+        if ($method === 'GET') {
+            handleGetServices();
+        } else {
+            Response::error('Method not allowed', 405);
+        }
+        break;
         
     case 'providers':
         if ($subAction && is_numeric($subAction)) {
@@ -88,6 +96,113 @@ switch ($action) {
         
     default:
         Response::error('Invalid admin endpoint', 404);
+}
+
+/**
+ * Admin: Get services (includes inactive)
+ * GET /api/v1/admin/services
+ *
+ * Query Parameters:
+ * - category_id (optional)
+ * - search (optional)
+ * - status (optional): active|inactive
+ * - lang (optional): en|fr|ar (default en)
+ * - page (optional): default 1
+ * - limit (optional): default 50 (max 200)
+ */
+function handleGetServices() {
+    try {
+        $db = Database::getConnection();
+
+        $scope = trim($_GET['scope'] ?? 'catalog'); // catalog|offered
+        $categoryId = $_GET['category_id'] ?? null;
+        $search = trim($_GET['search'] ?? '');
+        $status = trim($_GET['status'] ?? '');
+        $language = $_GET['lang'] ?? 'en';
+        $page = max(1, intval($_GET['page'] ?? 1));
+        $limit = min(200, max(1, intval($_GET['limit'] ?? 50)));
+        $offset = ($page - 1) * $limit;
+
+        $where = [];
+        $params = [$language];
+
+        // For catalog scope, status refers to services.is_active.
+        // For offered scope, status refers to provider_services.is_active.
+        $offerStatusSql = '';
+        $offerStatusParams = [];
+        if ($scope === 'catalog') {
+            if ($status === 'active') {
+                $where[] = 's.is_active = TRUE';
+            } elseif ($status === 'inactive') {
+                $where[] = 's.is_active = FALSE';
+            }
+        } else {
+            if ($status === 'active') {
+                $offerStatusSql = ' AND ps.is_active = TRUE';
+            } elseif ($status === 'inactive') {
+                $offerStatusSql = ' AND ps.is_active = FALSE';
+            }
+        }
+
+        if ($categoryId !== null && $categoryId !== '') {
+            $where[] = 's.category_id = ?';
+            $params[] = $categoryId;
+        }
+
+        if ($search !== '') {
+            $where[] = '(s.service_name LIKE ? OR s.description LIKE ? OR st.translated_name LIKE ? OR st.translated_description LIKE ?)';
+            $like = "%$search%";
+            $params[] = $like;
+            $params[] = $like;
+            $params[] = $like;
+            $params[] = $like;
+        }
+
+        if ($scope === 'offered') {
+            $where[] = "EXISTS (SELECT 1 FROM provider_services ps WHERE ps.service_id = s.service_id$offerStatusSql)";
+        }
+
+        $whereClause = count($where) > 0 ? ('WHERE ' . implode(' AND ', $where)) : '';
+
+        $fromSql = "FROM services s
+                LEFT JOIN service_categories sc ON s.category_id = sc.category_id
+                LEFT JOIN service_translations st ON s.service_id = st.service_id AND st.language_code = ?
+                $whereClause";
+
+        // Count total
+        $countSql = "SELECT COUNT(*) $fromSql";
+        $stmt = $db->prepare($countSql);
+        $stmt->execute($params);
+        $total = (int) $stmt->fetchColumn();
+
+        // Offered scope: add aggregate helper columns.
+        $extraSelect = '';
+        if ($scope === 'offered') {
+            $extraSelect = ",
+                (SELECT COUNT(DISTINCT ps2.provider_id) FROM provider_services ps2 WHERE ps2.service_id = s.service_id$offerStatusSql) as providers_offering,
+                (SELECT MIN(ps3.price) FROM provider_services ps3 WHERE ps3.service_id = s.service_id$offerStatusSql) as min_price,
+                (SELECT MAX(ps4.price) FROM provider_services ps4 WHERE ps4.service_id = s.service_id$offerStatusSql) as max_price";
+        }
+
+        // Fetch paged records
+        $dataSql = "SELECT s.*, sc.category_name,
+                COALESCE(st.translated_name, s.service_name) as service_name,
+                COALESCE(st.translated_description, s.description) as description
+                $extraSelect
+                $fromSql
+                ORDER BY s.is_featured DESC, s.is_popular DESC, s.service_name ASC
+                LIMIT ? OFFSET ?";
+
+        $dataParams = array_merge($params, [$limit, $offset]);
+        $stmt = $db->prepare($dataSql);
+        $stmt->execute($dataParams);
+        $services = $stmt->fetchAll();
+
+        Response::paginated($services, $total, $page, $limit);
+    } catch (Exception $e) {
+        error_log($e->getMessage());
+        Response::serverError('Failed to fetch services');
+    }
 }
 
 /**

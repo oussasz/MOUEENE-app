@@ -1922,6 +1922,20 @@
       return;
     }
 
+    // Admin pages: place switcher in the admin header controls (avoid fixed overlay)
+    const adminUser = document.querySelector(".admin-header .admin-user");
+    if (adminUser) {
+      switcher.classList.add("lang-switcher-admin");
+      const logoutBtn = adminUser.querySelector(".btn-logout");
+      if (logoutBtn) {
+        adminUser.insertBefore(switcher, logoutBtn);
+      } else {
+        adminUser.appendChild(switcher);
+      }
+      updateSwitcherActiveState();
+      return;
+    }
+
     switcher.classList.add("lang-switcher-fixed");
     document.body.appendChild(switcher);
     updateSwitcherActiveState();
