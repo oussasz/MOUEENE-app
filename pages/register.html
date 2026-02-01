@@ -10,12 +10,12 @@
     />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <!-- PAGE VERSION: 2.1.7 - d1e4ae3 - 2026-02-01 -->
+    <!-- PAGE VERSION: 2.1.8 - toggle-links-only - 2026-02-01 -->
     <title>Sign Up - Moueene</title>
 
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../assets/css/style.css?v=2.1.7" />
+    <link rel="stylesheet" href="../assets/css/style.css?v=2.1.8" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -300,7 +300,6 @@
               href="register.html?type=user"
               class="type-btn active"
               id="btnUser"
-              onclick="selectRegisterType('user')"
             >
               <i class="fas fa-user"></i>
               Customer
@@ -309,7 +308,6 @@
               href="register.html?type=provider"
               class="type-btn"
               id="btnProvider"
-              onclick="selectRegisterType('provider')"
             >
               <i class="fas fa-briefcase"></i>
               Provider
@@ -480,7 +478,7 @@
       AOS.init({ once: true });
     </script>
 
-    <script src="../assets/js/auth.js?v=2.1.7"></script>
+    <script src="../assets/js/auth.js?v=2.1.8"></script>
     <script>
       function showAlertError(message) {
         document.getElementById("errorMessage").textContent = message;
@@ -506,21 +504,7 @@
       function selectRegisterType(type) {
         hideAuthAlerts();
         document.getElementById("registerType").value = type;
-
-        try {
-          const url = new URL(window.location.href);
-          url.searchParams.set("type", type);
-          window.history.replaceState({}, "", url.toString());
-        } catch (e) {
-          // ignore URL update errors
-        }
-
-        // If URL didn't update (some hosting/caching setups), force it via reload
-        setTimeout(() => {
-          if (!window.location.search.includes(`type=${type}`)) {
-            window.location.search = `type=${type}`;
-          }
-        }, 0);
+        console.log("[Moueene] Type set to:", type);
 
         const btnUser = document.getElementById("btnUser");
         const btnProvider = document.getElementById("btnProvider");
