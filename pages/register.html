@@ -4,14 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Create a Moueene account" />
-    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
     <title>Sign Up - Moueene</title>
 
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../assets/css/style.css?v=2.1.0" />
+    <link rel="stylesheet" href="../assets/css/style.css?v=2.1.3" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -296,8 +293,6 @@
               type="button"
               class="type-btn active"
               id="btnUser"
-              data-type="user"
-              aria-pressed="true"
               onclick="selectRegisterType('user')"
             >
               <i class="fas fa-user"></i>
@@ -307,8 +302,6 @@
               type="button"
               class="type-btn"
               id="btnProvider"
-              data-type="provider"
-              aria-pressed="false"
               onclick="selectRegisterType('provider')"
             >
               <i class="fas fa-briefcase"></i>
@@ -480,7 +473,7 @@
       AOS.init({ once: true });
     </script>
 
-    <script src="../assets/js/auth.js?v=2.1.2"></script>
+    <script src="../assets/js/auth.js?v=2.1.3"></script>
     <script>
       function showAlertError(message) {
         document.getElementById("errorMessage").textContent = message;
@@ -511,11 +504,6 @@
         const btnProvider = document.getElementById("btnProvider");
         btnUser.classList.toggle("active", type === "user");
         btnProvider.classList.toggle("active", type === "provider");
-        btnUser.setAttribute("aria-pressed", type === "user" ? "true" : "false");
-        btnProvider.setAttribute(
-          "aria-pressed",
-          type === "provider" ? "true" : "false",
-        );
 
         const providerFields = document.getElementById("providerFields");
         providerFields.classList.toggle("show", type === "provider");
@@ -541,34 +529,8 @@
       (function initTypeFromUrl() {
         const params = new URLSearchParams(window.location.search);
         const t = params.get("type");
-        const stored = sessionStorage.getItem("register_type");
-        const desired = t === "provider" || t === "user" ? t : stored;
-        if (desired === "provider") selectRegisterType("provider");
+        if (t === "provider") selectRegisterType("provider");
         else selectRegisterType("user");
-
-        // Attach click listeners (backup for inline onclick / cached HTML)
-        const btnUser = document.getElementById("btnUser");
-        const btnProvider = document.getElementById("btnProvider");
-        if (btnUser) {
-          btnUser.addEventListener("click", () => selectRegisterType("user"));
-        }
-        if (btnProvider) {
-          btnProvider.addEventListener("click", () =>
-            selectRegisterType("provider"),
-          );
-        }
-      })();
-
-      // Persist the chosen type so refresh/back doesn't silently revert.
-      (function persistRegisterType() {
-        const input = document.getElementById("registerType");
-        if (!input) return;
-        const save = () => {
-          const t = input.value === "provider" ? "provider" : "user";
-          sessionStorage.setItem("register_type", t);
-        };
-        save();
-        input.addEventListener("change", save);
       })();
 
       document
@@ -577,22 +539,13 @@
           e.preventDefault();
           hideAuthAlerts();
 
-          // Determine current type robustly (active button wins)
-          const activeBtn = document.querySelector(".type-btn.active");
-          const activeType = activeBtn && activeBtn.dataset
-            ? activeBtn.dataset.type
-            : null;
-          const hiddenType = document.getElementById("registerType").value;
-          const registerType =
-            activeType === "provider" || activeType === "user"
-              ? activeType
-              : hiddenType === "provider" || hiddenType === "user"
-                ? hiddenType
-                : "user";
-
-          // Keep hidden input in sync (prevents mismatch)
-          document.getElementById("registerType").value = registerType;
-          sessionStorage.setItem("register_type", registerType);
+          // Read type from hidden input, but also check button state as fallback
+          let registerType = document.getElementById("registerType").value;
+          const providerBtnActive = document.getElementById("btnProvider").classList.contains("active");
+          if (providerBtnActive && registerType !== "provider") {
+            registerType = "provider";
+          }
+          console.log("[Moueene] Submitting as:", registerType);
 
           const firstName = document.getElementById("firstName").value.trim();
           const lastName = document.getElementById("lastName").value.trim();
