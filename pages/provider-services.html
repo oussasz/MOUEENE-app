@@ -908,11 +908,21 @@
                 />
                 <div
                   id="edit-images-preview"
-                  style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px"
+                  style="
+                    display: flex;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                    margin-top: 10px;
+                  "
                 ></div>
-                <small style="display:block; margin-top:8px; color: var(--text-light)"
-                  >Upload up to 10 images. Remove images to delete them from your
-                  offering.</small
+                <small
+                  style="
+                    display: block;
+                    margin-top: 8px;
+                    color: var(--text-light);
+                  "
+                  >Upload up to 10 images. Remove images to delete them from
+                  your offering.</small
                 >
               </div>
             </div>
@@ -1258,9 +1268,61 @@
       }
 
       let _addServiceImages = [];
+      let _dragContext = null;
+      let _dragIndex = null;
 
-      let _editExistingImages = [];
-      let _editNewImages = [];
+      let _editImages = [];
+
+      function moveArrayItem(arr, fromIndex, toIndex) {
+        if (!Array.isArray(arr)) return;
+        const from = Number(fromIndex);
+        const to = Number(toIndex);
+        if (!Number.isFinite(from) || !Number.isFinite(to)) return;
+        if (from === to) return;
+        if (from < 0 || from >= arr.length) return;
+        if (to < 0 || to >= arr.length) return;
+        const item = arr.splice(from, 1)[0];
+        arr.splice(to, 0, item);
+      }
+
+      function onImageDragStart(e, context, index) {
+        _dragContext = context;
+        _dragIndex = Number(index);
+        try {
+          e.dataTransfer.effectAllowed = "move";
+          e.dataTransfer.setData("text/plain", String(index));
+        } catch (err) {
+          // ignore
+        }
+      }
+
+      function onImageDragOver(e) {
+        e.preventDefault();
+        try {
+          e.dataTransfer.dropEffect = "move";
+        } catch (err) {
+          // ignore
+        }
+      }
+
+      function onImageDrop(e, context, targetIndex) {
+        e.preventDefault();
+        const to = Number(targetIndex);
+        const from = Number(_dragIndex);
+        if (_dragContext !== context) return;
+        if (!Number.isFinite(from) || !Number.isFinite(to)) return;
+
+        if (context === "add") {
+          moveArrayItem(_addServiceImages, from, to);
+          renderAddServiceImagesPreview();
+        } else if (context === "edit") {
+          moveArrayItem(_editImages, from, to);
+          renderEditServiceImagesPreview();
+        }
+
+        _dragContext = null;
+        _dragIndex = null;
+      }
 
       function resetAddServiceImages() {
         _addServiceImages = [];
@@ -1270,9 +1332,9 @@
       }
 
       function resetEditServiceImages() {
-        // Revoke object URLs for new images
-        for (const item of _editNewImages) {
-          if (item && item.previewUrl) {
+        // Revoke object URLs for local previews
+        for (const item of _editImages) {
+          if (item && item.type === "new" && item.previewUrl) {
             try {
               URL.revokeObjectURL(item.previewUrl);
             } catch (e) {
@@ -1280,8 +1342,7 @@
             }
           }
         }
-        _editExistingImages = [];
-        _editNewImages = [];
+        _editImages = [];
         const input = document.getElementById("edit-images");
         if (input) input.value = "";
         renderEditServiceImagesPreview();
@@ -1296,6 +1357,13 @@
           uploaded: null,
         }));
         renderAddServiceImagesPreview();
+
+        // allow selecting same file again
+        try {
+          e.target.value = "";
+        } catch (err) {
+          // ignore
+        }
       }
 
       function removeAddServiceImage(index) {
@@ -1327,10 +1395,11 @@
                 ? "Uploading..."
                 : "Ready";
             return `
-              <div style="position:relative; width:92px; height:92px; border-radius:12px; overflow:hidden; border:1px solid rgba(15,23,42,.12); background:#fff;">
+              <div draggable="true" ondragstart="onImageDragStart(event, 'add', ${idx})" ondragover="onImageDragOver(event)" ondrop="onImageDrop(event, 'add', ${idx})" title="Drag to reorder" style="position:relative; width:92px; height:92px; border-radius:12px; overflow:hidden; border:1px solid rgba(15,23,42,.12); background:#fff; cursor:grab;">
                 <img src="${img.previewUrl}" alt="Image" style="width:100%; height:100%; object-fit:cover; display:block;" />
                 <button type="button" onclick="removeAddServiceImage(${idx})" aria-label="Remove" style="position:absolute; top:6px; right:6px; width:26px; height:26px; border:none; border-radius:8px; background:rgba(15,23,42,.65); color:#fff; cursor:pointer;">&times;</button>
                 <div style="position:absolute; left:0; right:0; bottom:0; padding:4px 6px; font-size:11px; color:#fff; background:rgba(15,23,42,.55); text-align:center;">${status}</div>
+                <div style="position:absolute; left:6px; top:6px; width:22px; height:22px; border-radius:8px; background:rgba(15,23,42,.45); color:#fff; font-size:11px; display:flex; align-items:center; justify-content:center;">${idx + 1}</div>
               </div>
             `;
           })
@@ -1339,39 +1408,39 @@
 
       function onEditServiceImagesSelected(e) {
         const files = Array.from(e.target.files || []);
-
-        const existingCount = Array.isArray(_editExistingImages)
-          ? _editExistingImages.filter((x) => x && x.keep).length
-          : 0;
         const maxTotal = 10;
-        const remaining = Math.max(0, maxTotal - existingCount);
+        const currentCount = Array.isArray(_editImages) ? _editImages.length : 0;
+        const remaining = Math.max(0, maxTotal - currentCount);
 
-        _editNewImages = files.slice(0, remaining).map((file) => ({
+        const additions = files.slice(0, remaining).map((file) => ({
+          type: "new",
           file,
           previewUrl: URL.createObjectURL(file),
           uploaded: null,
           uploading: false,
         }));
+
+        _editImages = [..._editImages, ...additions];
         renderEditServiceImagesPreview();
+
+        // allow selecting same file again
+        try {
+          e.target.value = "";
+        } catch (err) {
+          // ignore
+        }
       }
 
-      function removeEditExistingImage(index) {
-        const item = _editExistingImages[index];
-        if (!item) return;
-        item.keep = false;
-        renderEditServiceImagesPreview();
-      }
-
-      function removeEditNewImage(index) {
-        const item = _editNewImages[index];
-        if (item && item.previewUrl) {
+      function removeEditImage(index) {
+        const item = _editImages[index];
+        if (item && item.type === "new" && item.previewUrl) {
           try {
             URL.revokeObjectURL(item.previewUrl);
           } catch (e) {
             // ignore
           }
         }
-        _editNewImages.splice(index, 1);
+        _editImages.splice(index, 1);
         renderEditServiceImagesPreview();
       }
 
@@ -1379,49 +1448,34 @@
         const el = document.getElementById("edit-images-preview");
         if (!el) return;
 
-        const existing = Array.isArray(_editExistingImages)
-          ? _editExistingImages
-              .map((img, idx) => ({ img, idx }))
-              .filter(({ img }) => img && img.keep)
-          : [];
-        const adding = Array.isArray(_editNewImages) ? _editNewImages : [];
-
-        if (!existing.length && !adding.length) {
+        if (!Array.isArray(_editImages) || _editImages.length === 0) {
           el.innerHTML = "";
           return;
         }
 
-        const existingHtml = existing
-          .map(({ img, idx }) => {
-            const url = img.url;
-            return `
-              <div style="position:relative; width:92px; height:92px; border-radius:12px; overflow:hidden; border:1px solid rgba(15,23,42,.12); background:#fff;">
-                <img src="${escapeHtml(url)}" alt="Image" style="width:100%; height:100%; object-fit:cover; display:block;" />
-                <button type="button" onclick="removeEditExistingImage(${idx})" aria-label="Remove" style="position:absolute; top:6px; right:6px; width:26px; height:26px; border:none; border-radius:8px; background:rgba(15,23,42,.65); color:#fff; cursor:pointer;">&times;</button>
-                <div style="position:absolute; left:0; right:0; bottom:0; padding:4px 6px; font-size:11px; color:#fff; background:rgba(15,23,42,.55); text-align:center;">Existing</div>
-              </div>
-            `;
-          })
-          .join("");
-
-        const newHtml = adding
+        el.innerHTML = _editImages
           .map((img, idx) => {
-            const status = img.uploaded
-              ? "Uploaded"
-              : img.uploading
-                ? "Uploading..."
-                : "Ready";
+            const isExisting = img.type === "existing";
+            const src = isExisting ? escapeHtml(img.url) : img.previewUrl;
+
+            const status = isExisting
+              ? "Existing"
+              : img.uploaded
+                ? "Uploaded"
+                : img.uploading
+                  ? "Uploading..."
+                  : "Ready";
+
             return `
-              <div style="position:relative; width:92px; height:92px; border-radius:12px; overflow:hidden; border:1px solid rgba(15,23,42,.12); background:#fff;">
-                <img src="${img.previewUrl}" alt="Image" style="width:100%; height:100%; object-fit:cover; display:block;" />
-                <button type="button" onclick="removeEditNewImage(${idx})" aria-label="Remove" style="position:absolute; top:6px; right:6px; width:26px; height:26px; border:none; border-radius:8px; background:rgba(15,23,42,.65); color:#fff; cursor:pointer;">&times;</button>
+              <div draggable="true" ondragstart="onImageDragStart(event, 'edit', ${idx})" ondragover="onImageDragOver(event)" ondrop="onImageDrop(event, 'edit', ${idx})" title="Drag to reorder" style="position:relative; width:92px; height:92px; border-radius:12px; overflow:hidden; border:1px solid rgba(15,23,42,.12); background:#fff; cursor:grab;">
+                <img src="${src}" alt="Image" style="width:100%; height:100%; object-fit:cover; display:block;" />
+                <button type="button" onclick="removeEditImage(${idx})" aria-label="Remove" style="position:absolute; top:6px; right:6px; width:26px; height:26px; border:none; border-radius:8px; background:rgba(15,23,42,.65); color:#fff; cursor:pointer;">&times;</button>
                 <div style="position:absolute; left:0; right:0; bottom:0; padding:4px 6px; font-size:11px; color:#fff; background:rgba(15,23,42,.55); text-align:center;">${status}</div>
+                <div style="position:absolute; left:6px; top:6px; width:22px; height:22px; border-radius:8px; background:rgba(15,23,42,.45); color:#fff; font-size:11px; display:flex; align-items:center; justify-content:center;">${idx + 1}</div>
               </div>
             `;
           })
           .join("");
-
-        el.innerHTML = existingHtml + newHtml;
       }
 
       async function getCloudinarySignature(folder) {
@@ -1745,13 +1799,13 @@
         // Images
         resetEditServiceImages();
         const existing = Array.isArray(svc.images) ? svc.images : [];
-        _editExistingImages = existing
+        _editImages = existing
           .filter((x) => x && x.url)
           .slice(0, 10)
           .map((x) => ({
+            type: "existing",
             url: x.url,
             public_id: x.public_id || null,
-            keep: true,
           }));
         renderEditServiceImagesPreview();
 
@@ -1817,29 +1871,40 @@
 
         setSubmittingFor("edit-service-submit", true);
         try {
-          // Upload any newly selected images first
-          const uploadedImages = [];
-          if (Array.isArray(_editNewImages) && _editNewImages.length > 0) {
-            const sig = await getCloudinarySignature("moueene/provider-services");
-            for (const item of _editNewImages) {
+          // Upload newly selected images in the current order
+          if (Array.isArray(_editImages) && _editImages.length > 0) {
+            const sig = await getCloudinarySignature(
+              "moueene/provider-services",
+            );
+            for (const item of _editImages) {
+              if (!item || item.type !== "new") continue;
               item.uploading = true;
               renderEditServiceImagesPreview();
               const uploaded = await uploadToCloudinary(item.file, sig);
               item.uploading = false;
               item.uploaded = uploaded;
               renderEditServiceImagesPreview();
-              if (uploaded && uploaded.url) {
-                uploadedImages.push(uploaded);
-              }
             }
           }
 
-          const keptExisting = Array.isArray(_editExistingImages)
-            ? _editExistingImages
-                .filter((x) => x && x.keep && x.url)
-                .map((x) => ({ url: x.url, public_id: x.public_id || null }))
-            : [];
-          const finalImages = [...keptExisting, ...uploadedImages].slice(0, 10);
+          const finalImages = (Array.isArray(_editImages) ? _editImages : [])
+            .map((item) => {
+              if (!item) return null;
+              if (item.type === "existing") {
+                if (!item.url) return null;
+                return { url: item.url, public_id: item.public_id || null };
+              }
+              if (item.type === "new") {
+                if (!item.uploaded || !item.uploaded.url) return null;
+                return {
+                  url: item.uploaded.url,
+                  public_id: item.uploaded.public_id || null,
+                };
+              }
+              return null;
+            })
+            .filter(Boolean)
+            .slice(0, 10);
 
           const token = Auth.getToken();
           const res = await fetch(

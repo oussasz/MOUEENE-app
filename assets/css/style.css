@@ -1166,9 +1166,12 @@ h2 {
    ============================================ */
 .featured-providers {
   padding: 100px 0 120px;
-  background: var(--bg-light);
+  background: var(--bg-white);
   position: relative;
   z-index: 10;
+}
+.featured-providers .section-header {
+  text-align: center;
 }
 .services-grid {
   display: grid;

@@ -550,7 +550,7 @@
                         autocomplete="new-password"
                         placeholder="Create a password"
                         required
-                        minlength="6"
+                        minlength="8"
                       />
                     </div>
                     <div class="form-group">
@@ -561,7 +561,7 @@
                         autocomplete="new-password"
                         placeholder="Repeat your password"
                         required
-                        minlength="6"
+                        minlength="8"
                       />
                     </div>
                   </div>
@@ -893,12 +893,17 @@
             showAlertError("Please enter your address.");
             return;
           }
-          if (!password || password.length < 6) {
-            showAlertError("Password must be at least 6 characters.");
+          if (!password || password.length < 8) {
+            showAlertError("Password must be at least 8 characters.");
             return;
           }
           if (password !== confirmPassword) {
             showAlertError("Passwords do not match.");
+            return;
+          }
+
+          if (registerType === "provider" && !phone) {
+            showAlertError("Phone number is required for providers.");
             return;
           }
 

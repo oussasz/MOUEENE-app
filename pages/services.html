@@ -393,7 +393,7 @@
         </div>
 
         <div class="filter-group">
-          <div class="filter-title">Price Range ($/hr)</div>
+          <div class="filter-title">Price Range (دج/hr)</div>
           <div class="price-range-inputs">
             <input
               id="min-price"
@@ -547,7 +547,14 @@
 
         function formatPrice(basePrice, priceType) {
           const price = Number(basePrice || 0);
-          const formatted = `$${price.toFixed(2).replace(/\.00$/, "")}`;
+
+          const hasFraction = Math.abs(price % 1) > 0.000001;
+          const formattedNumber = new Intl.NumberFormat("fr-DZ", {
+            minimumFractionDigits: hasFraction ? 2 : 0,
+            maximumFractionDigits: 2,
+          }).format(price);
+          const formatted = `${formattedNumber} دج`;
+
           if (priceType === "hourly") return `${formatted}/hr`;
           if (priceType === "per_item") return `${formatted}/item`;
           return formatted;
@@ -654,14 +661,26 @@
             card.setAttribute("data-aos-delay", String((index % 6) * 80));
             card.tabIndex = 0;
 
-            const imageUrl = service.service_image
-              ? resolveImageUrl(service.service_image)
+            const imageUrl = (service.primary_image || service.service_image)
+              ? resolveImageUrl(service.primary_image || service.service_image)
               : getCategoryFallbackImage(service.category_id);
 
             const categoryName = service.category_name || "Service";
             const rating = Number(service.average_rating || 0).toFixed(1);
+            const reviews = Number(service.total_reviews || 0);
             const bookings = Number(service.total_bookings || 0);
-            const providers = Number(service.total_providers || 0);
+
+            const providerName = (function () {
+              const business = (service.business_name || "").trim();
+              if (business) return business;
+              const first = (service.first_name || "").trim();
+              const last = (service.last_name || "").trim();
+              return [first, last].filter(Boolean).join(" ") || "Provider";
+            })();
+
+            const providerAvatar = service.provider_avatar
+              ? resolveImageUrl(service.provider_avatar)
+              : "../assets/images/default-avatar.jpg";
             const priceText = formatPrice(
               service.base_price,
               service.price_type,
@@ -681,13 +700,20 @@
                 <h3 class="service-title">${escapeHtml(service.service_name)}</h3>
                 <p class="service-description">${escapeHtml(service.description || "")}</p>
                 <div class="provider-info">
+                  <img
+                    src="${escapeHtml(providerAvatar)}"
+                    alt="${escapeHtml(providerName)}"
+                    class="provider-avatar"
+                    onerror="this.src = '../assets/images/default-avatar.jpg'"
+                  />
                   <div class="provider-details" style="width: 100%;">
+                    <h4>${escapeHtml(providerName)}</h4>
                     <div class="service-meta">
-                      <span class="rating"><i class="fas fa-star"></i> ${escapeHtml(rating)}</span>
+                      <span class="rating"><i class="fas fa-star"></i> ${escapeHtml(rating)} (${escapeHtml(reviews)})</span>
                       <span class="price">${escapeHtml(priceText)}</span>
                     </div>
                     <div class="service-meta" style="margin-top: 0.35rem;">
-                      <span style="color: var(--text-light); font-size: 0.85rem;"><i class="fas fa-user-friends"></i> ${escapeHtml(providers)}</span>
+                      <span style="color: var(--text-light); font-size: 0.85rem;"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(service.provider_city || "")}</span>
                       <span style="color: var(--text-light); font-size: 0.85rem;"><i class="fas fa-briefcase"></i> ${escapeHtml(bookings)}</span>
                     </div>
                   </div>
@@ -695,7 +721,7 @@
               </div>
             `;
 
-            const href = `service-detail.html?service_id=${encodeURIComponent(service.service_id)}`;
+            const href = `provider-profile.html?provider_id=${encodeURIComponent(service.provider_id)}`;
             card.addEventListener("click", () => (window.location.href = href));
             card.addEventListener("keydown", (e) => {
               if (e.key === "Enter" || e.key === " ") {
@@ -764,7 +790,7 @@
 
             readFiltersFromUI();
 
-            const result = await apiGet("/services", {
+            const result = await apiGet("/services/offers", {
               category_id: state.categoryId ?? "",
               search: state.search ?? "",
               page: state.page,

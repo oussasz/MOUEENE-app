@@ -7,6 +7,16 @@
 $uri = $_SERVER['REQUEST_URI'];
 $path = parse_url($uri, PHP_URL_PATH);
 
+// Favicon fallback for local dev
+if ($path === '/favicon.ico') {
+    $fallback = __DIR__ . '/logo.png';
+    if (file_exists($fallback)) {
+        header('Content-Type: image/png');
+        readfile($fallback);
+        exit;
+    }
+}
+
 // Serve static files directly
 if (preg_match('/\.(?:html|css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/', $path)) {
     $filePath = __DIR__ . $path;

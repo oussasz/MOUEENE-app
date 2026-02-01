@@ -256,6 +256,36 @@
       .admin-table tr:hover {
         background: #f9fafb;
       }
+
+      .action-buttons {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .btn-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        font-size: 0.85rem;
+        background: #f9fafb;
+        color: #374151;
+        transition: all 0.2s;
+      }
+      .btn-action:hover {
+        background: #f3f4f6;
+      }
+      .btn-action-danger {
+        background: #fee2e2;
+        color: #b91c1c;
+        border-color: #fecaca;
+      }
+      .btn-action-danger:hover {
+        background: #fecaca;
+      }
       .badge {
         padding: 5px 12px;
         border-radius: 20px;
@@ -663,6 +693,7 @@
                             ${scope === "offered" ? "<th>Providers</th>" : ""}
                             <th>Status</th>
                             <th>Popular</th>
+                  <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -708,6 +739,18 @@
                                 ${scope === "offered" ? `<td>${providersOffered}</td>` : ""}
                                 <td><span class="badge badge-${service.is_active ? "active" : "inactive"}">${service.is_active ? "Active" : "Inactive"}</span></td>
                                 <td>${service.is_popular ? '<i class="fas fa-star" style="color: #f59e0b;"></i>' : "-"}</td>
+                                <td>
+                                  <div class="action-buttons">
+                                    <button
+                                      class="btn-action btn-action-danger"
+                                      onclick="deleteService(${Number(service.service_id)}, '${String(service.service_name || '').replaceAll("\\", "\\\\").replaceAll("'", "\\'")}')"
+                                      title="Delete (deactivate) service"
+                                    >
+                                      <i class="fas fa-trash"></i>
+                                      Delete
+                                    </button>
+                                  </div>
+                                </td>
                             </tr>
                         `;
                           })
@@ -715,6 +758,39 @@
                     </tbody>
                 </table>
             `;
+      }
+
+      async function deleteService(serviceId, serviceName) {
+        const token = checkAuth();
+        if (!token) return;
+
+        const name = serviceName || `#${serviceId}`;
+        const confirmed = window.confirm(
+          `Delete service "${name}"?\n\nThis will deactivate it (it will no longer appear to users/providers).`,
+        );
+        if (!confirmed) return;
+
+        try {
+          const url = buildUrl(`/admin/services/${encodeURIComponent(serviceId)}`, {
+            scope: getScope(),
+          });
+          const result = await fetchWithAuth(url, { method: "DELETE" });
+
+          if (result && result.success) {
+            // Remove from local list and re-render fast
+            allServices = allServices.filter(
+              (s) => Number(s.service_id) !== Number(serviceId),
+            );
+            filterAndRenderServices();
+            loadStats();
+            return;
+          }
+
+          alert(result?.message || "Failed to delete service");
+        } catch (e) {
+          console.error("Delete service error:", e);
+          alert("Error deleting service");
+        }
       }
 
       document.addEventListener("DOMContentLoaded", () => {

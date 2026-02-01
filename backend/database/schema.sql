@@ -75,7 +75,7 @@ CREATE TABLE users (
     zip_code VARCHAR(20),
     country VARCHAR(100) DEFAULT 'Algeria',
     date_of_birth DATE,
-    gender ENUM('male', 'female', 'other', 'prefer_not_to_say'),
+    gender ENUM('male', 'female') DEFAULT NULL,
     email_verified BOOLEAN DEFAULT FALSE,
     phone_verified BOOLEAN DEFAULT FALSE,
     account_status ENUM('active', 'suspended', 'deactivated', 'deleted') DEFAULT 'active',
@@ -120,7 +120,7 @@ CREATE TABLE providers (
     zip_code VARCHAR(20),
     country VARCHAR(100) DEFAULT 'Algeria',
     date_of_birth DATE,
-    gender ENUM('male', 'female', 'other', 'prefer_not_to_say'),
+    gender ENUM('male', 'female') DEFAULT NULL,
     
     -- Professional Information
     experience_years INT DEFAULT 0,

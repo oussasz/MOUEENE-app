@@ -589,83 +589,31 @@
             <!-- Stats -->
             <div class="stats-grid">
               <div class="stat-card">
-                <div class="stat-number">4.8</div>
+                <div class="stat-number" id="avg-rating">—</div>
                 <div class="stat-label">Average Rating</div>
-                <div class="rating-stars">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                </div>
+                <div class="rating-stars" id="avg-rating-stars"></div>
               </div>
               <div class="stat-card">
-                <div class="stat-number">124</div>
+                <div class="stat-number" id="total-reviews">—</div>
                 <div class="stat-label">Total Reviews</div>
               </div>
               <div class="stat-card">
-                <div class="stat-number">98%</div>
+                <div class="stat-number" id="recommendation-rate">—</div>
                 <div class="stat-label">Recommendation Rate</div>
               </div>
             </div>
 
             <!-- Reviews List -->
-            <div class="reviews-list">
-              <!-- Review 1 -->
-              <div class="review-card">
-                <div class="review-header">
-                  <div class="reviewer-info">
-                    <img
-                      src="https://via.placeholder.com/50"
-                      alt="Reviewer"
-                      class="reviewer-avatar"
-                    />
-                    <div>
-                      <h4 class="reviewer-name">Sarah Jenkins</h4>
-                      <span class="review-date">Oct 15, 2023</span>
-                    </div>
-                  </div>
-                  <div class="rating-stars">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i
-                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
-                    ><i class="fas fa-star"></i>
-                  </div>
-                </div>
-                <p class="review-text">
-                  Absolutley fantastic service! Arrived on time and did an
-                  amazing job cleaning our entire house. Very professional and
-                  friendly. Highly recommended!
-                </p>
-                <span class="review-service">Deep Home Cleaning</span>
+            <div class="reviews-list" id="reviews-list">
+              <div class="review-card" style="opacity: 0.85">
+                <p class="review-text">Loading reviews…</p>
               </div>
+            </div>
 
-              <!-- Review 2 -->
-              <div class="review-card">
-                <div class="review-header">
-                  <div class="reviewer-info">
-                    <img
-                      src="https://via.placeholder.com/50"
-                      alt="Reviewer"
-                      class="reviewer-avatar"
-                    />
-                    <div>
-                      <h4 class="reviewer-name">Mike Ross</h4>
-                      <span class="review-date">Sep 28, 2023</span>
-                    </div>
-                  </div>
-                  <div class="rating-stars">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i
-                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
-                    ><i class="far fa-star"></i>
-                  </div>
-                </div>
-                <p class="review-text">
-                  Good service overall. The mechanic identified the issue
-                  quickly, but the repair took a bit longer than expected. Price
-                  was fair though.
-                </p>
-                <span class="review-service">Car Diagnostics</span>
-              </div>
+            <div style="margin-top: 15px">
+              <button class="btn btn-outline" id="reviews-load-more" style="display: none">
+                Load more
+              </button>
             </div>
           </main>
         </div>
@@ -708,6 +656,163 @@
             e.preventDefault();
             Auth.logout();
           });
+
+        const $avg = document.getElementById("avg-rating");
+        const $avgStars = document.getElementById("avg-rating-stars");
+        const $total = document.getElementById("total-reviews");
+        const $rec = document.getElementById("recommendation-rate");
+        const $list = document.getElementById("reviews-list");
+        const $loadMore = document.getElementById("reviews-load-more");
+
+        const apiBase = "/backend/api/v1";
+        const defaultAvatar = "../assets/images/default-avatar.jpg";
+        let _page = 1;
+        let _hasMore = false;
+        let _providerId = null;
+        let _loaded = [];
+
+        function esc(s) {
+          return String(s ?? "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+        }
+
+        function starsHtml(rating) {
+          const r = Math.max(0, Math.min(5, Number(rating) || 0));
+          const full = Math.floor(r);
+          const half = r - full >= 0.5 ? 1 : 0;
+          const empty = 5 - full - half;
+          return (
+            "<i class=\"fas fa-star\"></i>".repeat(full) +
+            (half ? "<i class=\"fas fa-star-half-alt\"></i>" : "") +
+            "<i class=\"far fa-star\"></i>".repeat(empty)
+          );
+        }
+
+        function renderStats(profile) {
+          const avg = Number(profile?.average_rating ?? 0);
+          const total = Number(profile?.total_reviews ?? 0);
+
+          $avg.textContent = avg ? avg.toFixed(1) : "0.0";
+          $avgStars.innerHTML = starsHtml(avg);
+          $total.textContent = Number.isFinite(total) ? String(total) : "0";
+
+          // Recommendation rate based on loaded reviews (rating >= 4)
+          if (_loaded.length === 0) {
+            $rec.textContent = "0%";
+            return;
+          }
+          const recommended = _loaded.filter((r) => Number(r.rating) >= 4).length;
+          const pct = Math.round((recommended / _loaded.length) * 100);
+          $rec.textContent = `${pct}%`;
+        }
+
+        function renderReviews() {
+          if (!_loaded.length) {
+            $list.innerHTML = `
+              <div class="review-card" style="opacity: 0.85">
+                <p class="review-text">No reviews yet.</p>
+              </div>`;
+            return;
+          }
+
+          $list.innerHTML = _loaded
+            .map((r) => {
+              const name = `${r.first_name || ""} ${r.last_name || ""}`.trim();
+              const avatar = r.profile_picture || defaultAvatar;
+              const date = r.created_at
+                ? new Date(r.created_at).toLocaleDateString([], {
+                    year: "numeric",
+                    month: "short",
+                    day: "2-digit",
+                  })
+                : "";
+              const title = (r.title || "").trim();
+              const comment = (r.comment || "").trim();
+              const serviceName = (r.service_name || "").trim();
+
+              return `
+                <div class="review-card">
+                  <div class="review-header">
+                    <div class="reviewer-info">
+                      <img src="${esc(avatar)}" alt="Reviewer" class="reviewer-avatar" />
+                      <div>
+                        <h4 class="reviewer-name">${esc(name || "Customer")}</h4>
+                        <span class="review-date">${esc(date)}</span>
+                      </div>
+                    </div>
+                    <div class="rating-stars">${starsHtml(r.rating)}</div>
+                  </div>
+                  ${title ? `<p class=\"review-text\" style=\"font-weight:600\">${esc(title)}</p>` : ""}
+                  <p class="review-text">${esc(comment || "—")}</p>
+                  ${serviceName ? `<span class=\"review-service\">${esc(serviceName)}</span>` : ""}
+                </div>`;
+            })
+            .join("");
+        }
+
+        async function apiFetch(path) {
+          const token = Auth.getToken();
+          const res = await fetch(`${apiBase}${path}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const json = await res.json().catch(() => ({}));
+          if (!res.ok || !json.success) {
+            throw new Error(json.message || `Request failed (${res.status})`);
+          }
+          return json;
+        }
+
+        async function loadMore() {
+          if (!_providerId) return;
+          $loadMore.disabled = true;
+          try {
+            const res = await apiFetch(
+              `/providers/${encodeURIComponent(
+                _providerId,
+              )}/reviews?page=${encodeURIComponent(_page)}&limit=10`,
+            );
+            const items = res.data || [];
+            _loaded = _loaded.concat(items);
+            _hasMore = Boolean(res.meta?.has_more);
+            _page += 1;
+            renderReviews();
+            renderStats(await Auth.getCurrentUser());
+            $loadMore.style.display = _hasMore ? "inline-flex" : "none";
+          } catch (e) {
+            $list.innerHTML = `
+              <div class="review-card" style="opacity: 0.9">
+                <p class="review-text">${esc(e.message || "Failed to load reviews")}</p>
+              </div>`;
+            $loadMore.style.display = "none";
+          } finally {
+            $loadMore.disabled = false;
+          }
+        }
+
+        $loadMore.addEventListener("click", (e) => {
+          e.preventDefault();
+          loadMore();
+        });
+
+        try {
+          const me = await Auth.getCurrentUser();
+          if (!me || me.user_type !== "provider") {
+            window.location.href = "login.html";
+            return;
+          }
+          _providerId = me.provider_id;
+          renderStats(me);
+          await loadMore();
+        } catch (e) {
+          $list.innerHTML = `
+            <div class="review-card" style="opacity: 0.9">
+              <p class="review-text">${esc(e.message || "Failed to load")}</p>
+            </div>`;
+        }
       });
     </script>
   </body>

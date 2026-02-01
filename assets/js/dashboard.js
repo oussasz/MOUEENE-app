@@ -6,9 +6,13 @@
  * @version 1.0.0
  */
 
-const __t = (s) => (window.I18N && window.I18N.t ? window.I18N.t(s) : s);
-const __lang = () =>
-  window.I18N && window.I18N.getLanguage ? window.I18N.getLanguage() : "en";
+function __t(s) {
+  return window.I18N && window.I18N.t ? window.I18N.t(s) : s;
+}
+
+function __lang() {
+  return window.I18N && window.I18N.getLanguage ? window.I18N.getLanguage() : "en";
+}
 
 const Dashboard = {
   apiUrl: "/backend/api/v1",

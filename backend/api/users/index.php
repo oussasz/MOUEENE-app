@@ -91,6 +91,28 @@ function handleUpdateProfile($data) {
     $authUser = Auth::user();
     
     try {
+        if (is_array($data) && array_key_exists('gender', $data)) {
+            $gender = is_string($data['gender']) ? trim($data['gender']) : $data['gender'];
+            if ($gender === '' || $gender === null) {
+                $data['gender'] = null;
+            } elseif (!in_array($gender, ['male', 'female'], true)) {
+                Response::error('Invalid gender. Allowed values: male, female.', 422);
+            }
+        }
+
+        if (is_array($data) && array_key_exists('profile_picture', $data)) {
+            $pic = is_string($data['profile_picture']) ? trim($data['profile_picture']) : $data['profile_picture'];
+            if ($pic === '' || $pic === null) {
+                $data['profile_picture'] = null;
+            } elseif (is_string($pic)) {
+                $isCloudinary = (strpos($pic, 'https://res.cloudinary.com/') === 0) || (strpos($pic, 'http://res.cloudinary.com/') === 0);
+                $isDefault = (strpos($pic, '/assets/images/') === 0);
+                if (!$isCloudinary && !$isDefault) {
+                    Response::error('Invalid profile picture URL. Please upload via Cloudinary.', 422);
+                }
+            }
+        }
+
         $user = new User();
         $result = $user->update($authUser['user_id'], $data);
         

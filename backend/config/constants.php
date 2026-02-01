@@ -119,8 +119,6 @@ define('LANG_ARABIC', 'ar');
 // Gender
 define('GENDER_MALE', 'male');
 define('GENDER_FEMALE', 'female');
-define('GENDER_OTHER', 'other');
-define('GENDER_PREFER_NOT_TO_SAY', 'prefer_not_to_say');
 
 // Days of Week
 define('DAY_MONDAY', 'monday');

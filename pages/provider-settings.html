@@ -585,18 +585,32 @@
                     id="settings-avatar"
                   />
                   <div>
-                    <button
-                      type="button"
-                      class="btn btn-outline"
-                      id="change-photo-btn"
-                    >
-                      Change Photo
-                    </button>
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap">
+                      <button
+                        type="button"
+                        class="btn btn-outline"
+                        id="change-photo-btn"
+                      >
+                        Change Photo
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-outline"
+                        id="remove-photo-btn"
+                        title="Remove profile photo"
+                      >
+                        Remove Photo
+                      </button>
+                    </div>
                     <div
                       style="font-size: 0.8rem; color: #888; margin-top: 5px"
                     >
                       Max file size: 2MB. JPG, PNG.
                     </div>
+                    <div
+                      id="photo-upload-status"
+                      style="font-size: 0.8rem; color: #6b7280; margin-top: 5px"
+                    ></div>
                   </div>
                 </div>
 
@@ -606,6 +620,9 @@
                   accept="image/*"
                   style="display: none"
                 />
+
+                <!-- Cloudinary profile_picture URL (hidden) -->
+                <input type="hidden" id="profile-picture-url" value="" />
 
                 <div class="form-grid">
                   <div class="form-group">
@@ -628,6 +645,17 @@
                       placeholder="Last name"
                     />
                   </div>
+
+                  <div class="form-group">
+                    <label>Business Name</label>
+                    <input
+                      type="text"
+                      id="business-name"
+                      class="form-control"
+                      placeholder="Business name (optional)"
+                    />
+                  </div>
+
                   <div class="form-group">
                     <label>Email Address</label>
                     <input
@@ -650,6 +678,7 @@
                     />
                   </div>
                 </div>
+
                 <div class="form-group" style="margin-top: 20px">
                   <label>Bio / Description</label>
                   <textarea
@@ -659,6 +688,50 @@
                     placeholder="Tell customers about your experience, skills, and services..."
                   ></textarea>
                 </div>
+
+                <div class="form-grid" style="margin-top: 20px">
+                  <div class="form-group">
+                    <label>City</label>
+                    <input
+                      type="text"
+                      id="city"
+                      class="form-control"
+                      autocomplete="address-level2"
+                      placeholder="City"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>State / Region</label>
+                    <input
+                      type="text"
+                      id="state"
+                      class="form-control"
+                      autocomplete="address-level1"
+                      placeholder="State/Region"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>Zip Code</label>
+                    <input
+                      type="text"
+                      id="zip-code"
+                      class="form-control"
+                      autocomplete="postal-code"
+                      placeholder="Zip"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>Country</label>
+                    <input
+                      type="text"
+                      id="country"
+                      class="form-control"
+                      autocomplete="country-name"
+                      placeholder="Country"
+                    />
+                  </div>
+                </div>
+
                 <div class="form-group" style="margin-top: 20px">
                   <label>Address</label>
                   <input
@@ -668,6 +741,140 @@
                     autocomplete="street-address"
                     placeholder="Address"
                   />
+                </div>
+
+                <div class="settings-card" style="margin-top: 20px; padding: 0; box-shadow: none; background: transparent">
+                  <h2 style="margin: 0 0 10px 0">Professional Details</h2>
+                </div>
+
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label>Specialization</label>
+                    <input
+                      type="text"
+                      id="specialization"
+                      class="form-control"
+                      placeholder="e.g. Cleaning, Plumbing, Electrical..."
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>Experience (years)</label>
+                    <input
+                      type="number"
+                      id="experience-years"
+                      class="form-control"
+                      min="0"
+                      step="1"
+                      placeholder="0"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>Languages Spoken</label>
+                    <input
+                      type="text"
+                      id="languages-spoken"
+                      class="form-control"
+                      placeholder="e.g. Arabic, French, English"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>Service Radius (km)</label>
+                    <input
+                      type="number"
+                      id="service-radius"
+                      class="form-control"
+                      min="0"
+                      step="1"
+                      placeholder="10"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-grid" style="margin-top: 20px">
+                  <div class="form-group">
+                    <label>Date of Birth</label>
+                    <input
+                      type="date"
+                      id="date-of-birth"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>Gender</label>
+                    <select id="gender" class="form-control">
+                      <option value="">Select gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Provider Type</label>
+                    <select id="provider-type" class="form-control">
+                      <option value="freelancer">Freelancer</option>
+                      <option value="self_employed">Self Employed</option>
+                      <option value="company">Company</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Availability Status</label>
+                    <select id="availability-status" class="form-control">
+                      <option value="available">Available</option>
+                      <option value="busy">Busy</option>
+                      <option value="offline">Offline</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 20px">
+                  <label>Certification</label>
+                  <input
+                    type="text"
+                    id="certification"
+                    class="form-control"
+                    placeholder="Certifications (optional)"
+                  />
+                </div>
+
+                <div class="settings-card" style="margin-top: 20px; padding: 0; box-shadow: none; background: transparent">
+                  <h2 style="margin: 0 0 10px 0">Business Info (Optional)</h2>
+                </div>
+
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label>Commercial Registry Number</label>
+                    <input
+                      type="text"
+                      id="commercial-registry-number"
+                      class="form-control"
+                      placeholder="Commercial registry number"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>NIF</label>
+                    <input
+                      type="text"
+                      id="nif"
+                      class="form-control"
+                      placeholder="NIF"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>NIS</label>
+                    <input
+                      type="text"
+                      id="nis"
+                      class="form-control"
+                      placeholder="NIS"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>Preferred Language</label>
+                    <select id="preferred-language" class="form-control">
+                      <option value="en">English</option>
+                      <option value="fr">French</option>
+                      <option value="ar">Arabic</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div style="margin-top: 30px; text-align: right">
@@ -737,10 +944,34 @@
 
           firstName: null,
           lastName: null,
+          businessName: null,
           email: null,
           phone: null,
           bio: null,
           address: null,
+
+          city: null,
+          state: null,
+          zipCode: null,
+          country: null,
+
+          specialization: null,
+          experienceYears: null,
+          languagesSpoken: null,
+          serviceRadius: null,
+          dateOfBirth: null,
+          gender: null,
+          providerType: null,
+          availabilityStatus: null,
+          certification: null,
+          commercialRegistryNumber: null,
+          nif: null,
+          nis: null,
+          preferredLanguage: null,
+
+          profilePictureUrl: null,
+          removePhotoBtn: null,
+          photoUploadStatus: null,
 
           profileSaveBtn: null,
           passwordSaveBtn: null,
@@ -750,16 +981,54 @@
           settingsAvatar: null,
         },
 
+        state: {
+          uploadedProfileUrl: null,
+        },
+
         cacheEls() {
           this.els.profileForm = document.getElementById("profile-form");
           this.els.passwordForm = document.getElementById("password-form");
 
           this.els.firstName = document.getElementById("first-name");
           this.els.lastName = document.getElementById("last-name");
+          this.els.businessName = document.getElementById("business-name");
           this.els.email = document.getElementById("email");
           this.els.phone = document.getElementById("phone");
           this.els.bio = document.getElementById("bio");
           this.els.address = document.getElementById("address");
+
+          this.els.city = document.getElementById("city");
+          this.els.state = document.getElementById("state");
+          this.els.zipCode = document.getElementById("zip-code");
+          this.els.country = document.getElementById("country");
+
+          this.els.specialization = document.getElementById("specialization");
+          this.els.experienceYears = document.getElementById("experience-years");
+          this.els.languagesSpoken = document.getElementById("languages-spoken");
+          this.els.serviceRadius = document.getElementById("service-radius");
+          this.els.dateOfBirth = document.getElementById("date-of-birth");
+          this.els.gender = document.getElementById("gender");
+          this.els.providerType = document.getElementById("provider-type");
+          this.els.availabilityStatus = document.getElementById(
+            "availability-status",
+          );
+          this.els.certification = document.getElementById("certification");
+          this.els.commercialRegistryNumber = document.getElementById(
+            "commercial-registry-number",
+          );
+          this.els.nif = document.getElementById("nif");
+          this.els.nis = document.getElementById("nis");
+          this.els.preferredLanguage = document.getElementById(
+            "preferred-language",
+          );
+
+          this.els.profilePictureUrl = document.getElementById(
+            "profile-picture-url",
+          );
+          this.els.removePhotoBtn = document.getElementById("remove-photo-btn");
+          this.els.photoUploadStatus = document.getElementById(
+            "photo-upload-status",
+          );
 
           this.els.profileSaveBtn = document.getElementById("profile-save-btn");
           this.els.passwordSaveBtn =
@@ -768,6 +1037,70 @@
           this.els.changePhotoBtn = document.getElementById("change-photo-btn");
           this.els.photoInput = document.getElementById("profile-photo-input");
           this.els.settingsAvatar = document.getElementById("settings-avatar");
+        },
+
+        _setPhotoStatus(text, isError = false) {
+          if (!this.els.photoUploadStatus) return;
+          this.els.photoUploadStatus.textContent = text || "";
+          this.els.photoUploadStatus.style.color = isError ? "#b91c1c" : "#6b7280";
+        },
+
+        _getProfilePictureUrl() {
+          const fromUpload = this.state.uploadedProfileUrl;
+          if (fromUpload) return fromUpload;
+          const fromInput = this.els.profilePictureUrl
+            ? this.els.profilePictureUrl.value.trim()
+            : "";
+          return fromInput || null;
+        },
+
+        async _getCloudinarySignature(folder) {
+          const token = Auth.getToken();
+          const url = `/backend/api/v1/uploads/cloudinary-signature?folder=${encodeURIComponent(
+            folder,
+          )}`;
+          const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const json = await res.json().catch(() => null);
+          if (!res.ok || !json || !json.success) {
+            const msg = json?.message || `Failed to get upload signature (${res.status})`;
+            const missing = json?.errors?.missing;
+            if (Array.isArray(missing) && missing.length) {
+              throw new Error(`${msg}. Missing: ${missing.join(", ")}`);
+            }
+            throw new Error(msg);
+          }
+          return json.data;
+        },
+
+        async _uploadProfilePhotoToCloudinary(file) {
+          const sig = await this._getCloudinarySignature(
+            "moueene/provider-profile",
+          );
+
+          const endpoint = `https://api.cloudinary.com/v1_1/${encodeURIComponent(
+            sig.cloud_name,
+          )}/${encodeURIComponent(sig.resource_type || "image")}/upload`;
+
+          const form = new FormData();
+          form.append("file", file);
+          form.append("api_key", sig.api_key);
+          form.append("timestamp", String(sig.timestamp));
+          form.append("signature", sig.signature);
+          form.append("folder", sig.folder);
+
+          const res = await fetch(endpoint, {
+            method: "POST",
+            body: form,
+          });
+
+          const json = await res.json().catch(() => null);
+          if (!res.ok || !json || !json.secure_url) {
+            throw new Error(json?.error?.message || "Upload failed");
+          }
+
+          return { url: json.secure_url, public_id: json.public_id };
         },
 
         async init() {
@@ -806,10 +1139,58 @@
             // Populate form
             this.els.firstName.value = p.first_name || "";
             this.els.lastName.value = p.last_name || "";
+            if (this.els.businessName)
+              this.els.businessName.value = p.business_name || "";
             this.els.email.value = p.email || "";
             this.els.phone.value = p.phone || "";
             this.els.bio.value = p.bio || "";
             this.els.address.value = p.address || "";
+
+            if (this.els.city) this.els.city.value = p.city || "";
+            if (this.els.state) this.els.state.value = p.state || "";
+            if (this.els.zipCode) this.els.zipCode.value = p.zip_code || "";
+            if (this.els.country) this.els.country.value = p.country || "";
+
+            if (this.els.specialization)
+              this.els.specialization.value = p.specialization || "";
+            if (this.els.experienceYears)
+              this.els.experienceYears.value =
+                p.experience_years !== null && p.experience_years !== undefined
+                  ? String(p.experience_years)
+                  : "";
+            if (this.els.languagesSpoken)
+              this.els.languagesSpoken.value = p.languages_spoken || "";
+            if (this.els.serviceRadius)
+              this.els.serviceRadius.value =
+                p.service_radius !== null && p.service_radius !== undefined
+                  ? String(p.service_radius)
+                  : "";
+            if (this.els.dateOfBirth)
+              this.els.dateOfBirth.value = p.date_of_birth || "";
+            if (this.els.gender) this.els.gender.value = p.gender || "";
+            if (this.els.providerType)
+              this.els.providerType.value = p.provider_type || "freelancer";
+            if (this.els.availabilityStatus)
+              this.els.availabilityStatus.value =
+                p.availability_status || "offline";
+            if (this.els.certification)
+              this.els.certification.value = p.certification || "";
+            if (this.els.commercialRegistryNumber)
+              this.els.commercialRegistryNumber.value =
+                p.commercial_registry_number || "";
+            if (this.els.nif) this.els.nif.value = p.nif || "";
+            if (this.els.nis) this.els.nis.value = p.nis || "";
+            if (this.els.preferredLanguage)
+              this.els.preferredLanguage.value = p.preferred_language || "en";
+
+            if (this.els.profilePictureUrl) {
+              this.els.profilePictureUrl.value = p.profile_picture || "";
+            }
+
+            // Keep avatar preview in sync
+            if (this.els.settingsAvatar && p.profile_picture) {
+              this.els.settingsAvatar.src = p.profile_picture;
+            }
 
             // Re-apply header/sidebar names + avatar with freshest data
             if (window.ProviderUI) {
@@ -874,13 +1255,60 @@
         },
 
         async saveProfile() {
+          const photoUrl = this._getProfilePictureUrl();
           const payload = {
             first_name: this.els.firstName.value.trim(),
             last_name: this.els.lastName.value.trim(),
+            business_name: this.els.businessName
+              ? this.els.businessName.value.trim()
+              : undefined,
             phone: this.els.phone.value.trim(),
             bio: this.els.bio.value.trim(),
             address: this.els.address.value.trim(),
+            city: this.els.city ? this.els.city.value.trim() : undefined,
+            state: this.els.state ? this.els.state.value.trim() : undefined,
+            zip_code: this.els.zipCode ? this.els.zipCode.value.trim() : undefined,
+            country: this.els.country ? this.els.country.value.trim() : undefined,
+            specialization: this.els.specialization
+              ? this.els.specialization.value.trim()
+              : undefined,
+            experience_years: this.els.experienceYears
+              ? Number(this.els.experienceYears.value || 0)
+              : undefined,
+            languages_spoken: this.els.languagesSpoken
+              ? this.els.languagesSpoken.value.trim()
+              : undefined,
+            service_radius: this.els.serviceRadius
+              ? Number(this.els.serviceRadius.value || 0)
+              : undefined,
+            date_of_birth: this.els.dateOfBirth
+              ? this.els.dateOfBirth.value || null
+              : undefined,
+            gender: this.els.gender ? this.els.gender.value || null : undefined,
+            provider_type: this.els.providerType
+              ? this.els.providerType.value
+              : undefined,
+            availability_status: this.els.availabilityStatus
+              ? this.els.availabilityStatus.value
+              : undefined,
+            certification: this.els.certification
+              ? this.els.certification.value.trim()
+              : undefined,
+            commercial_registry_number: this.els.commercialRegistryNumber
+              ? this.els.commercialRegistryNumber.value.trim()
+              : undefined,
+            nif: this.els.nif ? this.els.nif.value.trim() : undefined,
+            nis: this.els.nis ? this.els.nis.value.trim() : undefined,
+            preferred_language: this.els.preferredLanguage
+              ? this.els.preferredLanguage.value
+              : undefined,
+            profile_picture: photoUrl || null,
           };
+
+          // Remove undefined keys so we don't accidentally overwrite
+          Object.keys(payload).forEach((k) => {
+            if (payload[k] === undefined) delete payload[k];
+          });
 
           const btn = this.els.profileSaveBtn;
           const prevText = btn ? btn.textContent : null;
@@ -1026,13 +1454,59 @@
             this.els.photoInput.click();
           });
 
-          this.els.photoInput.addEventListener("change", () => {
+          if (this.els.removePhotoBtn) {
+            this.els.removePhotoBtn.addEventListener("click", () => {
+              this.state.uploadedProfileUrl = null;
+              if (this.els.profilePictureUrl) this.els.profilePictureUrl.value = "";
+              this._setPhotoStatus("Photo removed. Click Save Changes to apply.");
+
+              // Reset preview back to default avatar
+              const fallback = "../assets/images/default-avatar.jpg";
+              if (this.els.settingsAvatar) this.els.settingsAvatar.src = fallback;
+            });
+          }
+
+          this.els.photoInput.addEventListener("change", async () => {
             const file = this.els.photoInput.files?.[0];
             if (!file) return;
 
-            const url = URL.createObjectURL(file);
-            if (this.els.settingsAvatar) {
-              this.els.settingsAvatar.src = url;
+            // Client-side validation
+            const maxBytes = 2 * 1024 * 1024;
+            if (file.size > maxBytes) {
+              this._setPhotoStatus("File too large (max 2MB).", true);
+              await Auth.showModal({
+                type: "warning",
+                title: "File too large",
+                message: "Please choose an image under 2MB.",
+              });
+              return;
+            }
+
+            // Preview immediately
+            const localUrl = URL.createObjectURL(file);
+            if (this.els.settingsAvatar) this.els.settingsAvatar.src = localUrl;
+            this._setPhotoStatus("Uploading photo…");
+
+            try {
+              const uploaded = await this._uploadProfilePhotoToCloudinary(file);
+              this.state.uploadedProfileUrl = uploaded.url;
+              if (this.els.profilePictureUrl) {
+                this.els.profilePictureUrl.value = uploaded.url;
+              }
+              this._setPhotoStatus("Photo uploaded. Click Save Changes to apply.");
+            } catch (e) {
+              console.error("Photo upload failed:", e);
+              this.state.uploadedProfileUrl = null;
+              this._setPhotoStatus(
+                e.message || "Upload failed. Please try again.",
+                true,
+              );
+              await Auth.showModal({
+                type: "warning",
+                title: "Upload failed",
+                message:
+                  e.message || "Could not upload the photo. Please try again.",
+              });
             }
           });
         },

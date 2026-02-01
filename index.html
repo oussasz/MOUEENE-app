@@ -8,6 +8,7 @@
       content="Moueene - Connect with trusted service providers for all your needs"
     />
     <title>Moueene - Home Services Platform</title>
+    <link rel="icon" type="image/webp" href="/assets/images/logo.webp" />
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link rel="stylesheet" href="assets/css/style.css" />
@@ -201,7 +202,6 @@
       </div>
     </section>
 
-
     <!-- Featured Services Section -->
     <section class="featured-providers">
       <div class="container">
@@ -364,7 +364,14 @@
 
         function formatPrice(basePrice, priceType) {
           const price = Number(basePrice || 0);
-          const formatted = `$${price.toFixed(2).replace(/\.00$/, "")}`;
+
+          const hasFraction = Math.abs(price % 1) > 0.000001;
+          const formattedNumber = new Intl.NumberFormat("fr-DZ", {
+            minimumFractionDigits: hasFraction ? 2 : 0,
+            maximumFractionDigits: 2,
+          }).format(price);
+          const formatted = `${formattedNumber} دج`;
+
           if (priceType === "hourly") return `${formatted}/hr`;
           if (priceType === "per_item") return `${formatted}/item`;
           return formatted;
@@ -400,9 +407,12 @@
               String((index % 4) * 100 + 100),
             );
 
-            const imageUrl = service.service_image
-              ? resolveImageUrl(service.service_image)
-              : getCategoryFallbackImage(service.category_id);
+            const imageUrl =
+              service.primary_image || service.service_image
+                ? resolveImageUrl(
+                    service.primary_image || service.service_image,
+                  )
+                : getCategoryFallbackImage(service.category_id);
 
             const categoryName = service.category_name || "Service";
             const rating = Number(service.average_rating || 0).toFixed(1);
@@ -412,7 +422,7 @@
               service.price_type,
             );
 
-            const href = `pages/service-detail.html?service_id=${encodeURIComponent(service.service_id)}`;
+            const href = `pages/provider-profile.html?provider_id=${encodeURIComponent(service.provider_id)}`;
 
             card.innerHTML = `
               <div class="service-image-container">
@@ -452,7 +462,9 @@
           if (!topGrid) return;
           try {
             if (topStatus) topStatus.textContent = "Loading top services...";
-            const result = await apiGet("/services/popular", { limit: 4 });
+            const result = await apiGet("/services/offers-popular", {
+              limit: 4,
+            });
             const services = Array.isArray(result.data) ? result.data : [];
             if (services.length === 0) {
               if (topStatus)

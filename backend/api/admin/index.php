@@ -36,7 +36,9 @@ switch ($action) {
         break;
 
     case 'services':
-        if ($method === 'GET') {
+        if ($subAction && is_numeric($subAction) && $method === 'DELETE') {
+            handleDeleteService((int)$subAction);
+        } elseif ($method === 'GET') {
             handleGetServices();
         } else {
             Response::error('Method not allowed', 405);
@@ -202,6 +204,55 @@ function handleGetServices() {
     } catch (Exception $e) {
         error_log($e->getMessage());
         Response::serverError('Failed to fetch services');
+    }
+}
+
+/**
+ * Admin: Deactivate (soft-delete) a service
+ * DELETE /api/v1/admin/services/{id}
+ *
+ * Notes:
+ * - This does NOT hard-delete from DB to avoid cascading deletes (bookings, reviews, provider_services).
+ * - It deactivates the catalog service and disables all provider offerings for it.
+ */
+function handleDeleteService(int $serviceId): void {
+    try {
+        $db = Database::getConnection();
+
+        $stmt = $db->prepare('SELECT service_id, service_name, is_active FROM services WHERE service_id = ?');
+        $stmt->execute([$serviceId]);
+        $service = $stmt->fetch();
+
+        if (!$service) {
+            Response::notFound('Service');
+        }
+
+        $db->beginTransaction();
+
+        // Deactivate catalog entry
+        $stmt = $db->prepare('UPDATE services SET is_active = FALSE, is_popular = FALSE, is_featured = FALSE WHERE service_id = ?');
+        $stmt->execute([$serviceId]);
+
+        // Deactivate provider offerings for this service
+        $stmt = $db->prepare('UPDATE provider_services SET is_active = FALSE WHERE service_id = ?');
+        $stmt->execute([$serviceId]);
+
+        $db->commit();
+
+        Response::success(
+            [
+                'service_id' => (int)$service['service_id'],
+                'service_name' => $service['service_name'],
+                'was_active' => (bool)$service['is_active'],
+            ],
+            'Service deactivated successfully'
+        );
+    } catch (Exception $e) {
+        if (isset($db) && $db && $db->inTransaction()) {
+            $db->rollBack();
+        }
+        error_log('[MOUEENE-ADMIN] Delete service error: ' . $e->getMessage());
+        Response::serverError('Failed to delete service');
     }
 }
 

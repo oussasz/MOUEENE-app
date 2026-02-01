@@ -44,6 +44,8 @@ set_exception_handler(function($e) {
 
 // Load configuration
 require_once __DIR__ . '/../config/constants.php';
+require_once __DIR__ . '/../config/env.php';
+Env::load(CONFIG_PATH . '/.env');
 require_once __DIR__ . '/../config/database.php';
 
 // Load utilities

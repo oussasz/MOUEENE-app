@@ -39,7 +39,9 @@
   window.__moueeneI18NReady.then((i18n) => i18n && i18n.init && i18n.init());
 })();
 
-const __t = (s) => (window.I18N && window.I18N.t ? window.I18N.t(s) : s);
+function __t(s) {
+  return window.I18N && window.I18N.t ? window.I18N.t(s) : s;
+}
 
 const Auth = {
   // API base URL

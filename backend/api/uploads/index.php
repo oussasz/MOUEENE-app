@@ -46,12 +46,14 @@ function handleCloudinarySignature(array $authUser): void {
     $apiSecret = getenv('CLOUDINARY_API_SECRET') ?: '';
 
     if ($cloudName === '' || $apiKey === '' || $apiSecret === '') {
-        Response::error('Cloudinary is not configured on the server', 500, [
-            'missing' => [
-                $cloudName === '' ? 'CLOUDINARY_CLOUD_NAME' : null,
-                $apiKey === '' ? 'CLOUDINARY_API_KEY' : null,
-                $apiSecret === '' ? 'CLOUDINARY_API_SECRET' : null,
-            ],
+        $missing = array_values(array_filter([
+            $cloudName === '' ? 'CLOUDINARY_CLOUD_NAME' : null,
+            $apiKey === '' ? 'CLOUDINARY_API_KEY' : null,
+            $apiSecret === '' ? 'CLOUDINARY_API_SECRET' : null,
+        ]));
+
+        Response::error('Cloudinary is not configured on the server', 503, [
+            'missing' => $missing,
         ]);
     }
 

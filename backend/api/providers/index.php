@@ -337,6 +337,28 @@ function handleUpdateProfile($data) {
     }
     
     try {
+        if (is_array($data) && array_key_exists('gender', $data)) {
+            $gender = is_string($data['gender']) ? trim($data['gender']) : $data['gender'];
+            if ($gender === '' || $gender === null) {
+                $data['gender'] = null;
+            } elseif (!in_array($gender, ['male', 'female'], true)) {
+                Response::error('Invalid gender. Allowed values: male, female.', 422);
+            }
+        }
+
+        if (is_array($data) && array_key_exists('profile_picture', $data)) {
+            $pic = is_string($data['profile_picture']) ? trim($data['profile_picture']) : $data['profile_picture'];
+            if ($pic === '' || $pic === null) {
+                $data['profile_picture'] = null;
+            } elseif (is_string($pic)) {
+                $isCloudinary = (strpos($pic, 'https://res.cloudinary.com/') === 0) || (strpos($pic, 'http://res.cloudinary.com/') === 0);
+                $isDefault = (strpos($pic, '/assets/images/') === 0);
+                if (!$isCloudinary && !$isDefault) {
+                    Response::error('Invalid profile picture URL. Please upload via Cloudinary.', 422);
+                }
+            }
+        }
+
         $provider = new Provider();
         $result = $provider->update($authUser['user_id'], $data);
         
@@ -690,12 +712,13 @@ function handlePublicGetProviderReviews($providerId) {
         $total = $stmt->fetchColumn();
         
         // Get reviews
-        $sql = "SELECT r.*, u.first_name, u.last_name, u.profile_picture
-                FROM reviews r
-                JOIN users u ON r.user_id = u.user_id
-                WHERE r.provider_id = ? AND r.is_visible = TRUE
-                ORDER BY r.created_at DESC
-                LIMIT ? OFFSET ?";
+        $sql = "SELECT r.*, u.first_name, u.last_name, u.profile_picture, s.service_name
+            FROM reviews r
+            JOIN users u ON r.user_id = u.user_id
+            JOIN services s ON r.service_id = s.service_id
+            WHERE r.provider_id = ? AND r.is_visible = TRUE
+            ORDER BY r.created_at DESC
+            LIMIT ? OFFSET ?";
                 
         $stmt = $db->prepare($sql);
         $stmt->execute([$providerId, $limit, $offset]);

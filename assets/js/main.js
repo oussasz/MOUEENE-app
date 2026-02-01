@@ -388,7 +388,7 @@ function initFormValidation() {
       form.querySelectorAll("[required]").forEach((field) => {
         if (!field.value.trim()) {
           isValid = false;
-          showError(field, "This field is required");
+          showFieldError(field, "This field is required");
         }
       });
 
@@ -396,7 +396,7 @@ function initFormValidation() {
       form.querySelectorAll('input[type="email"]').forEach((field) => {
         if (field.value && !isValidEmail(field.value)) {
           isValid = false;
-          showError(field, "Please enter a valid email address");
+          showFieldError(field, "Please enter a valid email address");
         }
       });
 
@@ -412,7 +412,7 @@ function initFormValidation() {
         password.value !== confirmPassword.value
       ) {
         isValid = false;
-        showError(confirmPassword, "Passwords do not match");
+        showFieldError(confirmPassword, "Passwords do not match");
       }
 
       if (!isValid) {
@@ -422,7 +422,7 @@ function initFormValidation() {
   });
 }
 
-function showError(field, message) {
+function showFieldError(field, message) {
   const formGroup = field.closest(".form-group");
   if (formGroup) {
     formGroup.classList.add("error");

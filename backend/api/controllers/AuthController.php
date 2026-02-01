@@ -98,7 +98,7 @@ class AuthController {
 
         $db = Database::getConnection();
         if ($db === null) {
-            Response::serverError('Database connection failed');
+            Response::error('Database unavailable. Please configure your local database connection.', 200);
             return;
         }
 
@@ -139,6 +139,17 @@ class AuthController {
     private function register(Request $req, string $forcedType): void {
         $data = $req->json;
 
+        $nullIfEmpty = function ($v) {
+            if ($v === null) {
+                return null;
+            }
+            if (is_string($v)) {
+                $t = trim($v);
+                return $t === '' ? null : $t;
+            }
+            return $v;
+        };
+
         $validator = new Validator($data);
         $validator
             ->required('email')->email('email')
@@ -161,7 +172,7 @@ class AuthController {
 
         $db = Database::getConnection();
         if ($db === null) {
-            Response::serverError('Database connection failed');
+            Response::error('Database unavailable. Please configure your local database connection.', 200);
             return;
         }
 
@@ -190,26 +201,34 @@ class AuthController {
         $verificationToken = Auth::generateRandomToken();
         $defaultAvatar = '/assets/images/default-avatar.jpg';
 
-        $phone = isset($data['phone']) ? trim($data['phone']) : null;
-        $address = isset($data['address']) ? trim($data['address']) : null;
-        $city = isset($data['city']) ? trim($data['city']) : null;
+        $phone = $nullIfEmpty($data['phone'] ?? null);
+        $address = $nullIfEmpty($data['address'] ?? null);
+        $city = $nullIfEmpty($data['city'] ?? null);
         $country = isset($data['country']) && trim($data['country']) !== '' ? trim($data['country']) : 'Algeria';
 
-        $businessName = isset($data['business_name']) ? trim($data['business_name']) : null;
-        $bio = isset($data['bio']) ? trim($data['bio']) : null;
-        $state = isset($data['state']) ? trim($data['state']) : null;
-        $zipCode = isset($data['zip_code']) ? trim($data['zip_code']) : null;
-        $dateOfBirth = isset($data['date_of_birth']) ? trim($data['date_of_birth']) : null;
-        $gender = isset($data['gender']) ? trim($data['gender']) : null;
+        $businessName = $nullIfEmpty($data['business_name'] ?? null);
+        $bio = $nullIfEmpty($data['bio'] ?? null);
+        $state = $nullIfEmpty($data['state'] ?? null);
+        $zipCode = $nullIfEmpty($data['zip_code'] ?? null);
+        $dateOfBirth = $nullIfEmpty($data['date_of_birth'] ?? null);
+        $gender = $nullIfEmpty($data['gender'] ?? null);
         $providerType = isset($data['provider_type']) ? trim($data['provider_type']) : 'freelancer';
         $experienceYears = isset($data['experience_years']) ? (int)$data['experience_years'] : null;
-        $certification = isset($data['certification']) ? trim($data['certification']) : null;
-        $specialization = isset($data['specialization']) ? trim($data['specialization']) : null;
-        $languagesSpoken = isset($data['languages_spoken']) ? trim($data['languages_spoken']) : null;
+        $certification = $nullIfEmpty($data['certification'] ?? null);
+        $specialization = $nullIfEmpty($data['specialization'] ?? null);
+        $languagesSpoken = $nullIfEmpty($data['languages_spoken'] ?? null);
         $serviceRadius = isset($data['service_radius']) ? (int)$data['service_radius'] : null;
-        $commercialRegistryNumber = isset($data['commercial_registry_number']) ? trim($data['commercial_registry_number']) : null;
-        $nif = isset($data['nif']) ? trim($data['nif']) : null;
-        $nis = isset($data['nis']) ? trim($data['nis']) : null;
+        $commercialRegistryNumber = $nullIfEmpty($data['commercial_registry_number'] ?? null);
+        $nif = $nullIfEmpty($data['nif'] ?? null);
+        $nis = $nullIfEmpty($data['nis'] ?? null);
+
+        if ($gender === '') {
+            $gender = null;
+        }
+        if ($gender !== null && !in_array($gender, ['male', 'female'], true)) {
+            Response::error('Invalid gender. Allowed values: male, female.', 422);
+            return;
+        }
 
         if ($forcedType === 'provider') {
             $db->beginTransaction();
@@ -413,7 +432,7 @@ class AuthController {
 
         $db = Database::getConnection();
         if ($db === null) {
-            Response::serverError('Database connection failed');
+            Response::error('Database unavailable. Please configure your local database connection.', 200);
             return;
         }
 

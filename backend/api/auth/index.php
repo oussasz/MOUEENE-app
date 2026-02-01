@@ -200,11 +200,49 @@ function handleRegister($data, $forcedType = null) {
         // Default profile picture
         $defaultAvatar = '/assets/images/default-avatar.jpg';
         
+        $nullIfEmpty = function ($v) {
+            if ($v === null) {
+                return null;
+            }
+            if (is_string($v)) {
+                $t = trim($v);
+                return $t === '' ? null : $t;
+            }
+            return $v;
+        };
+
         // Prepare optional fields
-        $phone = isset($data['phone']) ? trim($data['phone']) : null;
-        $address = isset($data['address']) ? trim($data['address']) : null;
-        $city = isset($data['city']) ? trim($data['city']) : null;
-        $country = 'Algeria'; // Default country
+        $phone = $nullIfEmpty($data['phone'] ?? null);
+        $address = $nullIfEmpty($data['address'] ?? null);
+        $city = $nullIfEmpty($data['city'] ?? null);
+        $country = isset($data['country']) && trim((string)$data['country']) !== '' ? trim((string)$data['country']) : 'Algeria';
+
+        // Shared optional profile fields
+        $state = $nullIfEmpty($data['state'] ?? null);
+        $zipCode = $nullIfEmpty($data['zip_code'] ?? null);
+        $dateOfBirth = $nullIfEmpty($data['date_of_birth'] ?? null);
+        $gender = $nullIfEmpty($data['gender'] ?? null);
+        if ($gender !== null && !in_array($gender, ['male', 'female'], true)) {
+            Response::error('Invalid gender. Allowed values: male, female.', 422);
+            return;
+        }
+
+        // Provider-only optional fields
+        $businessName = $nullIfEmpty($data['business_name'] ?? null);
+        $bio = $nullIfEmpty($data['bio'] ?? null);
+        $providerType = $nullIfEmpty($data['provider_type'] ?? null) ?: 'freelancer';
+        if (!in_array($providerType, ['freelancer', 'self_employed', 'company'], true)) {
+            Response::error('Invalid provider_type. Allowed values: freelancer, self_employed, company.', 422);
+            return;
+        }
+        $experienceYears = array_key_exists('experience_years', $data) ? (int)$data['experience_years'] : null;
+        $serviceRadius = array_key_exists('service_radius', $data) ? (int)$data['service_radius'] : null;
+        $certification = $nullIfEmpty($data['certification'] ?? null);
+        $specialization = $nullIfEmpty($data['specialization'] ?? null);
+        $languagesSpoken = $nullIfEmpty($data['languages_spoken'] ?? null);
+        $commercialRegistryNumber = $nullIfEmpty($data['commercial_registry_number'] ?? null);
+        $nif = $nullIfEmpty($data['nif'] ?? null);
+        $nis = $nullIfEmpty($data['nis'] ?? null);
         
         // =====================================================================
         // INSERT INTO CORRECT TABLE BASED ON USER_TYPE
@@ -213,33 +251,63 @@ function handleRegister($data, $forcedType = null) {
         if ($userType === 'provider') {
             // *** PROVIDER REGISTRATION ***
             error_log('[MOUEENE-AUTH] Creating PROVIDER account for: ' . $email);
-            
+
             $sql = "INSERT INTO providers (
-                        email, 
-                        password_hash, 
-                        first_name, 
-                        last_name, 
-                        phone, 
-                        address, 
-                        city, 
-                        country, 
-                        profile_picture, 
+                        email,
+                        password_hash,
+                        business_name,
+                        first_name,
+                        last_name,
+                        phone,
+                        profile_picture,
+                        bio,
+                        address,
+                        city,
+                        state,
+                        zip_code,
+                        country,
+                        date_of_birth,
+                        gender,
+                        experience_years,
+                        certification,
+                        specialization,
+                        languages_spoken,
+                        service_radius,
+                        commercial_registry_number,
+                        nif,
+                        nis,
+                        provider_type,
                         verification_token,
                         account_status,
                         verification_status
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', 'pending')";
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', 'pending')";
             
             $stmt = $db->prepare($sql);
             $stmt->execute([
                 $email,
                 $passwordHash,
+                $businessName,
                 trim($data['first_name']),
                 trim($data['last_name']),
                 $phone,
+                $defaultAvatar,
+                $bio,
                 $address,
                 $city,
+                $state,
+                $zipCode,
                 $country,
-                $defaultAvatar,
+                $dateOfBirth,
+                $gender,
+                $experienceYears,
+                $certification,
+                $specialization,
+                $languagesSpoken,
+                $serviceRadius,
+                $commercialRegistryNumber,
+                $nif,
+                $nis,
+                $providerType,
                 $verificationToken
             ]);
             
@@ -253,18 +321,22 @@ function handleRegister($data, $forcedType = null) {
             error_log('[MOUEENE-AUTH] Creating USER (customer) account for: ' . $email);
             
             $sql = "INSERT INTO users (
-                        email, 
-                        password_hash, 
-                        first_name, 
-                        last_name, 
-                        phone, 
-                        address, 
-                        city, 
-                        country, 
-                        profile_picture, 
+                        email,
+                        password_hash,
+                        first_name,
+                        last_name,
+                        phone,
+                        address,
+                        city,
+                        state,
+                        zip_code,
+                        country,
+                        date_of_birth,
+                        gender,
+                        profile_picture,
                         verification_token,
                         account_status
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')";
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')";
             
             $stmt = $db->prepare($sql);
             $stmt->execute([
@@ -275,7 +347,11 @@ function handleRegister($data, $forcedType = null) {
                 $phone,
                 $address,
                 $city,
+                $state,
+                $zipCode,
                 $country,
+                $dateOfBirth,
+                $gender,
                 $defaultAvatar,
                 $verificationToken
             ]);

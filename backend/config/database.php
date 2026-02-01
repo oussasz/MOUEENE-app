@@ -20,6 +20,7 @@ class Database {
     private static $username = 'root';
     private static $password = '';
     private static $charset = 'utf8mb4';
+    private static $port = '3306';
     
     /**
      * Load environment variables from .env file
@@ -36,12 +37,14 @@ class Database {
             $envPass = getenv('DB_PASS');
         }
         $envCharset = getenv('DB_CHARSET');
+        $envPort = getenv('DB_PORT');
 
         if (is_string($envHost) && $envHost !== '') self::$host = $envHost;
         if (is_string($envName) && $envName !== '') self::$db_name = $envName;
         if (is_string($envUser) && $envUser !== '') self::$username = $envUser;
         if (is_string($envPass) && $envPass !== '') self::$password = $envPass;
         if (is_string($envCharset) && $envCharset !== '') self::$charset = $envCharset;
+        if (is_string($envPort) && $envPort !== '') self::$port = $envPort;
 
         // 2) Fallback to backend/config/.env (local dev convenience)
         // This file must NOT be committed.
@@ -83,6 +86,9 @@ class Database {
                 case 'DB_CHARSET':
                     if (!is_string(getenv('DB_CHARSET')) || getenv('DB_CHARSET') === '') self::$charset = $value;
                     break;
+                case 'DB_PORT':
+                    if (!is_string(getenv('DB_PORT')) || getenv('DB_PORT') === '') self::$port = $value;
+                    break;
             }
         }
     }
@@ -107,7 +113,8 @@ class Database {
             
             try {
                 $dsn = "mysql:host=" . self::$host . 
-                       ";dbname=" . self::$db_name . 
+                      ";port=" . self::$port .
+                      ";dbname=" . self::$db_name . 
                        ";charset=" . self::$charset;
                 
                 $options = [
@@ -149,6 +156,14 @@ class Database {
     public static function testConnection() {
         try {
             $conn = self::getConnection();
+
+            if ($conn === null) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Database connection failed (no connection returned)'
+                ];
+            }
+
             return [
                 'status' => 'success',
                 'message' => 'Database connection successful',
@@ -170,6 +185,7 @@ class Database {
     public static function getConfig() {
         return [
             'host' => self::$host,
+            'port' => self::$port,
             'database' => self::$db_name,
             'username' => self::$username,
             'charset' => self::$charset

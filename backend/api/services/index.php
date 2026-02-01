@@ -19,6 +19,22 @@ switch ($action) {
             Response::error('Method not allowed', 405);
         }
         break;
+
+    case 'offers':
+        if ($method === 'GET') {
+            handleGetServiceOffers();
+        } else {
+            Response::error('Method not allowed', 405);
+        }
+        break;
+
+    case 'offers-popular':
+        if ($method === 'GET') {
+            handleGetPopularServiceOffers();
+        } else {
+            Response::error('Method not allowed', 405);
+        }
+        break;
         
     case 'popular':
         if ($method === 'GET') {
@@ -43,6 +59,9 @@ switch ($action) {
 function handleGetServices() {
     try {
         $db = Database::getConnection();
+        if ($db === null) {
+            Response::serverError('Database connection failed');
+        }
         
         // Get query parameters
         $categoryId = $_GET['category_id'] ?? null;
@@ -93,9 +112,197 @@ function handleGetServices() {
         
         Response::paginated($services, $total, $page, $limit);
         
-    } catch (Exception $e) {
+    } catch (Throwable $e) {
         error_log($e->getMessage());
         Response::serverError('Failed to fetch services');
+    }
+}
+
+/**
+ * Get provider service offerings (provider_services) with optional filters
+ * GET /api/v1/services/offers
+ */
+function handleGetServiceOffers() {
+    try {
+        $db = Database::getConnection();
+        if ($db === null) {
+            Response::serverError('Database connection failed');
+        }
+
+        $categoryId = $_GET['category_id'] ?? null;
+        $search = $_GET['search'] ?? null;
+        $language = $_GET['lang'] ?? 'en';
+        $page = max(1, intval($_GET['page'] ?? 1));
+        $limit = min(100, max(1, intval($_GET['limit'] ?? 20)));
+        $offset = ($page - 1) * $limit;
+
+        $where = [
+            'ps.is_active = TRUE',
+            's.is_active = TRUE',
+            "p.account_status = 'active'",
+        ];
+        $params = [$language];
+
+        if ($categoryId) {
+            $where[] = 's.category_id = ?';
+            $params[] = $categoryId;
+        }
+
+        if ($search) {
+            $where[] = '(s.service_name LIKE ? OR s.description LIKE ? OR p.first_name LIKE ? OR p.last_name LIKE ? OR p.business_name LIKE ?)';
+            $like = "%$search%";
+            $params[] = $like;
+            $params[] = $like;
+            $params[] = $like;
+            $params[] = $like;
+            $params[] = $like;
+        }
+
+        $whereSql = 'WHERE ' . implode(' AND ', $where);
+
+        // Total count
+        $countSql = "SELECT COUNT(*)
+            FROM provider_services ps
+            JOIN services s ON ps.service_id = s.service_id
+            JOIN providers p ON ps.provider_id = p.provider_id
+            LEFT JOIN service_categories sc ON s.category_id = sc.category_id
+            LEFT JOIN service_translations st ON s.service_id = st.service_id AND st.language_code = ?
+            $whereSql";
+
+        $stmt = $db->prepare($countSql);
+        $stmt->execute($params);
+        $total = (int)$stmt->fetchColumn();
+
+        // Page data
+        $sql = "SELECT
+                ps.provider_service_id,
+                ps.provider_id,
+                ps.service_id,
+                ps.price AS base_price,
+                ps.price_type,
+                ps.total_bookings,
+                ps.created_at,
+                COALESCE(ps.description, COALESCE(st.translated_description, s.description)) AS description,
+                COALESCE(st.translated_name, s.service_name) AS service_name,
+                s.category_id,
+                sc.category_name,
+                s.service_image,
+                (
+                    SELECT psi.image_url
+                    FROM provider_service_images psi
+                    WHERE psi.provider_service_id = ps.provider_service_id
+                    ORDER BY psi.sort_order ASC, psi.image_id ASC
+                    LIMIT 1
+                ) AS primary_image,
+                p.first_name,
+                p.last_name,
+                p.business_name,
+                p.profile_picture AS provider_avatar,
+                p.city AS provider_city,
+                p.average_rating,
+                p.total_reviews
+            FROM provider_services ps
+            JOIN services s ON ps.service_id = s.service_id
+            JOIN providers p ON ps.provider_id = p.provider_id
+            LEFT JOIN service_categories sc ON s.category_id = sc.category_id
+            LEFT JOIN service_translations st ON s.service_id = st.service_id AND st.language_code = ?
+            $whereSql
+            ORDER BY p.average_rating DESC, ps.created_at DESC
+            LIMIT ? OFFSET ?";
+
+        $dataParams = $params;
+        $dataParams[] = $limit;
+        $dataParams[] = $offset;
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute($dataParams);
+        $offers = $stmt->fetchAll();
+
+        Response::paginated($offers, $total, $page, $limit);
+
+    } catch (Throwable $e) {
+        error_log($e->getMessage());
+        Response::serverError('Failed to fetch service offers');
+    }
+}
+
+/**
+ * Get popular provider service offerings (provider_services)
+ * GET /api/v1/services/offers-popular
+ */
+function handleGetPopularServiceOffers() {
+    try {
+        $db = Database::getConnection();
+        if ($db === null) {
+            Response::success([], 'Database unavailable', 200, [
+                'warning' => 'Database connection failed'
+            ]);
+        }
+        $language = $_GET['lang'] ?? 'en';
+        $limit = min(20, max(1, intval($_GET['limit'] ?? 8)));
+        $categoryId = $_GET['category_id'] ?? null;
+
+        $where = [
+            'ps.is_active = TRUE',
+            's.is_active = TRUE',
+            "p.account_status = 'active'",
+        ];
+        $params = [$language];
+
+        if ($categoryId) {
+            $where[] = 's.category_id = ?';
+            $params[] = $categoryId;
+        }
+
+        $whereSql = 'WHERE ' . implode(' AND ', $where);
+
+        $sql = "SELECT
+                ps.provider_service_id,
+                ps.provider_id,
+                ps.service_id,
+                ps.price AS base_price,
+                ps.price_type,
+                ps.total_bookings,
+                ps.created_at,
+                COALESCE(ps.description, COALESCE(st.translated_description, s.description)) AS description,
+                COALESCE(st.translated_name, s.service_name) AS service_name,
+                s.category_id,
+                sc.category_name,
+                s.service_image,
+                (
+                    SELECT psi.image_url
+                    FROM provider_service_images psi
+                    WHERE psi.provider_service_id = ps.provider_service_id
+                    ORDER BY psi.sort_order ASC, psi.image_id ASC
+                    LIMIT 1
+                ) AS primary_image,
+                p.first_name,
+                p.last_name,
+                p.business_name,
+                p.profile_picture AS provider_avatar,
+                p.city AS provider_city,
+                p.average_rating,
+                p.total_reviews
+            FROM provider_services ps
+            JOIN services s ON ps.service_id = s.service_id
+            JOIN providers p ON ps.provider_id = p.provider_id
+            LEFT JOIN service_categories sc ON s.category_id = sc.category_id
+            LEFT JOIN service_translations st ON s.service_id = st.service_id AND st.language_code = ?
+            $whereSql
+            ORDER BY ps.total_bookings DESC, p.average_rating DESC, ps.created_at DESC
+            LIMIT ?";
+
+        $params[] = $limit;
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute($params);
+        $offers = $stmt->fetchAll();
+
+        Response::success($offers);
+
+    } catch (Throwable $e) {
+        error_log($e->getMessage());
+        Response::serverError('Failed to fetch popular service offers');
     }
 }
 
@@ -105,6 +312,9 @@ function handleGetServices() {
 function handleGetPopularServices() {
     try {
         $db = Database::getConnection();
+        if ($db === null) {
+            Response::serverError('Database connection failed');
+        }
         $language = $_GET['lang'] ?? 'en';
         $limit = min(20, max(1, intval($_GET['limit'] ?? 10)));
         
@@ -124,7 +334,7 @@ function handleGetPopularServices() {
         
         Response::success($services);
         
-    } catch (Exception $e) {
+    } catch (Throwable $e) {
         error_log($e->getMessage());
         Response::serverError('Failed to fetch popular services');
     }
@@ -136,6 +346,9 @@ function handleGetPopularServices() {
 function handleGetService($serviceId) {
     try {
         $db = Database::getConnection();
+        if ($db === null) {
+            Response::serverError('Database connection failed');
+        }
         $language = $_GET['lang'] ?? 'en';
         
         $sql = "SELECT s.*, sc.category_name,
@@ -157,7 +370,7 @@ function handleGetService($serviceId) {
         
         Response::success($service);
         
-    } catch (Exception $e) {
+    } catch (Throwable $e) {
         error_log($e->getMessage());
         Response::serverError('Failed to fetch service');
     }

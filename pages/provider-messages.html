@@ -708,36 +708,16 @@
                 <div class="contacts-header">
                   <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search chats..." />
+                    <input id="chat-search" type="text" placeholder="Search chats..." />
                   </div>
                 </div>
-                <div class="contacts-scroll">
-                  <div class="contact-item active">
-                    <img
-                      src="https://via.placeholder.com/45"
-                      class="contact-avatar"
-                      alt="Alice"
-                    />
+                <div class="contacts-scroll" id="contacts-scroll">
+                  <div class="contact-item" style="opacity: 0.8">
                     <div class="contact-info">
                       <div class="contact-top">
-                        <span class="contact-name">Alice Smith</span>
-                        <span class="contact-time">10:30 AM</span>
+                        <span class="contact-name">Loading chats…</span>
                       </div>
-                      <p class="contact-msg">When will you arrive?</p>
-                    </div>
-                  </div>
-                  <div class="contact-item">
-                    <img
-                      src="https://via.placeholder.com/45"
-                      class="contact-avatar"
-                      alt="John"
-                    />
-                    <div class="contact-info">
-                      <div class="contact-top">
-                        <span class="contact-name">John Doe</span>
-                        <span class="contact-time">Yesterday</span>
-                      </div>
-                      <p class="contact-msg">Thanks for the great service!</p>
+                      <p class="contact-msg">Please wait</p>
                     </div>
                   </div>
                 </div>
@@ -746,45 +726,23 @@
               <!-- Chat Area -->
               <div class="chat-area">
                 <div class="chat-header">
-                  <img
-                    src="https://via.placeholder.com/45"
-                    class="contact-avatar"
-                    alt="Current User"
-                  />
+                  <img id="chat-with-avatar" src="../assets/images/default-avatar.jpg" class="contact-avatar" alt="Chat" />
                   <div>
-                    <h3>Alice Smith</h3>
-                    <span class="chat-status">Online</span>
+                    <h3 id="chat-with-name">Select a chat</h3>
+                    <span class="chat-status" id="chat-with-status">—</span>
                   </div>
                 </div>
-                <div class="chat-messages">
-                  <div class="message message-received">
-                    Hello! I have a question about the cleaning service.
-                    <span class="msg-time">10:00 AM</span>
-                  </div>
-                  <div class="message message-sent">
-                    Hi Alice! Sure, what would you like to know?
-                    <span class="msg-time">10:05 AM</span>
-                  </div>
-                  <div class="message message-received">
-                    Do you bring your own supplies?
-                    <span class="msg-time">10:15 AM</span>
-                  </div>
-                  <div class="message message-sent">
-                    Yes, I bring all necessary eco-friendly cleaning supplies
-                    and equipment.
-                    <span class="msg-time">10:20 AM</span>
-                  </div>
-                  <div class="message message-received">
-                    Great! When will you arrive for the appointment?
-                    <span class="msg-time">10:30 AM</span>
+                <div class="chat-messages" id="chat-messages">
+                  <div class="message message-received" style="opacity: 0.8">
+                    Select a conversation to view messages.
                   </div>
                 </div>
                 <div class="chat-input-area">
                   <button class="btn-icon" style="color: #888">
                     <i class="fas fa-paperclip"></i>
                   </button>
-                  <input type="text" placeholder="Type a message..." />
-                  <button class="btn-send">
+                  <input id="chat-message-input" type="text" placeholder="Type a message..." disabled />
+                  <button id="chat-send-btn" class="btn-send" disabled>
                     <i class="fas fa-paper-plane"></i>
                   </button>
                 </div>
@@ -831,6 +789,258 @@
             e.preventDefault();
             Auth.logout();
           });
+
+        const $contacts = document.getElementById("contacts-scroll");
+        const $search = document.getElementById("chat-search");
+        const $chatMessages = document.getElementById("chat-messages");
+        const $chatWithName = document.getElementById("chat-with-name");
+        const $chatWithAvatar = document.getElementById("chat-with-avatar");
+        const $chatWithStatus = document.getElementById("chat-with-status");
+        const $input = document.getElementById("chat-message-input");
+        const $sendBtn = document.getElementById("chat-send-btn");
+
+        const apiBase = "/backend/api/v1";
+        const defaultAvatar = "../assets/images/default-avatar.jpg";
+
+        let _conversations = [];
+        let _active = null; // { other_type, other_id, other_name, other_avatar }
+
+        function esc(s) {
+          return String(s ?? "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+        }
+
+        function formatTime(iso) {
+          if (!iso) return "";
+          const d = new Date(iso);
+          if (Number.isNaN(d.getTime())) return "";
+          return d.toLocaleString([], { month: "short", day: "2-digit" });
+        }
+
+        async function apiFetch(path, options = {}) {
+          const token = Auth.getToken();
+          const res = await fetch(`${apiBase}${path}`, {
+            ...options,
+            headers: {
+              ...(options.headers || {}),
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const json = await res.json().catch(() => ({}));
+          if (!res.ok || !json.success) {
+            const msg = json.message || `Request failed (${res.status})`;
+            throw new Error(msg);
+          }
+          return json;
+        }
+
+        function renderConversations(list) {
+          if (!Array.isArray(list) || list.length === 0) {
+            $contacts.innerHTML = `
+              <div class="contact-item" style="opacity: 0.8">
+                <div class="contact-info">
+                  <div class="contact-top">
+                    <span class="contact-name">No chats yet</span>
+                  </div>
+                  <p class="contact-msg">Messages will appear here.</p>
+                </div>
+              </div>`;
+            return;
+          }
+
+          const activeKey = _active
+            ? `${_active.other_type}:${_active.other_id}`
+            : null;
+
+          $contacts.innerHTML = list
+            .map((c) => {
+              const key = `${c.other_type}:${c.other_id}`;
+              const isActive = activeKey === key;
+              const avatar = c.other_avatar || defaultAvatar;
+              const time = formatTime(c.last?.created_at);
+              const lastMsg = (c.last?.message || "").trim();
+              const unread = Number(c.unread_count || 0);
+              return `
+                <div class="contact-item ${isActive ? "active" : ""}" data-key="${esc(
+                  key,
+                )}">
+                  <img src="${esc(avatar)}" class="contact-avatar" alt="${esc(
+                c.other_name,
+              )}" />
+                  <div class="contact-info">
+                    <div class="contact-top">
+                      <span class="contact-name">${esc(c.other_name)}</span>
+                      <span class="contact-time">${esc(time)}</span>
+                    </div>
+                    <p class="contact-msg">${esc(lastMsg || "…")}</p>
+                    ${
+                      unread > 0
+                        ? `<span class="badge" style="margin-top:6px; display:inline-block; background:#ef4444;">${unread}</span>`
+                        : ``
+                    }
+                  </div>
+                </div>`;
+            })
+            .join("");
+        }
+
+        function renderThread(messages, selfType, selfId) {
+          if (!Array.isArray(messages) || messages.length === 0) {
+            $chatMessages.innerHTML = `
+              <div class="message message-received" style="opacity: 0.8">
+                No messages yet. Say hello.
+              </div>`;
+            return;
+          }
+
+          $chatMessages.innerHTML = messages
+            .map((m) => {
+              const isSent =
+                m.sender_type === selfType && Number(m.sender_id) === selfId;
+              const cls = isSent ? "message-sent" : "message-received";
+              const time = new Date(m.created_at).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+              return `
+                <div class="message ${cls}">
+                  ${esc(m.message)}
+                  <span class="msg-time">${esc(time)}</span>
+                </div>`;
+            })
+            .join("");
+
+          $chatMessages.scrollTop = $chatMessages.scrollHeight;
+        }
+
+        async function refreshConversations() {
+          const res = await apiFetch(`/messages/conversations?limit=50`);
+          _conversations = res.data || [];
+          applySearchAndRender();
+        }
+
+        function applySearchAndRender() {
+          const q = ($search.value || "").trim().toLowerCase();
+          const filtered = q
+            ? _conversations.filter((c) =>
+                String(c.other_name || "").toLowerCase().includes(q),
+              )
+            : _conversations;
+          renderConversations(filtered);
+        }
+
+        async function selectConversation(otherType, otherId) {
+          const self = await Auth.getCurrentUser();
+          if (!self) return;
+
+          const selfType = self.user_type;
+          const selfId =
+            selfType === "provider"
+              ? Number(self.provider_id)
+              : selfType === "admin"
+                ? Number(self.admin_id)
+                : Number(self.user_id);
+
+          const found = _conversations.find(
+            (c) => c.other_type === otherType && Number(c.other_id) === otherId,
+          );
+          _active =
+            found ||
+            ({
+              other_type: otherType,
+              other_id: otherId,
+              other_name: "Chat",
+              other_avatar: defaultAvatar,
+            });
+
+          $chatWithName.textContent = _active.other_name || "Chat";
+          $chatWithAvatar.src = _active.other_avatar || defaultAvatar;
+          $chatWithStatus.textContent = "";
+          $input.disabled = false;
+          $sendBtn.disabled = false;
+          applySearchAndRender();
+
+          $chatMessages.innerHTML = `
+            <div class="message message-received" style="opacity: 0.8">Loading…</div>`;
+
+          const thread = await apiFetch(
+            `/messages/thread?with_type=${encodeURIComponent(
+              otherType,
+            )}&with_id=${encodeURIComponent(otherId)}&limit=200`,
+          );
+          renderThread(thread.data?.messages || [], selfType, selfId);
+
+          // Refresh unread counts
+          await refreshConversations();
+        }
+
+        async function sendMessage() {
+          if (!_active) return;
+          const text = ($input.value || "").trim();
+          if (!text) return;
+
+          $sendBtn.disabled = true;
+          try {
+            await apiFetch(`/messages/send`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                receiver_type: _active.other_type,
+                receiver_id: _active.other_id,
+                message: text,
+              }),
+            });
+            $input.value = "";
+            await selectConversation(_active.other_type, _active.other_id);
+          } catch (e) {
+            alert(e.message || "Failed to send message");
+          } finally {
+            $sendBtn.disabled = false;
+          }
+        }
+
+        $contacts.addEventListener("click", (e) => {
+          const item = e.target.closest(".contact-item");
+          if (!item) return;
+          const key = item.getAttribute("data-key");
+          if (!key) return;
+          const [t, id] = key.split(":");
+          const otherId = Number(id);
+          if (!t || !Number.isFinite(otherId)) return;
+          selectConversation(t, otherId);
+        });
+
+        $sendBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          sendMessage();
+        });
+
+        $input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            sendMessage();
+          }
+        });
+
+        $search.addEventListener("input", () => applySearchAndRender());
+
+        try {
+          await refreshConversations();
+        } catch (e) {
+          $contacts.innerHTML = `
+            <div class="contact-item" style="opacity: 0.9">
+              <div class="contact-info">
+                <div class="contact-top">
+                  <span class="contact-name">Failed to load chats</span>
+                </div>
+                <p class="contact-msg">${esc(e.message || "Please retry")}</p>
+              </div>
+            </div>`;
+        }
       });
     </script>
   </body>

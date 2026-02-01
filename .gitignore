@@ -8,3 +8,8 @@ php_server.log
 .DS_Store
 .vscode/
 
+# Local environment secrets
+backend/config/.env
+.env
+.env.*
+
