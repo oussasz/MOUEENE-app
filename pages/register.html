@@ -293,7 +293,7 @@
               type="button"
               class="type-btn active"
               id="btnUser"
-              onclick="selectRegisterType('user', true)"
+              onclick="selectRegisterType('user')"
             >
               <i class="fas fa-user"></i>
               Customer
@@ -302,7 +302,7 @@
               type="button"
               class="type-btn"
               id="btnProvider"
-              onclick="selectRegisterType('provider', true)"
+              onclick="selectRegisterType('provider')"
             >
               <i class="fas fa-briefcase"></i>
               Provider
@@ -496,15 +496,16 @@
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
       }
 
-      function selectRegisterType(type, updateUrl = false) {
+      function selectRegisterType(type) {
         hideAuthAlerts();
         document.getElementById("registerType").value = type;
 
-        // Update URL so refresh/bookmark keeps type
-        if (updateUrl) {
+        try {
           const url = new URL(window.location.href);
           url.searchParams.set("type", type);
           window.history.replaceState({}, "", url.toString());
+        } catch (e) {
+          // ignore URL update errors
         }
 
         const btnUser = document.getElementById("btnUser");
