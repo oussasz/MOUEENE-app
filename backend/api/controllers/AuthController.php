@@ -134,6 +134,8 @@ class AuthController {
         $country = isset($data['country']) && trim($data['country']) !== '' ? trim($data['country']) : 'Algeria';
 
         if ($forcedType === 'provider') {
+            $db->beginTransaction();
+            try {
             $sql = "INSERT INTO providers (
                         email,
                         password_hash,
@@ -164,6 +166,35 @@ class AuthController {
             ]);
 
             $accountId = $db->lastInsertId();
+
+            // If a DB trigger/misconfiguration inserts into users, we must not allow it.
+            $checkUser = $db->prepare('SELECT user_id FROM users WHERE email = ? LIMIT 1');
+            $checkUser->execute([$email]);
+            $unexpectedUser = $checkUser->fetch();
+            if ($unexpectedUser) {
+                $db->rollBack();
+                Response::serverError(
+                    'Database misconfiguration: provider registration is creating rows in users (likely a trigger). Remove triggers on providers/users that insert into users, then try again.'
+                );
+                return;
+            }
+
+            // Confirm the provider row exists before committing
+            $checkProvider = $db->prepare('SELECT provider_id FROM providers WHERE provider_id = ? LIMIT 1');
+            $checkProvider->execute([$accountId]);
+            if (!$checkProvider->fetch()) {
+                $db->rollBack();
+                Response::serverError('Database error: provider record not found after insert');
+                return;
+            }
+
+            $db->commit();
+            } catch (Exception $e) {
+                if ($db->inTransaction()) {
+                    $db->rollBack();
+                }
+                throw $e;
+            }
             $token = Auth::generateToken($accountId, 'provider');
 
             Response::success([
@@ -179,6 +210,8 @@ class AuthController {
         }
 
         // user
+        $db->beginTransaction();
+        try {
         $sql = "INSERT INTO users (
                     email,
                     password_hash,
@@ -208,6 +241,34 @@ class AuthController {
         ]);
 
         $accountId = $db->lastInsertId();
+
+        // Defensive: if a DB trigger/misconfiguration inserts into providers, block it.
+        $checkProvider = $db->prepare('SELECT provider_id FROM providers WHERE email = ? LIMIT 1');
+        $checkProvider->execute([$email]);
+        $unexpectedProvider = $checkProvider->fetch();
+        if ($unexpectedProvider) {
+            $db->rollBack();
+            Response::serverError(
+                'Database misconfiguration: user registration is creating rows in providers (likely a trigger). Remove triggers that insert into providers, then try again.'
+            );
+            return;
+        }
+
+        $checkUser = $db->prepare('SELECT user_id FROM users WHERE user_id = ? LIMIT 1');
+        $checkUser->execute([$accountId]);
+        if (!$checkUser->fetch()) {
+            $db->rollBack();
+            Response::serverError('Database error: user record not found after insert');
+            return;
+        }
+
+        $db->commit();
+        } catch (Exception $e) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $e;
+        }
         $token = Auth::generateToken($accountId, 'user');
 
         Response::success([
