@@ -8,7 +8,7 @@
 
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../assets/css/style.css?v=2.1.5" />
+    <link rel="stylesheet" href="../assets/css/style.css?v=2.1.6" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -289,24 +289,24 @@
           </div>
 
           <div class="type-toggle" role="tablist" aria-label="Account type">
-            <button
-              type="button"
+            <a
+              href="register.html?type=user"
               class="type-btn active"
               id="btnUser"
               onclick="selectRegisterType('user')"
             >
               <i class="fas fa-user"></i>
               Customer
-            </button>
-            <button
-              type="button"
+            </a>
+            <a
+              href="register.html?type=provider"
               class="type-btn"
               id="btnProvider"
               onclick="selectRegisterType('provider')"
             >
               <i class="fas fa-briefcase"></i>
               Provider
-            </button>
+            </a>
           </div>
 
           <div class="auth-alert error" id="errorAlert">
@@ -473,7 +473,7 @@
       AOS.init({ once: true });
     </script>
 
-    <script src="../assets/js/auth.js?v=2.1.5"></script>
+    <script src="../assets/js/auth.js?v=2.1.6"></script>
     <script>
       function showAlertError(message) {
         document.getElementById("errorMessage").textContent = message;
