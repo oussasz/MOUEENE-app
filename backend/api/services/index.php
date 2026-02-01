@@ -129,6 +129,8 @@ function handleGetServiceOffers() {
             Response::serverError('Database connection failed');
         }
 
+        $providerServiceId = $_GET['provider_service_id'] ?? null;
+        $includeImages = $_GET['include_images'] ?? null;
         $categoryId = $_GET['category_id'] ?? null;
         $search = $_GET['search'] ?? null;
         $language = $_GET['lang'] ?? 'en';
@@ -142,6 +144,11 @@ function handleGetServiceOffers() {
             "p.account_status = 'active'",
         ];
         $params = [$language];
+
+        if ($providerServiceId !== null && $providerServiceId !== '' && is_numeric($providerServiceId)) {
+            $where[] = 'ps.provider_service_id = ?';
+            $params[] = (int)$providerServiceId;
+        }
 
         if ($categoryId) {
             $where[] = 's.category_id = ?';
@@ -184,6 +191,7 @@ function handleGetServiceOffers() {
                 ps.created_at,
                 COALESCE(ps.description, COALESCE(st.translated_description, s.description)) AS description,
                 COALESCE(st.translated_name, s.service_name) AS service_name,
+                s.duration_minutes,
                 s.category_id,
                 sc.category_name,
                 s.service_image,
@@ -199,6 +207,10 @@ function handleGetServiceOffers() {
                 p.business_name,
                 p.profile_picture AS provider_avatar,
                 p.city AS provider_city,
+                p.provider_type,
+                p.verification_status,
+                p.availability_status,
+                p.service_fee_percentage,
                 p.average_rating,
                 p.total_reviews
             FROM provider_services ps
@@ -217,6 +229,52 @@ function handleGetServiceOffers() {
         $stmt = $db->prepare($sql);
         $stmt->execute($dataParams);
         $offers = $stmt->fetchAll();
+
+        $wantImages = false;
+        if ($includeImages !== null) {
+            $v = strtolower(trim((string)$includeImages));
+            $wantImages = ($v === '1' || $v === 'true' || $v === 'yes');
+        }
+        if (!$wantImages && ($providerServiceId !== null && $providerServiceId !== '' && is_numeric($providerServiceId))) {
+            // service-detail page typically fetches a single offer by id
+            $wantImages = true;
+        }
+
+        if ($wantImages && $offers) {
+            $ids = array_values(array_filter(array_map(function ($row) {
+                return isset($row['provider_service_id']) ? (int)$row['provider_service_id'] : 0;
+            }, $offers)));
+
+            if ($ids) {
+                $placeholders = implode(',', array_fill(0, count($ids), '?'));
+                $imgSql = "SELECT provider_service_id, image_url, public_id, sort_order
+                    FROM provider_service_images
+                    WHERE provider_service_id IN ($placeholders)
+                    ORDER BY sort_order ASC, image_id ASC";
+                $imgStmt = $db->prepare($imgSql);
+                $imgStmt->execute($ids);
+                $images = $imgStmt->fetchAll();
+
+                $byPs = [];
+                foreach ($images as $img) {
+                    $psid = (int)($img['provider_service_id'] ?? 0);
+                    if (!isset($byPs[$psid])) {
+                        $byPs[$psid] = [];
+                    }
+                    $byPs[$psid][] = [
+                        'url' => $img['image_url'] ?? null,
+                        'public_id' => $img['public_id'] ?? null,
+                        'sort_order' => isset($img['sort_order']) ? (int)$img['sort_order'] : 0,
+                    ];
+                }
+
+                foreach ($offers as &$offer) {
+                    $psid = (int)($offer['provider_service_id'] ?? 0);
+                    $offer['images'] = $byPs[$psid] ?? [];
+                }
+                unset($offer);
+            }
+        }
 
         Response::paginated($offers, $total, $page, $limit);
 

@@ -383,6 +383,7 @@
       </nav>
     </aside>
     <script src="../../assets/js/i18n.js"></script>
+    <script src="../../assets/js/admin-ui.js"></script>
 
     <main class="admin-main">
       <header class="admin-header">
@@ -743,11 +744,7 @@
                                   <div class="action-buttons">
                                     <button
                                       class="btn-action btn-action-danger"
-                                      onclick="deleteService(${Number(service.service_id)}, '${String(
-                                        service.service_name || "",
-                                      )
-                                        .replaceAll("\\", "\\\\")
-                                        .replaceAll("'", "\\'")}')"
+                                      onclick="deleteService(${Number(service.service_id)}, '${String(service.service_name || '').replaceAll("\\", "\\\\").replaceAll("'", "\\'")}')"
                                       title="Delete (deactivate) service"
                                     >
                                       <i class="fas fa-trash"></i>
@@ -775,12 +772,9 @@
         if (!confirmed) return;
 
         try {
-          const url = buildUrl(
-            `/admin/services/${encodeURIComponent(serviceId)}`,
-            {
-              scope: getScope(),
-            },
-          );
+          const url = buildUrl(`/admin/services/${encodeURIComponent(serviceId)}`, {
+            scope: getScope(),
+          });
           const result = await fetchWithAuth(url, { method: "DELETE" });
 
           if (result && result.success) {

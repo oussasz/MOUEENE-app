@@ -1753,9 +1753,123 @@ h2 {
     transform: scale(0.98);
   }
 
+  /* Guest-only More sheet */
+  body.app-mobile .app-sheet-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+    z-index: 1350;
+  }
+  body.app-mobile .app-sheet {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(90px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 22px;
+    box-shadow: 0 24px 80px rgba(15, 23, 42, 0.22);
+    padding: 10px 10px 12px;
+    transform: translateY(18px);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 200ms ease,
+      opacity 200ms ease;
+    z-index: 1360;
+  }
+  body.app-mobile.app-sheet-open .app-sheet-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  body.app-mobile.app-sheet-open .app-sheet {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  body.app-mobile .app-sheet__handle {
+    width: 42px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.15);
+    margin: 2px auto 10px;
+  }
+  body.app-mobile .app-sheet__title {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    padding: 0 8px 10px;
+  }
+  body.app-mobile .app-sheet__list {
+    display: grid;
+    gap: 8px;
+  }
+  body.app-mobile .app-sheet__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-radius: 16px;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    background: rgba(15, 23, 42, 0.03);
+    color: var(--text-dark);
+    font-weight: 700;
+  }
+  body.app-mobile .app-sheet__item:active {
+    transform: scale(0.99);
+  }
+
   /* Avoid content being hidden behind fixed UI */
   body.app-mobile .footer {
     padding-bottom: calc(110px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ============================================
+   ADMIN MOBILE DRAWER (works with inline admin styles)
+   ============================================ */
+
+@media (max-width: 768px) {
+  body.admin-mobile {
+    padding-top: calc(env(safe-area-inset-top));
+  }
+
+  body.admin-mobile .admin-menu-toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(15, 23, 42, 0.06);
+    color: #111827;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  body.admin-mobile .admin-mobile-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+    z-index: 999;
+  }
+
+  /* Ensure the admin sidebar can open even if page inline styles hide it */
+  body.admin-menu-open .admin-sidebar {
+    transform: translateX(0) !important;
+  }
+
+  body.admin-menu-open .admin-mobile-overlay {
+    opacity: 1;
+    pointer-events: auto;
   }
 }
 

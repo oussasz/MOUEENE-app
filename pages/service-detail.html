@@ -338,6 +338,7 @@
     <div class="service-gallery">
       <div class="gallery-item gallery-main" data-aos="fade-in">
         <img
+          id="galleryMainImg"
           src="../assets/images/services/childcare1.jpg"
           onerror="
             this.src =
@@ -351,6 +352,7 @@
       </div>
       <div class="gallery-item" data-aos="fade-in" data-aos-delay="100">
         <img
+          id="galleryImg1"
           src="../assets/images/services/childcare2.jpg"
           onerror="
             this.src = 'https://placehold.co/400x300/e0e0e0/555?text=Gallery+1'
@@ -360,6 +362,7 @@
       </div>
       <div class="gallery-item" data-aos="fade-in" data-aos-delay="200">
         <img
+          id="galleryImg2"
           src="../assets/images/services/childcare3.jpg"
           onerror="
             this.src = 'https://placehold.co/400x300/e0e0e0/555?text=Gallery+2'
@@ -374,19 +377,21 @@
       <!-- Left Column -->
       <div class="service-main">
         <div class="service-header" data-aos="fade-up">
-          <h1>Professional Babysitting Service</h1>
+          <h1 id="serviceTitle">Professional Babysitting Service</h1>
           <div class="service-meta">
-            <span class="rating"
+            <span class="rating" id="serviceRating"
               ><i class="fas fa-star"></i> 4.9 (127 reviews)</span
             >
-            <span class="location"
+            <span class="location" id="serviceLocation"
               ><i class="fas fa-map-marker-alt"></i> New York, NY</span
             >
-            <span class="category"><i class="fas fa-tag"></i> Childcare</span>
+            <span class="category" id="serviceCategory"
+              ><i class="fas fa-tag"></i> Childcare</span
+            >
           </div>
         </div>
 
-        <div class="description" data-aos="fade-up">
+        <div class="description" data-aos="fade-up" id="serviceDescription">
           <h3>About This Service</h3>
           <p>
             Looking for reliable and caring childcare? I offer professional
@@ -519,8 +524,8 @@
         <div class="booking-card">
           <div class="price-header">
             <div>
-              <span class="price">$25</span>
-              <span class="price-unit">/ hour</span>
+              <span class="price" id="servicePrice">$25</span>
+              <span class="price-unit" id="servicePriceUnit">/ hour</span>
             </div>
             <span
               class="badge"
@@ -633,7 +638,7 @@
           </form>
         </div>
 
-        <a href="provider-profile.html" class="provider-wiz">
+        <a href="provider-profile.html" class="provider-wiz" id="providerLink">
           <img
             src="../assets/images/providers/provider1.jpg"
             onerror="
@@ -641,10 +646,11 @@
             "
             class="prov-img"
             alt="Provider"
+            id="providerAvatar"
           />
           <div class="prov-info">
-            <h4>Emma Wilson</h4>
-            <p>Verified Professional</p>
+            <h4 id="providerName">Emma Wilson</h4>
+            <p id="providerSubtitle">Verified Professional</p>
           </div>
           <i
             class="fas fa-chevron-right"
@@ -669,6 +675,179 @@
         minDate: "today",
         dateFormat: "F j, Y",
       });
+
+      (function () {
+        const API_BASE = "/backend/api/v1";
+
+        const els = {
+          title: document.getElementById("serviceTitle"),
+          rating: document.getElementById("serviceRating"),
+          location: document.getElementById("serviceLocation"),
+          category: document.getElementById("serviceCategory"),
+          description: document.getElementById("serviceDescription"),
+          price: document.getElementById("servicePrice"),
+          priceUnit: document.getElementById("servicePriceUnit"),
+          imgMain: document.getElementById("galleryMainImg"),
+          img1: document.getElementById("galleryImg1"),
+          img2: document.getElementById("galleryImg2"),
+          providerLink: document.getElementById("providerLink"),
+          providerAvatar: document.getElementById("providerAvatar"),
+          providerName: document.getElementById("providerName"),
+          providerSubtitle: document.getElementById("providerSubtitle"),
+        };
+
+        function escapeHtml(text) {
+          return String(text ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/\"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        }
+
+        function resolveImageUrl(rawUrl) {
+          const value = String(rawUrl || "").trim();
+          if (!value) return "";
+          if (/^https?:\/\//i.test(value)) return value;
+          if (value.startsWith("/")) return value;
+          return `../${value.replace(/^\.\//, "")}`;
+        }
+
+        function getCategoryFallbackImage(categoryId) {
+          const index = ((Number(categoryId || 1) - 1) % 6) + 1;
+          return `../assets/images/categories/category${index}.jpg`;
+        }
+
+        function formatPrice(basePrice, priceType) {
+          const price = Number(basePrice || 0);
+          const hasFraction = Math.abs(price % 1) > 0.000001;
+          const formattedNumber = new Intl.NumberFormat("fr-DZ", {
+            minimumFractionDigits: hasFraction ? 2 : 0,
+            maximumFractionDigits: 2,
+          }).format(price);
+          const formatted = `${formattedNumber} دج`;
+          if (priceType === "hourly") return { value: formatted, unit: "/ hr" };
+          if (priceType === "per_item")
+            return { value: formatted, unit: "/ item" };
+          return { value: formatted, unit: "" };
+        }
+
+        async function apiGet(path, params = {}) {
+          const url = new URL(API_BASE + path, window.location.origin);
+          Object.entries(params).forEach(([key, value]) => {
+            if (value === null || value === undefined || value === "") return;
+            url.searchParams.set(key, value);
+          });
+          const response = await fetch(url);
+          const json = await response.json().catch(() => null);
+          if (!response.ok || !json || json.success !== true) {
+            const message =
+              json?.message || `Request failed (${response.status})`;
+            throw new Error(message);
+          }
+          return json;
+        }
+
+        function renderOffer(offer) {
+          const serviceName = offer.service_name || "Service";
+          document.title = `${serviceName} - Moueene`;
+          if (els.title) els.title.textContent = serviceName;
+
+          const rating = Number(offer.average_rating || 0);
+          const reviews = Number(offer.total_reviews || 0);
+          if (els.rating) {
+            els.rating.innerHTML = `<i class="fas fa-star"></i> ${escapeHtml(
+              rating ? rating.toFixed(1) : "0.0",
+            )} (${escapeHtml(reviews)})`;
+          }
+
+          if (els.location) {
+            const city = String(offer.provider_city || "").trim();
+            els.location.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${escapeHtml(
+              city || "",
+            )}`;
+          }
+
+          if (els.category) {
+            els.category.innerHTML = `<i class="fas fa-tag"></i> ${escapeHtml(
+              offer.category_name || "Service",
+            )}`;
+          }
+
+          if (els.description) {
+            const about = String(offer.description || "").trim();
+            const h3 = els.description.querySelector("h3")?.outerHTML ||
+              "<h3>About This Service</h3>";
+            els.description.innerHTML = `${h3}<p>${escapeHtml(about)}</p>`;
+          }
+
+          const price = formatPrice(offer.base_price, offer.price_type);
+          if (els.price) els.price.textContent = price.value;
+          if (els.priceUnit) els.priceUnit.textContent = price.unit;
+
+          const imageUrl = (offer.primary_image || offer.service_image)
+            ? resolveImageUrl(offer.primary_image || offer.service_image)
+            : getCategoryFallbackImage(offer.category_id);
+          if (els.imgMain) els.imgMain.src = imageUrl;
+          if (els.img1) els.img1.src = imageUrl;
+          if (els.img2) els.img2.src = imageUrl;
+
+          const providerName = (function () {
+            const business = (offer.business_name || "").trim();
+            if (business) return business;
+            const first = (offer.first_name || "").trim();
+            const last = (offer.last_name || "").trim();
+            return [first, last].filter(Boolean).join(" ") || "Provider";
+          })();
+          if (els.providerName) els.providerName.textContent = providerName;
+
+          if (els.providerAvatar) {
+            const avatar = offer.provider_avatar
+              ? resolveImageUrl(offer.provider_avatar)
+              : "../assets/images/default-avatar.jpg";
+            els.providerAvatar.src = avatar;
+          }
+
+          if (els.providerLink && offer.provider_id) {
+            els.providerLink.href = `provider-profile.html?provider_id=${encodeURIComponent(
+              offer.provider_id,
+            )}`;
+          }
+        }
+
+        async function initServiceDetail() {
+          const params = new URLSearchParams(window.location.search);
+          const providerServiceId =
+            params.get("provider_service_id") || params.get("offer_id") || "";
+          if (!providerServiceId) return;
+
+          try {
+            const result = await apiGet("/services/offers", {
+              provider_service_id: providerServiceId,
+              limit: 1,
+              page: 1,
+            });
+            const offer = Array.isArray(result.data) ? result.data[0] : null;
+            if (!offer) throw new Error("Service not found");
+            renderOffer(offer);
+          } catch (e) {
+            console.error(e);
+            if (els.title) {
+              els.title.textContent = "Service not found";
+            }
+            if (els.description) {
+              const h3 =
+                els.description.querySelector("h3")?.outerHTML ||
+                "<h3>About This Service</h3>";
+              els.description.innerHTML = `${h3}<p>${escapeHtml(
+                e?.message || "Failed to load service details",
+              )}</p>`;
+            }
+          }
+        }
+
+        initServiceDetail();
+      })();
     </script>
   </body>
 </html>

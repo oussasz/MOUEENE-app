@@ -724,14 +724,39 @@
               </div>
             `;
 
-            const href = `provider-profile.html?provider_id=${encodeURIComponent(service.provider_id)}`;
-            card.addEventListener("click", () => (window.location.href = href));
+            const offerId = service.provider_service_id;
+            const providerId = service.provider_id;
+            const serviceId = service.service_id;
+
+            const detailsHref = `service-detail.html?provider_service_id=${encodeURIComponent(offerId)}&provider_id=${encodeURIComponent(providerId)}&service_id=${encodeURIComponent(serviceId)}`;
+            card.addEventListener(
+              "click",
+              () => (window.location.href = detailsHref),
+            );
             card.addEventListener("keydown", (e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                window.location.href = href;
+                window.location.href = detailsHref;
               }
             });
+
+            const providerHref = `provider-profile.html?provider_id=${encodeURIComponent(providerId)}`;
+            const providerInfo = card.querySelector(".provider-info");
+            if (providerInfo) {
+              providerInfo.style.cursor = "pointer";
+              providerInfo.addEventListener("click", (e) => {
+                // Allow users to access provider profile explicitly.
+                // Clicking elsewhere on the card goes to service details.
+                if (
+                  e.target &&
+                  (e.target.closest(".provider-avatar") ||
+                    e.target.closest(".provider-details"))
+                ) {
+                  e.stopPropagation();
+                  window.location.href = providerHref;
+                }
+              });
+            }
             fragment.appendChild(card);
           });
 

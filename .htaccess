@@ -10,11 +10,13 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [L,R=301]
 
-# Handle .html extension (optional - for cleaner URLs)
+# Pretty URLs via router.php (front controller)
+# Examples:
+#  /services        -> pages/services.html
+#  /admin/services  -> pages/admin/services.html
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^(.+)$ $1.html [L]
+RewriteRule ^ router.php [L]
 
 # Set default charset
 AddDefaultCharset UTF-8

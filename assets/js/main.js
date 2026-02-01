@@ -53,6 +53,10 @@ document.addEventListener("DOMContentLoaded", function () {
 function initNavbar() {
   const header = document.querySelector(".header");
 
+  // Many pages (dashboards/admin/auth) don't use the marketing header.
+  // Avoid runtime errors on scroll.
+  if (!header) return;
+
   window.addEventListener("scroll", function () {
     if (window.scrollY > 50) {
       header.classList.add("scrolled");
@@ -70,7 +74,7 @@ function initMobileMenu() {
   const navMenu = document.querySelector(".nav-menu");
   const navButtons = document.querySelector(".nav-buttons");
 
-  if (hamburger) {
+  if (hamburger && navMenu) {
     hamburger.addEventListener("click", function () {
       this.classList.toggle("active");
       navMenu.classList.toggle("active");
@@ -90,12 +94,14 @@ function initMobileMenu() {
   }
 
   // Close menu when clicking on a link
-  document.querySelectorAll(".nav-menu a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navMenu.classList.remove("active");
-      hamburger.classList.remove("active");
+  if (navMenu && hamburger) {
+    document.querySelectorAll(".nav-menu a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navMenu.classList.remove("active");
+        hamburger.classList.remove("active");
+      });
     });
-  });
+  }
 }
 
 /**
@@ -140,7 +146,6 @@ function initMobileAppShell() {
   if (document.querySelector(".app-tabbar")) return;
 
   const current = (window.location.pathname || "").toLowerCase();
-  const isOnPages = current.includes("/pages/");
 
   const t = (s) => (window.I18N && window.I18N.t ? window.I18N.t(s) : s);
   const token = (() => {
@@ -159,26 +164,23 @@ function initMobileAppShell() {
   })();
   const isAuthed = !!token;
 
-  const hrefHome = isOnPages ? "../index.html" : "index.html";
-  const hrefServices = isOnPages ? "services.html" : "pages/services.html";
-  const hrefProviders = isOnPages ? "providers.html" : "pages/providers.html";
+  // Clean URLs (served via router.php + .htaccess)
+  const hrefHome = "/";
+  const hrefServices = "/services";
+  const hrefProviders = "/providers";
 
   // Auth-aware destinations
-  const hrefDashboard = isOnPages
-    ? userType === "provider"
-      ? "provider-dashboard.html"
-      : "dashboard.html"
-    : userType === "provider"
-      ? "pages/provider-dashboard.html"
-      : "pages/dashboard.html";
+  const hrefDashboard =
+    userType === "provider" ? "/provider/dashboard" : "/dashboard";
 
-  const hrefAccount = isOnPages
-    ? isAuthed
-      ? "profile.html"
-      : "login.html"
-    : isAuthed
-      ? "pages/profile.html"
-      : "pages/login.html";
+  const hrefMessages =
+    userType === "provider" ? "/provider/messages" : "/messages";
+
+  const hrefAccount = isAuthed
+    ? userType === "provider"
+      ? "/provider/settings"
+      : "/profile"
+    : "/login";
 
   const tabs = [
     {
@@ -195,23 +197,44 @@ function initMobileAppShell() {
       aria: t("Services"),
       match: ["/pages/services.html"],
     },
-    {
-      href: hrefProviders,
-      icon: "fa-users",
-      label: t("Providers"),
-      aria: t("Providers"),
-      match: ["/pages/providers.html", "/pages/provider-profile.html"],
-    },
   ];
 
+  // Mobile primary nav differs depending on auth state
   if (isAuthed) {
-    tabs.push({
-      href: hrefDashboard,
-      icon: "fa-table-columns",
-      label: t("Dashboard"),
-      aria: t("Dashboard"),
-      match: ["/pages/dashboard.html", "/pages/provider-dashboard.html"],
-    });
+    tabs.push(
+      {
+        href: hrefDashboard,
+        icon: "fa-table-columns",
+        label: t("Dashboard"),
+        aria: t("Dashboard"),
+        match: ["/pages/dashboard.html", "/pages/provider-dashboard.html"],
+      },
+      {
+        href: hrefMessages,
+        icon: "fa-comments",
+        label: t("Messages"),
+        aria: t("Messages"),
+        match: ["/pages/messages.html", "/pages/provider-messages.html"],
+      },
+    );
+  } else {
+    tabs.push(
+      {
+        href: hrefProviders,
+        icon: "fa-users",
+        label: t("Providers"),
+        aria: t("Providers"),
+        match: ["/pages/providers.html", "/pages/provider-profile.html"],
+      },
+      {
+        href: "#",
+        icon: "fa-ellipsis",
+        label: t("More"),
+        aria: t("More"),
+        kind: "more",
+        match: [],
+      },
+    );
   }
 
   tabs.push({
@@ -233,6 +256,63 @@ function initMobileAppShell() {
   tabbar.setAttribute("aria-label", "Primary");
   tabbar.style.gridTemplateColumns = `repeat(${tabs.length}, minmax(0, 1fr))`;
 
+  // Guest-only "More" sheet
+  let sheetOverlay = null;
+  let sheet = null;
+  const openSheet = () => {
+    if (!sheetOverlay || !sheet) return;
+    document.body.classList.add("app-sheet-open");
+  };
+  const closeSheet = () => {
+    document.body.classList.remove("app-sheet-open");
+  };
+
+  if (!isAuthed) {
+    sheetOverlay = document.createElement("div");
+    sheetOverlay.className = "app-sheet-overlay";
+    sheetOverlay.addEventListener("click", closeSheet);
+
+    sheet = document.createElement("div");
+    sheet.className = "app-sheet";
+    sheet.setAttribute("role", "dialog");
+    sheet.setAttribute("aria-label", "More");
+
+    const items = [
+      { href: "/about", label: t("About") },
+      { href: "/contact", label: t("Contact") },
+      { href: "/faq", label: t("FAQ") },
+      { href: "/help", label: t("Help") },
+      { href: "/terms", label: t("Terms") },
+      { href: "/privacy", label: t("Privacy") },
+      { href: "/register", label: t("Sign Up") },
+    ];
+
+    sheet.innerHTML = `
+      <div class="app-sheet__handle" aria-hidden="true"></div>
+      <div class="app-sheet__title">${t("More")}</div>
+      <div class="app-sheet__list">
+        ${items
+          .map(
+            (it) =>
+              `<a class="app-sheet__item" href="${it.href}">${it.label}</a>`,
+          )
+          .join("")}
+      </div>
+    `;
+
+    sheet.addEventListener("click", (e) => {
+      const a = e.target && e.target.closest ? e.target.closest("a") : null;
+      if (a) closeSheet();
+    });
+
+    document.body.appendChild(sheetOverlay);
+    document.body.appendChild(sheet);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeSheet();
+    });
+  }
+
   tabs.forEach((t) => {
     const a = document.createElement("a");
     a.className = "app-tabbar__item";
@@ -249,6 +329,14 @@ function initMobileAppShell() {
       a.classList.add("active");
       a.setAttribute("aria-current", "page");
     }
+    if (t.kind === "more") {
+      a.classList.add("app-tabbar__item--button");
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        openSheet();
+      });
+    }
+
     tabbar.appendChild(a);
   });
 

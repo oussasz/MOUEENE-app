@@ -138,6 +138,8 @@ switch ($action) {
                 handlePublicGetProviderServices((int)$action);
             } elseif ($subAction === 'reviews' && $method === 'GET') {
                 handlePublicGetProviderReviews((int)$action);
+            } elseif ($subAction === 'availability' && $method === 'GET') {
+                handlePublicGetProviderAvailability((int)$action);
             } elseif ($subAction === '' && $method === 'GET') {
                 handlePublicGetProvider((int)$action);
             } else {
@@ -704,11 +706,19 @@ function handlePublicGetProviderReviews($providerId) {
         $page = max(1, intval($_GET['page'] ?? 1));
         $limit = min(50, max(1, intval($_GET['limit'] ?? 10)));
         $offset = ($page - 1) * $limit;
+
+        $serviceId = $_GET['service_id'] ?? null;
+        $serviceFilterSql = '';
+        $serviceParams = [];
+        if ($serviceId !== null && $serviceId !== '' && is_numeric($serviceId)) {
+            $serviceFilterSql = ' AND service_id = ?';
+            $serviceParams[] = (int)$serviceId;
+        }
         
         // Count reviews
-        $countSql = "SELECT COUNT(*) FROM reviews WHERE provider_id = ? AND is_visible = TRUE";
+        $countSql = "SELECT COUNT(*) FROM reviews WHERE provider_id = ? AND is_visible = TRUE" . $serviceFilterSql;
         $stmt = $db->prepare($countSql);
-        $stmt->execute([$providerId]);
+        $stmt->execute(array_merge([$providerId], $serviceParams));
         $total = $stmt->fetchColumn();
         
         // Get reviews
@@ -716,17 +726,76 @@ function handlePublicGetProviderReviews($providerId) {
             FROM reviews r
             JOIN users u ON r.user_id = u.user_id
             JOIN services s ON r.service_id = s.service_id
-            WHERE r.provider_id = ? AND r.is_visible = TRUE
+            WHERE r.provider_id = ? AND r.is_visible = TRUE" . $serviceFilterSql . "
             ORDER BY r.created_at DESC
             LIMIT ? OFFSET ?";
                 
         $stmt = $db->prepare($sql);
-        $stmt->execute([$providerId, $limit, $offset]);
+        $stmt->execute(array_merge([$providerId], $serviceParams, [$limit, $offset]));
         $reviews = $stmt->fetchAll();
         
         Response::paginated($reviews, $total, $page, $limit);
     } catch (Exception $e) {
         error_log($e->getMessage());
         Response::serverError('Failed to load provider reviews');
+    }
+}
+
+/**
+ * Public: Get provider availability
+ * GET /api/v1/providers/{id}/availability?date=YYYY-MM-DD
+ */
+function handlePublicGetProviderAvailability($providerId) {
+    try {
+        $db = Database::getConnection();
+        if ($db === null) {
+            Response::serverError('Database connection failed');
+        }
+
+        $date = $_GET['date'] ?? null;
+        $dayOfWeek = null;
+
+        if ($date !== null && $date !== '') {
+            $dt = DateTime::createFromFormat('Y-m-d', $date);
+            if (!$dt) {
+                Response::error('Invalid date format. Use YYYY-MM-DD', 400);
+            }
+            $map = [
+                1 => 'monday',
+                2 => 'tuesday',
+                3 => 'wednesday',
+                4 => 'thursday',
+                5 => 'friday',
+                6 => 'saturday',
+                7 => 'sunday',
+            ];
+            $dayOfWeek = $map[(int)$dt->format('N')] ?? null;
+        }
+
+        $sql = "SELECT availability_id, provider_id, day_of_week, start_time, end_time, is_available
+            FROM service_availability
+            WHERE provider_id = ? AND is_available = TRUE";
+        $params = [$providerId];
+
+        if ($dayOfWeek) {
+            $sql .= " AND day_of_week = ?";
+            $params[] = $dayOfWeek;
+        }
+
+        $sql .= " ORDER BY FIELD(day_of_week, 'monday','tuesday','wednesday','thursday','friday','saturday','sunday') ASC, start_time ASC";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute($params);
+        $rows = $stmt->fetchAll();
+
+        Response::success([
+            'date' => $date,
+            'day_of_week' => $dayOfWeek,
+            'availability' => $rows ?: [],
+        ]);
+
+    } catch (Throwable $e) {
+        error_log($e->getMessage());
+        Response::serverError('Failed to load provider availability');
     }
 }
