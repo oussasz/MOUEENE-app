@@ -8,7 +8,7 @@
 
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../assets/css/style.css?v=2.1.4" />
+    <link rel="stylesheet" href="../assets/css/style.css?v=2.1.5" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -473,7 +473,7 @@
       AOS.init({ once: true });
     </script>
 
-    <script src="../assets/js/auth.js?v=2.1.4"></script>
+    <script src="../assets/js/auth.js?v=2.1.5"></script>
     <script>
       function showAlertError(message) {
         document.getElementById("errorMessage").textContent = message;
@@ -507,6 +507,13 @@
         } catch (e) {
           // ignore URL update errors
         }
+
+        // If URL didn't update (some hosting/caching setups), force it via reload
+        setTimeout(() => {
+          if (!window.location.search.includes(`type=${type}`)) {
+            window.location.search = `type=${type}`;
+          }
+        }, 0);
 
         const btnUser = document.getElementById("btnUser");
         const btnProvider = document.getElementById("btnProvider");
