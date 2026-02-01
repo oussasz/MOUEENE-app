@@ -1,0 +1,8 @@
+# Prevent caching of auth pages (fixes stale register.html without query string)
+<IfModule mod_headers.c>
+  <FilesMatch "^(register|login)\.html$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+</IfModule>
