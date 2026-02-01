@@ -743,7 +743,11 @@
                                   <div class="action-buttons">
                                     <button
                                       class="btn-action btn-action-danger"
-                                      onclick="deleteService(${Number(service.service_id)}, '${String(service.service_name || '').replaceAll("\\", "\\\\").replaceAll("'", "\\'")}')"
+                                      onclick="deleteService(${Number(service.service_id)}, '${String(
+                                        service.service_name || "",
+                                      )
+                                        .replaceAll("\\", "\\\\")
+                                        .replaceAll("'", "\\'")}')"
                                       title="Delete (deactivate) service"
                                     >
                                       <i class="fas fa-trash"></i>
@@ -771,9 +775,12 @@
         if (!confirmed) return;
 
         try {
-          const url = buildUrl(`/admin/services/${encodeURIComponent(serviceId)}`, {
-            scope: getScope(),
-          });
+          const url = buildUrl(
+            `/admin/services/${encodeURIComponent(serviceId)}`,
+            {
+              scope: getScope(),
+            },
+          );
           const result = await fetchWithAuth(url, { method: "DELETE" });
 
           if (result && result.success) {

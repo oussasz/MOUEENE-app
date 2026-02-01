@@ -788,7 +788,11 @@
             </div>
 
             <!-- All Offers with Filters -->
-            <div class="content-panel dashboard-offers" data-aos="fade-up" data-aos-delay="450">
+            <div
+              class="content-panel dashboard-offers"
+              data-aos="fade-up"
+              data-aos-delay="450"
+            >
               <div class="panel-header">
                 <h2 class="panel-title">All Offers</h2>
               </div>
@@ -876,14 +880,23 @@
                     </label>
                   </div>
 
-                  <button id="dashboard-apply-filters" class="btn btn-primary w-100">
+                  <button
+                    id="dashboard-apply-filters"
+                    class="btn btn-primary w-100"
+                  >
                     Apply Filters
                   </button>
                 </aside>
 
                 <div class="services-content">
-                  <div id="dashboard-services-status" style="margin-bottom: 1rem"></div>
-                  <div id="dashboard-services-grid" class="services-grid-layout"></div>
+                  <div
+                    id="dashboard-services-status"
+                    style="margin-bottom: 1rem"
+                  ></div>
+                  <div
+                    id="dashboard-services-grid"
+                    class="services-grid-layout"
+                  ></div>
 
                   <div class="text-center mt-40" style="margin-top: 2rem">
                     <button
@@ -1127,9 +1140,12 @@
             card.setAttribute("data-aos-delay", String((index % 6) * 80));
             card.tabIndex = 0;
 
-            const imageUrl = (service.primary_image || service.service_image)
-              ? resolveImageUrl(service.primary_image || service.service_image)
-              : getCategoryFallbackImage(service.category_id);
+            const imageUrl =
+              service.primary_image || service.service_image
+                ? resolveImageUrl(
+                    service.primary_image || service.service_image,
+                  )
+                : getCategoryFallbackImage(service.category_id);
 
             const categoryName = service.category_name || "Service";
             const rating = Number(service.average_rating || 0).toFixed(1);

@@ -1409,7 +1409,9 @@
       function onEditServiceImagesSelected(e) {
         const files = Array.from(e.target.files || []);
         const maxTotal = 10;
-        const currentCount = Array.isArray(_editImages) ? _editImages.length : 0;
+        const currentCount = Array.isArray(_editImages)
+          ? _editImages.length
+          : 0;
         const remaining = Math.max(0, maxTotal - currentCount);
 
         const additions = files.slice(0, remaining).map((file) => ({

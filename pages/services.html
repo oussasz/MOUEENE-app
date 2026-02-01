@@ -661,9 +661,12 @@
             card.setAttribute("data-aos-delay", String((index % 6) * 80));
             card.tabIndex = 0;
 
-            const imageUrl = (service.primary_image || service.service_image)
-              ? resolveImageUrl(service.primary_image || service.service_image)
-              : getCategoryFallbackImage(service.category_id);
+            const imageUrl =
+              service.primary_image || service.service_image
+                ? resolveImageUrl(
+                    service.primary_image || service.service_image,
+                  )
+                : getCategoryFallbackImage(service.category_id);
 
             const categoryName = service.category_name || "Service";
             const rating = Number(service.average_rating || 0).toFixed(1);

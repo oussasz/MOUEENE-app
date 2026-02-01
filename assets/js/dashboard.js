@@ -11,7 +11,9 @@ function __t(s) {
 }
 
 function __lang() {
-  return window.I18N && window.I18N.getLanguage ? window.I18N.getLanguage() : "en";
+  return window.I18N && window.I18N.getLanguage
+    ? window.I18N.getLanguage()
+    : "en";
 }
 
 const Dashboard = {

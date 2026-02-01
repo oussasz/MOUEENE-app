@@ -611,7 +611,11 @@
             </div>
 
             <div style="margin-top: 15px">
-              <button class="btn btn-outline" id="reviews-load-more" style="display: none">
+              <button
+                class="btn btn-outline"
+                id="reviews-load-more"
+                style="display: none"
+              >
                 Load more
               </button>
             </div>
@@ -686,9 +690,9 @@
           const half = r - full >= 0.5 ? 1 : 0;
           const empty = 5 - full - half;
           return (
-            "<i class=\"fas fa-star\"></i>".repeat(full) +
-            (half ? "<i class=\"fas fa-star-half-alt\"></i>" : "") +
-            "<i class=\"far fa-star\"></i>".repeat(empty)
+            '<i class="fas fa-star"></i>'.repeat(full) +
+            (half ? '<i class="fas fa-star-half-alt"></i>' : "") +
+            '<i class="far fa-star"></i>'.repeat(empty)
           );
         }
 
@@ -705,7 +709,9 @@
             $rec.textContent = "0%";
             return;
           }
-          const recommended = _loaded.filter((r) => Number(r.rating) >= 4).length;
+          const recommended = _loaded.filter(
+            (r) => Number(r.rating) >= 4,
+          ).length;
           const pct = Math.round((recommended / _loaded.length) * 100);
           $rec.textContent = `${pct}%`;
         }

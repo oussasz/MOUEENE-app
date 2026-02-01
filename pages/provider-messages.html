@@ -708,7 +708,11 @@
                 <div class="contacts-header">
                   <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input id="chat-search" type="text" placeholder="Search chats..." />
+                    <input
+                      id="chat-search"
+                      type="text"
+                      placeholder="Search chats..."
+                    />
                   </div>
                 </div>
                 <div class="contacts-scroll" id="contacts-scroll">
@@ -726,7 +730,12 @@
               <!-- Chat Area -->
               <div class="chat-area">
                 <div class="chat-header">
-                  <img id="chat-with-avatar" src="../assets/images/default-avatar.jpg" class="contact-avatar" alt="Chat" />
+                  <img
+                    id="chat-with-avatar"
+                    src="../assets/images/default-avatar.jpg"
+                    class="contact-avatar"
+                    alt="Chat"
+                  />
                   <div>
                     <h3 id="chat-with-name">Select a chat</h3>
                     <span class="chat-status" id="chat-with-status">—</span>
@@ -741,7 +750,12 @@
                   <button class="btn-icon" style="color: #888">
                     <i class="fas fa-paperclip"></i>
                   </button>
-                  <input id="chat-message-input" type="text" placeholder="Type a message..." disabled />
+                  <input
+                    id="chat-message-input"
+                    type="text"
+                    placeholder="Type a message..."
+                    disabled
+                  />
                   <button id="chat-send-btn" class="btn-send" disabled>
                     <i class="fas fa-paper-plane"></i>
                   </button>
@@ -869,8 +883,8 @@
                   key,
                 )}">
                   <img src="${esc(avatar)}" class="contact-avatar" alt="${esc(
-                c.other_name,
-              )}" />
+                    c.other_name,
+                  )}" />
                   <div class="contact-info">
                     <div class="contact-top">
                       <span class="contact-name">${esc(c.other_name)}</span>
@@ -927,7 +941,9 @@
           const q = ($search.value || "").trim().toLowerCase();
           const filtered = q
             ? _conversations.filter((c) =>
-                String(c.other_name || "").toLowerCase().includes(q),
+                String(c.other_name || "")
+                  .toLowerCase()
+                  .includes(q),
               )
             : _conversations;
           renderConversations(filtered);
@@ -948,14 +964,12 @@
           const found = _conversations.find(
             (c) => c.other_type === otherType && Number(c.other_id) === otherId,
           );
-          _active =
-            found ||
-            ({
-              other_type: otherType,
-              other_id: otherId,
-              other_name: "Chat",
-              other_avatar: defaultAvatar,
-            });
+          _active = found || {
+            other_type: otherType,
+            other_id: otherId,
+            other_name: "Chat",
+            other_avatar: defaultAvatar,
+          };
 
           $chatWithName.textContent = _active.other_name || "Chat";
           $chatWithAvatar.src = _active.other_avatar || defaultAvatar;

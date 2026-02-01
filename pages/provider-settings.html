@@ -585,7 +585,14 @@
                     id="settings-avatar"
                   />
                   <div>
-                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap">
+                    <div
+                      style="
+                        display: flex;
+                        gap: 10px;
+                        align-items: center;
+                        flex-wrap: wrap;
+                      "
+                    >
                       <button
                         type="button"
                         class="btn btn-outline"
@@ -743,7 +750,15 @@
                   />
                 </div>
 
-                <div class="settings-card" style="margin-top: 20px; padding: 0; box-shadow: none; background: transparent">
+                <div
+                  class="settings-card"
+                  style="
+                    margin-top: 20px;
+                    padding: 0;
+                    box-shadow: none;
+                    background: transparent;
+                  "
+                >
                   <h2 style="margin: 0 0 10px 0">Professional Details</h2>
                 </div>
 
@@ -835,7 +850,15 @@
                   />
                 </div>
 
-                <div class="settings-card" style="margin-top: 20px; padding: 0; box-shadow: none; background: transparent">
+                <div
+                  class="settings-card"
+                  style="
+                    margin-top: 20px;
+                    padding: 0;
+                    box-shadow: none;
+                    background: transparent;
+                  "
+                >
                   <h2 style="margin: 0 0 10px 0">Business Info (Optional)</h2>
                 </div>
 
@@ -1003,8 +1026,10 @@
           this.els.country = document.getElementById("country");
 
           this.els.specialization = document.getElementById("specialization");
-          this.els.experienceYears = document.getElementById("experience-years");
-          this.els.languagesSpoken = document.getElementById("languages-spoken");
+          this.els.experienceYears =
+            document.getElementById("experience-years");
+          this.els.languagesSpoken =
+            document.getElementById("languages-spoken");
           this.els.serviceRadius = document.getElementById("service-radius");
           this.els.dateOfBirth = document.getElementById("date-of-birth");
           this.els.gender = document.getElementById("gender");
@@ -1018,9 +1043,8 @@
           );
           this.els.nif = document.getElementById("nif");
           this.els.nis = document.getElementById("nis");
-          this.els.preferredLanguage = document.getElementById(
-            "preferred-language",
-          );
+          this.els.preferredLanguage =
+            document.getElementById("preferred-language");
 
           this.els.profilePictureUrl = document.getElementById(
             "profile-picture-url",
@@ -1042,7 +1066,9 @@
         _setPhotoStatus(text, isError = false) {
           if (!this.els.photoUploadStatus) return;
           this.els.photoUploadStatus.textContent = text || "";
-          this.els.photoUploadStatus.style.color = isError ? "#b91c1c" : "#6b7280";
+          this.els.photoUploadStatus.style.color = isError
+            ? "#b91c1c"
+            : "#6b7280";
         },
 
         _getProfilePictureUrl() {
@@ -1064,7 +1090,8 @@
           });
           const json = await res.json().catch(() => null);
           if (!res.ok || !json || !json.success) {
-            const msg = json?.message || `Failed to get upload signature (${res.status})`;
+            const msg =
+              json?.message || `Failed to get upload signature (${res.status})`;
             const missing = json?.errors?.missing;
             if (Array.isArray(missing) && missing.length) {
               throw new Error(`${msg}. Missing: ${missing.join(", ")}`);
@@ -1267,8 +1294,12 @@
             address: this.els.address.value.trim(),
             city: this.els.city ? this.els.city.value.trim() : undefined,
             state: this.els.state ? this.els.state.value.trim() : undefined,
-            zip_code: this.els.zipCode ? this.els.zipCode.value.trim() : undefined,
-            country: this.els.country ? this.els.country.value.trim() : undefined,
+            zip_code: this.els.zipCode
+              ? this.els.zipCode.value.trim()
+              : undefined,
+            country: this.els.country
+              ? this.els.country.value.trim()
+              : undefined,
             specialization: this.els.specialization
               ? this.els.specialization.value.trim()
               : undefined,
@@ -1457,12 +1488,16 @@
           if (this.els.removePhotoBtn) {
             this.els.removePhotoBtn.addEventListener("click", () => {
               this.state.uploadedProfileUrl = null;
-              if (this.els.profilePictureUrl) this.els.profilePictureUrl.value = "";
-              this._setPhotoStatus("Photo removed. Click Save Changes to apply.");
+              if (this.els.profilePictureUrl)
+                this.els.profilePictureUrl.value = "";
+              this._setPhotoStatus(
+                "Photo removed. Click Save Changes to apply.",
+              );
 
               // Reset preview back to default avatar
               const fallback = "../assets/images/default-avatar.jpg";
-              if (this.els.settingsAvatar) this.els.settingsAvatar.src = fallback;
+              if (this.els.settingsAvatar)
+                this.els.settingsAvatar.src = fallback;
             });
           }
 
@@ -1493,7 +1528,9 @@
               if (this.els.profilePictureUrl) {
                 this.els.profilePictureUrl.value = uploaded.url;
               }
-              this._setPhotoStatus("Photo uploaded. Click Save Changes to apply.");
+              this._setPhotoStatus(
+                "Photo uploaded. Click Save Changes to apply.",
+              );
             } catch (e) {
               console.error("Photo upload failed:", e);
               this.state.uploadedProfileUrl = null;
