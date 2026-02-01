@@ -103,6 +103,16 @@ class AuthController {
             return;
         }
 
+        if ($forcedType === 'provider') {
+            if (!$this->assertExpectedTable($db, 'providers', ['provider_id', 'email', 'password_hash'])) {
+                return;
+            }
+        } else {
+            if (!$this->assertExpectedTable($db, 'users', ['user_id', 'email', 'password_hash'])) {
+                return;
+            }
+        }
+
         $email = strtolower(trim($data['email']));
 
         // Prevent duplicate emails across both tables
@@ -160,6 +170,7 @@ class AuthController {
                 'token' => $token,
                 'provider_id' => (string)$accountId,
                 'user_type' => 'provider',
+                'created_in' => 'providers',
                 'email' => $email,
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
@@ -203,6 +214,7 @@ class AuthController {
             'token' => $token,
             'user_id' => (string)$accountId,
             'user_type' => 'user',
+            'created_in' => 'users',
             'email' => $email,
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -226,6 +238,16 @@ class AuthController {
         if ($db === null) {
             Response::serverError('Database connection failed');
             return;
+        }
+
+        if ($forcedType === 'provider') {
+            if (!$this->assertExpectedTable($db, 'providers', ['provider_id', 'email', 'password_hash'])) {
+                return;
+            }
+        } else {
+            if (!$this->assertExpectedTable($db, 'users', ['user_id', 'email', 'password_hash'])) {
+                return;
+            }
         }
 
         $email = strtolower(trim($data['email']));
@@ -287,5 +309,42 @@ class AuthController {
             'user_type' => $forcedType,
             'user' => $user
         ], 'Login successful');
+    }
+
+    private function assertExpectedTable($db, string $table, array $requiredColumns): bool {
+        try {
+            $stmt = $db->prepare("SELECT TABLE_TYPE FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?");
+            $stmt->execute([$table]);
+            $row = $stmt->fetch();
+            if (!$row) {
+                Response::serverError("Database schema error: missing table '{$table}'.");
+                return false;
+            }
+
+            $type = strtoupper((string)($row['TABLE_TYPE'] ?? ''));
+            if ($type !== 'BASE TABLE') {
+                Response::serverError("Database schema error: '{$table}' is not a BASE TABLE (it is '{$type}'). Please fix your database schema.");
+                return false;
+            }
+
+            $missing = [];
+            foreach ($requiredColumns as $col) {
+                $c = $db->prepare("SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ?");
+                $c->execute([$table, $col]);
+                if (!$c->fetch()) {
+                    $missing[] = $col;
+                }
+            }
+
+            if (!empty($missing)) {
+                Response::serverError("Database schema error: '{$table}' missing columns: " . implode(', ', $missing));
+                return false;
+            }
+
+            return true;
+        } catch (Exception $e) {
+            Response::serverError('Database schema check failed');
+            return false;
+        }
     }
 }
