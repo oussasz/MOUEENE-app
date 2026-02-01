@@ -296,6 +296,8 @@
               type="button"
               class="type-btn active"
               id="btnUser"
+              data-type="user"
+              aria-pressed="true"
               onclick="selectRegisterType('user')"
             >
               <i class="fas fa-user"></i>
@@ -305,6 +307,8 @@
               type="button"
               class="type-btn"
               id="btnProvider"
+              data-type="provider"
+              aria-pressed="false"
               onclick="selectRegisterType('provider')"
             >
               <i class="fas fa-briefcase"></i>
@@ -507,6 +511,11 @@
         const btnProvider = document.getElementById("btnProvider");
         btnUser.classList.toggle("active", type === "user");
         btnProvider.classList.toggle("active", type === "provider");
+        btnUser.setAttribute("aria-pressed", type === "user" ? "true" : "false");
+        btnProvider.setAttribute(
+          "aria-pressed",
+          type === "provider" ? "true" : "false",
+        );
 
         const providerFields = document.getElementById("providerFields");
         providerFields.classList.toggle("show", type === "provider");
@@ -532,8 +541,34 @@
       (function initTypeFromUrl() {
         const params = new URLSearchParams(window.location.search);
         const t = params.get("type");
-        if (t === "provider") selectRegisterType("provider");
+        const stored = sessionStorage.getItem("register_type");
+        const desired = t === "provider" || t === "user" ? t : stored;
+        if (desired === "provider") selectRegisterType("provider");
         else selectRegisterType("user");
+
+        // Attach click listeners (backup for inline onclick / cached HTML)
+        const btnUser = document.getElementById("btnUser");
+        const btnProvider = document.getElementById("btnProvider");
+        if (btnUser) {
+          btnUser.addEventListener("click", () => selectRegisterType("user"));
+        }
+        if (btnProvider) {
+          btnProvider.addEventListener("click", () =>
+            selectRegisterType("provider"),
+          );
+        }
+      })();
+
+      // Persist the chosen type so refresh/back doesn't silently revert.
+      (function persistRegisterType() {
+        const input = document.getElementById("registerType");
+        if (!input) return;
+        const save = () => {
+          const t = input.value === "provider" ? "provider" : "user";
+          sessionStorage.setItem("register_type", t);
+        };
+        save();
+        input.addEventListener("change", save);
       })();
 
       document
@@ -542,7 +577,22 @@
           e.preventDefault();
           hideAuthAlerts();
 
-          const registerType = document.getElementById("registerType").value;
+          // Determine current type robustly (active button wins)
+          const activeBtn = document.querySelector(".type-btn.active");
+          const activeType = activeBtn && activeBtn.dataset
+            ? activeBtn.dataset.type
+            : null;
+          const hiddenType = document.getElementById("registerType").value;
+          const registerType =
+            activeType === "provider" || activeType === "user"
+              ? activeType
+              : hiddenType === "provider" || hiddenType === "user"
+                ? hiddenType
+                : "user";
+
+          // Keep hidden input in sync (prevents mismatch)
+          document.getElementById("registerType").value = registerType;
+          sessionStorage.setItem("register_type", registerType);
 
           const firstName = document.getElementById("firstName").value.trim();
           const lastName = document.getElementById("lastName").value.trim();
