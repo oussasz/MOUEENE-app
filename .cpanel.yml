@@ -4,3 +4,5 @@ deployment:
     - export DEPLOYPATH="$HOME/public_html/"
     - /bin/echo "Deploying to $DEPLOYPATH"
     - /usr/bin/rsync -a --delete --exclude '.git' --exclude '.cpanel.yml' ./ "$DEPLOYPATH"
+    - /bin/echo "Deployed at $(date)" > "$DEPLOYPATH/deploy-timestamp.txt"
+    - /bin/echo "Commit $(git rev-parse HEAD)" >> "$DEPLOYPATH/deploy-timestamp.txt"
