@@ -776,7 +776,8 @@
 
           if (els.description) {
             const about = String(offer.description || "").trim();
-            const h3 = els.description.querySelector("h3")?.outerHTML ||
+            const h3 =
+              els.description.querySelector("h3")?.outerHTML ||
               "<h3>About This Service</h3>";
             els.description.innerHTML = `${h3}<p>${escapeHtml(about)}</p>`;
           }
@@ -785,9 +786,10 @@
           if (els.price) els.price.textContent = price.value;
           if (els.priceUnit) els.priceUnit.textContent = price.unit;
 
-          const imageUrl = (offer.primary_image || offer.service_image)
-            ? resolveImageUrl(offer.primary_image || offer.service_image)
-            : getCategoryFallbackImage(offer.category_id);
+          const imageUrl =
+            offer.primary_image || offer.service_image
+              ? resolveImageUrl(offer.primary_image || offer.service_image)
+              : getCategoryFallbackImage(offer.category_id);
           if (els.imgMain) els.imgMain.src = imageUrl;
           if (els.img1) els.img1.src = imageUrl;
           if (els.img2) els.img2.src = imageUrl;

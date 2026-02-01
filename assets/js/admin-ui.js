@@ -6,9 +6,7 @@
 
 (function () {
   function isMobile() {
-    return (
-      window.matchMedia && window.matchMedia("(max-width: 768px)").matches
-    );
+    return window.matchMedia && window.matchMedia("(max-width: 768px)").matches;
   }
 
   function closeMenu() {
