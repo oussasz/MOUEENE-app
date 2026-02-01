@@ -43,6 +43,20 @@ AddDefaultCharset UTF-8
     ExpiresByType font/woff2 "access plus 1 year"
 </IfModule>
 
+# Disable caching for auth pages and auth.js (avoid stale registration logic)
+<IfModule mod_headers.c>
+    <FilesMatch "^(register\.html|login\.html)$">
+        Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+    <FilesMatch "^auth\.js$">
+        Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+</IfModule>
+
 # Security headers
 <IfModule mod_headers.c>
     Header set X-Content-Type-Options "nosniff"
